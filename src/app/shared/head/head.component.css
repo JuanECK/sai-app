@@ -51,9 +51,12 @@ header {
                     position: absolute;
                     display: block;
                     left: -2rem;
-
                    
                 }
+            }
+            & .nav-link:hover{
+                background: #000;
+                color: #00B3CF;
             }
 
         }
