@@ -1,0 +1,51 @@
+.error{
+
+    & .container{
+display: flex;
+/* justify-content: center; */
+justify-content: space-evenly;
+align-items: center;
+height: 100vh;
+        & .error404{
+            width: 500px;
+            height: auto;
+
+            & .msj-Log{
+                margin: 0;
+                position: relative;
+                bottom: 30px;
+                color: #fff;
+                margin-left: 70px;
+                font-weight: var(--Normal);
+            }
+
+            & .btn-volver{
+                display: flex;
+                justify-content: center;
+
+                & .btn-volver-error{
+                    display: flex;
+                    align-items: center;
+                    position: relative;
+                    color: #fff;
+                    background: none;
+                    border: none;
+                    font-size: 16px;
+                    font-weight: var(--Normal);
+    
+                    & .icono-error{
+                        position:absolute;
+                        right: 3.6rem;
+                    }
+
+                    
+                }
+                & .btn-volver-error:hover{
+                    transform: scale(1.1);
+                }
+            }
+            
+        }
+
+    }
+}

@@ -1,0 +1,176 @@
+
+.Active{
+    background-color: #FFBF00;
+    color: #000;
+}
+.inActive{
+    background-color: #BFBFBF;
+    color: #fff;
+}
+
+.app-Login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    /* background-color: #9b1010; */
+    background: #f5f5f5;
+    width: 100vw !important;
+    
+    & .login{
+        width: 942px;
+        height: 539px;
+        box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.212);
+
+
+            & .container{
+                display:grid;
+                grid-template-columns: 410px 532px;
+                grid-template-areas: "sec-A-Img sec-B-Form" ;
+                height: 100%;
+
+                & .sec-A-Img{
+                    grid-area: sec-A-Img;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    background-color: #ffffff;
+
+                    & img{
+                        width: 100%;
+                    }
+                }
+
+                & .sec-B-Form{
+                    grid-area: sec-B-Form;
+                    display: flex;
+                    justify-content: center;
+                    flex-direction: column;
+                    background-color: #00B3CF;
+
+                    & .vercion{
+                        text-align: right;
+                        margin: 10px 25px;
+                        color: #fff;
+                    }
+                    
+                    
+                    & .form-Container{
+                        margin: 0 auto;
+
+                        & h1{
+                            font-size: 40px;
+                            font-weight: var(--Bold);
+                            margin-top: 40px;
+                            margin-bottom: 0px;
+                            color: #fff;
+                        }
+                        
+                        & p{
+                            font-size: 12px;
+                            margin-top: 0px;
+                            font-weight: var(--Bold);
+                            margin-bottom: 50px;
+                            margin-left: 15px;
+                            color: #fff;
+                        }
+
+                        & form{
+                            width: 100%;
+                            border-radius: 5px;
+            
+                            & .form-group{
+                                margin-bottom: 25px;
+                                position: relative;
+            
+                                & label{
+                                    display: block;
+                                    font-size: 12px;
+                                    font-weight: var(--Light);
+                                    margin-bottom: 5px;
+                                    color: #fff;
+                                }
+            
+                                & input{
+                                    width: 300px;
+                                    height: 39px;
+                                    border: 1px solid #939393;
+                                    border-radius: 4px;
+                                    font-size: 14px;
+                                    color: rgba(56, 56, 56, 0.60);
+                                    font-weight: var(--Medium);
+                                    padding-left: 2.8rem;
+                                    padding-right: 2.9rem;
+                                }
+
+                                & input::placeholder{
+                                    color: #00B3CF;
+                                }
+
+                                & input[type="password"]:focus, input[type="email"]:focus{
+                                    border:1px solid #D8D8D8;
+                                    background-color: #D8D8D8;
+                                    outline: none;
+                                }
+
+                                & .icon{
+                                    position: absolute;
+                                    display: block;
+                                    bottom: .5rem;
+                                    left: 1rem;
+                                
+                                }
+                                & .iconVerPass{
+                                    position: absolute;
+                                    display: block;
+                                    bottom: .5rem;
+                                    right: 0.3rem;
+                                    cursor:pointer;
+                                    border: none;
+                                    background: none;
+                                
+                                }
+                            }
+
+                            & .pass{
+                                margin-bottom: 20px;
+                            }
+                            
+                            & .errorPass{
+                                position: absolute;
+                               
+
+                                & p{
+                                    position: relative;
+                                    color: #CE0B0B;
+                                    font-size: 14px;
+                                    font-weight: var(--Medium);
+                                    margin-left: 10px;
+                                    padding-left: 2.8rem;
+                                }
+
+                                & img{
+                                    position:absolute;
+                                    display: block;
+                                    left: 1rem;
+                                    bottom: 0.5px;
+                                }
+                                
+                            }
+            
+                            & .btn-login{
+                                width: 392.8px;
+                                height: 30px;
+                                margin-top: 130px;
+                                border: none;
+                                border-radius: 20px;
+                                font-size: 14px;
+                                cursor: pointer;
+                                font-weight: var(--Medium);
+                        }
+                    } 
+                }
+            }
+        }
+    }
+}

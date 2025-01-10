@@ -1,0 +1,59 @@
+
+<section id="app-Login" class="app-Login">
+    <article class="secction login">
+        <div class="container">
+
+            <div class="sec-A-Img">
+                <img src="img-sai/image-loguin.png" >
+            </div>
+
+            <div class="sec-B-Form">
+                <div class="form-Container">
+
+                    <h1>¡Bienvenido!</h1>
+                    <p>Accede con tus credenciales</p>
+        
+                    <!-- <form #f="ngForm" (ngSubmit)="f.form.valid && login(f)"> -->
+                    <form [formGroup]="credenciales()" autocomplete="off">
+                      
+                        <div class="form-group">
+                            <label for="email">Nombre de Usuario</label>
+                             <span class="icon">
+                                <img src="img-sai/icon-avatar.png">
+                             </span>
+                            <input type="email" formControlName="email" class="form-control" id="email" name="email" placeholder="Nombre de Usuario" (input)="formImputComplete()" (click)="evaluaMssjError()" ngModel >
+                        </div>
+                        
+                        <div class="form-group pass">
+                            <label for="password">Contraseña</label>
+                            <span class="icon">
+                                <img src="img-sai/icon-lock.png">
+                             </span>
+                             <input type="password" formControlName="password" #inputPassword class="form-control" id="password" name="password" placeholder="Contraseña" (input)="formImputComplete()" (click)="evaluaMssjError()" ngModel >
+                             <button class="iconVerPass" (click)="visualizarPassword()">
+                                 <!-- <img src="img-sai/icon-eye2.png"> -->
+                                 <img [src]="visualizarPass ? 'img-sai/icon-eye2.png':'img-sai/icon-eye.png'" >
+                             </button>
+                             
+                        </div>
+
+                        <div class="errorPass" [hidden]="errorPass">
+                            <p><img src="img-sai/x-icon.png"> Nombre o contraseña inválida</p>
+                        </div>
+                        
+                         <button type="submit" [classList]="btnEnviar? 'btn-login inActive':'btn-login Active'" [disabled]="btnEnviar" (click)="login()">Ingresar a la plataforma</button>
+                    </form>
+
+                </div>
+
+                <p class="vercion">SA 1.0</p>
+
+            </div>
+        </div>
+    </article>
+</section>
+
+
+
+
+

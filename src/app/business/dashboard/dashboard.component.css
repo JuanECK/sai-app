@@ -1,0 +1,88 @@
+
+.dashboard{
+    /* background: #aa5050; */
+    overflow-y: auto;
+    word-wrap: break-word;
+    height: 100%;
+
+    & h1{
+        margin: 0;
+        font-size: 20px;
+        font-weight: var(--Medium);
+        margin-bottom: 16px;
+    }
+
+    & .table{
+        /* background: #b3b3b3; */
+        width: 100%;
+        border-collapse: collapse;
+        & thead{
+            
+            & tr{
+                /* background: #df5555; */
+                text-align: center;
+            } 
+        
+        }
+        & tbody{
+            
+            & tr{
+                /* background: #df5555; */
+                text-align: center;     
+            }
+        }
+    }
+    
+    & .container{
+        display: grid;
+        grid-template-rows: 370px 390px ;
+        & .separacion{
+            display: flex;
+            & .prestamos-internos{
+                margin-top: 45px;
+                margin-left: 22px;
+                margin-right: 22px;
+                margin-bottom: 23px;
+                width: 320px;
+                /* width: 450px; */
+                height: 273px;
+        
+                
+            }
+            & .saldos-cuentas-propias{
+                margin-top: 45px;
+                margin-left: 22px;
+                margin-right: 22px;
+                margin-bottom: 23px;
+                width: 720px;
+                /* width: 980px; */
+                height: 273px;
+        
+                
+            }
+            & .adeudo-europe{
+                margin-top: 0px;
+                margin-left: 22px;
+                margin-right: 22px;
+                margin-bottom: 23px;
+                width: 320px;
+                /* width: 450px; */
+                height: 273px;
+        
+              
+            }
+            & .diferencia-saldos{
+                margin-top: 0px;
+                margin-left: 22px;
+                margin-right: 22px;
+                margin-bottom: 23px;
+                width: 720px;
+                /* width: 980px; */
+                height: 273px;
+        
+               
+            }
+        }
+    }
+    
+}

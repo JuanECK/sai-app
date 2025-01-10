@@ -1,0 +1,82 @@
+/* You can add global styles to this file, and also import other style files */
+:root{
+    /* font-weight tipografias */
+    --Thin:100;
+    --Extra-Light:300;
+    --Light:300;
+    --Normal:400; /* Regular */
+    --Medium:500;
+    --Semi-Bold:600;
+    --Bold:800;
+    --Extra-Bold:900;
+}
+
+
+body{
+    margin:0 !important;
+    padding: 0 !important;
+    font-family: 'Roboto';
+    background: #00B3CF;
+    overflow-y: hidden;
+}
+
+.card{
+    padding: 16px 12px;
+    position: relative;
+    background: #ffffff;
+    border: none;
+    z-index: 100;
+    border-radius: 2px;
+    box-shadow: 0px 5px 10px #00000040;
+}
+.thead-th-blod{
+    font-size: 12px;
+    font-weight: bold;
+    padding: 3px;
+    border-bottom: 1px solid #CCC5C5;
+}
+.tbody-td-ligth{
+    font-size: 12px;
+    font-weight: 300;
+    color: #656565;
+    padding: 3px;
+    border-bottom: 1px solid #CCC5C5;
+}
+.tbody-td-bold{
+    font-size: 14px;
+    font-weight: 500;
+    color: #000;
+    padding: 3px;
+    border-bottom: 1px solid #CCC5C5;
+}
+
+.form-group-icon{
+    position: relative;
+
+    & .icon{
+        position: absolute;
+        display: block;
+        bottom: .2rem;
+        left: 3.2rem;
+    
+    }
+
+    & input{
+        
+        border: 1px solid #939393;
+        border-radius: 2px;
+        font-size: 12px;
+        color: rgb(56, 56, 56);
+        font-weight: var(--Normal);
+        padding-top:2px ;
+        margin: 1px;
+        padding-left: 1rem;
+    }
+
+    & input[type="text"]:focus{
+        border:1px solid #D8D8D8;
+        background-color: #D8D8D8;
+        outline: none;
+    }
+
+}
