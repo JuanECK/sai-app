@@ -54,10 +54,6 @@ header {
                    
                 }
             }
-            & .nav-link:hover{
-                background: #000;
-                color: #00B3CF;
-            }
 
         }
     }
