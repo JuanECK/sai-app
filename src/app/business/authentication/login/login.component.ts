@@ -50,11 +50,47 @@ export class LoginComponent implements OnInit {
 
     login(){
     console.log(this.credenciales().value);
-      if (!this.AuthService.login(this.credenciales().get('email')?.value, this.credenciales().get('password')?.value)){
+    // console.log(this.AuthService.login(this.credenciales().get('email')?.value, this.credenciales().get('password')?.value))
+    // let { respuesta } = this.AuthService.login(this.credenciales().get('email')?.value, this.credenciales().get('password')?.value)
+    // console.log(respuesta)
+    // if(respuesta)
+      // if (!this.AuthService.login(this.credenciales().get('email')?.value, this.credenciales().get('password')?.value)){
         // this.credenciales().reset();
-        this.errorPass = false;
-      };
+        
+      //   this.errorPass = false;
+      // };
+
+
+      fetch("http://localhost:3000/login", {
+        method: 'POST',
+        mode:"cors",
+        credentials:"same-origin",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            Usuario: this.credenciales().get('email')?.value,
+            Contrasenia: this.credenciales().get('password')?.value,
+        })
+      })
+
+      .then(response => {
+        if(response.ok) {
+            return response.json();
+        } else{
+          this.errorPass = false;
+        }
+        throw 'Error en petición';
+      })
+      .then(data => {
+        if(data.token){
+          document.cookie = `auth_access_token=${data.token}; path=/; domain=${location.hostname};`
+          this.router.navigate(['/dashboard']);
+        }
+      })
+      .catch(error => console.log('error', error));
     }
+
 
     formImputComplete(){
 
