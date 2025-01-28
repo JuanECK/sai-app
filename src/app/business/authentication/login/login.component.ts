@@ -82,7 +82,11 @@ export class LoginComponent implements OnInit {
         }
         throw 'Error en petición';
       })
+
       .then(data => {
+        const { Clave_Usuario, Usuario, ...UsuarioData } = data.user
+        // console.log(JSON.stringify(UsuarioData))
+        localStorage.setItem('sesion', JSON.stringify(UsuarioData));
         if(data.token){
           document.cookie = `auth_access_token=${data.token}; path=/; domain=${location.hostname};`
           this.router.navigate(['/dashboard']);
@@ -119,7 +123,8 @@ export class LoginComponent implements OnInit {
     }
 
     ver(){
-      console.log(this.credenciales().value)
+      console.log(this.AuthService.isAuthenticado())
+      // console.log(this.credenciales().value)
     }
 
 }
