@@ -25,36 +25,69 @@ export class AuthService {
 
 
   // Metodo de inicio de sesion
-  login(email:string, password:string){
-    console.log(email, password);
-    this.dataos.append( 'data', JSON.stringify({Usuario:email, Contrasenia:password}))
+  async login(email:string, password:string){
+
+    try {
+      
+      let dataCookie:boolean = true
+      const response = await  fetch("http://localhost:3000/login", {
+        method: 'POST',
+        // mode:"cors",
+        credentials:"include",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            Usuario: email,
+            Contrasenia: password,
+        })
+      })
+      const data = await response.json();
+      // console.log(data);
+
+      if(response.status === 200){
+        dataCookie = true
+      }else{
+        dataCookie = false
+      }
+      
+      return {
+        log:dataCookie,
+        data:data
+      }
+
+    } catch (error) {
+      throw new Error()
+    }
+
 
   }
 
   // Metodo de verificacion de usuario logeado
   async isAuthenticado(){
     
-    const coockie = this.getCookie();
-    if(coockie.length === 0) return false
+    // const coockie = this.getCookie();
+    // if(coockie.length === 0) return false
     
-    // console.log('segui el camino')
+    // console.log(coockie)
     let dataCookie:boolean = true
     
-    const response = await fetch(this._http + 'validaSession', {
+    const response = await fetch(this._http + 'cookie', {
+    // const response = await fetch(this._http + 'validaSession', {
       method: 'POST',
-      mode:"cors",
-      credentials:"same-origin",
+      // mode:"cors",
+      credentials:"include",
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({
-        // Usuario: coockie,
-        Token: coockie[0][1],
-      })
+      // body: JSON.stringify({
+      //   // Usuario: coockie,
+      //   Token: coockie[0][1],
+      // })
     })
     const data = await response.json();
     if(data.respuesta === true){
-      console.log(data.respuesta);
+      console.log(data);
       dataCookie = true
     }else{
       // console.log(dato);
@@ -68,10 +101,23 @@ export class AuthService {
   }
   
   // Metodo de cierre de sesion
-  logOut(){
-    const res = this.getCookie()
-    document.cookie = res[0][0] + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-    this.router.navigate(['/login'])
+  async logOut(){
+    // const res = this.getCookie()
+    // document.cookie = res[0][0] + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    // this.router.navigate(['/login'])
+    const response = await fetch( this._http + 'logOut',{
+      method: 'GET',
+      credentials:'include',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    const data= await response.json()
+    console.log(data)
+    if(data.logOut){
+      localStorage.removeItem('sesion');
+      this.router.navigate(['/login']);
+    }
   }
   
   getCookie(){

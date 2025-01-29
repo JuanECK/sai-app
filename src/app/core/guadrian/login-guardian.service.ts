@@ -43,6 +43,7 @@ canActivate(): Promise<boolean> | boolean{
       this.valorRetorno = valor;
       if(this.valorRetorno) { // <- aquí 'this.valorRetorno' es igual a 'valor' podrías usar directamente el parámetro 'valor'
          console.log("COMPROBAMOS: " + this.valorRetorno);
+        
          return true; // se resolverá la promesa y Angular sabrá si puede o no activar la ruta
      } else {
         console.log("Redirigimosssss: ");

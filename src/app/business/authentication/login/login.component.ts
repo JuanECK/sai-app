@@ -21,6 +21,7 @@ export class LoginComponent implements OnInit {
   btnEnviar:boolean = true;
   errorPass: boolean = true;
   visualizarPass:boolean = true;
+  private usuarioRetorno: boolean =false;
 
   @ViewChild('inputPassword')
   inputPassword!:ElementRef
@@ -33,6 +34,10 @@ export class LoginComponent implements OnInit {
   )
 
   ngOnInit(): void {
+    console.log(this.AuthService.getCookie().length)
+    if(window.location.pathname === '/login' && localStorage.getItem('sesion') ){
+     this.router.navigate(['/dashboard'])
+   }
     this.isLogin()
   }
 
@@ -48,51 +53,60 @@ export class LoginComponent implements OnInit {
   //   this.AuthService.login(email, password);
   //   }
 
-    login(){
-    console.log(this.credenciales().value);
-    // console.log(this.AuthService.login(this.credenciales().get('email')?.value, this.credenciales().get('password')?.value))
-    // let { respuesta } = this.AuthService.login(this.credenciales().get('email')?.value, this.credenciales().get('password')?.value)
-    // console.log(respuesta)
-    // if(respuesta)
-      // if (!this.AuthService.login(this.credenciales().get('email')?.value, this.credenciales().get('password')?.value)){
-        // this.credenciales().reset();
-        
-      //   this.errorPass = false;
-      // };
+  // login(){
+    login():Promise<boolean> | boolean{
 
+      const usuario = this.credenciales().get('email')?.value;
+      const contrasenia = this.credenciales().get('password')?.value;
 
-      fetch("http://localhost:3000/login", {
-        method: 'POST',
-        mode:"cors",
-        credentials:"same-origin",
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            Usuario: this.credenciales().get('email')?.value,
-            Contrasenia: this.credenciales().get('password')?.value,
-        })
-      })
-
-      .then(response => {
-        if(response.ok) {
-            return response.json();
-        } else{
-          this.errorPass = false;
-        }
-        throw 'Error en petición';
-      })
-
-      .then(data => {
-        const { Clave_Usuario, Usuario, ...UsuarioData } = data.user
-        // console.log(JSON.stringify(UsuarioData))
-        localStorage.setItem('sesion', JSON.stringify(UsuarioData));
-        if(data.token){
-          document.cookie = `auth_access_token=${data.token}; path=/; domain=${location.hostname};`
+      return this.AuthService.login( usuario, contrasenia ).then(valor =>{
+        this.usuarioRetorno = valor.log
+        if(this.usuarioRetorno){
+          console.log("COMPROBAMOS-USUARIO: " + this.usuarioRetorno);
+          const { Clave_Usuario, Usuario, ...UsuarioData } = valor.data.user
+          localStorage.setItem('sesion', JSON.stringify(UsuarioData));
           this.router.navigate(['/dashboard']);
+          return true;
+        }else{
+          console.log("Redirigimosssss: ");
+          this.errorPass = false;
+          return false;
         }
       })
-      .catch(error => console.log('error', error));
+
+// ------------------------------------------------
+// -------Funcionando----------
+
+      // fetch("http://localhost:3000/login", {
+      //   method: 'POST',
+      //   // mode:"cors",
+      //   credentials:"include",
+      //   headers: {
+      //       'Content-Type': 'application/json'
+      //   },
+      //   body: JSON.stringify({
+      //       Usuario: this.credenciales().get('email')?.value,
+      //       Contrasenia: this.credenciales().get('password')?.value,
+      //   })
+      // })
+
+      // .then(response => {
+      //   if(response.ok) {
+      //       return response.json();
+      //   } else{
+      //     this.errorPass = false;
+      //     // console.clear()
+      //   }
+      //   throw 'Error en petición';
+      // })
+
+      // .then(data => {
+      //   const { Clave_Usuario, Usuario, ...UsuarioData } = data.user
+      //   localStorage.setItem('sesion', JSON.stringify(UsuarioData));
+      //     this.router.navigate(['/dashboard']);
+      // })
+      // .catch(error => console.log('error', error));
+      // ------------------------------------------------
     }
 
 
