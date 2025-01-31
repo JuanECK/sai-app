@@ -9,7 +9,10 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'app-sai-1.0';
+  // _http = process.env["WEBSERVICE_URL"]
 
+  constructor(){
+      // console.log({message:process.env['WEBSERVICE_URL']})
+  }
 
 }

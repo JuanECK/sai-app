@@ -2,7 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { environment } from '../../../environments/environments';
 import { envs } from '../../config/envs';
+
 
 @Injectable({
   providedIn: 'root'
@@ -22,14 +24,16 @@ export class AuthService {
   
   // _http = 'http://localhost:3000/';
   // _http = 'http://localhost:3000/api/auth/login';
-
-  // _http = process.env.WEBSERVICE_URL;
-  _http = envs.WEBSERVICE_URL
-
-
-
+  
+  // _http = process.env.["WEBSERVICE_URL"];
+  // _http = envs.WEBSERVICE_URL
+  // _http = 
+   private _http:string = `${environment.apiUrl}`
+  
+  
   // Metodo de inicio de sesion
   async login(email:string, password:string){
+    
 
     try {
       
