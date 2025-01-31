@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { envs } from '../../config/envs';
 
 @Injectable({
   providedIn: 'root'
@@ -19,8 +20,11 @@ export class AuthService {
   resapuestaValor:boolean = true
   Cookie:boolean = true
   
-  _http = 'http://localhost:3000/';
+  // _http = 'http://localhost:3000/';
   // _http = 'http://localhost:3000/api/auth/login';
+
+  // _http = process.env.WEBSERVICE_URL;
+  _http = envs.WEBSERVICE_URL
 
 
 
@@ -87,11 +91,11 @@ export class AuthService {
     })
     const data = await response.json();
     if(data.respuesta === true){
-      console.log(data);
+      // console.log(data);
       dataCookie = true
     }else{
       // console.log(dato);
-      console.log(data.respuesta);
+      // console.log(data.respuesta);
       dataCookie = false
       this.logOut();
     }
@@ -102,22 +106,34 @@ export class AuthService {
   
   // Metodo de cierre de sesion
   async logOut(){
-    // const res = this.getCookie()
-    // document.cookie = res[0][0] + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-    // this.router.navigate(['/login'])
-    const response = await fetch( this._http + 'logOut',{
-      method: 'GET',
-      credentials:'include',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-    const data= await response.json()
-    console.log(data)
-    if(data.logOut){
-      localStorage.removeItem('sesion');
-      this.router.navigate(['/login']);
+
+    const sesion = localStorage.getItem('sesion');
+    let id = 0
+
+    if(sesion){
+      const { Id_User } = JSON.parse(sesion!)
+      id = Id_User
     }
+
+      const response = await fetch( this._http + 'logOut',{
+        method: 'POST',
+        mode:"cors",
+        credentials:'include',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          id_user:id
+        })
+      })
+
+      const data= await response.json()
+      // console.clear()
+      // console.log(data)
+      if(data.logOut){
+        localStorage.removeItem('sesion');
+        this.router.navigate(['/login']);
+      }
   }
   
   getCookie(){

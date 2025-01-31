@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../core/services/auth.service';
-import { servicioGuardian } from '../../core/services/servisio';
 
 @Component({
   selector: 'app-head',

@@ -15,6 +15,10 @@
 .perueba{
     background: #ffffff80;
 }
+.link-Active{
+    background: #0195AC;
+}
+
 aside{
     /* background-color: #363f41a1; */
     background-color: #00B3CF;
@@ -45,6 +49,7 @@ aside{
                 
                 width: 100%;
                 text-align: center;
+                
                 /* border-bottom: 1px solid #fff; */
 
                 
@@ -60,6 +65,7 @@ aside{
                         text-decoration: none;
                         font-size: 12px;
                         font-weight: var(--Medium);
+                        
                     }
 
                 }

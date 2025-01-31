@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
   )
 
   ngOnInit(): void {
-    console.log(this.AuthService.getCookie().length)
+    // console.log(this.AuthService.getCookie().length)
     if(window.location.pathname === '/login' && localStorage.getItem('sesion') ){
      this.router.navigate(['/dashboard'])
    }
@@ -62,13 +62,13 @@ export class LoginComponent implements OnInit {
       return this.AuthService.login( usuario, contrasenia ).then(valor =>{
         this.usuarioRetorno = valor.log
         if(this.usuarioRetorno){
-          console.log("COMPROBAMOS-USUARIO: " + this.usuarioRetorno);
+          // console.log("COMPROBAMOS-USUARIO: " + this.usuarioRetorno);
           const { Clave_Usuario, Usuario, ...UsuarioData } = valor.data.user
           localStorage.setItem('sesion', JSON.stringify(UsuarioData));
           this.router.navigate(['/dashboard']);
           return true;
         }else{
-          console.log("Redirigimosssss: ");
+          // console.log("Redirigimosssss: ");
           this.errorPass = false;
           return false;
         }
