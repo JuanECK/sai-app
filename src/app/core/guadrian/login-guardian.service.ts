@@ -36,6 +36,10 @@ export class LoginGuardianService implements CanActivate{
 //   }
 // }
 
+tipoPerfil(){
+
+}
+
 
 canActivate(): Promise<boolean> | boolean{ 
  
@@ -43,12 +47,12 @@ canActivate(): Promise<boolean> | boolean{
       this.valorRetorno = valor;
       if(this.valorRetorno) { // <- aquí 'this.valorRetorno' es igual a 'valor' podrías usar directamente el parámetro 'valor'
         //  console.log("COMPROBAMOS: " + this.valorRetorno);
-        console.log('Guardian In');
+        // console.log('Guardian In');
         
         return true; // se resolverá la promesa y Angular sabrá si puede o no activar la ruta
       } else {
         // console.log("Redirigimosssss: ");
-        console.log('Guardian Out');
+        // console.log('Guardian Out');
         this.router.navigateByUrl('/login');
         return false; // se resolverá la promesa y Angular sabrá si puede o no activar la ruta
         // return true

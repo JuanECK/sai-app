@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../core/services/auth.service';
+import { PuenteDataService } from '../../core/services/puente-data.service';
 
 @Component({
   selector: 'app-head',
@@ -9,9 +10,11 @@ import { AuthService } from '../../core/services/auth.service';
   styleUrl: './head.component.css'
 })
 export class HeadComponent implements OnInit {
-  
+
   constructor(
     private AuthService: AuthService,
+    private puenteData:PuenteDataService
+
   ){}
   
   usuarioLogueado:string = 'usuario'
@@ -21,37 +24,47 @@ export class HeadComponent implements OnInit {
     const sesion = localStorage.getItem('sesion')
     const { Id_User, Nombre_Completo } = JSON.parse(sesion!);
     this.usuarioLogueado = Nombre_Completo
-    
+
+    // this.getDataLogin()
   }
   
-  async pruebaCoockie() {
-    // 
-    //  console.log(coock)
-    const response = await fetch(this._http + 'session', {
-    // const response = await fetch(this._http + 'cookie', {
-      method: 'POST',
-      // mode:"cors",
-      credentials:"include",
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body:JSON.stringify({
-        Usuario: 'Juann@fincash.com',
-        Contrasenia:'123456'
-      })
-    })
-    const data = await response.json();
-    console.log(data)
+  getDataLogin(){
+   
   }
+
+  // setDataLogin() {
+  //  this.puenteData.disparadorLogin.emit({dato:'aaaaaaaaaaa'})
+  // }
+  
+//   async pruebaCoockie() {
+//     // 
+//     //  console.log(coock)
+//     const response = await fetch(this._http + 'session', {
+//     // const response = await fetch(this._http + 'cookie', {
+//       method: 'POST',
+//       // mode:"cors",
+//       credentials:"include",
+//       headers: {
+//         'Content-Type': 'application/json'
+//       },
+//       body:JSON.stringify({
+//         Usuario: 'Juann@fincash.com',
+//         Contrasenia:'123456'
+//       })
+//     })
+//     const data = await response.json();
+//     console.log(data)
+//   }
   
 salir() {
 this.AuthService.logOut()
 ;}
 
-ver(){
-  console.log(this.AuthService.isAuthenticado())
+// ver(){
+//   console.log(this.AuthService.isAuthenticado())
 
-  // console.log(this.credenciales().value)
-}
+//   // console.log(this.credenciales().value)
+// }
+
 
 }

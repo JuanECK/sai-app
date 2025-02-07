@@ -2,6 +2,8 @@ import { Component, ElementRef, OnInit, signal, ViewChild } from '@angular/core'
 import { FormControl, FormGroup, FormsModule, NgForm, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../../core/services/auth.service';
 import { Router } from '@angular/router';
+import { PuenteDataService } from '../../../core/services/puente-data.service';
+
 
 @Component({
   selector: 'app-login',
@@ -15,7 +17,8 @@ export class LoginComponent implements OnInit {
   
   constructor(
     private AuthService: AuthService,
-    private router: Router
+    private router: Router,
+    private emitDataLogin: PuenteDataService,
   ){}
   
   btnEnviar:boolean = true;
@@ -36,16 +39,18 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     // console.log(this.AuthService.getCookie().length)
     if(window.location.pathname === '/login' && localStorage.getItem('sesion') ){
-     this.router.navigate(['/dashboard'])
+     this.router.navigate(['/Inicio'])
    }
-    this.isLogin()
+
+
+    // this.isLogin()
   }
 
-  isLogin(){
-    if(localStorage.getItem('token')){
-      this.router.navigate(['/dasboard']);
-    }
-  }
+  // isLogin(){
+  //   if(localStorage.getItem('token')){
+  //     this.router.navigate(['/dasboard']);
+  //   }
+  // }
 
   // login(form: NgForm) {
   //   const email = form.value.email;
@@ -63,9 +68,12 @@ export class LoginComponent implements OnInit {
         this.usuarioRetorno = valor.log
         if(this.usuarioRetorno){
           // console.log("COMPROBAMOS-USUARIO: " + this.usuarioRetorno);
-          const { Clave_Usuario, Usuario, ...UsuarioData } = valor.data.user
+          // const { Clave_Usuario, Usuario, ...UsuarioData } = valor.data.user
+          const {Usuario, ...UsuarioData } = valor.data.user
           localStorage.setItem('sesion', JSON.stringify(UsuarioData));
-          this.router.navigate(['/dashboard']);
+          // const { Nombre_Completo, ...UsuarioD} = UsuarioData 
+          // this.emitDataLogin.disparadorLogin.emit(UsuarioD)
+          this.router.navigate(['/Inicio']);
           return true;
         }else{
           // console.log("Redirigimosssss: ");
@@ -103,7 +111,7 @@ export class LoginComponent implements OnInit {
       // .then(data => {
       //   const { Clave_Usuario, Usuario, ...UsuarioData } = data.user
       //   localStorage.setItem('sesion', JSON.stringify(UsuarioData));
-      //     this.router.navigate(['/dashboard']);
+      //     this.router.navigate(['/Inicio']);
       // })
       // .catch(error => console.log('error', error));
       // ------------------------------------------------

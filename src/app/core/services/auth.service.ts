@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { environment } from '../../../environments/environments';
-import { envs } from '../../config/envs';
 
 
 @Injectable({
@@ -20,7 +19,7 @@ export class AuthService {
   
   dataos = new FormData();
   resapuestaValor:boolean = true
-  Cookie:boolean = true
+  // Cookie:boolean = true
   
   // _http = 'http://localhost:3000/';
   // _http = 'http://localhost:3000/api/auth/login';
@@ -38,7 +37,7 @@ export class AuthService {
     try {
       
       let dataCookie:boolean = true
-      const response = await  fetch("http://localhost:3000/login", {
+      const response = await  fetch(this._http +"login", {
         method: 'POST',
         // mode:"cors",
         credentials:"include",
@@ -115,8 +114,9 @@ export class AuthService {
     let id = 0
 
     if(sesion){
-      const { Id_User } = JSON.parse(sesion!)
-      id = Id_User
+      const { Datos } = JSON.parse(sesion!)
+      id = Datos
+      // id = Id_User
     }
 
       const response = await fetch( this._http + 'logOut',{
@@ -140,11 +140,11 @@ export class AuthService {
       }
   }
   
-  getCookie(){
-    return document.cookie.split("; ").filter(c=>/^auth_access_token.+/.test(c))
-    .map(e=>e.split("="));
-    // console.log(res[0][0]);
-  }
+  // getCookie(){
+  //   return document.cookie.split("; ").filter(c=>/^auth_access_token.+/.test(c))
+  //   .map(e=>e.split("="));
+  //   // console.log(res[0][0]);
+  // }
 }
 // clienteLogin(data:any):Observable<any>{
 //   return this.http.post<any>(this._http,data)

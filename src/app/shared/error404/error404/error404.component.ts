@@ -29,7 +29,7 @@ export class Error404Component implements OnInit{
 
 
   volver(){
-this.router.navigate(['/dashboard'])
+this.router.navigate(['/Inicio'])
   }
 
 }
