@@ -4,14 +4,28 @@ import { DashboardComponent } from './business/dashboard/dashboard.component';
 import { LoginComponent } from './business/authentication/login/login.component';
 import { LoginGuardianService } from './core/guadrian/login-guardian.service';
 import { Error404Component } from './shared/error404/error404/error404.component';
-import { MovimientosComponent } from './business/movimientos/movimientos.component';
+import { SaiComponent } from './business/sai/sai.component';
+import { PerfilGuard } from './core/guadrian/perfil.guard';
+import { PerfilSAIGuard  } from './core/guadrian/perfilSAI.guard';
+import { ModulAuthorized  } from './core/guadrian/isModuleAuthorized.guard';
+import { BrkComponent } from './business/movimientos/brk/brk.component';
+import { ClientesComponent } from './business/clientes/clientes/clientes.component';
+import { isModAuthGuard } from './core/guadrian/is-mod-auth.guard';
+
+
 
 export const routes: Routes = [
-    {   path:'', component: LayoutComponent, canActivate: [LoginGuardianService] ,
+
+
+    {    path:'', component: LayoutComponent, canActivate: [LoginGuardianService] ,
         children: [
-            { path:'Inicio',component: DashboardComponent, canActivate: [LoginGuardianService], },
             { path:'', redirectTo: 'Inicio', pathMatch: 'full' },
-            { path:'Movimientos', component:MovimientosComponent, canActivate: [LoginGuardianService],},
+            // { path: componente.inicio, component: componente.componentes ,canActivate: [LoginGuardianService]},
+            { path:'Inicio',component: DashboardComponent, canActivate: [PerfilGuard], },
+            { path:'sai',component: SaiComponent, canActivate: [PerfilSAIGuard]},
+            { path:'Movimientos/BRK', component:BrkComponent, canActivate: [isModAuthGuard], data:{roles:['Movimientos']}},
+            { path:'Clientes/Clientes', component:ClientesComponent, canActivate: [isModAuthGuard],data:{roles:['Clientes']}},
+            // { path:'Clientes', component:ClientesComponent, canActivate: [ModulAuthorized],},
         ]
     },
     {
@@ -20,7 +34,8 @@ export const routes: Routes = [
     },
     {
         path:'**',
-        component: Error404Component
+        component: Error404Component ,
+        // data: {roles:['sai']}
     },
     
     // {   path:'**',
@@ -28,3 +43,4 @@ export const routes: Routes = [
     //     pathMatch: 'full'
     // }
 ];
+

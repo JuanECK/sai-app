@@ -12,6 +12,8 @@ export class AppComponent {
   // _http = process.env["WEBSERVICE_URL"]
 
   constructor(){
+    // console.log('app.component')
+
       // console.log({message:process.env['WEBSERVICE_URL']})
   }
 

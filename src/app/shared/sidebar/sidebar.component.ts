@@ -50,7 +50,7 @@ export class SidebarComponent implements OnInit {
 
   // verData(){
   //   // console.log(this.dataLogin)
-  //   this.puenteData.disparadorLogin.subscribe(data =>{
+  //   this.puenteData.disparadorData.subscribe(data =>{
   //     console.log('recibiendo Login',data) 
   //   })
   // }
@@ -62,7 +62,7 @@ export class SidebarComponent implements OnInit {
     if( this.sesion ){
       const { Datos } = JSON.parse(this.sesion!)
       const resultado = await this.headService.getModulos( Datos )
-      console.log(resultado)
+      // console.log(resultado)
 
       resultado[0].map((dato:any)=>{ 
         if( id !== dato.Id_moduloPadre ){

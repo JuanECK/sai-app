@@ -14,7 +14,7 @@ import { Location } from '@angular/common';
 export class DashboardComponent implements OnInit {
   
   constructor(
-      // private puenteData:PuenteDataService,
+      private puenteData:PuenteDataService,
       public route:ActivatedRoute,
       private router: Router,
       private location: Location
@@ -24,7 +24,7 @@ export class DashboardComponent implements OnInit {
     // const state = navigation?.extras.state?
     // console.log(navigation)
 
-   
+
   }
 
 public listaModulos:Array<any> = []
@@ -32,7 +32,7 @@ public listaModulos:Array<any> = []
   ngOnInit(): void {
     // this.puenteData.disparadorData.subscribe(data =>{
     //   console.log('recibiendo Modulo',data)
-    //   this.listaModulos.push(data)
+    //   // this.listaModulos.push(data)
 
     // })
 
@@ -55,7 +55,7 @@ public listaModulos:Array<any> = []
     ver(){
       console.log('aqui')
       console.log(this.listaModulos)
-      
+
   }
 
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, Params, ActivatedRouteSnapshot, ParamMap } from '@angular/router';
 
 @Component({
   selector: 'app-error404',
@@ -9,14 +9,31 @@ import { Router } from '@angular/router';
   styleUrl: './error404.component.css'
 })
 export class Error404Component implements OnInit{
+  private _route: any;
+  subscriptions: any;
 
   constructor(
-    private router:Router
+    private router:Router,
+    private rutaActiva: ActivatedRoute,
+    // private route: ActivatedRouteSnapshot
   ){}
 
   userLog:string = 'Amigo'
 
   ngOnInit(): void {
+
+    // this.rutaActiva.params.subscribe(
+    //   (params: Params) => {
+    //     this.coche.modelo = params.modelo;
+    //     this.coche.marca = params.marca;
+    //   }
+    // );
+    // const ruta = this.rutaActiva.snapshot.params["sai"]
+    // console.log(ruta)
+
+    // let roles = this.route.data["roles"] as Array<string>;
+// this.getId()
+
     const sesion = localStorage.getItem('sesion');
     if(sesion){
 
@@ -28,8 +45,26 @@ export class Error404Component implements OnInit{
   }
 
 
+  // getId():void{
+    // this.router.data
+    // this.rutaActiva.paramMap.subscribe((params:ParamMap)=>{
+    //   this.subscriptions = params.get('roles');
+    // })
+    // console.log(this.subscriptions)
+    // this.subscriptions = this.rutaActiva.params.subscribe(
+    //   (response: Params) => {
+    //     if(response){ 
+    //       console.log(response,response);
+    //     }
+    //   }, 
+    //   err=>{
+    //     console.log(err);
+    //   }
+    // );
+  // }
+
   volver(){
-this.router.navigate(['/Inicio'])
+this.router.navigate(['/'])
   }
 
 }

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { environment } from '../../../environments/environments';
+import { PuenteDataService } from './puente-data.service';
 
 
 @Injectable({
@@ -14,26 +15,17 @@ export class AuthService {
   
   constructor(
     private router: Router,
+    private puenteData:PuenteDataService,
     // private http: HttpClient,
   ) { }
   
   dataos = new FormData();
-  resapuestaValor:boolean = true
-  // Cookie:boolean = true
-  
-  // _http = 'http://localhost:3000/';
-  // _http = 'http://localhost:3000/api/auth/login';
-  
-  // _http = process.env.["WEBSERVICE_URL"];
-  // _http = envs.WEBSERVICE_URL
-  // _http = 
-   private _http:string = `${environment.apiUrl}`
+  resapuestaValor:boolean = true;
+  private _http:string = `${environment.apiUrl}`
   
   
   // Metodo de inicio de sesion
   async login(email:string, password:string){
-    
-
     try {
       
       let dataCookie:boolean = true
@@ -73,14 +65,9 @@ export class AuthService {
   // Metodo de verificacion de usuario logeado
   async isAuthenticado(){
     
-    // const coockie = this.getCookie();
-    // if(coockie.length === 0) return false
-    
-    // console.log(coockie)
     let dataCookie:boolean = true
     
     const response = await fetch(this._http + 'cookie', {
-    // const response = await fetch(this._http + 'validaSession', {
       method: 'POST',
       // mode:"cors",
       credentials:"include",
@@ -94,11 +81,8 @@ export class AuthService {
     })
     const data = await response.json();
     if(data.respuesta === true){
-      // console.log(data);
       dataCookie = true
     }else{
-      // console.log(dato);
-      // console.log(data.respuesta);
       dataCookie = false
       this.logOut();
     }
@@ -109,15 +93,16 @@ export class AuthService {
   
   // Metodo de cierre de sesion
   async logOut(){
+    // const sesion = localStorage.getItem('sesion');
+    // let id = 0
 
-    const sesion = localStorage.getItem('sesion');
-    let id = 0
+    // if(sesion){
+    //   const { Datos } = JSON.parse(sesion!)
+    //   id = Datos
+    //   // id = Id_User
+    // }
 
-    if(sesion){
-      const { Datos } = JSON.parse(sesion!)
-      id = Datos
-      // id = Id_User
-    }
+    let id = this.getID();
 
       const response = await fetch( this._http + 'logOut',{
         method: 'POST',
@@ -139,6 +124,146 @@ export class AuthService {
         this.router.navigate(['/login']);
       }
   }
+
+
+  // ---------------------------------------------------
+
+  async showDash( perfil:string ){
+  // let componente:any = []
+  let respuestaPerfil:boolean = true;
+    
+    // const sesion = localStorage.getItem('sesion');
+    // let id = 0
+    // if(sesion){
+    //   const { Datos } = JSON.parse(sesion!)
+    //   id = Datos
+    // }
+
+    let id = this.getID();
+
+    const response = await fetch( this._http + 'getModuloId',{
+      method: 'POST',
+      mode:"cors",
+      credentials:'include',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        id_user:id
+      })
+    })
+    const data = await response.json()
+    // console.log(data)
+    
+    switch (perfil){
+      case 'inicio':
+        if(data == 1 || data == 2){
+           respuestaPerfil = true;
+          }else{
+          respuestaPerfil = false;
+        }
+        break;
+
+        case 'sai':
+          // console.log('entre a sai')
+          if( data > 2){
+            // console.log('sai es true')
+            respuestaPerfil = true;
+          }else{
+            // console.log('sai es falso')
+            respuestaPerfil = false;
+          }
+        break;
+      }
+      
+      return respuestaPerfil;
+
+
+    // return data
+}
+
+
+
+async showModul ( roles:any ) {
+console.log('entre a modulo')
+  let respuestaModulo:boolean = true;
+  // let datos:any[] = []
+//  data.push(this.getInfo ())
+// console.log(roles[0])
+// let id = 0
+// const sesion = localStorage.getItem('sesion');
+// if(sesion){
+//   const { Datos } = JSON.parse(sesion!)
+//   id = Datos
+// }
+// let array:any[] = [
+//   {path:'Movimientos/BRK',}
+// ]
+let id = this.getID();
+
+const response = await fetch( this._http + "modulo", {
+  method: 'POST',
+  credentials: 'include',
+  headers: {
+       'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+      id: id
+  }) 
+} )   
+const data = await response.json()
+// let path = window.location.pathname;
+// let array:any[]
+
+
+
+// console.log(path.split('/')[1])
+console.log(data[0])
+// console.log(this.router.url)
+// console.log(path)
+
+  // checar porque no entra y evalua correctamente
+  console.log('reccorido')
+
+
+for(let i=0; i < data[0].length; i++){
+  if(data[0][i].moduloPadre == roles[0]){
+    respuestaModulo = true
+    break
+  }else{
+    respuestaModulo = false
+  }
+}
+
+  // data[0].map((dato:any) => {
+  //   console.log(dato.moduloPadre)
+  //   if(dato.moduloPadre == roles[0]){
+  //     respuestaModulo = true
+      
+  //   }else{
+  //     respuestaModulo = false
+  //   }
+    
+  // })
+
+  console.log(respuestaModulo)
+  return respuestaModulo
+
+}
+
+getID(){
+  const sesion = localStorage.getItem('sesion');
+  const { Datos } = JSON.parse(sesion!)
+  return Datos
+}
+
+// getInfo () {
+//   this.puenteData.disparadorData.subscribe(data =>{
+//     console.log('recibiendo Modulo',data)
+    
+//   })
+// }
+  
   
   // getCookie(){
   //   return document.cookie.split("; ").filter(c=>/^auth_access_token.+/.test(c))
