@@ -12,6 +12,7 @@ import { PuenteDataService } from '../../core/services/puente-data.service';
 })
 export class SidebarComponent implements OnInit {
 
+
   constructor(
     private headService:HeadService,
     private puenteData:PuenteDataService
@@ -24,36 +25,14 @@ export class SidebarComponent implements OnInit {
   dataLogin:any=[]
 
 
+  @Output () migajaEvent: EventEmitter<string> = new EventEmitter();
+
+
+
    ngOnInit(): void {
-
-   
-//  this.dataLogin.push(this.data()) 
-// console.log('esto',this.data())
     this.getModulo()
-
-
    
   }
-
-  data(){
-    // this.puenteData.disparadorLogin.subscribe({
-    //   next: (data:any) => {
-    //     console.log(data)
-    //     this.dataLogin.push(data)
-    //   }
-    // })
-
-   
-
-    
-  }
-
-  // verData(){
-  //   // console.log(this.dataLogin)
-  //   this.puenteData.disparadorData.subscribe(data =>{
-  //     console.log('recibiendo Login',data) 
-  //   })
-  // }
 
   async getModulo(){
     let id = 0;
@@ -82,7 +61,8 @@ export class SidebarComponent implements OnInit {
 
         }
       })
-      // this.puenteData.disparadorData.emit(this.arrLista)
+      // console.log(this.arrLista)
+      // this.puenteData.disparadorLogin.emit(this.arrLista)
       
     }
   }

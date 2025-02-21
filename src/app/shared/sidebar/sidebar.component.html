@@ -55,13 +55,68 @@
 
 
 
+<!-- <aside>
+    <div class="sidebar">
+ 
+        <ul class="mcd-menu">
+
+            @for( item of arrLista; track $index ){
+                <li>
+
+                    @if(item[1].length > 1){
+
+                         <a [routerLink]="['/'+item[0]]" (click)="$event.stopPropagation();$event.preventDefault()"> 
+                        <a [routerLink]="['/'+item[0]]" >
+                            <div class="link-side " routerLinkActive="link-Active">
+                                <div class="icon"><img [src]="['img-sai/icon-'+item[0]+'.png']" alt="link-side"></div>
+                                {{item[0]}}
+                            </div>
+                        </a>
+                        <ul>
+                            <li>
+                                @for (items of item[1]; track $index) {
+                                    @if( item[1].length > 1 ){
+    
+                                    <a [routerLink]="['/'+item[0]+'/'+items.moduloHijo]" >
+                                        <div class="link-side_hijos"routerLinkActive="link-Active">
+                                            {{items.moduloHijo}}
+                                        </div>
+                                    </a>
+    
+                                    }
+                                }
+                            </li>
+                        </ul>
+
+                    } @else {
+
+                        <a [routerLink]="['/'+item[0]]"  >
+                            @if( item[0] == 'No reconocidos' ){
+                                    <div class="link-side "routerLinkActive="link-Active">
+                                        <div class="icon"><img [src]="['img-sai/icon-Noreconocidos.png']" alt="link-side"></div>
+                                        No reconocidos
+                                    </div>
+                            }@else {
+                                <div class="link-side "routerLinkActive="link-Active">
+                                    <div class="icon"><img [src]="['img-sai/icon-'+item[0]+'.png']" alt="link-side"></div>
+                                    {{item[0]}}
+                                </div>
+                            }
+                        </a>
+                    }
+                </li>
+            }
+        </ul>
+    </div>
+</aside> -->
 <aside>
     <div class="sidebar">
  
         <ul class="mcd-menu">
-            <!-- <button (click)="verData()" >ver</button> -->
+
             @for( item of arrLista; track $index ){
                 <li>
+
                     <a [routerLink]="['/'+item[0]]"  >
                         @if( item[0] == 'No reconocidos' ){
                                 <div class="link-side "routerLinkActive="link-Active">
@@ -81,7 +136,7 @@
                             @for (items of item[1]; track $index) {
                                 @if( item[1].length > 1 ){
 
-                                    <a [routerLink]="['/'+item[0]+'/'+items.moduloHijo]" >
+                                    <a [routerLink]="['/'+item[0]+'/'+items.moduloHijo]">
                                         <div class="link-side_hijos"routerLinkActive="link-Active">
                                             {{items.moduloHijo}}
                                         </div>
@@ -97,50 +152,7 @@
     </div>
 </aside>
 
-<!-- <aside>
-    <div class="sidebar">
- 
-        <ul class="mcd-menu">
-            @for( item of arrLista; track $index ){
-                <li>
-                        
-                    @if( item[0] == 'No reconocidos' ){
-                        <a [routerLink]="['/'+item[0]]" >
-                            <div class="link-side "routerLinkActive="link-Active">
-                                <div class="icon"><img [src]="['img-sai/icon-Noreconocidos.png']" alt="link-side"></div>
-                                No reconocidos
-                            </div>
-                        </a>
-                        
-                    }@else {
 
-                        <a [routerLink]="['/'+item[0]]" >
-                            <div class="link-side "routerLinkActive="link-Active">
-                                <div class="icon"><img [src]="['img-sai/icon-'+item[0]+'.png']" alt="link-side"></div>
-                                {{item[0]}}
-                            </div>
-                        </a>
-                        <ul>
-                            <li>
-                                @for (items of item[1]; track $index) {
-                                    @if( item[1].length > 1 ){
-
-                                        <a [routerLink]="['/'+item[0]+'/'+items.moduloHijo]" >
-                                            <div class="link-side_hijos"routerLinkActive="link-Active">
-                                                {{items.moduloHijo}}
-                                            </div>
-                                        </a>
-
-                                    }
-                                }
-                            </li>
-                        </ul>
-                    }
-                </li>
-            }
-        </ul>
-    </div>
-</aside> -->
 
 <!-- <li><a href="#" ><i class="fa fa-globe"></i>Mission</a></li>
 <li><a href="#"><i class="fa fa-globe"></i>Mission</a></li> -->

@@ -29,26 +29,63 @@ body{
     border-radius: 2px;
     box-shadow: 0px 5px 10px #00000040;
 }
+/* .p1{
+    padding: 6px 3px 6px 12px;
+} */
+
+
+
+
 .thead-th-blod{
     font-size: 12px;
     font-weight: bold;
-    padding: 3px;
-    border-bottom: 1px solid #CCC5C5;
+    padding: 6px 3px 6px 12px;
+    border-bottom: 1px solid #00B3CF;
 }
 .tbody-td-ligth{
     font-size: 12px;
     font-weight: 300;
     color: #656565;
-    padding: 3px;
-    border-bottom: 1px solid #CCC5C5;
+    padding: 6px 3px 6px 12px;
+    border-bottom: 1px solid #00B3CF;
+
+    & span{
+        display: flex;
+        justify-content: center;
+        text-align: center;
+    }
 }
 .tbody-td-bold{
     font-size: 14px;
     font-weight: 500;
     color: #000;
-    padding: 3px;
-    border-bottom: 1px solid #CCC5C5;
+    padding: 6px 3px 6px 12px;
+    border-bottom: 1px solid #00B3CF;
 }
+
+.thead-th-blod-saldos{
+    font-size: 12px;
+    font-weight: bold;
+    padding: 6px 3px 6px 3px;
+}
+.tbody-td-ligth-saldos{
+    font-size: 12px;
+    font-weight: 300;
+    color: #656565;
+    padding: 6px 3px 6px 3px;
+    & span{
+        display: flex;
+        justify-content: center;
+        text-align: center;
+    }
+}
+.tbody-td-bold-saldos{
+    font-size: 14px;
+    font-weight: 500;
+    color: #000;
+    padding: 6px 3px 6px 3px;
+}
+
 
 .form-group-icon{
     position: relative;
@@ -57,7 +94,7 @@ body{
         position: absolute;
         display: block;
         bottom: .2rem;
-        left: 3.2rem;
+        left: .5rem;
     
     }
 

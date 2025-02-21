@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, signal, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, FormsModule, NgForm, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../../core/services/auth.service';
 import { Router } from '@angular/router';
 import { PuenteDataService } from '../../../core/services/puente-data.service';

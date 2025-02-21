@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../core/services/auth.service';
-import { PuenteDataService } from '../../core/services/puente-data.service';
+import { PuenteDataService, Persona} from '../../core/services/puente-data.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-head',
   standalone: true,
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './head.component.html',
   styleUrl: './head.component.css'
 })
@@ -18,22 +19,31 @@ export class HeadComponent implements OnInit {
   ){}
   
   usuarioLogueado:string = 'usuario'
-  _http = 'http://localhost:3000/';
-  
+  dataHead:any
+
+    
   ngOnInit(): void {
     const sesion = localStorage.getItem('sesion')
     const { Id_User, Nombre_Completo } = JSON.parse(sesion!);
     this.usuarioLogueado = Nombre_Completo
 
-    // this.getDataLogin()
+    this.getDataLogin()
+
+    if(!this.dataHead){
+      this.dataHead = {dato:'Inicio'} 
+    }
   }
   
   getDataLogin(){
+
+    this.puenteData.disparadorData.subscribe(data =>{
+          this.dataHead = data
+        })
    
   }
 
   // setDataLogin() {
-  //  this.puenteData.disparadorLogin.emit({dato:'aaaaaaaaaaa'})
+  //  this.puenteData.disparadorData.emit({dato:'aaaaaaaaaaa'})
   // }
   
 //   async pruebaCoockie() {
@@ -60,11 +70,13 @@ salir() {
 this.AuthService.logOut()
 ;}
 
-// ver(){
-//   console.log(this.AuthService.isAuthenticado())
+ver(){
 
-//   // console.log(this.credenciales().value)
-// }
+  console.log(this.dataHead)
+  // console.log(this.AuthService.isAuthenticado())
+
+  // console.log(this.credenciales().value)
+}
 
 
 }

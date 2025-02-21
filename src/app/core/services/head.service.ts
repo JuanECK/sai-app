@@ -15,7 +15,7 @@ export class HeadService {
 
     async getModulos ( id:string ) {
 
-    const response = await fetch( this._http + "modulo", {
+    const response = await fetch( this._http + "auth/modulo", {
         method: 'POST',
         credentials: 'include',
         headers: {

@@ -17,4 +17,8 @@ export class AppComponent {
       // console.log({message:process.env['WEBSERVICE_URL']})
   }
 
+  // handleEvent(event: string){
+  //   console.log(event)
+  // }
+
 }

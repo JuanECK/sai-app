@@ -29,7 +29,7 @@ export class AuthService {
     try {
       
       let dataCookie:boolean = true
-      const response = await  fetch(this._http +"login", {
+      const response = await  fetch(this._http +"auth/login", {
         method: 'POST',
         // mode:"cors",
         credentials:"include",
@@ -67,7 +67,7 @@ export class AuthService {
     
     let dataCookie:boolean = true
     
-    const response = await fetch(this._http + 'cookie', {
+    const response = await fetch(this._http + 'auth/cookie', {
       method: 'POST',
       // mode:"cors",
       credentials:"include",
@@ -104,7 +104,7 @@ export class AuthService {
 
     let id = this.getID();
 
-      const response = await fetch( this._http + 'logOut',{
+      const response = await fetch( this._http + 'auth/logOut',{
         method: 'POST',
         mode:"cors",
         credentials:'include',
@@ -141,7 +141,7 @@ export class AuthService {
 
     let id = this.getID();
 
-    const response = await fetch( this._http + 'getModuloId',{
+    const response = await fetch( this._http + 'auth/getModuloId',{
       method: 'POST',
       mode:"cors",
       credentials:'include',
@@ -185,23 +185,11 @@ export class AuthService {
 
 
 async showModul ( roles:any ) {
-console.log('entre a modulo')
   let respuestaModulo:boolean = true;
-  // let datos:any[] = []
-//  data.push(this.getInfo ())
-// console.log(roles[0])
-// let id = 0
-// const sesion = localStorage.getItem('sesion');
-// if(sesion){
-//   const { Datos } = JSON.parse(sesion!)
-//   id = Datos
-// }
-// let array:any[] = [
-//   {path:'Movimientos/BRK',}
-// ]
 let id = this.getID();
 
-const response = await fetch( this._http + "modulo", {
+
+const response = await fetch( this._http + "auth/modulo", {
   method: 'POST',
   credentials: 'include',
   headers: {
@@ -212,19 +200,7 @@ const response = await fetch( this._http + "modulo", {
   }) 
 } )   
 const data = await response.json()
-// let path = window.location.pathname;
-// let array:any[]
-
-
-
-// console.log(path.split('/')[1])
-console.log(data[0])
-// console.log(this.router.url)
-// console.log(path)
-
-  // checar porque no entra y evalua correctamente
-  console.log('reccorido')
-
+console.log(data)
 
 for(let i=0; i < data[0].length; i++){
   if(data[0][i].moduloPadre == roles[0]){
@@ -235,18 +211,6 @@ for(let i=0; i < data[0].length; i++){
   }
 }
 
-  // data[0].map((dato:any) => {
-  //   console.log(dato.moduloPadre)
-  //   if(dato.moduloPadre == roles[0]){
-  //     respuestaModulo = true
-      
-  //   }else{
-  //     respuestaModulo = false
-  //   }
-    
-  // })
-
-  console.log(respuestaModulo)
   return respuestaModulo
 
 }

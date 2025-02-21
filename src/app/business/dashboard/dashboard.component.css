@@ -9,29 +9,18 @@
         margin: 0;
         font-size: 20px;
         font-weight: var(--Medium);
-        margin-bottom: 16px;
+        margin-bottom: 12px;
+        margin-left: 3px;
     }
 
-    & .table{
-        /* background: #b3b3b3; */
-        width: 100%;
-        border-collapse: collapse;
-        & thead{
-            
-            & tr{
-                /* background: #df5555; */
-                text-align: center;
-            } 
-        
-        }
-        & tbody{
-            
-            & tr{
-                /* background: #df5555; */
-                text-align: center;     
-            }
-        }
+    .H1PI, .H1AE, .abonos{
+        margin-left: 45px;
     }
+
+    .abonos{
+        margin-top: 21px;
+    }
+
     
     & .container{
         display: grid;
@@ -45,7 +34,8 @@
                 margin-bottom: 23px;
                 width: 320px;
                 /* width: 450px; */
-                height: 273px;
+                height: 290px;
+                /* height: 273px; */
         
                 
             }
@@ -56,33 +46,198 @@
                 margin-bottom: 23px;
                 width: 720px;
                 /* width: 980px; */
-                height: 273px;
+                height: 290px;
+                /* height: 273px; */
         
                 
             }
             & .adeudo-europe{
-                margin-top: 0px;
+                margin-top: 17px;
                 margin-left: 22px;
                 margin-right: 22px;
                 margin-bottom: 23px;
                 width: 320px;
                 /* width: 450px; */
-                height: 273px;
+                height: 290px;
         
               
             }
             & .diferencia-saldos{
-                margin-top: 0px;
+                margin-top: 17px;
                 margin-left: 22px;
                 margin-right: 22px;
                 margin-bottom: 23px;
                 width: 720px;
                 /* width: 980px; */
-                height: 273px;
+                height: 290px;
         
                
             }
         }
     }
     
+}
+
+.PrestInt{
+    max-width:110px; 
+    min-width:110px; 
+    padding-left: 45px;}
+
+.AdeudoEurope{
+    max-width:110px;
+    min-width:110px;
+    padding-left: 45px;}
+
+.AdeudoEurope-Monte{
+    max-width:103px;
+    min-width:103px;
+    padding-left: 45px;}
+
+
+/* --------saldos de cuentas propias------- */
+
+.th-banco1{
+    max-width: 95px;
+    min-width: 95px;
+    padding: 6px 3px 6px 3px;}
+.th-indet1{
+   max-width: 70px;
+   min-width: 70px;
+   padding: 6px 3px 6px 3px;}
+.th-cuen1{
+    max-width: 110px;
+    min-width: 110px;
+    padding: 6px 3px 6px 3px;}
+.th-clabe1{
+    max-width: 125px;
+    min-width: 125px;
+    padding: 6px 3px 6px 3px;}
+.th-negocio1{
+    max-width: 110px;
+    min-width: 110px;
+    padding: 6px 3px 6px 3px;}
+.th-saldo1{
+   max-width: 150px;
+   min-width: 150px;
+   padding: 6px 3px 6px 3px;}
+/* ----------------------------------- */
+
+
+/* --------Diferencia de saldos------- */
+.DS-banco{
+   max-width: 95px;
+   min-width: 95px;
+   padding: 6px 3px 6px 3px;
+}
+.DS-ident{
+   max-width: 70px;
+   min-width: 70px;
+   padding: 6px 3px 6px 3px;
+   text-align: center;
+}
+.DS-SAnterior{
+   max-width: 88px;
+   min-width: 88px;
+   padding: 6px 3px 6px 3px;
+}
+.DS-SActual{
+   max-width: 260px;
+   min-width: 260px;
+   /* max-width: 180px;
+   min-width: 180px; */
+   padding: 6px 3px 6px 3px;
+}
+.DS-Guardar{
+   max-width: 70px;
+   min-width: 70px;
+   padding: 6px 3px 6px 3px;
+}
+.DS-difer{
+   max-width: 155px;
+   min-width: 155px;
+   padding: 6px 3px 6px 3px;
+}
+
+
+.btn-DS{
+    border: none;
+    padding: 3px 15px;
+    margin-left: 15px ;
+    border-radius: 2px;
+    background: #BBBBBB;
+    font-size: 10px;
+    font-weight: var(--Normal);
+}
+.btn-DS-Active{
+    background: #00B3CF;
+}
+
+/* ----------------------------------- */
+
+
+thead, tbody { 
+   display: block; 
+   border-collapse: collapse;
+}
+
+tr{
+   text-align: left; 
+} 
+
+
+tbody {
+   display: block; 
+   height: 220px;       
+   overflow-y: auto;   
+   overflow-x: hidden;  
+}
+
+.tbody-AE {
+   display: block; 
+   height: 30px;       
+   overflow-y: auto;   
+   overflow-x: hidden;  
+}
+.tbody-Abonos {
+   display: block; 
+   height: 90px;       
+   overflow-y: auto;   
+   overflow-x: hidden;  
+}
+
+.form-group-icon-SD{
+
+    display: flex;
+
+    & .input-Saldo-Actual{
+
+        position: relative;
+    
+        & .icon{
+            position: absolute;
+            display: block;
+            bottom: .2rem;
+            left: .5rem;
+        
+        }
+
+        & input{
+        
+            border: 1px solid #939393;
+            border-radius: 2px;
+            font-size: 12px;
+            color: rgb(56, 56, 56);
+            font-weight: var(--Normal);
+            padding-top:2px ;
+            margin: 1px;
+            padding-left: 1rem;
+        }
+    
+        & input[type="text"]:focus{
+            border:1px solid #D8D8D8;
+            background-color: #D8D8D8;
+            outline: none;
+        }
+    }
+
 }

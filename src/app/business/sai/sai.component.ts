@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { PuenteDataService } from '../../core/services/puente-data.service';
 
 @Component({
   selector: 'app-sai',
@@ -7,6 +8,16 @@ import { Component } from '@angular/core';
   templateUrl: './sai.component.html',
   styleUrl: './sai.component.css'
 })
-export class SaiComponent {
+export class SaiComponent implements OnInit {
 
+  constructor(
+    private puenteData:PuenteDataService,
+  ){}
+
+  ngOnInit(): void {
+    this.setDataLogin();
+  }
+  setDataLogin() {
+    this.puenteData.disparadorData.emit({dato:'Inicio'})
+   }
 }

@@ -2,9 +2,12 @@
 <header>
     <nav class="navbar">
         <div class="container-navbar">
+            <!-- <h2>{{ data$ }}</h2> -->
+            <!-- <h2>{{(data$ | async)?.name }}</h2> -->
             
             <div class="breadcrumbs">
-                <h1 class="bread" href="#">Módulo de control de Finanzas / <span class="crumbs">Inicio</span></h1>
+                <h1 class="bread" href="#">Módulo de control de Finanzas / <span class="crumbs">{{dataHead.dato}}</span></h1>
+                <!-- <h1 class="bread" href="#">Módulo de control de Finanzas / <span class="crumbs"><a [routerLink]="['/']">{{dataHead.dato}}</a></span></h1> -->
             </div>
             <div class="nav-option">
                 
@@ -16,7 +19,7 @@
             </div>
             <div class="nav-option">
                 
-              <a class="nav-link"  ><span class="icono-nav"><img src="img-sai/icon-bell.png" alt="user-option"></span> Notificaciones</a>
+              <a class="nav-link"  (click)="ver()"><span class="icono-nav"><img src="img-sai/icon-bell.png" alt="user-option"></span> Notificaciones</a>
             </div>
     
         </div>

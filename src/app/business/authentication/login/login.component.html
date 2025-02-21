@@ -21,7 +21,7 @@
                              <span class="icon">
                                 <img src="img-sai/icon-avatar.png">
                              </span>
-                            <input type="email" formControlName="email" class="form-control" id="email" name="email" placeholder="Nombre de Usuario" (input)="formImputComplete()" (click)="evaluaMssjError()" ngModel >
+                            <input type="email" formControlName="email" class="form-control" id="email" autocomplete="off" name="email" placeholder="Nombre de Usuario" (input)="formImputComplete()" (click)="evaluaMssjError()" >
                         </div>
                         
                         <div class="form-group pass">
@@ -29,7 +29,7 @@
                             <span class="icon">
                                 <img src="img-sai/icon-lock.png">
                              </span>
-                             <input type="password" formControlName="password" #inputPassword class="form-control" id="password" name="password" placeholder="Contraseña" (input)="formImputComplete()" (click)="evaluaMssjError()" ngModel >
+                             <input type="password" formControlName="password" #inputPassword class="form-control" id="password" autocomplete="off" name="password" placeholder="Contraseña" (input)="formImputComplete()" (click)="evaluaMssjError()" >
                              <button class="iconVerPass" (click)="visualizarPassword()">
                                  <!-- <img src="img-sai/icon-eye2.png"> -->
                                  <img [src]="visualizarPass ? 'img-sai/icon-eye2.png':'img-sai/icon-eye.png'" >

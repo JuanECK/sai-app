@@ -4,165 +4,168 @@
     <div class="separacion">
       <div class="prestamos-internos card">
         <!-- <button (click)="ver()">ver</button> -->
-        <h1>Préstamos internos</h1>
-          <table class="table">
+        <h1 class="H1PI" >Préstamos internos</h1>
+          <table class="table tbody-scroll" >
             <thead>
               <tr>
-                <th class="thead-th-blod">Cliente</th>
-                <th class="thead-th-blod">Monto</th>
+                <th class="thead-th-blod PrestInt">Cliente</th>
+                <th class="thead-th-blod PrestInt">Monto</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td class="tbody-td-ligth">Sebastián</td>
-                <td class="tbody-td-bold">$100,000.00</td>
-              </tr>
-              <tr>
-                <td class="tbody-td-ligth">Brenda</td>
-                <td class="tbody-td-bold">$100,000.00</td>
-              </tr>
+              @for( item of Array[0]; track $index ){
+                <tr>
+                  <td class="tbody-td-ligth PrestInt">{{item.Cliente}}</td>
+                  <td class="tbody-td-bold PrestInt">{{getCurrency(item.Prestamo)}}</td>
+                </tr>
+              }
+              
             </tbody>
           </table>
         </div>
-      <div class="saldos-cuentas-propias card">
+
+      <div class="saldos-cuentas-propias card" >
         <h1>Saldos de Cuentas Propias</h1>
-        <table class="table">
+        <table class="table" >
           <thead>
             <tr>
-              <th class="thead-th-blod">Banco</th>
-              <th class="thead-th-blod">Identificador</th>
-              <th class="thead-th-blod">No. de Cuenta</th>
-              <th class="thead-th-blod">Clabe</th>
-              <th class="thead-th-blod">U. Negocio</th>
-              <th class="thead-th-blod">Saldo</th>
+              <th class="thead-th-blod th-banco1">Banco</th>
+              <th class="thead-th-blod th-indet1">Identificador</th>
+              <th class="thead-th-blod th-cuen1">No. de Cuenta</th>
+              <th class="thead-th-blod th-clabe1">Clabe</th>
+              <th class="thead-th-blod th-negocio1">U. Negocio</th>
+              <th class="thead-th-blod th-saldo1">Saldo</th>
+              <th class="thead-th-blod th-extra1" ></th>
             </tr>
           </thead>
+          
           <tbody>
-            <tr>
-              <td class="tbody-td-ligth">Santander</td>
-              <td class="tbody-td-ligth">01</td>
-              <td class="tbody-td-ligth">01258785412587541</td>
-              <td class="tbody-td-ligth">158745236987452547</td>
-              <td class="tbody-td-ligth">Bankers</td>
-              <td class="tbody-td-bold">$100,000.00</td>
-            </tr>
-            <tr>
-              <td class="tbody-td-ligth">Santander</td>
-              <td class="tbody-td-ligth">01</td>
-              <td class="tbody-td-ligth">01258785412587541</td>
-              <td class="tbody-td-ligth">158745236987452547</td>
-              <td class="tbody-td-ligth">Bankers</td>
-              <td class="tbody-td-bold">$100,000.00</td>
-            </tr>
-            <tr>
-              <td class="tbody-td-ligth">Santander</td>
-              <td class="tbody-td-ligth">01</td>
-              <td class="tbody-td-ligth">01258785412587541</td>
-              <td class="tbody-td-ligth">158745236987452547</td>
-              <td class="tbody-td-ligth">Bankers</td>
-              <td class="tbody-td-bold">$100,000.00</td>
-            </tr>
-            <tr>
-              <td class="tbody-td-ligth">Santander</td>
-              <td class="tbody-td-ligth">01</td>
-              <td class="tbody-td-ligth">01258785412587541</td>
-              <td class="tbody-td-ligth">158745236987452547</td>
-              <td class="tbody-td-ligth">Bankers</td>
-              <td class="tbody-td-bold">$100,000.00</td>
-            </tr>
-            <tr>
-              <td class="tbody-td-ligth">Santander</td>
-              <td class="tbody-td-ligth">01</td>
-              <td class="tbody-td-ligth">01258785412587541</td>
-              <td class="tbody-td-ligth">158745236987452547</td>
-              <td class="tbody-td-ligth">Bankers</td>
-              <td class="tbody-td-bold">$100,000.00</td>
-            </tr>
-            <tr>
-              <td class="tbody-td-ligth">Santander</td>
-              <td class="tbody-td-ligth">01</td>
-              <td class="tbody-td-ligth">01258785412587541</td>
-              <td class="tbody-td-ligth">158745236987452547</td>
-              <td class="tbody-td-ligth">Bankers</td>
-              <td class="tbody-td-bold">$100,000.00</td>
-            </tr>
+            @for( item of Array[3]; track $index ){
+              <tr>
+                <td class="tbody-td-ligth th-banco1">{{item.Banco}}</td>
+                <td class="tbody-td-ligth th-indet1"><span>{{item.Identificador}}</span></td>
+                <td class="tbody-td-ligth th-cuen1">{{item.Cuenta}}</td>
+                <td class="tbody-td-ligth th-clabe1">{{item.CLABE}}</td>
+                <td class="tbody-td-ligth th-negocio1">{{item.UnidadNegocio}}</td>
+                <td class="tbody-td-bold th-saldo1">{{getCurrency(item.Saldo)}}</td>
+              </tr>
+            }
           </tbody>
         </table>
       </div>
     </div>
+
     <div class="separacion">
       <div class="adeudo-europe card">
-        <h1>Préstamos internos</h1>
+        <h1 class="H1AE">Adeudo Europe</h1>
         <table class="table">
           <thead>
             <tr>
-              <th class="thead-th-blod">Cliente</th>
-              <th class="thead-th-blod">Monto</th>
+              <th class="thead-th-blod AdeudoEurope">Cliente</th>
+              <th class="thead-th-blod AdeudoEurope">Monto</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody class="tbody-AE">
+            
+            @for( item of Array[1]; track $index ){
+                <tr>
+                  <td class="tbody-td-ligth AdeudoEurope">{{item.Cliente}}</td>
+                  <td class="tbody-td-bold AdeudoEurope">{{getCurrency(item.Adeudo)}}</td>
+                </tr>
+            }
+          
+          </tbody>
+        </table>
+
+        <h1 class="abonos">Abonos</h1>
+        <table class="table">
+          <thead>
             <tr>
-              <td class="tbody-td-ligth">Rivelino</td>
-                <td class="tbody-td-bold">$100,000.00</td>
+              <th class="thead-th-blod AdeudoEurope-Monte">Fecha de captura</th>
+              <th class="thead-th-blod AdeudoEurope-Monte">Monto</th>
+              <th class="thead-th-blod "></th>
             </tr>
+          </thead>
+          <tbody class="tbody-Abonos ">
+            @for( item of Array[2]; track $index ){
+              <tr>
+                <td class="tbody-td-ligth AdeudoEurope-Monte">{{item.Fecha_Captura}}</td>
+                  <td class="tbody-td-bold AdeudoEurope-Monte">{{getCurrency(item.Monto)}}</td>
+              </tr>
+            }
           </tbody>
         </table>
       </div>
+
       <div class="diferencia-saldos card">
-        <h1>Saldos de Cuentas Propias</h1>
-        <table class="table">
+        <h1>Diferencia de saldos</h1>
+        <!-- <button (click)="ver()">ver</button> -->
+        <table class="table" id="table-diferencia-saldos">
           <thead>
             <tr>
-              <th class="thead-th-blod">Banco</th>
-              <th class="thead-th-blod">Identificador</th>
-              <th class="thead-th-blod">Saldo anterior</th>
-              <th class="thead-th-blod">Saldo actual</th>
-              <th class="thead-th-blod">Diferencia</th>
+              <th class="thead-th-blod-saldos DS-banco">Banco</th>
+              <th class="thead-th-blod-saldos DS-ident">Identificador</th>
+              <th class="thead-th-blod-saldos DS-SAnterior">Saldo anterior</th>
+              <th class="thead-th-blod-saldos DS-SActual">Saldo actual</th>
+              <!-- <th class="thead-th-blod-saldos DS-Guardar"></th> -->
+              <th class="thead-th-blod-saldos DS-difer">Diferencia</th>
             </tr>
           </thead>
           <tbody>
+            @for( item of Array[4]; track $index ){
             <tr>
-              <td class="tbody-td-ligth">Santander</td>
-              <td class="tbody-td-ligth">01</td>
-              <td class="tbody-td-ligth">$100,000.00</td>
-              <td class="tbody-td-ligth">
+              <td class="tbody-td-ligth-saldos DS-banco">{{item.Nombre_Banco}}</td>
+              <td class="tbody-td-ligth-saldos DS-ident"><span>{{item.Id_CuentaB}}</span></td>
+              <td class="tbody-td-ligth-saldos DS-SAnterior">{{getCurrency(item.Saldo_anterior)}}</td>
+              <td class="tbody-td-ligth-saldos DS-SActual">
+                <div class="form-group-icon-SD">
+                  <div class="input-Saldo-Actual">
+                      <span class="icon">
+                        $
+                    </span>
+                    <input type="text" [id]="item.Id_CuentaB" (change)="ver($event)" autocomplete="off">
+                    <!-- <input type="text" (input)="soloDigito($event)" [id]="item.Id_CuentaB" (change)="ver($event)" autocomplete="off"> -->
+                  </div>
+
+                 <button class="btn-DS" [id]="item.Id_CuentaB" (click)="actualizarSaldo($event)" disabled="true" >Guardar</button>
+
+                </div>
+              </td>
+
+              <!-- <td class="tbody-td-ligth-saldos DS-Guardar">
+                <div class="form-group-icon">
+                 <button class="btn-DS" [id]="item.Id_CuentaB" (click)="actualizarSaldo($event)" disabled="true" >Guardar</button>
+                </div>
+              </td> -->
+
+              <td class="tbody-td-bold-saldos DS-difer">{{getCurrency(item.Diferencia_Saldos)}}</td>
+            </tr>
+
+
+
+            <!-- <tr>
+              <td class="tbody-td-ligth-saldos DS-banco">{{item.Nombre_Banco}}</td>
+              <td class="tbody-td-ligth-saldos DS-ident"><span>{{item.Id_CuentaB}}</span></td>
+              <td class="tbody-td-ligth-saldos DS-SAnterior">{{getCurrency(item.Saldo_anterior)}}</td>
+              <td class="tbody-td-ligth-saldos DS-SActual">
                 <div class="form-group-icon">
                   <span class="icon">
                     $
                  </span>
-                 <input type="text">
+                 <input type="text" (input)="soloDigito($event)" [id]="item.Id_CuentaB" (change)="ver($event)" autocomplete="off">
+
                 </div>
               </td>
-              <td class="tbody-td-bold">$100,000.00</td>
-            </tr>
-            <tr>
-              <td class="tbody-td-ligth">Santander</td>
-              <td class="tbody-td-ligth">01</td>
-              <td class="tbody-td-ligth">$100,000.00</td>
-              <td class="tbody-td-ligth">
+
+              <td class="tbody-td-ligth-saldos DS-Guardar">
                 <div class="form-group-icon">
-                  <span class="icon">
-                    $
-                 </span>
-                 <input type="text">
+                 <button class="btn-DS" [id]="item.Id_CuentaB" (click)="actualizarSaldo($event)" disabled="true" >Guardar</button>
                 </div>
               </td>
-              <td class="tbody-td-bold">$100,000.00</td>
-            </tr>
-            <tr>
-              <td class="tbody-td-ligth">Santander</td>
-              <td class="tbody-td-ligth">01</td>
-              <td class="tbody-td-ligth">$100,000.00</td>
-              <td class="tbody-td-ligth">
-                <div class="form-group-icon">
-                  <span class="icon">
-                    $
-                 </span>
-                 <input type="text">
-                </div>
-              </td>
-              <td class="tbody-td-bold">$100,000.00</td>
-            </tr>
+
+              <td class="tbody-td-bold-saldos DS-difer">{{getCurrency(item.Diferencia_Saldos)}}</td>
+            </tr> -->
+          }
            
           </tbody>
         </table>

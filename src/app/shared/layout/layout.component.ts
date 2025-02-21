@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { Router, RouterOutlet } from '@angular/router';
 import { HeadComponent } from '../head/head.component';
 
 import { environment } from '../../../environments/environments';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-layout',
@@ -15,14 +16,23 @@ import { environment } from '../../../environments/environments';
 })
 export class LayoutComponent implements OnInit {
 
+
+
   constructor(
     private router: Router,
   ){}
   componente:any = []
   ruta = 0;
 
-  ngOnInit(): void {
+  // mensajeHijo:string = 'ppp'
 
+  // handleEvent(event:any){
+  //   this.mensajeHijo = event
+  //   console.log(this.mensajeHijo)
+  // }
+
+  ngOnInit(): void {
+// this.handleEvent
     // console.log('entre a oulet')
 
     // this.daleRuta()
