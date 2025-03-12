@@ -6,6 +6,7 @@ import { environment } from '../../../environments/environments';
 import { PipeTransform } from '@angular/core'
 import { formatCurrency } from '@angular/common';
 
+
 @Component({
   selector: 'app-bashboard',
   standalone: true,
@@ -63,8 +64,10 @@ export class DashboardComponent implements OnInit {
    }
 
    getCurrency(value:number){
-    return formatCurrency(value, 'en', '$')
+    return formatCurrency(value, 'en', '$', '','1.2-4')
    }
+
+
 
    ver(event:any){
      this.buttons = document.querySelectorAll('#table-diferencia-saldos button');
@@ -83,19 +86,36 @@ export class DashboardComponent implements OnInit {
     }
    }
 
-   actualizarSaldo(event:any){
+   async actualizarSaldo(event:any){
     //  const saldo = event.target.parentNode.childNodes[1].childNodes[0].value
-     const saldo = event.target.parentNode.childNodes[0].childNodes[1].value
+     let saldo = event.target.parentNode.childNodes[0].childNodes[1].value
+     saldo = saldo.replace(/,/g, '');
      console.log('saldo actualizado',saldo)
-
-
-     
+     const sesion = localStorage.getItem('sesion');
+    const { Datos } = JSON.parse(sesion!)
+    
+     const response = await fetch( this._http + 'inicio/saldoInicial',{
+      method:'POST',
+      headers:{
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        saldo: saldo,
+        identificador: event.target.id,
+        usuario: Datos
+      })
+     })
+     const datos = await response.json()
+     if(datos.Respuesta === 'OK'){
+      event.target.parentNode.childNodes[0].childNodes[1].value = '';
+      event.target.classList.remove('btn-DS-Active');
+      event.target.disabled = true;
+      this.getDataInicio()
+     }
+    //  console.log(datos)
    }
 
    soloDigito(event:any){
-     // let expReg = new RegExp('^[0-9]+$');
-    //  const numericNumberReg= '^-?[0-9]\\d*(\\.\\d{1,2})?$';
-     
      let valorMonto = event.target.value;
      valorMonto = valorMonto
      .replace(/\D/g, "")
@@ -106,5 +126,14 @@ export class DashboardComponent implements OnInit {
      event.target.value = valorMonto  
 
    }
+
+  parseDigito(event:any){
+    let valorMonto = event.target.value;
+    valorMonto = valorMonto
+    // .match(/^[0-9,.]{0,50}(?:.[0-9]{0,4}$)*$/g);
+    .match(/^[0-9,.]*$/g);
+    event.target.value = valorMonto 
+    // return formatCurrency(valorMonto, 'en', '$', '','1.2-4')
+  }
 
 }

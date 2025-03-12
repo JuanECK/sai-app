@@ -45,7 +45,8 @@ header {
                 cursor: pointer;
                 text-decoration: none;
                 font-size: 14px;
-                color: #BBBBBB;
+                font-weight: var(--Semi-Bold);
+                
                 
                 & span{
                     position: absolute;
@@ -55,7 +56,15 @@ header {
                 }
             }
 
+            
         }
+    }
+    & .container-navbar .nav-option:nth-of-type(2) .nav-link,
+    .container-navbar .nav-option:nth-of-type(3) .nav-link{
+        color: #00B3CF;
+    }
+    & .container-navbar .nav-option:nth-of-type(4) .nav-link{
+        color: #BBBBBB;
     }
 } 
 

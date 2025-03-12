@@ -1,0 +1,240 @@
+
+<div class="comisionistas">
+    <div class="container">
+        <div class="separacion">
+            <div class="card-1 card">
+                <h1 class="h1TitleCard">Agregar Comisionista</h1>
+                <span>20 / Noviembre / 2024</span>
+
+                <form [formGroup]="formulario()">
+                    <div class="form-check">
+                        <div class="check">
+                            <label  class="form-check-label" >Persona Física</label>
+                            <label class="label-container" >
+                                <input type="radio" #radioBtn1 (change)="formulario().patchValue({'fisica_moral':true})" name="radio">
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                        <div class="check Second-check">
+                            <label  class="form-check-label" >Persona Moral</label>
+                            <label class="label-container" >
+                                <input type="radio" #radioBtn1 (change)="formulario().patchValue({'fisica_moral':false})" name="radio">
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                    </div>
+                </form>
+
+                <form class="form-comisionista" [formGroup]="formulario()">
+                    <div class="d-flex">
+                        <div class="col-7">
+                            <h4 class="H4ESPECIAL"><span>*</span> Nombre o Razón social</h4>
+                            <input class="Nombre-Rsocial" type="text" formControlName="nombre" placeholder="Nombre ó Razón social">
+                        </div>
+                        <div class="col-5">
+                            <h4 class="H4ESPECIAL">RFC</h4>
+                            <input class="RFC" type="text" formControlName="RFC" placeholder="Registro federal de Causantes">
+                        </div>
+                    </div>
+
+                    <div class="d-flex">
+                        <div>
+                            <h4><span>*</span> No. telefónico</h4>
+                            <div>
+                                <!-- <input class="clave" type="text"  placeholder="Clave"> -->
+                                <input class="numTel" type="text" formControlName="telefono" placeholder="Clave + Número telefónico">
+                            </div>
+                        </div>
+                        <div>
+                            <h4><span>*</span> Correo</h4>
+                            <input class="CorreoElectronico" type="text" formControlName="correo" placeholder="Correo electrónico">
+                        </div>
+                    </div>
+
+                    <!-- <div class="row"> -->
+                        <div class="mb-12">
+                            <h4>Dirección</h4>
+                            <input class="Calle PlaceHolderObligatorio" formControlName="Calle" type="text" placeholder="* Calle">
+                            <input class="Numero" type="text" formControlName="No_Exterior" placeholder="Número">
+                            <input class="NumeroInt" type="text" formControlName="No_Interior" placeholder="Número Int.">
+                            <input class="CP" type="text" formControlName="CP" placeholder="C.P">
+                        </div>
+
+                        <div class="">
+
+                            
+                            <select required #Estado class="Estado" formControlName="Id_Estado" (change)="Municipio()">
+                                <option value="" disabled selected hidden>* Estado</option>
+                                @for(item of arrayEstado[0]; track $index ){
+                                    <option [value]="item.Id_Estado">{{item.Estado}}</option>
+                                }
+                            </select>
+                            
+                            <select required #mySelect class="Municipio" id="Municipio" formControlName="Id_Municipio">
+                                <option value="" disabled selected hidden>* Municipio</option>
+                                @for(item of arrayMunicipio[0]; track $index ){
+                                    <option [value]="item.Id_Municipio">{{item.Municipio}}</option>
+                                }
+                            </select>
+
+                            <!-- <div class="select Estado">
+                                <div class="scuare"></div>
+                                <select required #Estado class="selection" formControlName="Id_Estado" onmousedown="if(this.options.length>10){this.size=10, this.style.marginTop='30px' }else{this.size=this.options.length-1, this.style.marginTop='30px' , this.style.overflow = 'hidden'}" onchange="this.size=0, this.style.marginTop='0px';" onblur="this.size=0, this.style.marginTop='0px';">
+                                    <option value="" disabled selected hidden>* Estado</option>
+
+                                    @for(item of arrayEstado[0]; track $index ){
+                                        <option value={{item.Id_Estado}} (click)="Municipio(item.Id_Estado)">{{item.Estado}}</option>
+                                    }
+                                </select>
+                            </div> -->
+
+                            <!-- <div class="select Municipio">
+
+                                <div class="scuare"></div>
+                                <select required #mySelect class="selection" formControlName="Id_Municipio" onmousedown="if(this.options.length>10){this.size=10, this.style.marginTop='30px' }else{this.size=this.options.length-1, this.style.marginTop='30px' , this.style.overflow = 'hidden'}" onchange="this.size=0, this.style.marginTop='0px';" onblur="this.size=0, this.style.marginTop='0px';">
+                                    <option value="" disabled selected hidden>* Municipio</option>
+
+                                    @for(item of arrayMunicipio[0]; track $index ){
+                                        <option [value]="item.Id_Municipio">{{item.Municipio}}</option>
+                                    }
+
+                                </select>
+                              </div> -->
+
+                            <input class="Colonia" type="text" formControlName="Colonia" placeholder="Colonia">
+                        </div>
+                    <!-- </div> -->
+
+                    <div class="mb-12">
+                        <h4 class="h4RefInt">Referencia interna</h4>
+                        <input class="NomRefInt" type="text" formControlName="Referido" placeholder="Nombre de la referecia interna">
+                    </div>
+
+                    <div class="d-flex">
+                        <div class="row ">
+                            <h4>Comprobantes</h4>
+                            <button class="btn AgregaComprobantes mr-12" type="button"  (click)="ver()">Agregar comprobante de Domicilio</button>
+                            <input class="labelCarga mr-12" type="text" placeholder="No hay archivo cargado1">
+                        </div>
+                        <div class="DividentificacionOficial">
+                            <button class="btn AgregaComprobantes" type="button">Agregar identificación oficial</button>
+                            <input class="labelCarga" type="text" placeholder="No hay archivo cargado">
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+
+            <form class="InformaciónAdicional-Busqueda" [formGroup]="formulario()">
+
+                <div class="tabsNav tabsNavAncho">
+                    
+                    <div class="tab">
+                        <!-- <input type="radio" name="tabs" id="t1" > -->
+                        <input type="radio" name="tabs" id="t1" checked>
+                        <label class="Extra" for="t1" >Información Adicional</label>
+
+                        <div class="InformaciónAdicional DivContainer">
+                            <h1 class="h1TitleCardTab">Alta de Contrato</h1>
+                            <h4 class="h1FechaEmision">Fecha de emisión</h4>
+                            <input class="btn- custom-date-picker FechaEmision mr-12" type="date" formControlName="Fecha_contrato">
+
+                            <div class="d-flex">
+                                <div class="mr-12">
+                                    <h4 class="H4formInfoAdicional">Cuenta CLABE</h4>
+                                    <input class="numClave" type="text" formControlName="CLABE" placeholder="18 dígitos">
+                                </div>
+                                <div class="col-">
+                                    <h4 class="H4formInfoAdicional">Institución Bancaria asociada</h4>
+                                    <input class="NomBanco" type="text" formControlName="banco_cuenta" placeholder="Nombre del banco">
+                                </div>
+                            </div>
+
+                            <div class="d-flex">
+                                <div class="mr-12">
+                                    <h4 class="H4formInfoAdicional">Tarjeta bancaria asociada</h4>
+                                    <input class="numClave" type="text" formControlName="tarjeta" placeholder="18 dígitos">
+                                </div>
+                                <div class="col-">
+                                    <h4 class="H4formInfoAdicional">Institución Bancaria emisora</h4>
+                                    <input class="NomBanco" type="text" formControlName="Banco_tarjeta" placeholder="Nombre del banco">
+                                </div>
+                            </div>
+                            <div class="d-flex">
+                                <div class="mr-12">
+                                    <h4 class=" H4formInfoAdicional">Tarjeta Fincash asociada</h4>
+                                    <input class="numClave" type="text" formControlName="fincash" placeholder="16 dígitos">
+                                </div>
+                            </div>
+
+                            <div class="d-flex btnsRegistro">
+                                <div class="row ">
+                                    <button type="submit" (click)="enviar()" [classList]="formulario().valid ? 'btn G-C-Registro btnInActivo':'btn G-C-Registro btnActive'" >GUARDAR REGISSTRO</button>
+                                    <button class="btn-second G-C-Registro mr-12" type="button" (click)="cancelar()">CANCELAR</button>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        
+                    </div>
+                    
+                    <div class="tab">
+                        <input type="radio" name="tabs" id="t2">
+                        <label class="Busqueda" for="t2">Búsqueda</label>
+                        <div class="BusquedaDiv DivContainer">
+                            <h1 class="h1TitleCardTab">Búsqueda</h1>
+                                <div class="inputBusqueda">
+                                    <p>Para hacer una búsqueda basado en el Nombre, número de Cliente o Correo electrónico</p>
+                                    <input class="Nombre-Cliente" type="text" placeholder="Nombre ó número de Cliente ">
+                                </div>
+                                <div class="">
+                                    <button class="btn NuevaBusqueda mr-12" type="button">Nueva búsqueda</button>
+                                </div>
+                                <h1 class="h1TitleCardTab">Coincidencias</h1>
+
+                                <div class="TableBusqueda">
+                                    <table class="table">
+                                        <thead>
+                                          <tr>
+                                            <th class="thead-th-blod-No-Border th-just-left Nombre">Nombre</th>
+                                            <th class="thead-th-blod-No-Border th-just-left Codigo">Código</th>
+                                            <th class="thead-th-blod-No-Border th-just-left TipCliente">Tipo de Cliente</th>
+                                            <th class="thead-th-blod-No-Border th-just-left CorreoElect">Correo electrónico</th>
+                                            <th class="thead-th-blod-No-Border "></th>
+                                          </tr>
+                                        </thead>
+                                        <tbody class="">
+                                            <tr>
+                                                <td class="tbody-td-ligth-No-Border AdeudoEurope-Monte Nombre">Juan González Alcantara</td>
+                                                <td class="tbody-td-ligth-No-Border AdeudoEurope-Monte Codigo">BRK-2587</td>
+                                                <td class="tbody-td-ligth-No-Border AdeudoEurope-Monte TipCliente">Inversionista</td>
+                                                <td class="tbody-td-ligth-No-Border AdeudoEurope-Monte CorreoElect">juanjuan.com</td>
+                                                <td class=""><button type="button" class="TdOptionsTable"><img src="/img-sai/icon-Brief.png"></button></td>
+                                                <td class=""><button type="button" class="TdOptionsTable"><img src="/img-sai/icon-edith.png"></button></td>
+                                                <td class=""><button type="button" class="TdOptionsTable"><img src="/img-sai/icon-trash.png"></button></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="tbody-td-ligth-No-Border AdeudoEurope-Monte Nombre">Juan González Alcantara</td>
+                                                <td class="tbody-td-ligth-No-Border AdeudoEurope-Monte Codigo">BRK-2587</td>
+                                                <td class="tbody-td-ligth-No-Border AdeudoEurope-Monte TipCliente">Inversionista</td>
+                                                <td class="tbody-td-ligth-No-Border AdeudoEurope-Monte CorreoElect">juanjuan.com</td>
+                                                <td class=""><button type="button" class="TdOptionsTable"><img src="/img-sai/icon-Brief.png"></button></td>
+                                                <td class=""><button type="button" class="TdOptionsTable"><img src="/img-sai/icon-edith.png"></button></td>
+                                                <td class=""><button type="button" class="TdOptionsTable"><img src="/img-sai/icon-trash.png"></button></td>
+                                            </tr>
+
+                                        </tbody>
+                                      </table>
+                                </div>
+                        </div>
+                    </div>
+                    
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>

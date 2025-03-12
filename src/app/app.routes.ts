@@ -12,6 +12,7 @@ import { BrkComponent } from './business/movimientos/brk/brk.component';
 import { ClientesComponent } from './business/clientes/clientes/clientes.component';
 import { isModAuthGuard } from './core/guadrian/is-mod-auth.guard';
 import { isNavHeadNoActiveGuard } from './core/guadrian/is-nav-head-no-active.guard';
+import { ComisionistasComponent } from './business/clientes/comisionistas/comisionistas.component';
 
 
 
@@ -29,6 +30,7 @@ export const routes: Routes = [
             { path:'Contratos', component:BrkComponent, canActivate: [isNavHeadNoActiveGuard]},
             { path:'Movimientos/BRK', component:BrkComponent, canActivate: [isModAuthGuard], data:{roles:['Movimientos']}},
             { path:'Clientes/Clientes', component:ClientesComponent, canActivate: [isModAuthGuard],data:{roles:['Clientes']}},
+            { path:'Clientes/Comisionistas', component:ComisionistasComponent, canActivate: [isModAuthGuard],data:{roles:['Clientes']}},
             // { path:'Clientes', component:ClientesComponent, canActivate: [ModulAuthorized],},
         ]
     },

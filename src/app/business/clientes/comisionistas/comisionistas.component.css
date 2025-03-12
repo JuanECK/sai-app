@@ -1,0 +1,237 @@
+
+.comisionistas{
+    overflow-y: auto;
+    word-wrap: break-word;
+    height: 100%;
+
+    .btnActive{
+        background: #BBBBBB;
+        border: none;
+        cursor:default;
+    }
+    .btnInActivo{
+        background: #00B3CF;
+    }
+
+    .H4ESPECIAL{
+            margin-top: 40px;
+            margin-bottom: 12px;
+            font-size: 16px;
+            font-weight: var(--Medium);
+            & span{
+                color:var(--Obligatorio);
+            }
+    }
+    .h4RefInt{
+        margin-top: 33px;
+    }
+
+    .card-1{
+        width: 527px;
+        
+        margin-top: 45px;
+        margin-left: 22px;
+        margin-right: 12px;
+        margin-bottom: 23px;
+        padding: 5px 30px;
+    }
+    .card-2{
+        width: 512px;
+        margin-top: 45px;
+        margin-left: 12px;
+        margin-right: 22px;
+        margin-bottom: 23px;
+        padding: 5px 30px;
+    }
+
+    & .container{
+        display: grid;
+        grid-template-rows: 370px 390px ;
+        & .separacion{
+            display: flex;
+            & .card{
+                & .form-comisionista{
+                    
+                    & h4{
+                        /* margin-top: 40px; */
+                        margin-bottom: 12px;
+                        font-size: 16px;
+                        font-weight: var(--Medium);
+                        & span{
+                            color:var(--Obligatorio);
+                        }
+                    }
+
+                    & .Nombre-Rsocial{
+                        width: 283px;
+                    }
+                    & .RFC{
+                        width: 208px;
+                    }
+
+                    & .clave{
+                        width: 55px;
+                        margin-right: 12px;
+                    }
+                    & .numTel{
+                        margin-right: 12px;
+                        width: 215px;
+                    }
+                    & .CorreoElectronico{
+                        width: 276px;
+                    }
+                    & .Calle{
+                        width: 214px;
+                        margin-right: 12px;
+                    }
+                    & .Numero{
+                        width: 65px;
+                        margin-right: 12px;
+                    }
+                    & .NumeroInt{
+                        width: 80px;
+                        margin-right: 12px;
+                    }
+                    & .CP{
+                        width: 84px;
+                    }
+                    & .Estado{
+                        width: 145px;
+                        margin-right: 12px;
+                        bottom: 1px;
+                    }
+                    & .Municipio{
+                        width: 175px;
+                        /* max-width: 154px;
+                        min-width: 154px; */
+                        bottom: 1px;
+                        margin-right: 12px;
+                        
+                        /* margin-left: 177px; */
+                        /* margin-left: 154px; */
+                    }
+                    & .Colonia{
+                        width: 171px;
+                        /* margin-left: 344px; */
+                    }
+                    & .NomRefInt{
+                        width: 315px;
+                    }
+                    & .DividentificacionOficial{
+                        margin-top: 52px;
+                    }
+                    & .AgregaComprobantes{
+                        width: 258px;
+                        margin-bottom: 6px;
+                    }
+                    & .labelCarga{
+                        width: 246px;
+                        height: 25px;
+                        border: 1px solid #00B3CF;
+                    }
+                    & .Calle::placeholder,
+                    .Municipio::placeholder,
+                    .Estado::placeholder{
+                        background: linear-gradient(90deg, var(--Obligatorio) 6px, #BBBBBB 6px);
+                        color: transparent;
+                        background-clip: text;
+                    }
+                }
+
+                
+            }
+
+            & .InformaciónAdicional-Busqueda{
+                
+                & .tabsNavAncho{
+                    width: 605px;
+                }
+                & .InformaciónAdicional{
+    
+                    & .h1FechaEmision{
+                        font-size: 16px;
+                        font-weight: var(--Medium);
+                        margin-top: 26px;
+                        margin-bottom: 10px;
+                    }
+
+                    .H4formInfoAdicional{
+                        margin-top: 15px;
+                        margin-bottom: 12px;
+                        font-size: 16px;
+                        font-weight: var(--Medium);
+                        & span{
+                            color:var(--Obligatorio);
+                        }
+                    }
+                    & .FechaEmision{
+                        width: 212px;
+                    }
+                    
+                    & .numClave{
+                        width: 255px;
+                    }
+                    & .NomBanco{
+                        width: 254px;
+                    }
+                    & .btnsRegistro{
+                        margin-top: 210px;
+                        & .G-C-Registro{
+                            width: 545px;
+                            margin-bottom: 6px;
+                        }
+                    }
+
+                }
+
+                & .BusquedaDiv{
+                    
+
+                    & .inputBusqueda{
+
+                        margin-bottom: 19px;
+
+                        & p{
+                            font-size: 12px;
+                            font-weight: var(--Normal);
+                            color: #656565;
+                        }
+
+                        & .Nombre-Cliente{
+                            width: 440px;
+                        }
+                    }
+
+                    & .NuevaBusqueda{
+                        width: 198px;
+                    }
+
+                    & .table{
+                        /* width: 3px; */
+
+                        & .Nombre{
+                            max-width: 140px;
+                            min-width: 140px;
+                        }
+                        & .Codigo{
+                            max-width: 60px;
+                            min-width: 60px;
+                        }
+                        & .TipCliente{
+                            max-width: 90px;
+                            min-width: 90px;
+                        }
+                        & .CorreoElect{
+                            max-width: 116px;
+                            min-width: 116px;
+                        }
+                    }
+
+                }
+
+            }
+        }
+    }
+}
+
+

@@ -200,7 +200,7 @@ const response = await fetch( this._http + "auth/modulo", {
   }) 
 } )   
 const data = await response.json()
-console.log(data)
+// console.log(data)
 
 for(let i=0; i < data[0].length; i++){
   if(data[0][i].moduloPadre == roles[0]){
