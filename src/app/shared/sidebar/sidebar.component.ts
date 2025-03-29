@@ -1,7 +1,7 @@
 import { Component,  EventEmitter,  Input,  OnInit, Output } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { HeadService } from '../../core/services/head.service';
-import { PuenteDataService } from '../../core/services/puente-data.service';
+// import { PuenteDataService } from '../../core/services/puente-data.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -15,7 +15,7 @@ export class SidebarComponent implements OnInit {
 
   constructor(
     private headService:HeadService,
-    private puenteData:PuenteDataService
+    // private puenteData:PuenteDataService
   ){}
  
 

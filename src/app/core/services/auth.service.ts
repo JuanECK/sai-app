@@ -140,7 +140,6 @@ export class AuthService {
     // }
 
     let id = this.getID();
-
     const response = await fetch( this._http + 'auth/getModuloId',{
       method: 'POST',
       mode:"cors",
@@ -187,7 +186,7 @@ export class AuthService {
 async showModul ( roles:any ) {
   let respuestaModulo:boolean = true;
 let id = this.getID();
-
+// console.log(id)
 
 const response = await fetch( this._http + "auth/modulo", {
   method: 'POST',

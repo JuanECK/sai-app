@@ -28,7 +28,7 @@
                 <form class="form-comisionista" [formGroup]="formulario()">
                     <div class="d-flex">
                         <div class="col-7">
-                            <h4 class="H4ESPECIAL"><span>*</span> Nombre o Razón social</h4>
+                            <h4 class="H4ESPECIAL"><span [classList]="formulario().get('nombre')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'" >*</span> Nombre o Razón social</h4>
                             <input class="Nombre-Rsocial" type="text" formControlName="nombre" placeholder="Nombre ó Razón social">
                         </div>
                         <div class="col-5">
@@ -39,15 +39,15 @@
 
                     <div class="d-flex">
                         <div>
-                            <h4><span>*</span> No. telefónico</h4>
+                            <h4><span [classList]="formulario().get('telefono')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'" >*</span> No. telefónico</h4>
                             <div>
                                 <!-- <input class="clave" type="text"  placeholder="Clave"> -->
                                 <input class="numTel" type="text" formControlName="telefono" placeholder="Clave + Número telefónico">
                             </div>
                         </div>
                         <div>
-                            <h4><span>*</span> Correo</h4>
-                            <input class="CorreoElectronico" type="text" formControlName="correo" placeholder="Correo electrónico">
+                            <h4><span [classList]="formulario().get('correo')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'">*</span> Correo</h4>
+                            <input type="text" class="CorreoElectronico" formControlName="correo" placeholder="Correo electrónico" >
                         </div>
                     </div>
 
@@ -110,16 +110,45 @@
                         <input class="NomRefInt" type="text" formControlName="Referido" placeholder="Nombre de la referecia interna">
                     </div>
 
-                    <div class="d-flex">
+                    <div class="comprobantes">
                         <div class="row ">
-                            <h4>Comprobantes</h4>
-                            <button class="btn AgregaComprobantes mr-12" type="button"  (click)="ver()">Agregar comprobante de Domicilio</button>
-                            <input class="labelCarga mr-12" type="text" placeholder="No hay archivo cargado1">
+                            <h4><span [classList]="formulario().get('Comprobante_domicilio')?.valid && formulario().get('INE')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'">*</span> Comprobantes</h4>
+                            <p>* Las imágenes individualmente no deben superar 1MB</p>
+                            <p>* Son válidos para la carga de imágenes los formatos: jpeg, png y pdf </p>
                         </div>
-                        <div class="DividentificacionOficial">
-                            <button class="btn AgregaComprobantes" type="button">Agregar identificación oficial</button>
-                            <input class="labelCarga" type="text" placeholder="No hay archivo cargado">
+                    </div>
+
+                    <div class="d-flex Comprobante-identificacion-Oficial">
+
+                        <div class="inputfile-box AgregaComprobantes">
+                            <input type="file" #FileDomicilio id="fileDomicilio" class="inputfile" (change)='uploadDomicilio($event)' accept="application/pdf">
+                            <label for="fileDomicilio" class="Labelfile">
+                                <span class="file-button">Agregar comprobante de Domicilio</span>
+                            </label>
+                            
+                            <span class="file-box">
+                                <div class="boxNameCargaDomicilio disabledBox" id="boxNameCargaDomicilio">
+                                    <input type="text" #inputDomicilio id="file-Domicilio" class="boxName" disabled="true">
+                                    <span class="cerrar-file text-center" (click)="eliminarBoxIdenficacion()">x</span>
+                                </div>
+                            </span>
                         </div>
+
+                        <div class="inputfile-box AgregaComprobantes">
+                            <input type="file" #FileIdentificacion id="fileIdentificacion" class="inputfile" (change)='uploadIdentificacion($event)' accept="application/pdf">
+                            <label for="fileIdentificacion" class="Labelfile">
+                                <span class="file-button">Agregar identificación oficial</span>
+                            </label>
+                            
+                            <span class="file-box">
+                                <div class="boxNameCargaIdentificacion disabledBox" id="boxNameCargaIdentificacion">
+                                    <input type="text" #inputIdentificacion id="file-Identificacion" class="boxName" disabled="true">
+                                    <span class="cerrar-file text-center" (click)="eliminarBoxIdentificacion()">x</span>
+                                </div>
+                            </span>
+
+                        </div>
+                        
                     </div>
 
                 </form>

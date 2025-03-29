@@ -2,7 +2,7 @@ import { Component, ElementRef, OnInit, signal, ViewChild } from '@angular/core'
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../../core/services/auth.service';
 import { Router } from '@angular/router';
-import { PuenteDataService } from '../../../core/services/puente-data.service';
+// import { PuenteDataService } from '../../../core/services/puente-data.service';
 
 
 @Component({
@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private AuthService: AuthService,
     private router: Router,
-    private emitDataLogin: PuenteDataService,
+    // private emitDataLogin: PuenteDataService,
   ){}
   
   btnEnviar:boolean = true;

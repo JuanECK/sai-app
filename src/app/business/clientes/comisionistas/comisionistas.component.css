@@ -18,9 +18,9 @@
             margin-bottom: 12px;
             font-size: 16px;
             font-weight: var(--Medium);
-            & span{
+            /* & span{
                 color:var(--Obligatorio);
-            }
+            } */
     }
     .h4RefInt{
         margin-top: 33px;
@@ -57,9 +57,9 @@
                         margin-bottom: 12px;
                         font-size: 16px;
                         font-weight: var(--Medium);
-                        & span{
+                        /* & span{
                             color:var(--Obligatorio);
-                        }
+                        } */
                     }
 
                     & .Nombre-Rsocial{
@@ -117,18 +117,26 @@
                     & .NomRefInt{
                         width: 315px;
                     }
-                    & .DividentificacionOficial{
-                        margin-top: 52px;
+                    & .Comprobante-identificacion-Oficial{
+                        margin-top: 15px;
+                        justify-content: space-between;
                     }
+
                     & .AgregaComprobantes{
                         width: 258px;
                         margin-bottom: 6px;
                     }
-                    & .labelCarga{
-                        width: 246px;
-                        height: 25px;
-                        border: 1px solid #00B3CF;
+
+                    .comprobantes{
+                        font-size: 10px;
+                        font-weight: var(--Medium);
+                        
+                        & p{
+                            margin: 0;
+                            color: #BBBBBB;
+                        }
                     }
+
                     & .Calle::placeholder,
                     .Municipio::placeholder,
                     .Estado::placeholder{
@@ -160,9 +168,9 @@
                         margin-bottom: 12px;
                         font-size: 16px;
                         font-weight: var(--Medium);
-                        & span{
+                        /* & span{
                             color:var(--Obligatorio);
-                        }
+                        } */
                     }
                     & .FechaEmision{
                         width: 212px;
@@ -175,7 +183,7 @@
                         width: 254px;
                     }
                     & .btnsRegistro{
-                        margin-top: 210px;
+                        margin-top: 252px;
                         & .G-C-Registro{
                             width: 545px;
                             margin-bottom: 6px;
