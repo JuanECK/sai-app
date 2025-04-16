@@ -1,9 +1,13 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { environment } from '../../../environments/environments';
 import { PuenteDataService } from './puente-data.service';
+
+
+import { ComponentType } from "@angular/cdk/portal";
+import { MatDialog } from "@angular/material/dialog";
 
 
 @Injectable({
@@ -219,6 +223,11 @@ getID(){
   const { Datos } = JSON.parse(sesion!)
   return Datos
 }
+
+
+// ------------------------------------------------------------------------------
+
+
 
 // getInfo () {
 //   this.puenteData.disparadorData.subscribe(data =>{

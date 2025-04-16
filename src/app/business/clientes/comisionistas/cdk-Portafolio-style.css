@@ -1,0 +1,147 @@
+
+
+
+:host {
+  display: block;
+  background: #ffffff;
+  border-radius: 5px;
+}
+
+  .content-port-inv{
+    /* display: flex;
+    justify-content: center;
+    flex-direction: column; */
+    padding: 25px 98px 25px 98px ;
+
+    & .titulo{
+      & h1{
+        color: var(--Obligatorio);
+        font-weight: var(--Medium);
+        font-size: 20px;
+        margin: 0 0 29px 0px;
+      }
+    }
+    & .bodyCard-inv{
+      margin: 0 0 20px 0;
+      
+      & .form-comisionista-inversion {
+        margin-bottom: 21px;
+
+        & .grupo-campos{
+          margin: 0 0 15px 0;
+        }
+        & h4 {
+          margin: 0 0 10px 0;
+        }
+        & .input1{ 
+          width: 242px;
+          margin-right: 8px;
+        }
+        & .inputBRK{
+          position: relative;
+          & span {
+            position: absolute;
+            top: 6px;
+            left: 10px;
+            font-size: 15px;
+          }
+          & input{
+            padding: 0 0 0 42px;
+            width: 209px;
+          }
+        }
+        & .input2{
+          width: 242px;
+        }
+        & .CuentaTargeta{
+          width: 254px;
+          margin-right: 8px;
+        }
+        /* & .CuentaTargeta::placeholder{
+          background: linear-gradient(90deg, var(--Obligatorio) 6px, #BBBBBB 6px);
+          color: transparent;
+          background-clip: text;
+        } */
+        /* & .NoCuentaTargeta{
+          width: 242px;
+          margin-left: 68px;
+        } */
+        & .FechaNacimientoBRK{
+          width: 200px;
+          height: 19px;
+        }
+        & .InvRefInt{
+          width: 262px;
+        }
+        & .selectRefInt > select:invalid{
+          background: #BBBBBB ;
+          color: transparent;
+          background-clip: text;
+        }
+        & select option{
+          background: #ffffff;
+        }
+        & .selectRefInt{
+          width: 253px;
+        }
+          & .FechaEmisionContrato{
+          width: 200px;
+          height: 19px;
+        }
+        & .grupo-beneficiario{
+          margin-top: 35px;
+        }
+        & .FechaNacimientoBeneficiario{
+          width: 131px;
+          height: 19px;
+          margin: 0 8px 0 0 
+        }
+        & .porcentaje{
+            width: 30px;
+            margin: 29px 0 0 0 ;
+            padding: 0 20px 0 8px;
+        }
+        & .btnAgregaBeneFiciario{
+          margin-top: 21px;
+          margin-top: 21px;
+          margin-right:8px ;
+          width: 254px;
+        }
+        & .EliminaBeneFiciario{
+          margin-top: 21px;
+          margin-bottom: 0;
+          width: 254px;
+        }
+        & .formPortafolio{
+          margin-bottom: 21px;
+        }
+        & .btnAccionPortafolio{
+          margin-top: 21px;
+          width: 100%;
+        }
+        & .cancelPortafolio{
+          margin-top: 6px;
+        }
+        & .porcienObligatorio::placeholder{
+          background: linear-gradient(90deg, var(--Obligatorio) 6px, #BBBBBB 6px);
+          color: transparent;
+          background-clip: text;
+        }
+
+        & .porciento{
+          position: relative;
+          & .iconoPorc{
+            position: absolute;
+            top: 35px;
+            right: 10px;
+            font-size: 14px;
+            font-weight: var(--Normal);
+            color: #939393;;
+          }
+        }
+
+      }
+
+    }
+
+  }

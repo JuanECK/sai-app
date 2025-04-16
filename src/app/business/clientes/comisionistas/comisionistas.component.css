@@ -1,17 +1,13 @@
+dialog {
+    background: #7c7c7c;
+    padding: 10px;
+    border-radius: 50px;
+  }
 
 .comisionistas{
     overflow-y: auto;
     word-wrap: break-word;
     height: 100%;
-
-    .btnActive{
-        background: #BBBBBB;
-        border: none;
-        cursor:default;
-    }
-    .btnInActivo{
-        background: #00B3CF;
-    }
 
     .H4ESPECIAL{
             margin-top: 40px;
@@ -49,17 +45,31 @@
         grid-template-rows: 370px 390px ;
         & .separacion{
             display: flex;
+
             & .card{
+
+                & .edicionRegistro{
+                    /* position: absolute; */
+                    right: 0px;
+                    & h1{
+                        margin-bottom: 0;
+                        color: var(--Obligatorio);
+                    }
+                    & p{
+                        color: #9BA1A6;
+                        font-size: 11px;
+                        margin: 0;
+                        letter-spacing: .8px;
+                    }
+                }
+
                 & .form-comisionista{
                     
+                    
                     & h4{
-                        /* margin-top: 40px; */
                         margin-bottom: 12px;
                         font-size: 16px;
                         font-weight: var(--Medium);
-                        /* & span{
-                            color:var(--Obligatorio);
-                        } */
                     }
 
                     & .Nombre-Rsocial{
@@ -85,37 +95,46 @@
                         margin-right: 12px;
                     }
                     & .Numero{
-                        width: 65px;
+                        width: 73px;
                         margin-right: 12px;
                     }
                     & .NumeroInt{
-                        width: 80px;
+                        width: 88px;
                         margin-right: 12px;
                     }
                     & .CP{
-                        width: 84px;
+                        width: 92px;
                     }
                     & .Estado{
                         width: 145px;
                         margin-right: 12px;
-                        bottom: 1px;
+                        /* bottom: 1px; */
+                        z-index: 10;
                     }
                     & .Municipio{
                         width: 175px;
                         /* max-width: 154px;
                         min-width: 154px; */
-                        bottom: 1px;
+                        /* bottom: 1px; */
                         margin-right: 12px;
-                        
-                        /* margin-left: 177px; */
-                        /* margin-left: 154px; */
+                        left: 187px;
+                        z-index: 5;
                     }
                     & .Colonia{
                         width: 171px;
-                        /* margin-left: 344px; */
+                        margin-left: 344px;
                     }
                     & .NomRefInt{
                         width: 315px;
+                    }
+                    & .NomRefIntDiv{
+                        margin-bottom: 48px;
+                        
+                        & select:invalid{
+                            background: #BBBBBB ;
+                            color: transparent;
+                            background-clip: text;
+                        }
                     }
                     & .Comprobante-identificacion-Oficial{
                         margin-top: 15px;
@@ -123,7 +142,7 @@
                     }
 
                     & .AgregaComprobantes{
-                        width: 258px;
+                        width: 256px;
                         margin-bottom: 6px;
                     }
 
@@ -137,9 +156,7 @@
                         }
                     }
 
-                    & .Calle::placeholder,
-                    .Municipio::placeholder,
-                    .Estado::placeholder{
+                    & .Calle::placeholder{
                         background: linear-gradient(90deg, var(--Obligatorio) 6px, #BBBBBB 6px);
                         color: transparent;
                         background-clip: text;
@@ -174,11 +191,13 @@
                     }
                     & .FechaEmision{
                         width: 212px;
+                        height: 20px;
                     }
                     
                     & .numClave{
                         width: 255px;
                     }
+
                     & .NomBanco{
                         width: 254px;
                     }
@@ -189,8 +208,11 @@
                             margin-bottom: 6px;
                         }
                     }
+ 
 
                 }
+
+/* -------------------------------------------------------------------------------------------------------------------------------------- */
 
                 & .BusquedaDiv{
                     
@@ -216,22 +238,47 @@
 
                     & .table{
                         /* width: 3px; */
+                        /* background: #00B3CF; */
+                        width: 100%;
+                        thead, tbody{
+                            display: block;
+                            border-collapse: collapse;
+                        }
+
+                        tr{
+                            text-align: left;
+                        }
+
+                        tbody{
+
+                            display: block;
+                            /* height: 200px; */
+                            height: 442px;
+                            overflow-y: auto;
+                            overflow-x: hidden;
+                            /* background: #0e0a33; */
+                        }
 
                         & .Nombre{
                             max-width: 140px;
                             min-width: 140px;
+                            padding-left: 0px ;
                         }
                         & .Codigo{
                             max-width: 60px;
                             min-width: 60px;
+                            padding-left: 0px;
                         }
                         & .TipCliente{
                             max-width: 90px;
                             min-width: 90px;
+                            padding-left: 8px;
                         }
                         & .CorreoElect{
-                            max-width: 116px;
-                            min-width: 116px;
+                            max-width: 115px;
+                            min-width: 115px;
+                            padding-left: 2px;
+                            padding-right: 10px;
                         }
                     }
 

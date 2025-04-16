@@ -1,0 +1,31 @@
+:host {
+    display: block;
+    background: #222222;
+    border-radius: 20px;
+    /* padding: 16px; */
+    /* max-width: 500px; */
+}
+.content-modalMsg{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 16px;
+  
+    & .text-center{
+      & h1 {
+        font-size: 40px;
+        margin-bottom: 0px;
+        margin-top: 15px;
+        font-weight: var(--Medium);
+        color: #e4e4e4;
+      }
+    }
+  
+    & .mensaje-modalMsg{
+      font-size: 13px;
+      font-weight: var(--Normal);
+      color: #e4e4e4;
+      padding: 12px 20px;
+    }
+  }

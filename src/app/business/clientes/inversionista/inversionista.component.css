@@ -1,0 +1,376 @@
+.comisionistas{
+    overflow-y: auto;
+    word-wrap: break-word;
+    height: 100%;
+
+    .H4ESPECIAL{
+        margin-top: 40px;
+        margin-bottom: 12px;
+        font-size: 16px;
+        font-weight: var(--Medium);
+    }
+    .activeBenef{
+        color: #181818 !important;
+    }
+    .h4RefInt{
+        margin-top: 33px;
+    }
+
+    .card-1{
+        width: 527px;
+        margin-top: 45px;
+        margin-left: 22px;
+        margin-right: 12px;
+        margin-bottom: 23px;
+        padding: 5px 30px;
+    }
+    .card-2{
+        width: 512px;
+        margin-top: 45px;
+        margin-left: 12px;
+        margin-right: 22px;
+        margin-bottom: 23px;
+        padding: 5px 30px;
+    }
+
+    & h4{
+        margin-bottom: 12px;
+        font-size: 16px;
+        font-weight: var(--Medium);
+    }
+    & .container{
+        display: grid;
+        grid-template-rows: 370px 390px ;
+        & .separacion{
+            display: flex;
+
+            & .card{
+
+                & .form-comisionista{
+                    
+                    & .Nombre-Rsocial{
+                        width: 358px;
+                        margin-right: 12px;
+                    }
+                    
+                    & .RFC{
+                        width: 132px;
+                    }
+
+                    & .h1FechaEmision{
+                        font-size: 16px;
+                        font-weight: var(--Medium);
+                        margin-top: 26px;
+                        margin-bottom: 12px;
+                    }
+                    & .Calle{
+                        width: 214px;
+                        margin-right: 12px;
+                    }
+                    & .Calle::placeholder{
+                        background: linear-gradient(90deg, var(--Obligatorio) 6px, #BBBBBB 6px);
+                        color: transparent;
+                        background-clip: text;
+                    }
+                    & .Numero{
+                        width: 73px;
+                        margin-right: 12px;
+                    }
+                    & .NumeroInt{
+                        width: 88px;
+                        margin-right: 12px;
+                    }
+                    & .CP{
+                        width: 92px;
+                    }
+                    & .Estado{
+                        width: 145px;
+                        margin-right: 12px;
+                        /* bottom: 1px; */
+                        z-index: 10;
+                    }
+                    & .Municipio{
+                        width: 175px;
+                        /* max-width: 154px;
+                        min-width: 154px; */
+                        /* bottom: 1px; */
+                        margin-right: 12px;
+                        left: 187px;
+                        z-index: 5;
+                    }
+                    & .Colonia{
+                        width: 171px;
+                        margin-left: 344px;
+                    }
+
+                    & .numTel{
+                        margin-right: 12px;
+                        width: 215px;
+                    }
+                    & .CorreoElectronico{
+                        width: 276px;
+                    }
+                    .comprobantes{
+                        font-size: 10px;
+                        font-weight: var(--Medium);
+                        
+                        & p{
+                            margin: 0;
+                            color: #BBBBBB;
+                        }
+                    }
+                    & .Comprobante-identificacion-Oficial{
+                        margin-top: 15px;
+                        justify-content: space-between;
+                    }
+                    & .AgregaComprobantes{
+                        width: 256px;
+                        margin-bottom: 6px;
+                    }
+
+                }
+            }
+
+            & .InformaciónAdicional-Busqueda{
+                
+                & .tabsNavAncho{
+                    width: 605px;
+                }
+                & .InformaciónAdicional{
+    
+                    .H4formInfoAdicional{
+                        margin-top: 15px;
+                        margin-bottom: 12px;
+                        font-size: 16px;
+                        font-weight: var(--Medium);
+                    }
+
+                    & .inputBRK{
+                        position: relative;
+                        & span {
+                          position: absolute;
+                          top: 6px;
+                          left: 10px;
+                          font-size: 15px;
+                        }
+                        & input{
+                          padding: 0 0 0 42px;
+                          width: 217px;
+                          margin-right: 12px;
+                        }
+                      }
+
+                      & .fechaEmisionContrato{
+                        height: 19px;
+                        width: 217px;
+                      }
+                      & .TipoCuenta{
+                        width: 273px;
+                      }
+                      & .selectTipoCuenta > select:invalid{
+                        background: #BBBBBB ;
+                        color: transparent;
+                        background-clip: text;
+                      }
+                      & select option{
+                        background: #ffffff;
+                      }
+                      & .selectTipoCuenta{
+                        width: 260px;
+                      }
+
+                      & .No-Fecha-Targeta{
+                        width: 260px;
+                      }
+                      & .InstitucionBancaria{
+                        width: 246px;
+                      }
+                      & .beneficiario{
+                        /* background: #a5a4a4; */
+                        margin-top: 30px;
+                        width: 100%;
+                        height: 89px;
+                        /* height: 200px; */
+                        /* overflow: auto; */
+                        overflow-y: scroll;
+                        scroll-behavior: smooth;
+                        border: 1px solid #a5a4a4;
+                      }
+
+                      & .beneficiario-content-1{
+                        justify-content: center;
+                        /* height: 89px; */
+                        padding: 13px 0 14px 0;
+                        /* margin-bottom: 0px; */
+                        & h4 {
+                            margin: 0px 0 12px 0;
+                        }
+                        & .porciento{
+                            & .iconoPorc{
+                              top: 39px;
+                            }
+                          }
+                          & .porcentaje{
+                            margin: 31px 0 0 0 ;
+                        }
+                      }
+                      & .beneficiario-content{
+                        justify-content: center;
+                        padding: 15px 0 15px 0;
+                        /* margin-bottom: 15px; */
+                        & h4 {
+                            margin: 0px 0 12px 0;
+                        }
+                      }
+
+                      & .input1{ 
+                        width: 230px;
+                        margin-right: 8px;
+                      }
+
+                      & .FechaNacimientoBeneficiario{
+                        width: 131px;
+                        height: 21px;
+                        margin: 0 8px 0 0 
+                      }
+                      & .eliminar-beneficiario{
+                        color: #00B3CF;
+                        font-size: 12px;
+                        padding: 2px 9px 2px 9px;
+                        cursor: pointer;
+                      }
+                      & .eliminar-beneficiario:hover{
+                        color: #BBBBBB;
+                      }
+                      & .porciento{
+                        position: relative;
+                        & .iconoPorc{
+                          position: absolute;
+                          top: 22px;
+                          right: 10px;
+                          font-size: 14px;
+                          font-weight: var(--Normal);
+                          color: #939393;;
+                        }
+                      }
+                      & .porcentaje{
+                        width: 31px;
+                        height: 28px;
+                        margin: 14px 0 0 0 ;
+                        padding: 0 20px 0 8px;
+                    }
+
+                    & .accion-inversionista {
+
+                        width: 100%;
+                        justify-content: space-between;
+                        
+                        & .btnAgregaBeneFiciario{
+                            margin-top: 12px;
+                        }
+                        
+                        & .nav-inversionista{
+                            margin-right: 50px;
+                            margin-top: 15px;
+                            position: relative;
+
+                            & .btn-nav-inversionista{
+                                /* background: #00B3CF; */
+                                font-size: 12px;
+                                font-weight: var(--Medium);
+                                color: #A4A4A4;
+                                /* margin: 0 10px 0 10px; */
+                                padding: 0 10px 0 10px;
+                                cursor: pointer;
+                            }
+                            
+                         }
+                    }
+
+                    & .btnsRegistro{
+                        position: absolute;
+                        bottom: 29px;
+                        /* margin-top: 252px; */
+                        & .G-C-Registro{
+                            width: 545px;
+                            margin-bottom: 6px;
+                        }
+                    }
+ 
+
+                }
+
+                & .BusquedaDiv{
+                    
+
+                    & .inputBusqueda{
+
+                        margin-bottom: 19px;
+
+                        & p{
+                            font-size: 12px;
+                            font-weight: var(--Normal);
+                            color: #656565;
+                        }
+
+                        & .Nombre-Cliente{
+                            width: 440px;
+                        }
+                    }
+
+                    & .NuevaBusqueda{
+                        width: 198px;
+                    }
+
+                    & .table{
+                        /* width: 3px; */
+                        /* background: #00B3CF; */
+                        width: 100%;
+                        thead, tbody{
+                            display: block;
+                            border-collapse: collapse;
+                        }
+
+                        tr{
+                            text-align: left;
+                        }
+
+                        tbody{
+
+                            display: block;
+                            /* height: 200px; */
+                            height: 442px;
+                            overflow-y: auto;
+                            overflow-x: hidden;
+                            /* background: #0e0a33; */
+                        }
+
+                        & .Nombre{
+                            max-width: 140px;
+                            min-width: 140px;
+                            padding-left: 0px ;
+                        }
+                        & .Codigo{
+                            max-width: 60px;
+                            min-width: 60px;
+                            padding-left: 0px;
+                        }
+                        & .TipCliente{
+                            max-width: 90px;
+                            min-width: 90px;
+                            padding-left: 8px;
+                        }
+                        & .CorreoElect{
+                            max-width: 115px;
+                            min-width: 115px;
+                            padding-left: 2px;
+                            padding-right: 10px;
+                        }
+                    }
+
+                }
+
+            }
+        }
+    }
+}

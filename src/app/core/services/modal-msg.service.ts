@@ -10,17 +10,21 @@ export class ModalMsgService {
     private readonly _dialog = inject(MatDialog);
 
 
-    openModalMsg<CT>( componentRef: ComponentType<CT>, data?:any, width?:string, height?:string ):void{
-    // openModalMsg<CT, T>( componentRef: ComponentType<CT>, data?: T, isEditing = false ):void{
+    openModalMsg<CT>( componentRef: ComponentType<CT>, data?:any, closeModal?:boolean, width?:string, TypeMsg?:string ):void{
 
-        const config = { data }
+        const config = { data, closeModal, TypeMsg}
 
-        this._dialog.open( componentRef, {
+        const dialogRef = this._dialog.open( componentRef, {
             panelClass:"custom",
+            disableClose:closeModal,
             data: config,
             width: width,
-            // height: height,
         } )
+
+        dialogRef.afterClosed().subscribe(result => {
+            console.log(`Dialog result: ${result}`);
+            return result
+          });
 
     }
 

@@ -7,6 +7,8 @@ import { PipeTransform } from '@angular/core'
 import { formatCurrency } from '@angular/common';
 
 
+
+
 @Component({
   selector: 'app-bashboard',
   standalone: true,

@@ -15,13 +15,11 @@
 
 <form>
     <div class="content-modalMsg">
-        <div class="text-center">
-            <h4>
-                Módulo Control de Finanzas
-            </h4>
+        <div class="text-center" [hidden]="type">
+            <h1><img src="/img-sai/icon-error-alert.png" alt=""> Error</h1>
         </div>
         <div class="mensaje-modalMsg ">
-           <p class="text-justify">{{data.mensaje}}</p>
+           <p class="text-center">{{data.mensaje}}</p>
         </div>
     </div>
 </form>

@@ -3,22 +3,32 @@
     <div class="container">
         <div class="separacion">
             <div class="card-1 card">
-                <h1 class="h1TitleCard">Agregar Comisionista</h1>
-                <span>20 / Noviembre / 2024</span>
+                <div class="d-flex">
+                    <div class="col-7" [hidden]="editar ? false : true">
+                        <h1 class="h1TitleCard">Agregar Comisionista</h1>
+                        <!-- <button (click)="portafolioInvercion( 568 )" >ver</button>  -->
+                    </div>
+
+                    <div class="col-5- edicionRegistro col-7" [hidden]="editar ? true: false">
+                        <h1 class="h1TitleCard"><img src="/img-sai/icon-edicion-de-registro.png" style="width: 20px;">Edición de Registro</h1>
+                        <p>Los cambios afectarán el registro</p>
+                    </div>
+                </div>
+                <span>{{Hoy}}</span>
 
                 <form [formGroup]="formulario()">
                     <div class="form-check">
                         <div class="check">
                             <label  class="form-check-label" >Persona Física</label>
                             <label class="label-container" >
-                                <input type="radio" #radioBtn1 (change)="formulario().patchValue({'fisica_moral':true})" name="radio">
+                                <input type="radio" #radioBtn1 (change)="formulario().patchValue({'fisica_moral':true})" checked name="radio">
                                 <span class="checkmark"></span>
                             </label>
                         </div>
                         <div class="check Second-check">
                             <label  class="form-check-label" >Persona Moral</label>
                             <label class="label-container" >
-                                <input type="radio" #radioBtn1 (change)="formulario().patchValue({'fisica_moral':false})" name="radio">
+                                <input type="radio" #radioBtn2 (change)="formulario().patchValue({'fisica_moral':false})" name="radio">
                                 <span class="checkmark"></span>
                             </label>
                         </div>
@@ -54,60 +64,68 @@
                     <!-- <div class="row"> -->
                         <div class="mb-12">
                             <h4>Dirección</h4>
-                            <input class="Calle PlaceHolderObligatorio" formControlName="Calle" type="text" placeholder="* Calle">
-                            <input class="Numero" type="text" formControlName="No_Exterior" placeholder="Número">
-                            <input class="NumeroInt" type="text" formControlName="No_Interior" placeholder="Número Int.">
-                            <input class="CP" type="text" formControlName="CP" placeholder="C.P">
+                            <input class="Calle PlaceHolderObligatorio-" formControlName="Calle" type="text" placeholder="* Calle">
+                            <input class="Numero text-center Not-padding" type="text" formControlName="No_Exterior" placeholder="Número">
+                            <input class="NumeroInt text-center Not-padding" type="text" formControlName="No_Interior" placeholder="Número Int.">
+                            <input class="CP text-center Not-padding" type="text" formControlName="CP" placeholder="C.P">
                         </div>
 
                         <div class="">
 
                             
-                            <select required #Estado class="Estado" formControlName="Id_Estado" (change)="Municipio()">
+                            <!-- <select required #Estado class="Estado" formControlName="Id_Estado" (change)="Municipio()">
                                 <option value="" disabled selected hidden>* Estado</option>
                                 @for(item of arrayEstado[0]; track $index ){
                                     <option [value]="item.Id_Estado">{{item.Estado}}</option>
                                 }
-                            </select>
-                            
-                            <select required #mySelect class="Municipio" id="Municipio" formControlName="Id_Municipio">
+                            </select> -->
+
+                            <!-- <select required #mySelect class="Municipio" id="Municipio" formControlName="Id_Municipio">
                                 <option value="" disabled selected hidden>* Municipio</option>
                                 @for(item of arrayMunicipio[0]; track $index ){
                                     <option [value]="item.Id_Municipio">{{item.Municipio}}</option>
                                 }
-                            </select>
+                            </select> -->
 
-                            <!-- <div class="select Estado">
-                                <div class="scuare"></div>
-                                <select required #Estado class="selection" formControlName="Id_Estado" onmousedown="if(this.options.length>10){this.size=10, this.style.marginTop='30px' }else{this.size=this.options.length-1, this.style.marginTop='30px' , this.style.overflow = 'hidden'}" onchange="this.size=0, this.style.marginTop='0px';" onblur="this.size=0, this.style.marginTop='0px';">
+                            <div class="select Estado">
+                                <span class="spanExedioCaractereSelect" id="estado" [ariaSelected]="true" [hidden]="selectEstado">...</span>
+                                <select required #Estado class="Estado-" formControlName="Id_Estado" (change)="Municipio( $event )">
                                     <option value="" disabled selected hidden>* Estado</option>
 
                                     @for(item of arrayEstado[0]; track $index ){
-                                        <option value={{item.Id_Estado}} (click)="Municipio(item.Id_Estado)">{{item.Estado}}</option>
-                                    }
+                                        <option [value]="item.Id_Estado">{{item.Estado}}</option>                                    }
                                 </select>
-                            </div> -->
+                            </div>
 
-                            <!-- <div class="select Municipio">
-
-                                <div class="scuare"></div>
-                                <select required #mySelect class="selection" formControlName="Id_Municipio" onmousedown="if(this.options.length>10){this.size=10, this.style.marginTop='30px' }else{this.size=this.options.length-1, this.style.marginTop='30px' , this.style.overflow = 'hidden'}" onchange="this.size=0, this.style.marginTop='0px';" onblur="this.size=0, this.style.marginTop='0px';">
+                            <div class="select Municipio">
+                                <span class="spanExedioCaractereSelect" id="municipio" [hidden]="selectMunicipio">...</span>
+                                <select required #mySelect class="Municipio-" formControlName="Id_Municipio" (change)="SeleccionMunicipio( $event )">
+                                <!-- <select required #mySelect class="selection" formControlName="Id_Municipio" onmousedown="if(this.options.length>10){this.size=10, this.style.marginTop='30px' }else{this.size=this.options.length-1, this.style.marginTop='30px' , this.style.overflow = 'hidden'}" onchange="this.size=0, this.style.marginTop='0px';" onblur="this.size=0, this.style.marginTop='0px';"> -->
                                     <option value="" disabled selected hidden>* Municipio</option>
-
                                     @for(item of arrayMunicipio[0]; track $index ){
-                                        <option [value]="item.Id_Municipio">{{item.Municipio}}</option>
+                                        <option  [value]="item.Id_Municipio">{{item.Municipio}}</option>
                                     }
-
                                 </select>
-                              </div> -->
+                            </div>
 
                             <input class="Colonia" type="text" formControlName="Colonia" placeholder="Colonia">
                         </div>
                     <!-- </div> -->
 
-                    <div class="mb-12">
-                        <h4 class="h4RefInt">Referencia interna</h4>
-                        <input class="NomRefInt" type="text" formControlName="Referido" placeholder="Nombre de la referecia interna">
+                    <div class="NomRefIntDiv">
+                        <h4 class="h4RefInt"><span [classList]="formulario().get('Referido')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'" >*</span> Referencia interna</h4>
+                        <div class="select NomRefInt">
+                            <span class="spanExedioCaractereSelect" id="estado" [ariaSelected]="true" [hidden]="selectEstado">...</span>
+                            <select required #comisionistaReferido class="Estado-" formControlName="Referido">
+                                <option value="" disabled selected hidden>Nombre de la referecia interna</option>
+
+                                @for(item of ComisionistaReferido[0]; track $index ){
+                                    <option [value]="item.Nombre_Razon_Social">{{item.Nombre_Razon_Social}}</option>                                    
+                                }
+
+                            </select>
+                        </div>
+                        <!-- <input class="NomRefInt" type="text" formControlName="Referido" placeholder="Nombre de la referecia interna"> -->
                     </div>
 
                     <div class="comprobantes">
@@ -161,18 +179,18 @@
                     
                     <div class="tab">
                         <!-- <input type="radio" name="tabs" id="t1" > -->
-                        <input type="radio" name="tabs" id="t1" checked>
+                        <input type="radio" #TabsInformacion name="tabs" id="t1" checked>
                         <label class="Extra" for="t1" >Información Adicional</label>
 
                         <div class="InformaciónAdicional DivContainer">
                             <h1 class="h1TitleCardTab">Alta de Contrato</h1>
                             <h4 class="h1FechaEmision">Fecha de emisión</h4>
-                            <input class="btn- custom-date-picker FechaEmision mr-12" type="date" formControlName="Fecha_contrato">
+                            <input  [classList]="Piker ? 'custom-date-picker FechaEmision mr-12 btnInActivo':'custom-date-picker FechaEmision mr-12 btnActive'" type="date" formControlName="Fecha_contrato" #FechaContrato>
 
                             <div class="d-flex">
                                 <div class="mr-12">
                                     <h4 class="H4formInfoAdicional">Cuenta CLABE</h4>
-                                    <input class="numClave" type="text" formControlName="CLABE" placeholder="18 dígitos">
+                                    <input class="numClave" type="text" maxlength="23" placeholder="18 dígitos" (input)="soloDigito( $event, 3 )" (change)="remplazaDigito( $event, 'CLABE' )">
                                 </div>
                                 <div class="col-">
                                     <h4 class="H4formInfoAdicional">Institución Bancaria asociada</h4>
@@ -183,7 +201,7 @@
                             <div class="d-flex">
                                 <div class="mr-12">
                                     <h4 class="H4formInfoAdicional">Tarjeta bancaria asociada</h4>
-                                    <input class="numClave" type="text" formControlName="tarjeta" placeholder="18 dígitos">
+                                    <input class="numClave" type="text" maxlength="23" placeholder="18 dígitos" (input)="soloDigito( $event, 3 )" (change)="remplazaDigito( $event, 'tarjeta' )">
                                 </div>
                                 <div class="col-">
                                     <h4 class="H4formInfoAdicional">Institución Bancaria emisora</h4>
@@ -193,33 +211,34 @@
                             <div class="d-flex">
                                 <div class="mr-12">
                                     <h4 class=" H4formInfoAdicional">Tarjeta Fincash asociada</h4>
-                                    <input class="numClave" type="text" formControlName="fincash" placeholder="16 dígitos">
+                                    <input class="numClave" type="text" maxlength="19" placeholder="16 dígitos" (input)="soloDigito( $event, 4 )" (change)="remplazaDigito( $event, 'fincash' )">
                                 </div>
                             </div>
 
                             <div class="d-flex btnsRegistro">
                                 <div class="row ">
-                                    <button type="submit" (click)="enviar()" [classList]="formulario().valid ? 'btn G-C-Registro btnInActivo':'btn G-C-Registro btnActive'" >GUARDAR REGISSTRO</button>
-                                    <button class="btn-second G-C-Registro mr-12" type="button" (click)="cancelar()">CANCELAR</button>
+                                    <button type="submit" (click)="enviar()" [hidden]="editar ? false:true" [classList]="formulario().valid ? 'btn G-C-Registro btnInActivo':'btn G-C-Registro btnActive'" >GUARDAR REGISSTRO</button>
+                                    <button type="submit" (click)="ActualizarRegistro()" [hidden]="editar ? true:false" [classList]="formulario().valid ? 'btn G-C-Registro btnInActivo':'btn G-C-Registro btnActive'" >ACTUALIZAR CAMPOS</button>
+                                    <button class="btn-second G-C-Registro mr-12" type="button" (click)="resetForm()">CANCELAR</button>
                                 </div>
                             </div>
-
-                        </div>
-
-                        
+                        </div>                      
                     </div>
                     
+<!-- ------------------------------------------------------------------------------------------------------------------------------------------------------------ -->
+
                     <div class="tab">
-                        <input type="radio" name="tabs" id="t2">
+                        <input type="radio" #TabsBusqueda name="tabs" id="t2">
+
                         <label class="Busqueda" for="t2">Búsqueda</label>
                         <div class="BusquedaDiv DivContainer">
                             <h1 class="h1TitleCardTab">Búsqueda</h1>
                                 <div class="inputBusqueda">
                                     <p>Para hacer una búsqueda basado en el Nombre, número de Cliente o Correo electrónico</p>
-                                    <input class="Nombre-Cliente" type="text" placeholder="Nombre ó número de Cliente ">
+                                    <input class="Nombre-Cliente" #Busqueda type="text" placeholder="Nombre ó número de Cliente " (input)="inputBusqueda($event)">
                                 </div>
                                 <div class="">
-                                    <button class="btn NuevaBusqueda mr-12" type="button">Nueva búsqueda</button>
+                                    <button class="btn NuevaBusqueda mr-12" (click)="busqueda()" [disabled]="disabledBtn" [classList]="disabledBtn ? 'btn NuevaBusqueda mr-12 btnActive':'btn NuevaBusqueda mr-12 btnInActivo'" type="button">Nueva búsqueda</button>
                                 </div>
                                 <h1 class="h1TitleCardTab">Coincidencias</h1>
 
@@ -232,28 +251,22 @@
                                             <th class="thead-th-blod-No-Border th-just-left TipCliente">Tipo de Cliente</th>
                                             <th class="thead-th-blod-No-Border th-just-left CorreoElect">Correo electrónico</th>
                                             <th class="thead-th-blod-No-Border "></th>
+                                            <!-- <th class="thead-th-blod-No-Border "></th> -->
                                           </tr>
                                         </thead>
                                         <tbody class="">
-                                            <tr>
-                                                <td class="tbody-td-ligth-No-Border AdeudoEurope-Monte Nombre">Juan González Alcantara</td>
-                                                <td class="tbody-td-ligth-No-Border AdeudoEurope-Monte Codigo">BRK-2587</td>
-                                                <td class="tbody-td-ligth-No-Border AdeudoEurope-Monte TipCliente">Inversionista</td>
-                                                <td class="tbody-td-ligth-No-Border AdeudoEurope-Monte CorreoElect">juanjuan.com</td>
-                                                <td class=""><button type="button" class="TdOptionsTable"><img src="/img-sai/icon-Brief.png"></button></td>
-                                                <td class=""><button type="button" class="TdOptionsTable"><img src="/img-sai/icon-edith.png"></button></td>
-                                                <td class=""><button type="button" class="TdOptionsTable"><img src="/img-sai/icon-trash.png"></button></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="tbody-td-ligth-No-Border AdeudoEurope-Monte Nombre">Juan González Alcantara</td>
-                                                <td class="tbody-td-ligth-No-Border AdeudoEurope-Monte Codigo">BRK-2587</td>
-                                                <td class="tbody-td-ligth-No-Border AdeudoEurope-Monte TipCliente">Inversionista</td>
-                                                <td class="tbody-td-ligth-No-Border AdeudoEurope-Monte CorreoElect">juanjuan.com</td>
-                                                <td class=""><button type="button" class="TdOptionsTable"><img src="/img-sai/icon-Brief.png"></button></td>
-                                                <td class=""><button type="button" class="TdOptionsTable"><img src="/img-sai/icon-edith.png"></button></td>
-                                                <td class=""><button type="button" class="TdOptionsTable"><img src="/img-sai/icon-trash.png"></button></td>
-                                            </tr>
-
+                                            @for( item of listaBusqueda[0]; track $index ){
+                                                <tr>
+                                                    <td class="tbody-td-ligth-No-Border AdeudoEurope-Monte Nombre">{{item.Nombre_Razon_Social}}</td>
+                                                    <td class="tbody-td-ligth-No-Border AdeudoEurope-Monte Codigo">{{item.Num_Comisionista}}</td>
+                                                    <td class="tbody-td-ligth-No-Border AdeudoEurope-Monte TipCliente">{{item.TipoCliente}}</td>
+                                                    <td class="tbody-td-ligth-No-Border AdeudoEurope-Monte CorreoElect">{{item.Correo}}</td>
+                                                    <td class=""><button type="button" [disabled]="item.BRK ? true:false" (click)="portafolioInvercion( item.Id_ICPC )" class="TdOptionsTable"><img [src]="item.BRK ?  '/img-sai/icon-Brief-disabled-35.png' : '/img-sai/icon-Brief.png'  " ></button></td>
+                                                    <td class=""><button type="button" (click)="verDatosComisionista( item.Id_ICPC )" class="TdOptionsTable"><img src="/img-sai/ojito_abierto.png"></button></td>
+                                                    <td class=""><button type="button" (click)="editarComisionista( item.Id_ICPC )" class="TdOptionsTable"><img src="/img-sai/icon-edith.png"></button></td>
+                                                    <td class=""><button type="button" (click)="eliminarComisionista( item.Id_ICPC )" class="TdOptionsTable"><img src="/img-sai/icon-trash.png"></button></td>
+                                                </tr>
+                                            }
                                         </tbody>
                                       </table>
                                 </div>
