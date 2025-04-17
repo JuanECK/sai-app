@@ -134,6 +134,10 @@ fechaActual(){
   return fecha = dia + ' / ' + getMes[mes] + ' / ' + ano
 }
 
+insertaNumBRK( event:any ){
+  
+}
+
 TipoDeCuenta( event:any ){
   // deacuerdo al tipo de cuenta que selecciones en "Cuenta o tarjeta asociada" se va a abilitar los campos que estan alado y abajo
 }

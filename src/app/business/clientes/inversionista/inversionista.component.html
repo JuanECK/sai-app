@@ -164,7 +164,7 @@
                                     <h4><span [classList]="formulario().get('BRK')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'">*</span> No. de BRK</h4>
                                     <div class="inputBRK">
                                         <span>BRK-</span>
-                                        <input class="input1" type="text" maxlength="4" formControlName="BRK" placeholder="">
+                                        <input class="input1" type="text" maxlength="4" formControlName="BRK" placeholder="" (change)="insertaNumBRK( $event )">
                                     </div>
                                 </div>
                                 <div class="">
