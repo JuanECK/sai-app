@@ -3,7 +3,7 @@
         <div class="separacion">
             <!-- ------------------CARD 1 --------------------- -->
             <div class="card-1 card">
-                <!-- <button (click)="ver()" >ver</button> -->
+                <button (click)="ver()" >ver</button>
                 <div class="d-flex">
                     <div class="col-7">
                         <h1 class="h1TitleCard">Agregar Inversionista</h1>
@@ -34,36 +34,26 @@
                 <form class="form-comisionista" [formGroup]="formulario()">
                     <div class="d-flex">
                         <div class="">
-                            <h4 class="H4ESPECIAL"><span
-                                    [classList]="formulario().get('nombre')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'">*</span>
-                                Nombre completo o Razón Social</h4>
+                            <h4 class="H4ESPECIAL"><span [classList]="formulario().get('nombre')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'">*</span> Nombre completo o Razón Social</h4>
                             <div>
-                                <input class="Nombre-Rsocial" type="text" formControlName="nombre"
-                                    placeholder="Nombre (s) y apellido (s)">
+                                <input class="Nombre-Rsocial" type="text" formControlName="nombre" placeholder="Nombre (s) y apellido (s)">
                                 <input class="RFC" type="text" formControlName="RFC" placeholder="RFC">
                             </div>
                         </div>
                     </div>
                     <div>
-                        <h4 class="h1FechaEmision"><span
-                                [classList]="formulario().get('nombre')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'">*</span>
-                            Fecha de nacimiento</h4>
-                        <input
-                            [classList]="Piker ? 'custom-date-picker FechaEmision mr-12 btnInActivo':'custom-date-picker FechaEmision mr-12 btnActive'"
-                            type="date" formControlName="Fecha_contrato" #FechaContrato>
+                        <h4 class="h1FechaEmision"><span [classList]="formulario().get('Fecha_Nac')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'">*</span> Fecha de nacimiento</h4>
+                        <input [classList]="Piker ? 'custom-date-picker FechaEmision mr-12 btnInActivo':'custom-date-picker FechaEmision mr-12 btnActive'" type="date" formControlName="Fecha_Nac" #FechaContrato (change)="validaFecha( $event, 'Fecha_Nac' )">
                     </div>
 
                     <div class="mb-12">
 
                         <h4>Dirección</h4>
-                        <input class="Calle PlaceHolderObligatorio-" formControlName="Calle" type="text"
-                            placeholder="* Calle">
+                        <input class="Calle PlaceHolderObligatorio-" formControlName="Calle" type="text" placeholder="* Calle">
 
-                        <input class="Numero text-center Not-padding" type="text" formControlName="No_Exterior"
-                            placeholder="Número">
+                        <input class="Numero text-center Not-padding" type="text" formControlName="No_Exterior" placeholder="Número">
 
-                        <input class="NumeroInt text-center Not-padding" type="text" formControlName="No_Interior"
-                            placeholder="Número Int.">
+                        <input class="NumeroInt text-center Not-padding" type="text" formControlName="No_Interior" placeholder="Número Int.">
 
                         <input class="CP text-center Not-padding" type="text" formControlName="CP" placeholder="C.P">
                     </div>
@@ -94,19 +84,15 @@
                     </div>
                     <div class="d-flex">
                         <div>
-                            <h4><span
-                                    [classList]="formulario().get('telefono')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'">*</span>
-                                No. telefónico</h4>
+                            <h4><span [classList]="formulario().get('telefono')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'">*</span> No. telefónico</h4>
                             <div>
                                 <!-- <input class="clave" type="text"  placeholder="Clave"> -->
-                                <input class="numTel" type="text" formControlName="telefono"
-                                    placeholder="Clave + Número telefónico">
+                                <input class="numTel" type="text" formControlName="telefono" placeholder="Clave + Número telefónico">
                             </div>
                         </div>
                         <div>
                             <h4><span
-                                    [classList]="formulario().get('correo')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'">*</span>
-                                Correo</h4>
+                                    [classList]="formulario().get('correo')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'">*</span> Correo</h4>
                             <input type="text" class="CorreoElectronico" formControlName="correo"
                                 placeholder="Correo electrónico">
                         </div>
@@ -114,8 +100,7 @@
                     <div class="comprobantes">
                         <div class="row ">
                             <h4><span
-                                    [classList]="formulario().get('Comprobante_domicilio')?.valid && formulario().get('INE')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'">*</span>
-                                Comprobantes</h4>
+                                    [classList]="formulario().get('Comprobante_domicilio')?.valid && formulario().get('INE')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'">*</span> Comprobantes</h4>
                             <p>* Las imágenes individualmente no deben superar 1MB</p>
                             <p>* Son válidos para la carga de imágenes los formatos: jpeg, png y pdf </p>
                         </div>
@@ -134,7 +119,7 @@
                                 <div class="boxNameCargaDomicilio disabledBox" id="boxNameCargaDomicilio">
                                     <input type="text" #inputDomicilio id="file-Domicilio" class="boxName"
                                         disabled="true">
-                                    <span class="cerrar-file text-center" (click)="eliminarBoxIdenficacion()">x</span>
+                                    <span class="cerrar-file text-center" (click)="eliminarBoxComprobante()">x</span>
                                 </div>
                             </span>
                         </div>
@@ -150,7 +135,7 @@
                                 <div class="boxNameCargaIdentificacion disabledBox" id="boxNameCargaIdentificacion">
                                     <input type="text" #inputIdentificacion id="file-Identificacion" class="boxName"
                                         disabled="true">
-                                    <span class="cerrar-file text-center" (click)="eliminarBoxIdenficacion()">x</span>
+                                    <span class="cerrar-file text-center" (click)="eliminarBoxIdentificacion()">x</span>
                                 </div>
                             </span>
 
@@ -176,66 +161,59 @@
 
                             <div class="d-flex grupo-campos-">
                                 <div>
-                                    <h4><span
-                                            [classList]="formulario().get('BRK')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'">*</span>
-                                        No. de BRK</h4>
+                                    <h4><span [classList]="formulario().get('BRK')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'">*</span> No. de BRK</h4>
                                     <div class="inputBRK">
                                         <span>BRK-</span>
-                                        <input class="input1" type="text" maxlength="4" formControlName="Id_Estado"
-                                            placeholder="">
+                                        <input class="input1" type="text" maxlength="4" formControlName="BRK" placeholder="">
                                     </div>
                                 </div>
                                 <div class="">
                                     <h4>Fecha de emisión de Contrato</h4>
                                     <!-- <h4><span [classList]="formulario().get('Fecha_Nac')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'">*</span> Fecha de emisión de Contrato</h4> -->
-                                    <input class="custom-date-picker fechaEmisionContrato mr-12- " #piker type="date"
-                                        max="hoy" formControlName="Id_Municipio"
-                                        (change)="validaFecha( $event, 'Fecha_Nac' )">
+                                    <input class="custom-date-picker fechaEmisionContrato mr-12- " #piker type="date" max="hoy" formControlName="Fecha_Contrato" (change)="validaFecha( $event, 'Fecha_Contrato' )">
                                 </div>
                             </div>
 
                             <div class="d-flex grupo-campos-">
                                 <div class="">
-                                    <h4 class="TipoCuenta">Cuenta o tarjeta asociada</h4>
-                                    <!-- <h4 class="InvRefInt"><span [classList]="formulario().get('Recomendado')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'">*</span> Referencia interna</h4> -->
+                                    <!-- <h4 class="TipoCuenta">Cuenta o tarjeta asociada</h4> -->
+                                    <h4 class="TipoCuenta"><span [classList]="formulario().get('Tipo_Cuenta_targeta')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'">*</span> Cuenta o tarjeta asociada</h4>
 
                                     <div class="select selectTipoCuenta">
-                                        <span class="spanExedioCaractereSelect" id="estado" [ariaSelected]="true"
+                                        <span class="spanExedioCaractereSelect" id="" [ariaSelected]="true"
                                             [hidden]="selectReferido">...</span>
-                                        <select required #comisionistaReferido class="" formControlName="CP">
+                                        <select required #comisionistaReferido class="" formControlName="Tipo_Cuenta_targeta"  (change)="TipoDeCuenta( $event )">
                                             <option value="" disabled selected hidden>Selecciona el tipo de cuenta
-                                            </option>
+                                                <option value="CLABE">Cuenta CLABE</option>
+                                                <option value="Debito">Targeta Debito</option>
+                                                <option value="Fincash">Targeta Fincash</option>
+                                            <!-- </option>
 
                                             @for(item of arrayCuentaAsociada[0]; track $index ){
                                             <option [value]="item.Nombre_Razon_Social">{{item.Nombre_Razon_Social}}
                                             </option>
-                                            }
+                                            } -->
 
                                         </select>
                                     </div>
                                 </div>
                                 <div class="">
                                     <h4>No. de cuenta o tarjeta</h4>
-                                    <input class="No-Fecha-Targeta" type="text" maxlength="4"
-                                        formControlName="Id_Estado" placeholder="16 ó 18 dígitos">
+                                    <input class="No-Fecha-Targeta" type="text" maxlength="4"  placeholder="16 ó 18 dígitos" [disabled]="">
                                 </div>
                             </div>
                             <div class="">
                                 <h4>Institución Bancaria</h4>
-                                <input class="InstitucionBancaria" type="text" maxlength="4" formControlName="Id_Estado"
-                                    placeholder="16 dígitos">
+                                <input class="InstitucionBancaria" type="text" maxlength="4"  placeholder="16 dígitos">
                             </div>
 
                             <div class="beneficiario">
 
                                 <div class="d-flex mt-15- beneficiario-content-1" id="page-1">
                                     <div>
-                                        <h4><span
-                                                [classList]="formulario().get('Beneficiario1')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'">*</span>
-                                            Beneficiario 1</h4>
+                                        <h4><span [classList]="formulario().get('Beneficiario1')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'">*</span> Beneficiario 1</h4>
                                         <div>
-                                            <input class="input1" type="text" formControlName="Beneficiario1"
-                                                placeholder="Nombre completo">
+                                            <input class="input1" type="text" formControlName="Beneficiario1" placeholder="Nombre completo">
                                         </div>
                                     </div>
                                     <div>
@@ -250,126 +228,87 @@
                                         <!-- <span class="eliminar-beneficiario">Eliminar</span> -->
                                         <div class="porciento">
                                             <span class="iconoPorc">%</span>
-                                            <input class="porcentaje porcienObligatorio group2" type="number"
-                                                formControlName="Porcentaje_Beneficiario1"
-                                                (change)="evaluaPorciento( $event, 0 )" (input)="soloDigito($event)"
-                                                placeholder="">
+                                            <input class="porcentaje porcienObligatorio group2" type="number" formControlName="Porcentaje_Beneficiario1" (change)="evaluaPorciento( $event, 0 )" (input)="soloDigito($event)" placeholder="">
                                         </div>
                                     </div>
                                 </div>
 
                                 <div [classList]=" Benef2 ? '' :'d-flex mt-15- beneficiario-content' " id="page-2">
                                     <div>
-                                        <h4 [hidden]="Benef2"><span
-                                                [classList]="formulario().get('Beneficiario2')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'">*</span>
-                                            Beneficiario 2</h4>
+                                        <h4 [hidden]="Benef2"><span [classList]="formulario().get('Beneficiario2')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'">*</span> Beneficiario 2</h4>
                                         <div>
-                                            <input [hidden]="Benef2" class="input1" type="text"
-                                                formControlName="Beneficiario2" placeholder="Nombre completo">
+                                            <input [hidden]="Benef2" class="input1" type="text" formControlName="Beneficiario2" placeholder="Nombre completo">
                                         </div>
                                     </div>
                                     <div>
                                         <h4 [hidden]="Benef2">Fecha de nacimiento</h4>
-                                        <input [hidden]="Benef2"
-                                            class="custom-date-picker FechaNacimientoBeneficiario mr-12 group2"
-                                            type="date" max="hoy" formControlName="Fecha_Nac_Beneficiario2"
-                                            (change)="validaFecha( $event, 'Fecha_Nac_Beneficiario2' )">
+                                        <input [hidden]="Benef2" class="custom-date-picker FechaNacimientoBeneficiario mr-12 group2" type="date" max="hoy" formControlName="Fecha_Nac_Beneficiario2" (change)="validaFecha( $event, 'Fecha_Nac_Beneficiario2' )">
                                     </div>
                                     <div>
                                         <span class="eliminar-beneficiario" [hidden]="Benef2" (click)="eliminaBeneficiario2( Benef2, 2 )">Eliminar</span>
                                         <div class="porciento">
                                             <span class="iconoPorc" [hidden]="Benef2">%</span>
-                                            <input [hidden]="Benef2" class="porcentaje group2" type="number"
-                                                formControlName="Porcentaje_Beneficiario2"
-                                                (change)="evaluaPorciento( $event, 1 )" (input)="soloDigito($event)"
-                                                placeholder="">
+                                            <input [hidden]="Benef2" class="porcentaje group2" type="number" formControlName="Porcentaje_Beneficiario2" (change)="evaluaPorciento( $event, 1 )" (input)="soloDigito($event)" placeholder="">
                                         </div>
                                     </div>
                                 </div>
 
                                 <div [classList]=" Benef3 ? '' :'d-flex mt-15- beneficiario-content' " id="page-3">
                                     <div>
-                                        <h4 [hidden]="Benef3"><span
-                                                [classList]="formulario().get('Beneficiario3')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'">*</span>
-                                            Beneficiario 3</h4>
+                                        <h4 [hidden]="Benef3"><span [classList]="formulario().get('Beneficiario3')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'">*</span> Beneficiario 3</h4>
                                         <div>
-                                            <input [hidden]="Benef3" class="input1" type="text"
-                                                formControlName="Beneficiario3" placeholder="Nombre completo">
+                                            <input [hidden]="Benef3" class="input1" type="text" formControlName="Beneficiario3" placeholder="Nombre completo">
                                         </div>
                                     </div>
                                     <div>
                                         <h4 [hidden]="Benef3">Fecha de nacimiento</h4>
-                                        <input [hidden]="Benef3"
-                                            class="custom-date-picker FechaNacimientoBeneficiario mr-12 group2"
-                                            type="date" max="hoy" formControlName="Fecha_Nac_Beneficiario3"
-                                            (change)="validaFecha( $event, 'Fecha_Nac_Beneficiario3' )">
+                                        <input [hidden]="Benef3" class="custom-date-picker FechaNacimientoBeneficiario mr-12 group2" type="date" max="hoy" formControlName="Fecha_Nac_Beneficiario3" (change)="validaFecha( $event, 'Fecha_Nac_Beneficiario3' )">
                                     </div>
                                     <div>
                                         <span class="eliminar-beneficiario" [hidden]="Benef3" (click)="eliminaBeneficiario2( Benef3, 3 )">Eliminar</span>
                                         <div class="porciento">
                                             <span class="iconoPorc" [hidden]="Benef3">%</span>
-                                            <input [hidden]="Benef3" class="porcentaje group2" type="number"
-                                                formControlName="Porcentaje_Beneficiario3"
-                                                (change)="evaluaPorciento( $event, 2 )" (input)="soloDigito($event)"
-                                                placeholder="">
+                                            <input [hidden]="Benef3" class="porcentaje group2" type="number" formControlName="Porcentaje_Beneficiario3" (change)="evaluaPorciento( $event, 2 )" (input)="soloDigito($event)" placeholder="">
                                         </div>
                                     </div>
                                 </div>
 
                                 <div [classList]=" Benef4 ? '' :'d-flex mt-15- beneficiario-content' " id="page-4">
                                     <div>
-                                        <h4 [hidden]="Benef4"><span
-                                                [classList]="formulario().get('Beneficiario4')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'">*</span>
-                                            Beneficiario 4</h4>
+                                        <h4 [hidden]="Benef4"><span [classList]="formulario().get('Beneficiario4')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'">*</span> Beneficiario 4</h4>
                                         <div>
-                                            <input [hidden]="Benef4" class="input1" type="text"
-                                                formControlName="Beneficiario4" placeholder="Nombre completo">
+                                            <input [hidden]="Benef4" class="input1" type="text" formControlName="Beneficiario4" placeholder="Nombre completo">
                                         </div>
                                     </div>
                                     <div>
                                         <h4 [hidden]="Benef4">Fecha de nacimiento</h4>
-                                        <input [hidden]="Benef4"
-                                            class="custom-date-picker FechaNacimientoBeneficiario mr-12 group2"
-                                            type="date" max="hoy" formControlName="Fecha_Nac_Beneficiario4"
-                                            (change)="validaFecha( $event, 'Fecha_Nac_Beneficiario4' )">
+                                        <input [hidden]="Benef4" class="custom-date-picker FechaNacimientoBeneficiario mr-12 group2" type="date" max="hoy" formControlName="Fecha_Nac_Beneficiario4" (change)="validaFecha( $event, 'Fecha_Nac_Beneficiario4' )">
                                     </div>
                                     <div>
                                         <span class="eliminar-beneficiario" [hidden]="Benef4" (click)="eliminaBeneficiario2( Benef4, 4 )">Eliminar</span>
                                         <div class="porciento">
                                             <span class="iconoPorc" [hidden]="Benef4">%</span>
-                                            <input [hidden]="Benef4" class="porcentaje group2" type="number"
-                                                formControlName="Porcentaje_Beneficiario4"
-                                                (change)="evaluaPorciento( $event, 3 )" (input)="soloDigito($event)"
-                                                placeholder="">
+                                            <input [hidden]="Benef4" class="porcentaje group2" type="number" formControlName="Porcentaje_Beneficiario4" (change)="evaluaPorciento( $event, 3 )" (input)="soloDigito($event)" placeholder="">
                                         </div>
                                     </div>
                                 </div>
 
                                 <div [classList]=" Benef5 ? '' :'d-flex mt-15- beneficiario-content' " id="page-5">
                                     <div>
-                                        <h4 [hidden]="Benef5"><span
-                                                [classList]="formulario().get('Beneficiario5')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'">*</span>
-                                            Beneficiario 5</h4>
+                                        <h4 [hidden]="Benef5"><span [classList]="formulario().get('Beneficiario5')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'">*</span> Beneficiario 5</h4>
                                         <div>
-                                            <input [hidden]="Benef5" class="input1" type="text"
-                                                formControlName="Beneficiario5" placeholder="Nombre completo">
+                                            <input [hidden]="Benef5" class="input1" type="text" formControlName="Beneficiario5" placeholder="Nombre completo">
                                         </div>
                                     </div>
                                     <div>
                                         <h4 [hidden]="Benef5">Fecha de nacimiento</h4>
-                                        <input [hidden]="Benef5"
-                                            class="custom-date-picker FechaNacimientoBeneficiario mr-12 group2"
-                                            type="date" max="hoy" formControlName="Fecha_Nac_Beneficiario5"
-                                            (change)="validaFecha( $event, 'Fecha_Nac_Beneficiario5' )">
+                                        <input [hidden]="Benef5" class="custom-date-picker FechaNacimientoBeneficiario mr-12 group2" type="date" max="hoy" formControlName="Fecha_Nac_Beneficiario5" (change)="validaFecha( $event, 'Fecha_Nac_Beneficiario5' )">
                                     </div>
                                     <div>
                                         <span class="eliminar-beneficiario" [hidden]="Benef5" (click)="eliminaBeneficiario2( Benef5, 5)">Eliminar</span>
                                         <div class="porciento">
                                             <span class="iconoPorc" [hidden]="Benef5">%</span>
-                                            <input [hidden]="Benef5" class="porcentaje group2" type="number"
-                                                formControlName="Porcentaje_Beneficiario5"
-                                                (change)="evaluaPorciento( $event, 4 )" (input)="soloDigito($event)"
-                                                placeholder="">
+                                            <input [hidden]="Benef5" class="porcentaje group2" type="number" formControlName="Porcentaje_Beneficiario5" (change)="evaluaPorciento( $event, 4 )" (input)="soloDigito($event)" placeholder="">
                                         </div>
                                     </div>
                                 </div>
@@ -391,11 +330,10 @@
                             <div class="">
                                 <!-- <h4>Comisionista referente</h4> -->
                                 <h4 class="InvRefInt"><span [classList]="formulario().get('Recomendado')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'">*</span> Comisionista referente</h4>
-
+                                
                                 <div class="select selectTipoCuenta">
-                                    <span class="spanExedioCaractereSelect" id="estado" [ariaSelected]="true"
-                                        [hidden]="selectReferido">...</span>
-                                    <select required #comisionistaReferido class="" formControlName="CP">
+                                    <span class="spanExedioCaractereSelect" id="estado" [ariaSelected]="true" [hidden]="selectBRK">...</span>
+                                    <select required #comisionistaReferido class="" formControlName="Recomendado" (change)="ChangueBRK( $event )">
                                         <option value="" disabled selected hidden>Elige del catálogo de comisionistas</option>
 
                                         @for(item of arrayRefInt[0]; track $index ){
