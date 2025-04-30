@@ -7,9 +7,13 @@ import { ModalMsgComponent } from '../../../core/modal-msg/modal-msg.component';
 import { VentanaBusquedaMsg } from '../comisionistas/ventanaBusquedaMsg';
 import { Inversionistas } from '../../../core/services/inversionistas.service';
 
+import { VentanaVerInformacion } from './ventanaVerInformacion';
+
 // let cuenta = 1;
 let porcentaje = [0, 0, 0, 0, 0]
 let pocicion = [ 0, 0, 0, 0]
+let BusquedaText = ''
+// let editedRegistro:boolean = false;
 
 @Component({
   selector: 'app-inversionista',
@@ -37,13 +41,17 @@ export class InversionistaComponent implements OnInit {
   @ViewChild('FechaContrato') FechaContrato!: ElementRef;
   @ViewChild('TabsInformacion') TabsInformacion!: ElementRef;
   @ViewChild('comisionistaReferido') comisionistaReferido!: ElementRef;
+  @ViewChild('Ref_input_Cuenta_Tarjeta') Ref_input_Cuenta_Tarjeta!: ElementRef;
+  @ViewChild('Ref_Inst_Bancaria') Ref_Inst_Bancaria!: ElementRef;
+  @ViewChild('brk') brk!: ElementRef;
+  @ViewChild('targeta_asociada') targeta_asociada!: ElementRef;
 
   formulario = signal<FormGroup>(
     new FormGroup({
       Id_ICPC: new FormControl(''),
 
       nombre: new FormControl('', [Validators.required]), //Nombre_Razon_Social
-      fisica_moral: new FormControl(true),
+      fisica_moral: new FormControl(1),
       correo: new FormControl('', [Validators.required, Validators.email]),
       telefono: new FormControl('', [Validators.required]),
       BRK: new FormControl('', [Validators.required]),
@@ -68,8 +76,8 @@ export class InversionistaComponent implements OnInit {
       Fecha_Nac_Beneficiario5: new FormControl(''),
       Porcentaje_Beneficiario5: new FormControl(''),
 
-      Banco_cuenta: new FormControl('', [Validators.required]),
-      CLABE: new FormControl('', [Validators.required]),
+      Banco_cuenta: new FormControl(''),
+      CLABE: new FormControl(''),
       FINCASH: new FormControl(''),
       Banco_Tarjeta: new FormControl(''),
       Tarjeta: new FormControl(''),
@@ -87,6 +95,7 @@ export class InversionistaComponent implements OnInit {
       CP: new FormControl(''),
 
       estatus: new FormControl(''),
+
       Tipo_Cuenta_targeta: new FormControl('', [Validators.required]),
 
     })
@@ -98,6 +107,8 @@ arrayMunicipio: Array<any>[] = [];
 arrayCuentaAsociada: Array<any>[] = [];
 ComisionistaReferido: Array<any>[] = [];
 listaBusqueda: Array<any>[] = [];
+InversionistaBusquedaID: Array<any>[] = [];
+criterioBusqueda:string = '';
 selectEstado:boolean = true;
 selectBRK:boolean = true;
 selectMunicipio:boolean = true;
@@ -111,6 +122,17 @@ Benef2: boolean = true;
 Benef3: boolean = true;
 Benef4: boolean = true;
 Benef5: boolean = true;
+Banco_cuenta: boolean = true;
+inst_Bancaria: boolean = true;
+input_BRK: boolean = false;
+titulo_cuenta_asociada:string = 'No. de cuenta o tarjeta'
+placeHolder_cuenta_asociada:string = '16 ó 18 dígitos'
+cuenta_targeta: boolean = false;
+valor:string = ''
+maxlengthCuentas!:number;
+// actualizaRegistro:boolean = false;
+
+
 Hoy:string = "";
 
   private readonly _modalMsg = inject(ModalMsgService);
@@ -120,9 +142,24 @@ ngOnInit(): void {
   this.puenteData.disparadorData.emit({ dato: 'Inversionistas' })
   this.Hoy = this.fechaActual()
   this.estado()
-  this.Referido()
   this.BRK()
+
+  // this.formulario().get('nombre')?.valueChanges.subscribe(selectedValue => {
+  //   console.log('nombre cambio su valor')
+  // })
+  
+  // this.formulario()?.valueChanges.subscribe(selectedValue => {
+  //   console.log(editedRegistro)
+
+  //   if(editedRegistro == true){
+  //       // console.log(editedRegistro)
+  //     console.log('nombre cambio su valor')
+  //     this.actualizaRegistro = true
+  //   }
+  //   })
 }
+
+
 
 fechaActual(){ 
   let fecha = '';
@@ -135,12 +172,104 @@ fechaActual(){
 }
 
 insertaNumBRK( event:any ){
-  
+  if( event.target.value === '' ){
+    this.formulario().patchValue({['BRK']:''})
+    return
+  }
+  this.formulario().patchValue({['BRK']:'BRK-'+event.target.value})
 }
 
+
+// -------------------Tipos de cuentas asiciadas y sus variantes-----------------------
 TipoDeCuenta( event:any ){
-  // deacuerdo al tipo de cuenta que selecciones en "Cuenta o tarjeta asociada" se va a abilitar los campos que estan alado y abajo
+
+  this.Banco_cuenta = true;
+  this.inst_Bancaria = true;
+  this.titulo_cuenta_asociada = 'No. de cuenta o tarjeta'
+  this.placeHolder_cuenta_asociada = '16 ó 18 dígitos'
+  this.maxlengthCuentas = 0
+  this.formulario().patchValue({['FINCASH']:'', 
+    ['CLABE']:'',
+    ['Banco_cuenta']:'',
+    ['Banco_Tarjeta']:'',
+    ['Tarjeta']:'',
+    ['Tipo_Cuenta_targeta']:''});
+
+    this.Ref_input_Cuenta_Tarjeta.nativeElement.value=''
+    this.Ref_Inst_Bancaria.nativeElement.value=''
+  
+  this.valor = event.target.selectedOptions[0].value
+  if(this.valor === 'CLABE' || this.valor === 'Debito' ){
+    this.Banco_cuenta = false;
+    this.inst_Bancaria = false;
+    this.placeHolder_cuenta_asociada = '18 dígitos'
+    if(this.valor === 'Debito' ){
+       this.placeHolder_cuenta_asociada = '16 dígitos'
+    }
+  }else{
+    this.Banco_cuenta = false;
+    this.placeHolder_cuenta_asociada = '16 dígitos'
+    this.titulo_cuenta_asociada = 'Tarjeta Fincash asociada'
+  }
+
 }
+
+cuenta_o_tarjeta( event:any ){
+
+  console.log(this.valor)
+
+if( this.valor === 'Fincash' ){
+  this.formulario().patchValue({['FINCASH']:event.target.value, ['Tipo_Cuenta_targeta']:this.valor});
+  this.cuenta_targeta = true
+  return
+}
+
+if( this.valor === 'CLABE' ){
+  this.formulario().patchValue({['CLABE']:event.target.value});
+  if( this.formulario().get('Banco_cuenta')?.value != '' ){
+    
+    this.cuenta_targeta = true
+    this.formulario().patchValue({['Tipo_Cuenta_targeta']:this.valor});
+  }
+  
+}else if (this.valor === 'Debito'){
+  this.formulario().patchValue({['Tarjeta']:event.target.value});
+  if( this.formulario().get('Banco_Tarjeta')?.value != '' ){
+    
+    this.cuenta_targeta = true
+    this.formulario().patchValue({['Tipo_Cuenta_targeta']:this.valor});
+    
+  }
+}
+
+
+}
+
+Institucion_Bancaria( event:any ){
+  
+  if( this.valor === 'CLABE' ){
+    this.formulario().patchValue({['Banco_cuenta']:event.target.value});
+    if( this.formulario().get('CLABE')?.value != '' ){
+      
+      this.cuenta_targeta = true
+      this.formulario().patchValue({['Tipo_Cuenta_targeta']:this.valor});
+      
+    }
+    
+  }else if (this.valor === 'Debito'){
+    this.formulario().patchValue({['Banco_Tarjeta']:event.target.value});
+    if( this.formulario().get('Tarjeta')?.value != '' ){
+      
+      this.cuenta_targeta = true
+      this.formulario().patchValue({['Tipo_Cuenta_targeta']:this.valor});
+      
+    }
+  }
+
+}
+
+// ------------------------------------------------------------------------------
+
 async estado() {
 
   const estado = await this.servicio.getEstado()
@@ -148,18 +277,12 @@ async estado() {
   // console.log(estado)
 
 }
-async Referido() {
 
-  // const referido = await this.servicio.getReferido()
-  // this.ComisionistaReferido = referido
-  // console.log(estado)
-
-}
 async BRK(  ) {
 
   const referido = await this.servicio.getReferidoBRK()
   this.arrayRefInt = referido
-  console.log(this.arrayRefInt)
+  // console.log(this.arrayRefInt)
   
 }
 
@@ -221,7 +344,7 @@ resetForm() {
   this.Estado.nativeElement.value = '';
   this.comisionistaReferido.nativeElement.value = '';
 
-  this.radioBtn1.nativeElement.checked = true
+  this.radioBtn1.nativeElement.checked = 1
   this.formulario().patchValue({fisica_moral:true})
   
   this.arrayMunicipio = []
@@ -234,18 +357,40 @@ resetForm() {
   this.selectEstado = true
   this.selectMunicipio = true
   this.selectBRK = true
+
+  this.Banco_cuenta = true;
+  this.inst_Bancaria = true;
+  this.titulo_cuenta_asociada = 'No. de cuenta o tarjeta'
+  this.placeHolder_cuenta_asociada = '16 ó 18 dígitos'
+  this.maxlengthCuentas = 0
+  this.formulario().patchValue({['FINCASH']:'', 
+    ['CLABE']:'',
+    ['Banco_cuenta']:'',
+    ['Banco_Tarjeta']:'',
+    ['Tarjeta']:'',
+    ['Tipo_Cuenta_targeta']:''});
+
+    this.targeta_asociada.nativeElement.value=''
+    this.Ref_input_Cuenta_Tarjeta.nativeElement.value=''
+    this.Ref_Inst_Bancaria.nativeElement.value=''
+    this.brk.nativeElement.value=''
+    this.brk.nativeElement.disabled = true
+    this.input_BRK = false;
+
+    // this.actualizaRegistro = false
 }
-ActualizarRegistro() {
+
+async ActualizarRegistro() {
     console.log(this.formulario().value)
 
     if ( this.formulario().valid ){
 
-      if( this.formulario().get('usuario')?.value == null ){
+      // if( this.formulario().get('usuario')?.value == null ){
         // let credenciales = await this.servicio.GetCredenciales()
         // this.formulario().patchValue({usuario:credenciales.Id})
-      }
+      // }
 
-      // let registroActualizado = await this.servicio.EnviarActualizacioRegistro(this.formulario())
+      let registroActualizado = await this.servicio.EnviarActualizacioRegistro(this.formulario(), this.InversionistaBusquedaID)
 
       // if ( registroActualizado.status === 'error' ){
       //   this._modalMsg.openModalMsg<ModalMsgComponent>( ModalMsgComponent, { data:registroActualizado.data }, false, '300px', 'error' )
@@ -257,51 +402,178 @@ ActualizarRegistro() {
       this.listaBusqueda = [];
     }
 }
-enviar() {
+
+async enviar() {
     if (this.formulario().valid) {
 
       
       if( this.formulario().get('usuario')?.value ==='' || this.formulario().get('usuario')?.value == null){
-        // let credenciales = await this.servicio.GetCredenciales()
-        // this.formulario().patchValue({usuario:credenciales.Id})
+        let credenciales = await this.servicio.GetCredenciales()
+        this.formulario().patchValue({usuario:credenciales.Id})
       }
 
-      // let registro = await this.servicio.AgregarComisionista( this.formulario() )
-      // if ( registro.status === 'error' ){
-      //   this._modalMsg.openModalMsg<ModalMsgComponent>( ModalMsgComponent, { data:registro.data }, false, '300px', 'error' )
-      //   return
-      // }
+      let registro = await this.servicio.AgregarInversionistas( this.formulario() )
+      if ( registro.status === 'error' ){
+        this._modalMsg.openModalMsg<ModalMsgComponent>( ModalMsgComponent, { data:registro.data }, false, '300px', 'error' )
+        return
+      }
       
-      // this._modalMsg.openModalMsg<ModalMsgComponent>( ModalMsgComponent, { data:registro.data }, false, '300px', 'exito' )
-      this.resetForm()
-
+      this._modalMsg.openModalMsg<ModalMsgComponent>( ModalMsgComponent, { data:registro.data }, false, '300px', 'exito' )
+      // this.resetForm()
+      
     }
+    console.log(this.formulario().value)
 
-      console.log(this.formulario().value)
 }
+
 inputBusqueda(event:any) {
-  // this.criterioBusqueda = event.target.value; 
+  this.criterioBusqueda = event.target.value; 
+  // this.criterioBusqueda = ''; 
   if( event.target.value.length > 0 ){
     this.disabledBtn = false;
     return
   }
   this.disabledBtn = true;
 }
+
+cargaFormularioComisionista( formComisionista:Array<any>, dataBeneficiarios:any ){
+  // console.log(formComisionista)
+
+  // this.resetForm();
+  formComisionista[0].map((item:any)=>{
+    this.formulario().patchValue({
+      ['Id_ICPC']:item.Id_ICPC,
+      ['nombre']:item.nombre,
+      ['fisica_moral']:item.fisica_moral,
+      ['correo']:item.correo,
+      ['telefono']:item.telefono,
+      ['BRK']:item.BRK,
+      ['usuario']:item.usuario,
+      ['Fecha_Nac']:item.Fecha_Nac,
+      ['RFC']:item.RFC,
+
+      ['Beneficiario1']:item.Beneficiario1,
+      ['Fecha_Nac_Beneficiario1']:item.Fecha_Nac_Beneficiario1,
+      // ['Porcentaje_Beneficiario1']:item.Porcentaje_Beneficiario1,
+      ['Beneficiario2']:item.Beneficiario2,
+      ['Fecha_Nac_Beneficiario2']:item.Fecha_Nac_Beneficiario2,
+      // ['Porcentaje_Beneficiario2']:item.Porcentaje_Beneficiario2,
+      ['Beneficiario3']:item.Beneficiario3,
+      ['Fecha_Nac_Beneficiario3']:item.Fecha_Nac_Beneficiario3,
+      // ['Porcentaje_Beneficiario3']:item.Porcentaje_Beneficiario3,
+      ['Beneficiario4']:item.Beneficiario4,
+      ['Fecha_Nac_Beneficiario4']:item.Fecha_Nac_Beneficiario4,
+      // ['Porcentaje_Beneficiario4']:item.Porcentaje_Beneficiario4,
+      ['Beneficiario5']:item.Beneficiario5,
+      ['Fecha_Nac_Beneficiario5']:item.Fecha_Nac_Beneficiario5,
+      // ['Porcentaje_Beneficiario5']:item.Porcentaje_Beneficiario5,
+
+      ['Banco_cuenta']:item.Banco_cuenta,
+      ['CLABE']:item.CLABE,
+      ['FINCASH']:item.FINCASH,
+      ['Banco_Tarjeta']:item.Banco_Tarjeta,
+      ['Tarjeta']:item.Tarjeta,
+      ['INE']:item.INE,
+      ['Comprobante_Domicilio']:item.Comprobante_Domicilio,
+      ['Recomendado']:item.Recomendado,
+      ['Fecha_Contrato']:item.Fecha_Contrato,
+      ['Calle']:item.Calle,
+      ['No_Exterior']:item.No_Exterior,
+      ['No_Interior']:item.No_Interior,
+      ['Colonia']:item.Colonia,
+      ['Id_Estado']:item.Id_Estado,
+      // ['Id_Municipio']:item.Id_Municipio,
+      ['CP']:item.CP,
+      ['estatus']:item.Estatus,
+
+    })
+  })
+  formComisionista[0][0].fisica_moral === '1' ? (this.radioBtn1.nativeElement.checked = true) : (this.radioBtn2.nativeElement.checked = true)
+  this.servicio.getMunicipio(formComisionista[0][0].Id_Estado)
+  .then( datosMunicipio => {
+    this.arrayMunicipio = datosMunicipio;
+  } )
+  setTimeout(() => {
+    this.formulario().patchValue({['Id_Municipio']:formComisionista[0][0].Id_Municipio,})
+  }, 100)
+
+  document.getElementById("boxNameCargaDomicilio")?.classList.remove('disabledBox')
+  document.getElementById("boxNameCargaIdentificacion")?.classList.remove('disabledBox')
+  this.inputDomicilio.nativeElement.value = formComisionista[0][0].Comprobante_Domicilio;
+  this.inputIdentificacion.nativeElement.value = formComisionista[0][0].INE;
+
+  if(formComisionista[0][0].Fecha_Contrato){
+    this.Piker = false;
+    this.FechaContrato.nativeElement.disabled = true
+  }
+
+  this.brk.nativeElement.value = formComisionista[0][0].BRK.replace(/\D/g, "")
+  this.brk.nativeElement.disabled = true
+  this.input_BRK = true;
+
+  this.cargaCuentaTargeta( formComisionista[0][0].CLABE, formComisionista[0][0].Banco_Cuenta, formComisionista[0][0].Tarjeta, formComisionista[0][0].Banco_Tarjeta, formComisionista[0][0].FINCASH )
+
+  this.actualizaBeneficiario( dataBeneficiarios )
+
+}
+
+
+cargaCuentaTargeta( _Clave:string, _BancoCuenta:string, _tarjeta:string, _BancoTargeta:string, _fincash:string ){
+  if( _Clave != '' ){
+      this.formulario().patchValue({['Tipo_Cuenta_targeta']:'CLABE'})
+      this.targeta_asociada.nativeElement.value ='CLABE'
+      this.Ref_input_Cuenta_Tarjeta.nativeElement.value = _Clave
+      this.Ref_Inst_Bancaria.nativeElement.value = _BancoCuenta
+      this.inst_Bancaria = false;
+      this.cuenta_targeta = true
+      this.Banco_cuenta = false;
+
+      return
+  }
+  if( _tarjeta != '' ){
+    this.formulario().patchValue({['Tipo_Cuenta_targeta']:'Debito'})
+    this.targeta_asociada.nativeElement.value ='Debito'
+    this.Ref_input_Cuenta_Tarjeta.nativeElement.value = _tarjeta
+    this.Ref_Inst_Bancaria.nativeElement.value = _BancoTargeta
+    this.inst_Bancaria = false;
+    this.cuenta_targeta = true
+    this.Banco_cuenta = false;
+
+    return
+  }
+  if( _fincash != '' ){
+    this.formulario().patchValue({['Tipo_Cuenta_targeta']:'Fincash'})
+    this.targeta_asociada.nativeElement.value ='Fincash'
+    this.Ref_input_Cuenta_Tarjeta.nativeElement.value = _fincash
+    this.inst_Bancaria = true;
+    this.cuenta_targeta = true
+    this.Banco_cuenta = false;
+
+    return
+  }
+
+
+}
+
 async busqueda(){
-    // BusquedaText = this.criterioBusqueda
-    // const data = await this.servicio.busqueda( this.criterioBusqueda )
+    BusquedaText = this.criterioBusqueda
+    console.log(BusquedaText)
+    const data = await this.servicio.busqueda( this.criterioBusqueda )
+    console.log(data)
+    if( data.status === 'error' ){
     // if( data[0].length === 0 ){
-    //   this.listaBusqueda = []
-    //   const data = { mensaje:'No se Encontraron Coincidencias' }
-    //   this._modalMsg.openModalMsg<ModalMsgComponent>( ModalMsgComponent, { data:data }, false, '300px', 'exito')
-    //   this.Busqueda.nativeElement.value = '';
-    //   this.disabledBtn = true;
-    //   return
-    // }
-    // this.listaBusqueda = data
+      this.listaBusqueda = []
+      // const data = { mensaje:'No se Encontraron Coincidencias' }
+      this._modalMsg.openModalMsg<ModalMsgComponent>( ModalMsgComponent, { data:data.data }, false, '300px', 'exito')
+      this.Busqueda.nativeElement.value = '';
+      this.disabledBtn = true;
+      return
+    }
+    this.listaBusqueda = data
     this.Busqueda.nativeElement.value = '';
     this.disabledBtn = true;
 }
+
   validaFecha( event:any, quien:string ){
     console.log(event.target.value)
     let fecha_nacimiento = event.target.value
@@ -359,7 +631,8 @@ uploadDomicilio(event: any) {
 }
 
   editarComisionista( id:number ){
- 
+ console.log(id)
+
     const dialogRef = this._dialog.open( VentanaBusquedaMsg, {
       disableClose:true,
       data: '',
@@ -368,41 +641,46 @@ uploadDomicilio(event: any) {
     });
       
     dialogRef.afterClosed().subscribe(result => {
-      // if(result){
-      //   this.servicio.cargaComisionistaId( id )
-      //   .then( datos => {
-      //     if( datos.status === 'error' ){
-      //       this._modalMsg.openModalMsg<ModalMsgComponent>( ModalMsgComponent, { data:datos.data }, false, '300px', 'exito')
-      //       return
-      //     }
-      //     this.resetForm()
-      //     this.editar = false
-      //     this.cargaFormularioComisionista( datos )
-      //     this.TabsInformacion.nativeElement.checked = true
-      //   } )
-      // }
+      if(result){
+        this.servicio.cargaComisionistaId( id, 'edita' )
+        .then( datos => {
+          if( datos.status === 'error' ){
+            this._modalMsg.openModalMsg<ModalMsgComponent>( ModalMsgComponent, { data:datos.data }, false, '300px', 'exito')
+            return
+          }
+          this.resetForm()
+          this.editar = false
+          this.InversionistaBusquedaID=datos.Busqueda
+          this.cargaFormularioComisionista( datos.busqueda, datos.datosBeneficiario )
+
+          this.TabsInformacion.nativeElement.checked = true
+        } )
+      }
     });
 
   }
   async verDatosComisionista( id:number ){
-    // const datos = await this.servicio.cargaComisionistaId( id )
-    // if(datos.status === 'error'){
-    //   this._modalMsg.openModalMsg<ModalMsgComponent>( ModalMsgComponent, { data:datos.data }, false, '300px', 'exito')
-    //   return
-    // }
-    // const dialogRef = this._dialog.open( VentanaVerInformacion, {
-    //   disableClose:true,
-    //   data:datos,
-    //   width:'705px',
-    //   maxWidth: '100%'
-    // })
 
-    // dialogRef.afterClosed().subscribe( result => {
-    // })
+    const datos = await this.servicio.cargaComisionistaId( id, 'ver' )
+    if(datos.status === 'error'){
+      this._modalMsg.openModalMsg<ModalMsgComponent>( ModalMsgComponent, { data:datos.data }, false, '300px', 'exito')
+      return
+    }
+    const dialogRef = this._dialog.open( VentanaVerInformacion, {
+      disableClose:true,
+      data:datos,
+      width:'705px',
+      maxWidth: '100%'
+    })
+
+    dialogRef.afterClosed().subscribe( result => {
+    })
 
   }
+
 ver(){
   console.log(this.formulario().value)
+  console.log(porcentaje)
 }
 
 eliminarBoxFile(HTMLElementBoxWho: string, HTMLElementRefFileHow: ElementRef, ElementRefHow: ElementRef, FormGroupNameKey: string) {
@@ -433,6 +711,72 @@ soloDigito(event:any) {
   event.target.value = valorMonto 
 }
 
+actualizaBeneficiario( dataBeneficiarios:any ){
+  console.log(dataBeneficiarios)
+
+this.Benef1 = false
+this.formulario().patchValue({['Porcentaje_Beneficiario1']: +dataBeneficiarios[0][`Porcentaje_Beneficiario1`]})
+
+porcentaje[0] = +dataBeneficiarios[0][`Porcentaje_Beneficiario1`]
+
+
+for( let j = 1; j < Object.keys(dataBeneficiarios[0]).length-1; j++ ){
+  
+  if( dataBeneficiarios[0][`Beneficiario${j+1}`]!=='' ){
+    // console.log( 'entre ', j+1)
+    // console.log(dataBeneficiarios[0][`Beneficiario${j+1}`])
+    
+    switch (j-1) {
+      case 0:
+        pocicion[0]=1
+        this.Benef2 = false;
+        this.formulario().patchValue({['Porcentaje_Beneficiario2']: +dataBeneficiarios[0][`Porcentaje_Beneficiario2`]})
+        porcentaje[1] = +dataBeneficiarios[0][`Porcentaje_Beneficiario2`]
+        break
+        
+        case 1:
+          pocicion[1]=1
+          this.Benef3 = false;
+          this.formulario().patchValue({['Porcentaje_Beneficiario3']: +dataBeneficiarios[0][`Porcentaje_Beneficiario3`]})
+          porcentaje[2] = +dataBeneficiarios[0][`Porcentaje_Beneficiario3`]
+          break
+          
+          case 2:
+            pocicion[2]=1
+            this.Benef4 = false;
+            this.formulario().patchValue({['Porcentaje_Beneficiario4']: +dataBeneficiarios[0][`Porcentaje_Beneficiario4`]})
+            porcentaje[3] = +dataBeneficiarios[0][`Porcentaje_Beneficiario4`]
+            break
+            
+            case 3:
+              pocicion[3]=1
+              this.Benef5 = false;
+              this.formulario().patchValue({['Porcentaje_Beneficiario5']: +dataBeneficiarios[0][`Porcentaje_Beneficiario5`]})
+              porcentaje[4] = +dataBeneficiarios[0][`Porcentaje_Beneficiario5`]
+              break
+              
+            }
+            
+  }
+
+  
+  let cuenta = porcentaje[0] + porcentaje[1] + porcentaje[2] + porcentaje[3] + porcentaje[4]
+  if ( cuenta >= 100){
+    this.btnAgregaBeneficiario = false
+    
+    
+    // return
+  }
+  
+}
+
+// setTimeout(() => {
+//   editedRegistro = true
+//   console.log('el registro', editedRegistro)
+// }, 100)
+
+}
+
 agregaBeneficiario() {
   let cuenta = porcentaje[0] + porcentaje[1] + porcentaje[2] + porcentaje[3] + porcentaje[4]
   
@@ -454,28 +798,29 @@ agregaBeneficiario() {
       // this.formulario().get( 'Beneficiario2' )?.addValidators( Validators.required )
       pocicion[0]=1
       this.Benef2 = false;
-      cuenta += 1
+      // cuenta += 1
       break
 
     case 1:
       pocicion[1]=1
       this.Benef3 = false;
-      cuenta += 1
+      // cuenta += 1
       break
 
     case 2:
       pocicion[2]=1
       this.Benef4 = false;
-      cuenta += 1
+      // cuenta += 1
       break
 
     case 3:
       pocicion[3]=1
       this.Benef5 = false;
-      cuenta += 1
+      // cuenta += 1
       break
 
   }
+  console.log(pocicion)
 
 }
 eliminaBeneficiario2( benef:boolean, num:number ){

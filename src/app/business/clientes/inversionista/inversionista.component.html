@@ -3,19 +3,24 @@
         <div class="separacion">
             <!-- ------------------CARD 1 --------------------- -->
             <div class="card-1 card">
-                <button (click)="ver()" >ver</button>
+                <button (click)="editarComisionista( 600 )" >ver</button>
+                <button (click)="ver()" >ver-array</button>
                 <div class="d-flex">
-                    <div class="col-7">
-                        <h1 class="h1TitleCard">Agregar Inversionista</h1>
+                    <div class="col-7" [hidden]="editar ? false : true">
+                        <h1 class="h1TitleCard">Agregar Inversionistas</h1>
+                    </div>
+                    <div class="col-5- edicionRegistro col-7" [hidden]="editar ? true: false">
+                        <h1 class="h1TitleCard"><img src="/img-sai/icon-edicion-de-registro.png" style="width: 20px;">Edición de Registro</h1>
+                        <p>Los cambios afectarán el registro</p>
                     </div>
                 </div>
-                <span>{{Hoy}}</span>
+                <span  [hidden]="editar ? false: true">{{Hoy}}</span>
                 <form [formGroup]="formulario()">
                     <div class="form-check">
                         <div class="check">
                             <label class="form-check-label">Persona Física</label>
                             <label class="label-container">
-                                <input type="radio" #radioBtn1 (change)="formulario().patchValue({'fisica_moral':true})"
+                                <input type="radio" #radioBtn1 (change)="formulario().patchValue({'fisica_moral':1})"
                                     checked name="radio">
                                 <span class="checkmark"></span>
                             </label>
@@ -24,7 +29,7 @@
                             <label class="form-check-label">Persona Moral</label>
                             <label class="label-container">
                                 <input type="radio" #radioBtn2
-                                    (change)="formulario().patchValue({'fisica_moral':false})" name="radio">
+                                    (change)="formulario().patchValue({'fisica_moral':0})" name="radio">
                                 <span class="checkmark"></span>
                             </label>
                         </div>
@@ -42,8 +47,8 @@
                         </div>
                     </div>
                     <div>
-                        <h4 class="h1FechaEmision"><span [classList]="formulario().get('Fecha_Nac')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'">*</span> Fecha de nacimiento</h4>
-                        <input [classList]="Piker ? 'custom-date-picker FechaEmision mr-12 btnInActivo':'custom-date-picker FechaEmision mr-12 btnActive'" type="date" formControlName="Fecha_Nac" #FechaContrato (change)="validaFecha( $event, 'Fecha_Nac' )">
+                        <h4 class="h1FechaNacimiento"><span [classList]="formulario().get('Fecha_Nac')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'">*</span> Fecha de nacimiento</h4>
+                        <input [classList]="Piker ? 'custom-date-picker FechaNacimiento mr-12 btnInActivo':'custom-date-picker FechaEmision mr-12 btnActive'" type="date" formControlName="Fecha_Nac" #FechaContrato (change)="validaFecha( $event, 'Fecha_Nac' )">
                     </div>
 
                     <div class="mb-12">
@@ -51,11 +56,11 @@
                         <h4>Dirección</h4>
                         <input class="Calle PlaceHolderObligatorio-" formControlName="Calle" type="text" placeholder="* Calle">
 
-                        <input class="Numero text-center Not-padding" type="text" formControlName="No_Exterior" placeholder="Número">
+                        <input class="Numero text-center Not-padding" type="text" maxlength="20" formControlName="No_Exterior" placeholder="Número">
 
-                        <input class="NumeroInt text-center Not-padding" type="text" formControlName="No_Interior" placeholder="Número Int.">
+                        <input class="NumeroInt text-center Not-padding" type="text" maxlength="20" formControlName="No_Interior" placeholder="Número Int.">
 
-                        <input class="CP text-center Not-padding" type="text" formControlName="CP" placeholder="C.P">
+                        <input class="CP text-center Not-padding" type="text" maxlength="5" formControlName="CP" placeholder="C.P">
                     </div>
 
                     <div class="">
@@ -99,8 +104,7 @@
                     </div>
                     <div class="comprobantes">
                         <div class="row ">
-                            <h4><span
-                                    [classList]="formulario().get('Comprobante_domicilio')?.valid && formulario().get('INE')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'">*</span> Comprobantes</h4>
+                            <h4><span [classList]="formulario().get('Comprobante_Domicilio')?.valid && formulario().get('INE')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'">*</span> Comprobantes</h4>
                             <p>* Las imágenes individualmente no deben superar 1MB</p>
                             <p>* Son válidos para la carga de imágenes los formatos: jpeg, png y pdf </p>
                         </div>
@@ -164,25 +168,27 @@
                                     <h4><span [classList]="formulario().get('BRK')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'">*</span> No. de BRK</h4>
                                     <div class="inputBRK">
                                         <span>BRK-</span>
-                                        <input class="input1" type="text" maxlength="4" formControlName="BRK" placeholder="" (change)="insertaNumBRK( $event )">
+                                        <input [classList]="input_BRK ? 'input1 inputInActive' : 'input1' " type="text" maxlength="4" #brk placeholder="" (change)="insertaNumBRK( $event )" (input)="soloDigito( $event )">
                                     </div>
                                 </div>
                                 <div class="">
                                     <h4>Fecha de emisión de Contrato</h4>
                                     <!-- <h4><span [classList]="formulario().get('Fecha_Nac')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'">*</span> Fecha de emisión de Contrato</h4> -->
-                                    <input class="custom-date-picker fechaEmisionContrato mr-12- " #piker type="date" max="hoy" formControlName="Fecha_Contrato" (change)="validaFecha( $event, 'Fecha_Contrato' )">
+                                    <input class="custom-date-picker fechaEmisionContrato mr-12- " #piker type="date" formControlName="Fecha_Contrato">
                                 </div>
                             </div>
 
                             <div class="d-flex grupo-campos-">
                                 <div class="">
                                     <!-- <h4 class="TipoCuenta">Cuenta o tarjeta asociada</h4> -->
-                                    <h4 class="TipoCuenta"><span [classList]="formulario().get('Tipo_Cuenta_targeta')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'">*</span> Cuenta o tarjeta asociada</h4>
+                                    <!-- <h4 class="TipoCuenta"><span [classList]="formulario().get('Tipo_Cuenta_targeta')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'">*</span> Cuenta o tarjeta asociada</h4> -->
+                                    <h4 class="TipoCuenta"><span [classList]="cuenta_targeta ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'">*</span> Cuenta o tarjeta asociada</h4>
 
                                     <div class="select selectTipoCuenta">
                                         <span class="spanExedioCaractereSelect" id="" [ariaSelected]="true"
                                             [hidden]="selectReferido">...</span>
-                                        <select required #comisionistaReferido class="" formControlName="Tipo_Cuenta_targeta"  (change)="TipoDeCuenta( $event )">
+                                        <select required #targeta_asociada class="" (change)="TipoDeCuenta( $event )">
+                                        <!-- <select required #comisionistaReferido class="" formControlName="Tipo_Cuenta_targeta"  (change)="TipoDeCuenta( $event )"> -->
                                             <option value="" disabled selected hidden>Selecciona el tipo de cuenta
                                                 <option value="CLABE">Cuenta CLABE</option>
                                                 <option value="Debito">Targeta Debito</option>
@@ -198,13 +204,13 @@
                                     </div>
                                 </div>
                                 <div class="">
-                                    <h4>No. de cuenta o tarjeta</h4>
-                                    <input class="No-Fecha-Targeta" type="text" maxlength="4"  placeholder="16 ó 18 dígitos" [disabled]="">
+                                    <h4>{{titulo_cuenta_asociada}}</h4>
+                                    <input [classList]="Banco_cuenta ? 'No-Fecha-Targeta inputInActive' : 'No-Fecha-Targeta' " #Ref_input_Cuenta_Tarjeta type="text" [attr.maxLength]="valor ==='CLABE' ? 18:16 "  [placeholder]="placeHolder_cuenta_asociada" [disabled]="Banco_cuenta" (change)="cuenta_o_tarjeta( $event )">
                                 </div>
                             </div>
                             <div class="">
                                 <h4>Institución Bancaria</h4>
-                                <input class="InstitucionBancaria" type="text" maxlength="4"  placeholder="16 dígitos">
+                                <input  [classList]="inst_Bancaria ? 'InstitucionBancaria inputInActive' : 'InstitucionBancaria' " #Ref_Inst_Bancaria type="text" placeholder="Banca emisora" [disabled]="inst_Bancaria" (change)="Institucion_Bancaria( $event )">
                             </div>
 
                             <div class="beneficiario">
@@ -350,6 +356,7 @@
                             <div class="d-flex btnsRegistro">
                                 <div class="row ">
                                     <button type="submit" (click)="enviar()" [hidden]="editar ? false:true" [classList]="formulario().valid ? 'btn G-C-Registro btnInActivo':'btn G-C-Registro btnActive'" >GUARDAR REGISSTRO</button>
+                                    <!-- <button type="submit" (click)="ActualizarRegistro()" [hidden]="editar ? true:false" [classList]="actualizaRegistro ? 'btn G-C-Registro btnInActivo':'btn G-C-Registro btnActive'" >ACTUALIZAR CAMPOS</button> -->
                                     <button type="submit" (click)="ActualizarRegistro()" [hidden]="editar ? true:false" [classList]="formulario().valid ? 'btn G-C-Registro btnInActivo':'btn G-C-Registro btnActive'" >ACTUALIZAR CAMPOS</button>
                                     <button class="btn-second G-C-Registro mr-12" type="button" (click)="resetForm()">CANCELAR</button>
                                 </div>
@@ -384,23 +391,23 @@
                                       <tr>
                                         <th class="thead-th-blod-No-Border th-just-left Nombre">Nombre</th>
                                         <th class="thead-th-blod-No-Border th-just-left Codigo">Código</th>
-                                        <th class="thead-th-blod-No-Border th-just-left TipCliente">Tipo de Cliente</th>
+                                        <!-- <th class="thead-th-blod-No-Border th-just-left TipCliente">Tipo de Cliente</th> -->
                                         <th class="thead-th-blod-No-Border th-just-left CorreoElect">Correo electrónico</th>
-                                        <th class="thead-th-blod-No-Border "></th>
+                                        <!-- <th class="thead-th-blod-No-Border "></th> -->
                                         <!-- <th class="thead-th-blod-No-Border "></th> -->
                                       </tr>
                                     </thead>
                                     <tbody class="">
                                         @for( item of listaBusqueda[0]; track $index ){
                                             <tr>
-                                                <!-- <td class="tbody-td-ligth-No-Border AdeudoEurope-Monte Nombre">{{item.Nombre_Razon_Social}}</td> -->
-                                                <td class="tbody-td-ligth-No-Border AdeudoEurope-Monte Codigo">{{item.Num_Comisionista}}</td>
-                                                <td class="tbody-td-ligth-No-Border AdeudoEurope-Monte TipCliente">{{item.TipoCliente}}</td>
+                                                <td class="tbody-td-ligth-No-Border AdeudoEurope-Monte Nombre">{{item.Nombre_Razon_Social}}</td>
+                                                <td class="tbody-td-ligth-No-Border AdeudoEurope-Monte Codigo">{{item.BRK}}</td>
+                                                <!-- <td class="tbody-td-ligth-No-Border AdeudoEurope-Monte TipCliente">{{item.TipoCliente}}</td> -->
                                                 <td class="tbody-td-ligth-No-Border AdeudoEurope-Monte CorreoElect">{{item.Correo}}</td>
                                                 <!-- <td class=""><button type="button" [disabled]="item.BRK ? true:false" (click)="portafolioInvercion( item.Id_ICPC )" class="TdOptionsTable"><img [src]="item.BRK ?  '/img-sai/icon-Brief-disabled-35.png' : '/img-sai/icon-Brief.png'  " ></button></td> -->
-                                                <td class=""><button type="button" (click)="verDatosComisionista( item.Id_ICPC )" class="TdOptionsTable"><img src="/img-sai/ojito_abierto.png"></button></td>
-                                                <td class=""><button type="button" (click)="editarComisionista( item.Id_ICPC )" class="TdOptionsTable"><img src="/img-sai/icon-edith.png"></button></td>
-                                                <td class=""><button type="button" (click)="editarComisionista( item.Id_ICPC )" class="TdOptionsTable"><img src="/img-sai/icon-trash.png"></button></td>
+                                                <td class="TD_Option"><button type="button" (click)="verDatosComisionista( item.Id_ICPC )" class="TdOptionsTable"><img src="/img-sai/ojito_abierto.png"></button></td>
+                                                <td class="TD_Option"><button type="button" (click)="editarComisionista( item.Id_ICPC )" class="TdOptionsTable"><img src="/img-sai/icon-edith.png"></button></td>
+                                                <td class="TD_Option"><button type="button" (click)="editarComisionista( item.Id_ICPC )" class="TdOptionsTable"><img src="/img-sai/icon-trash.png"></button></td>
                                             </tr>
                                         }
                                     </tbody>

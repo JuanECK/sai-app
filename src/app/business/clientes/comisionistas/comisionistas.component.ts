@@ -19,6 +19,7 @@ import { VentanaEliminaMsg } from './ventanaEliminarMsg';
 // -----------------------------------------------------------
 
 let BusquedaText = ''
+// let editedRegistro:boolean = false;
 
 
 // const MATERIAL_MODULES = [ MatCardModule ]
@@ -56,11 +57,14 @@ export class ComisionistasComponent implements OnInit {
   @ViewChild('FechaContrato') FechaContrato!: ElementRef;
   @ViewChild('TabsInformacion') TabsInformacion!: ElementRef;
   @ViewChild('comisionistaReferido') comisionistaReferido!: ElementRef;
+  @ViewChild('Ref_input_Cuenta_Tarjeta') Ref_input_Cuenta_Tarjeta!: ElementRef;
+  @ViewChild('Ref_Inst_Bancaria') Ref_Inst_Bancaria!: ElementRef;
+  @ViewChild('targeta_asociada') targeta_asociada!: ElementRef;
 
   formulario = signal<FormGroup>(
     new FormGroup({
       nombre: new FormControl('', [Validators.required]),
-      fisica_moral: new FormControl(true, [Validators.required]),
+      fisica_moral: new FormControl(1, [Validators.required]),
       correo: new FormControl('', [Validators.required, Validators.email]),
       telefono: new FormControl('', [Validators.required]),
       usuario: new FormControl(''),
@@ -85,8 +89,9 @@ export class ComisionistasComponent implements OnInit {
       Id_ICPC: new FormControl(''),
       
       NameDomicilio: new FormControl(''),
-      NameIdentificacion: new FormControl('')
-      
+      NameIdentificacion: new FormControl(''),
+
+      Tipo_Cuenta_targeta: new FormControl('', [Validators.required]),
     })
   )
 
@@ -102,6 +107,16 @@ export class ComisionistasComponent implements OnInit {
   selectEstado:boolean = true;
   selectMunicipio:boolean = true;
   Hoy:string = "";
+  cuenta_targeta: boolean = false;
+  selectReferido: boolean = true;
+  Banco_cuenta: boolean = true;
+  inst_Bancaria: boolean = true;
+  titulo_cuenta_asociada:string = 'No. de cuenta o tarjeta'
+  placeHolder_cuenta_asociada:string = '16 ó 18 dígitos'
+  maxlengthCuentas!:number;
+  valor:string = ''
+
+  // actualizaRegistro:boolean = false;
 
   private readonly _modalMsg = inject(ModalMsgService);
   // private readonly _ventanaBusqueda = inject(VentanaBusquedaMsgService);
@@ -109,12 +124,110 @@ export class ComisionistasComponent implements OnInit {
 
   // @ViewChildren("radio") checkboxes: QueryList<ElementRef>;
 
+  TipoDeCuenta( event:any ){
+
+    this.Banco_cuenta = true;
+    this.inst_Bancaria = true;
+    this.titulo_cuenta_asociada = 'No. de cuenta o tarjeta'
+    this.placeHolder_cuenta_asociada = '16 ó 18 dígitos'
+    this.maxlengthCuentas = 0
+    this.formulario().patchValue({
+      ['fincash']:'', 
+      ['CLABE']:'',
+      ['banco_cuenta']:'',
+      ['Banco_tarjeta']:'',
+      ['tarjeta']:'',
+      ['Tipo_Cuenta_targeta']:''});
+  
+      this.Ref_input_Cuenta_Tarjeta.nativeElement.value=''
+      this.Ref_Inst_Bancaria.nativeElement.value=''
+    
+    this.valor = event.target.selectedOptions[0].value
+    if(this.valor === 'CLABE' || this.valor === 'Debito' ){
+      this.Banco_cuenta = false;
+      this.inst_Bancaria = false;
+      this.placeHolder_cuenta_asociada = '18 dígitos'
+      if(this.valor === 'Debito' ){
+         this.placeHolder_cuenta_asociada = '16 dígitos'
+      }
+    }else{
+      this.Banco_cuenta = false;
+      this.placeHolder_cuenta_asociada = '16 dígitos'
+      this.titulo_cuenta_asociada = 'Tarjeta Fincash asociada'
+    }
+  
+  }
+
+  Institucion_Bancaria( event:any ){
+  
+    if( this.valor === 'CLABE' ){
+      this.formulario().patchValue({['banco_cuenta']:event.target.value});
+      if( this.formulario().get('CLABE')?.value != '' ){
+        
+        this.cuenta_targeta = true
+        this.formulario().patchValue({['Tipo_Cuenta_targeta']:this.valor});
+        
+      }
+      
+    }else if (this.valor === 'Debito'){
+      this.formulario().patchValue({['Banco_tarjeta']:event.target.value});
+      if( this.formulario().get('tarjeta')?.value != '' ){
+        
+        this.cuenta_targeta = true
+        this.formulario().patchValue({['Tipo_Cuenta_targeta']:this.valor});
+        
+      }
+    }
+  
+  }
+
+  cuenta_o_tarjeta( event:any ){
+
+    console.log(this.valor)
+  
+  if( this.valor === 'Fincash' ){
+    this.formulario().patchValue({['fincash']:event.target.value, ['Tipo_Cuenta_targeta']:this.valor});
+    this.cuenta_targeta = true
+    return
+  }
+  
+  if( this.valor === 'CLABE' ){
+    this.formulario().patchValue({['CLABE']:event.target.value});
+    if( this.formulario().get('banco_cuenta')?.value != '' ){
+      
+      this.cuenta_targeta = true
+      this.formulario().patchValue({['Tipo_Cuenta_targeta']:this.valor});
+    }
+    
+  }else if (this.valor === 'Debito'){
+    this.formulario().patchValue({['tarjeta']:event.target.value});
+    if( this.formulario().get('Banco_tarjeta')?.value != '' ){
+      
+      this.cuenta_targeta = true
+      this.formulario().patchValue({['Tipo_Cuenta_targeta']:this.valor});
+      
+    }
+  }
+  
+  
+  }
+
   ngOnInit(): void {
     this.setDataLogin();
     this.estado()
     this.Referido()
     this.BRK()
     this.Hoy = this.fechaActual()
+
+    // this.formulario()?.valueChanges.subscribe(selectedValue => {
+    //   console.log(editedRegistro)
+  
+    //   if(editedRegistro == true){
+    //       // console.log(editedRegistro)
+    //     console.log('nombre cambio su valor')
+    //     this.actualizaRegistro = true
+    //   }
+    //   })
   }
 
   fechaActual(){ 
@@ -125,6 +238,10 @@ export class ComisionistasComponent implements OnInit {
     var dia = hoy.getDate();
     var getMes = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre']
     return fecha = dia + ' / ' + getMes[mes] + ' / ' + ano
+  }
+
+  insertaNumBRK( event:any ){
+    this.formulario().patchValue({['BRK']:'BRK-'+event.target.value})
   }
 
   soloDigito(event:any, size:number){
@@ -351,13 +468,12 @@ console.log(data)
 
       })
     })
-    formComisionista[0][0].Fisica_Moral ? (this.radioBtn1.nativeElement.checked = true) : (this.radioBtn2.nativeElement.checked = true)
+    formComisionista[0][0].Fisica_Moral === '1' ? (this.radioBtn1.nativeElement.checked = true) : (this.radioBtn2.nativeElement.checked = true)
     this.servicio.getMunicipio(formComisionista[0][0].Id_Estado)
     .then( datosMunicipio => {
       this.arrayMunicipio = datosMunicipio;
     } )
     setTimeout(() => {
-      console.log('entre')
       this.formulario().patchValue({['Id_Municipio']:formComisionista[0][0].Id_Municipio,})
     }, 100)
 
@@ -370,6 +486,50 @@ console.log(data)
       this.Piker = false;
       this.FechaContrato.nativeElement.disabled = true
     }
+    this.cargaCuentaTargeta( formComisionista[0][0].CLABE, formComisionista[0][0].Banco_Cuenta, formComisionista[0][0].Tarjeta, formComisionista[0][0].Banco_Tarjeta, formComisionista[0][0].FINCASH )
+
+    // setTimeout(() => {
+    //   editedRegistro = true
+    //   console.log('el registro', editedRegistro)
+    // }, 100)
+  }
+
+  cargaCuentaTargeta( _Clave:string, _BancoCuenta:string, _tarjeta:string, _BancoTargeta:string, _fincash:string ){
+    if( _Clave != '' ){
+      this.formulario().patchValue({['Tipo_Cuenta_targeta']:'CLABE'})
+      this.targeta_asociada.nativeElement.value ='CLABE'
+      this.Ref_input_Cuenta_Tarjeta.nativeElement.value = _Clave
+      this.Ref_Inst_Bancaria.nativeElement.value = _BancoCuenta
+      this.inst_Bancaria = false;
+      this.cuenta_targeta = true
+      this.Banco_cuenta = false;
+
+      return
+    }
+    if( _tarjeta != '' ){
+      this.formulario().patchValue({['Tipo_Cuenta_targeta']:'Debito'})
+      this.targeta_asociada.nativeElement.value ='Debito'
+      this.Ref_input_Cuenta_Tarjeta.nativeElement.value = _tarjeta
+      this.Ref_Inst_Bancaria.nativeElement.value = _BancoTargeta
+      this.inst_Bancaria = false;
+      this.cuenta_targeta = true
+      this.Banco_cuenta = false;
+
+      return
+    }
+    if( _fincash != '' ){
+      this.formulario().patchValue({['Tipo_Cuenta_targeta']:'Fincash'})
+      this.targeta_asociada.nativeElement.value ='Fincash'
+      this.Ref_input_Cuenta_Tarjeta.nativeElement.value = _fincash
+      this.inst_Bancaria = true;
+      this.cuenta_targeta = true
+      this.Banco_cuenta = false;
+
+      return
+    }
+
+
+
 
   }
 
@@ -377,10 +537,11 @@ console.log(data)
     BusquedaText = this.criterioBusqueda
     const data = await this.servicio.busqueda( this.criterioBusqueda )
     console.log(data)
-    if( data[0].length === 0 ){
+    if( data.status === 'error' ){
+    // if( data[0].length === 0 ){
       this.listaBusqueda = []
-      const data = { mensaje:'No se Encontraron Coincidencias' }
-      this._modalMsg.openModalMsg<ModalMsgComponent>( ModalMsgComponent, { data:data }, false, '300px', 'exito')
+      // const data = { mensaje:'No se Encontraron Coincidencias' }
+      this._modalMsg.openModalMsg<ModalMsgComponent>( ModalMsgComponent, { data:data.data }, false, '300px', 'exito')
       this.Busqueda.nativeElement.value = '';
       this.disabledBtn = true;
       return
@@ -449,12 +610,17 @@ console.log(data)
       }
       
       this._modalMsg.openModalMsg<ModalMsgComponent>( ModalMsgComponent, { data:registro.data }, false, '300px', 'exito' )
+      console.log(this.formulario().value)
       this.resetForm()
-
+      
     }
 
-      console.log(this.formulario().value)
       
+    }
+    
+    ver(){
+    console.log(this.formulario().value)
+
   }
 
   resetForm() {
@@ -466,7 +632,7 @@ console.log(data)
     this.Estado.nativeElement.value = '';
     this.comisionistaReferido.nativeElement.value = '';
 
-    this.radioBtn1.nativeElement.checked = true
+    this.radioBtn1.nativeElement.checked = 1
     this.formulario().patchValue({fisica_moral:true})
     
     this.arrayMunicipio = []
@@ -479,10 +645,27 @@ console.log(data)
     this.selectEstado = true
     this.selectMunicipio = true
 
+    this.Banco_cuenta = true;
+    this.inst_Bancaria = true;
+    this.titulo_cuenta_asociada = 'No. de cuenta o tarjeta'
+    this.placeHolder_cuenta_asociada = '16 ó 18 dígitos'
+    this.maxlengthCuentas = 0
+    this.formulario().patchValue({['FINCASH']:'', 
+      ['CLABE']:'',
+      ['Banco_cuenta']:'',
+      ['Banco_Tarjeta']:'',
+      ['Tarjeta']:'',
+      ['Tipo_Cuenta_targeta']:''});
+  
+      this.targeta_asociada.nativeElement.value=''
+      this.Ref_input_Cuenta_Tarjeta.nativeElement.value=''
+      this.Ref_Inst_Bancaria.nativeElement.value=''
+
     // this.radioBtn1.forEach((input) => {
     //   input.nativeElement.checked = true;
     // })
     // var options = document.querySelectorAll('#Municipio option');
+    // this.actualizaRegistro = false
 
   }
 

@@ -13,7 +13,7 @@ export class Comisionistas {
     private _http: string = `${environment.apiUrl}`;
 
     async getEstado() {
-        const response = await fetch(this._http + 'clientes/comisionistas/estado', {
+        const response = await fetch(this._http + 'generales/estado', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -25,7 +25,7 @@ export class Comisionistas {
         }
     }
     async getReferido() {
-        const response = await fetch(this._http + 'clientes/comisionistas/ReferidoComisionista', {
+        const response = await fetch(this._http + 'generales/ReferidoComisionista', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -37,7 +37,7 @@ export class Comisionistas {
         }
     }
     async getReferidoBRK() {
-        const response = await fetch(this._http + 'clientes/comisionistas/ReferidoBRK', {
+        const response = await fetch(this._http + 'generales/ReferidoBRK', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -51,7 +51,7 @@ export class Comisionistas {
 
     async getMunicipio(estado: number) {
 
-        const response = await fetch(this._http + 'clientes/comisionistas/municipio', {
+        const response = await fetch(this._http + 'generales/municipio', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -64,6 +64,49 @@ export class Comisionistas {
             return data;
         }
     }
+    async GetCredenciales() {
+
+        const sesion = localStorage.getItem('sesion');
+        const { Datos } = JSON.parse(sesion!)
+
+        const response = await fetch(this._http + 'auth/credenciales', {
+            method: 'POST',
+            headers: {
+                'Content-Type':'application/json'
+            },
+            body: JSON.stringify({ id: Datos })
+        })
+        const data = await response.json()
+        if (response.status === 200) {
+            return data
+        }
+    }
+    async descargaComprobante( nameComprobante:string ){
+
+        const response = await fetch( this._http + 'download/comisionistas/'+nameComprobante,{
+            method:'GET',
+            headers:{
+                "Content-Type":"application/x-www-form-urlencoded"
+            },
+            redirect: "follow"
+        } )
+
+        if( response.status === 200){
+            const datos = await response.blob()
+            return {
+                status:'ok',
+                data:datos
+            }
+        }else{
+            const datos = await response.json();
+            const data = { mensaje:datos.error }
+            return{
+                status:'error',
+                data:data
+            }
+        }
+    }
+        // ---------------------------------------------------------------------------------------------------------------------
 
     async getComprobante(fileInput: any) {
         let aplication = new FormData();
@@ -87,23 +130,6 @@ export class Comisionistas {
         }
     }
 
-    async GetCredenciales() {
-
-        const sesion = localStorage.getItem('sesion');
-        const { Datos } = JSON.parse(sesion!)
-
-        const response = await fetch(this._http + 'auth/credenciales', {
-            method: 'POST',
-            headers: {
-                'Content-Type':'application/json'
-            },
-            body: JSON.stringify({ id: Datos })
-        })
-        const data = await response.json()
-        if (response.status === 200) {
-            return data
-        }
-    }
 
     async cargaComisionistaId( id:number ){
         console.log(id)
@@ -150,31 +176,7 @@ export class Comisionistas {
         }
 
     }
-    async descargaComprobante( nameComprobante:string ){
 
-        const response = await fetch( this._http + 'download/comisionistas/'+nameComprobante,{
-            method:'GET',
-            headers:{
-                "Content-Type":"application/x-www-form-urlencoded"
-            },
-            redirect: "follow"
-        } )
-
-        if( response.status === 200){
-            const datos = await response.blob()
-            return {
-                status:'ok',
-                data:datos
-            }
-        }else{
-            const datos = await response.json();
-            const data = { mensaje:datos.error }
-            return{
-                status:'error',
-                data:data
-            }
-        }
-    }
 
     async EnviarActualizacioRegistro( formularioActualizado: FormGroup ){
 

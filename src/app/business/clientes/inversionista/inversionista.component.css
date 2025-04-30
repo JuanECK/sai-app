@@ -46,6 +46,22 @@
 
             & .card{
 
+                & .edicionRegistro{
+                    /* position: absolute; */
+                    right: 0px;
+                    margin-bottom: 14px;
+                    & h1{
+                        margin-bottom: 0;
+                        color: var(--Obligatorio);
+                    }
+                    & p{
+                        color: #9BA1A6;
+                        font-size: 11px;
+                        margin: 0;
+                        letter-spacing: .8px;
+                    }
+                }
+
                 & .form-comisionista{
                     
                     & .Nombre-Rsocial{
@@ -57,11 +73,14 @@
                         width: 132px;
                     }
 
-                    & .h1FechaEmision{
+                    & .h1FechaNacimiento{
                         font-size: 16px;
                         font-weight: var(--Medium);
                         margin-top: 26px;
                         margin-bottom: 12px;
+                    }
+                    & .FechaNacimiento{
+                        width: 170px;
                     }
                     & .Calle{
                         width: 214px;
@@ -266,6 +285,7 @@
                         justify-content: space-between;
                         
                         & .btnAgregaBeneFiciario{
+                            width: 200px;
                             margin-top: 12px;
                         }
                         
@@ -293,6 +313,7 @@
                         /* margin-top: 252px; */
                         & .G-C-Registro{
                             width: 545px;
+                            height: 30px;
                             margin-bottom: 6px;
                         }
                     }
@@ -355,14 +376,14 @@
                             min-width: 60px;
                             padding-left: 0px;
                         }
-                        & .TipCliente{
+                        /* & .TipCliente{
                             max-width: 90px;
                             min-width: 90px;
                             padding-left: 8px;
-                        }
+                        } */
                         & .CorreoElect{
-                            max-width: 115px;
-                            min-width: 115px;
+                            max-width: 205px;
+                            min-width: 205px;
                             padding-left: 2px;
                             padding-right: 10px;
                         }

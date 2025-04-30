@@ -51,6 +51,7 @@ dialog {
                 & .edicionRegistro{
                     /* position: absolute; */
                     right: 0px;
+                    margin-bottom: 14px;
                     & h1{
                         margin-bottom: 0;
                         color: var(--Obligatorio);
@@ -190,7 +191,7 @@ dialog {
                         } */
                     }
                     & .FechaEmision{
-                        width: 212px;
+                        width: 205px;
                         height: 20px;
                     }
                     
@@ -202,12 +203,43 @@ dialog {
                         width: 254px;
                     }
                     & .btnsRegistro{
+                        position: absolute;
+                        bottom: 19px;
+                        /* margin-top: 252px; */
+                        & .G-C-Registro{
+                            width: 545px;
+                            height: 30px;
+                            margin-bottom: 6px;
+                        }
+                    }
+                    /* & .btnsRegistro{
                         margin-top: 252px;
                         & .G-C-Registro{
                             width: 545px;
                             margin-bottom: 6px;
                         }
+                    } */
+                     
+                    & .TipoCuenta{
+                        width: 273px;
                     }
+                    & .selectTipoCuenta > select:invalid{
+                        background: #BBBBBB ;
+                        color: transparent;
+                        background-clip: text;
+                      }
+                      & select option{
+                        background: #ffffff;
+                      }
+                      & .selectTipoCuenta{
+                        width: 260px;
+                      }
+                      & .No-Fecha-Targeta{
+                        width: 260px;
+                      }
+                      & .InstitucionBancaria{
+                        width: 246px;
+                      }
  
 
                 }
@@ -275,8 +307,8 @@ dialog {
                             padding-left: 8px;
                         }
                         & .CorreoElect{
-                            max-width: 115px;
-                            min-width: 115px;
+                            max-width: 160px;
+                            min-width: 160px;
                             padding-left: 2px;
                             padding-right: 10px;
                         }

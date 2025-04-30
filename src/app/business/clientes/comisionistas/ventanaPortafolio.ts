@@ -22,7 +22,7 @@ let porcentaje = [0, 0, 0, 0, 0]
         <div class=" titulo text-center">
           <h1>Crear Portafolios de Inversión</h1>
         </div>
-
+                <!-- <button (click)="ver()">ver</button> -->
         <div class="bodyCard-inv">
           <!-- <div class="modal-port-inv"> -->
             <form class="form-comisionista-inversion " [formGroup]="formulario()">
@@ -31,7 +31,7 @@ let porcentaje = [0, 0, 0, 0, 0]
                       <h4><span [classList]="formulario().get('BRK')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'" >*</span> No. de BRK</h4>
                       <div class="inputBRK">
                           <span>BRK-</span>
-                          <input class="input1" type="text" maxlength="4" formControlName="BRK" placeholder="">
+                          <input class="input1" type="text" maxlength="4"  placeholder="" (change)="insertaNumBRK( $event )" (input)="soloDigito( $event )">
                       </div>
                   </div>
                   <div>
@@ -192,7 +192,7 @@ let porcentaje = [0, 0, 0, 0, 0]
                 <button class="btn btnAgregaBeneFiciario" (click)="agregaBeneficiario()">Agregar beneficiario</button>
                 <button class="btn-second EliminaBeneFiciario" (click)="eliminaBeneficiario()">Elimina beneficiario</button>
               </div>
-              <!-- <button class="btn btnAgregaBeneFiciario" (click)="ver()">ver array</button> -->
+              
               <div class="row btnAccionPortafolio">
                 <button type="submit" (click)="creaPortafolioInversion()" [classList]="formulario().valid ? 'btn btnInActivo ':'btn btnActive'" >GUARDAR REGISSTRO</button>
                 <!-- <button type="submit" (click)="ver()" [classList]="formulario().valid ? 'btn G-C-Registro btnInActivo':'btn G-C-Registro btnActive'" >GUARDAR REGISSTRO</button> -->
@@ -271,6 +271,14 @@ export class VentanaCreaPortafolio implements OnInit{
       
     })
   )
+
+  insertaNumBRK( event:any ){
+    if( event.target.value === '' ){
+      this.formulario().patchValue({['BRK']:''})
+      return
+    }
+    this.formulario().patchValue({['BRK']:'BRK-'+event.target.value})
+  }
   
   ngOnInit(): void {
     console.log(this.dataModal)
@@ -439,5 +447,7 @@ export class VentanaCreaPortafolio implements OnInit{
     // console.log(this.formulario().value)
 
   }
+
+  ver(){console.log(this.formulario().value)}
 }
 

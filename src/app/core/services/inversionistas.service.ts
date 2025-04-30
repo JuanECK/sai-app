@@ -13,7 +13,7 @@ export class Inversionistas {
     private _http: string = `${environment.apiUrl}`;
 
     async getEstado() {
-        const response = await fetch(this._http + 'clientes/comisionistas/estado', {
+        const response = await fetch(this._http + 'generales/estado', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -24,20 +24,20 @@ export class Inversionistas {
             return data
         }
     }
-    async getReferido() {
-        const response = await fetch(this._http + 'clientes/comisionistas/ReferidoComisionista', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-        const data = await response.json()
-        if (response.status === 200) {
-            return data
-        }
-    }
+    // async getReferido() {
+    //     const response = await fetch(this._http + 'clientes/comisionistas/ReferidoComisionista', {
+    //         method: 'GET',
+    //         headers: {
+    //             'Content-Type': 'application/json'
+    //         }
+    //     })
+    //     const data = await response.json()
+    //     if (response.status === 200) {
+    //         return data
+    //     }
+    // }
     async getReferidoBRK() {
-        const response = await fetch(this._http + 'clientes/comisionistas/ReferidoBRK', {
+        const response = await fetch(this._http + 'generales/ReferidoBRK', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -51,7 +51,7 @@ export class Inversionistas {
 
     async getMunicipio(estado: number) {
 
-        const response = await fetch(this._http + 'clientes/comisionistas/municipio', {
+        const response = await fetch(this._http + 'generales/municipio', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -64,29 +64,6 @@ export class Inversionistas {
             return data;
         }
     }
-
-    async getComprobante(fileInput: any) {
-        let aplication = new FormData();
-
-        aplication.append('file', fileInput)
-        // console.log(fileInput)
-        const response = await fetch(this._http + 'upload/single/comisionistas', {
-            method: 'POST',
-            body: aplication,
-            redirect: "follow"
-        })
-        const data = await response.json();
-        if (response.status === 200) {
-            return data
-        }
-        else {
-            return {
-                status: 'error',
-                data: data
-            }
-        }
-    }
-
     async GetCredenciales() {
 
         const sesion = localStorage.getItem('sesion');
@@ -105,51 +82,6 @@ export class Inversionistas {
         }
     }
 
-    async cargaComisionistaId( id:number ){
-        console.log(id)
-        const response = await fetch( this._http + 'clientes/comisionistas/cargaComisionista',{
-            method:'POST',
-            headers:{
-                'Content-Type':'application/json'
-            },
-            body:JSON.stringify({id:id})
-        } )
-        const datos = await response.json()
-        console.log(datos[0])
-        if( response.status === 200 ){
-            if( datos[0].length === 0 ){
-                const data = { mensaje:'¡Por el momento no se pueden cargar los datos!' }
-                return {
-                    status:'error',
-                    data}
-            }
-            return datos
-        }
-
-    }
-
-    async busqueda( criterio:string ){
-
-        const response = await fetch( this._http + 'clientes/comisionistas/busqueda',{
-            method:'POST',
-            headers:{
-                'Content-Type':'application/json'
-            },
-            body: JSON.stringify({criterio:criterio})
-        } )
-        const datos = await response.json()
-        // console.log(datos)
-        if( response.status === 200 ){
-            return datos;
-        }else{
-            const data = { mensaje:datos.error }
-            return {
-                status:'error',
-                data:data
-            }
-        }
-
-    }
     async descargaComprobante( nameComprobante:string ){
 
         const response = await fetch( this._http + 'download/comisionistas/'+nameComprobante,{
@@ -175,47 +107,152 @@ export class Inversionistas {
             }
         }
     }
+    // ---------------------------------------------------------------------------------------------------------------------
 
-    async EnviarActualizacioRegistro( formularioActualizado: FormGroup ){
-
-        // console.log(formularioActualizado.value.Comprobante_domicilio)
+    async getComprobante(fileInput: any) {
         let aplication = new FormData();
-        aplication.append('file', formularioActualizado.value.Comprobante_domicilio )
-        aplication.append('file', formularioActualizado.value.INE )
 
-        for (const [key, value] of Object.entries(formularioActualizado.value)) {
-            if (typeof value != "object") {
-                aplication.append(key, String(value))
-            }else{
-                aplication.append(key, '')
-            }
-        }
-
-        const response = await fetch(this._http + 'clientes/comisionistas/actualizaComisionista/comisionistas', {
+        aplication.append('file', fileInput)
+        // console.log(fileInput)
+        const response = await fetch(this._http + 'upload/single/comisionistas', {
             method: 'POST',
             body: aplication,
             redirect: "follow"
         })
-        const dataService = await response.json()
+        const data = await response.json();
         if (response.status === 200) {
-            const data = { mensaje:dataService.mensaje }
+            return data
+        }
+        else {
             return {
-                status:'',    
+                status: 'error',
                 data: data
             }
         }
-        else {
-            const data = { mensaje:dataService.error } 
-            return {
-                status: 'error',
-                data: data 
+    }
+
+
+    async cargaComisionistaId( id:number, accion:string ){
+        console.log(id)
+        const response = await fetch( this._http + 'clientes/inversionistas/cargaInversionista',{
+            method:'POST',
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify({id:id})
+        } )
+        const datos = await response.json()
+        // console.log(datos)
+        if( response.status === 200 ){
+            if( accion === 'ver' ){
+                
+                return datos.busqueda
+            }else if( accion === 'edita' ){
+                return datos
+            }
+
+            if( datos[0].length === 0 ){
+
+                const data = { mensaje:'¡Por el momento no se pueden cargar los datos!' }
+                return {
+                    status:'error',
+                    data}
             }
         }
 
     }
+
+    async busqueda( criterio:string ){
+
+        const response = await fetch( this._http + 'clientes/inversionistas/busqueda',{
+            method:'POST',
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body: JSON.stringify({criterio:criterio})
+        } )
+        const datos = await response.json()
+        // console.log(datos)
+        if( response.status === 200 ){
+            return datos;
+        }else{
+            const data = { mensaje:datos.error }
+            return {
+                status:'error',
+                data:data
+            }
+        }
+
+    }
+
+    async EnviarActualizacioRegistro( formularioActualizado: FormGroup, InversionistaBusquedaID:Array<any> ){
+
+        // Evaluar si hubo cambios
+
+        this.hayCambiosEnForm( formularioActualizado, InversionistaBusquedaID )
+
+        // console.log(formularioActualizado.value.Comprobante_domicilio)
+
+
+        // let aplication = new FormData();
+        // aplication.append('file', formularioActualizado.value.Comprobante_domicilio )
+        // aplication.append('file', formularioActualizado.value.INE )
+
+        // for (const [key, value] of Object.entries(formularioActualizado.value)) {
+        //     if (typeof value != "object") {
+        //         aplication.append(key, String(value))
+        //     }else{
+        //         aplication.append(key, '')
+        //     }
+        // }
+
+        // const response = await fetch(this._http + 'clientes/inversionistas/actualizaInversionista/inversionista', {
+        //     method: 'POST',
+        //     body: aplication,
+        //     redirect: "follow"
+        // })
+        // const dataService = await response.json()
+        // if (response.status === 200) {
+        //     const data = { mensaje:dataService.mensaje }
+        //     return {
+        //         status:'',    
+        //         data: data
+        //     }
+        // }
+        // else {
+        //     const data = { mensaje:dataService.error } 
+        //     return {
+        //         status: 'error',
+        //         data: data 
+        //     }
+        // }
+
+    }
+
+
+    hayCambiosEnForm( form:FormGroup, InversionistaBusquedaID:Array<any> ){
+        // console.log( form.value )
+        
+        // form.value.map((item:any)=>{
+        //     if(  )
+        // })
+        console.log(Object.keys(form.value).length)
+        console.log(InversionistaBusquedaID)
+
+        // for( let i = 0; i< form.value.length ; i++){
+
+        //     for( let j = 0; j< InversionistaBusquedaID.length ; j++){
+
+        //     }
+
+        // }
+
+    }
+
+
     async RegistraInversionista( formularioInversion: FormGroup ){
 
-        const response = await fetch(this._http + 'clientes/comisionistas/registraInversionista', {
+        const response = await fetch(this._http + 'clientes/inversionistas/registraInversionista', {
             method: 'POST',
             headers:{
                 'Content-Type':'application/json'
@@ -242,7 +279,7 @@ export class Inversionistas {
     }
     async eliminaComisionista( Id_ICPC:number, estatus:string, usuario:number ){
 
-        const response = await fetch(this._http + 'clientes/comisionistas/eliminarRegistro', {
+        const response = await fetch(this._http + 'clientes/inversionistas/eliminarRegistro', {
             method: 'POST',
             headers:{
                 'Content-Type':'application/json'
@@ -268,13 +305,13 @@ export class Inversionistas {
 
     }
 
-    async AgregarComisionista(formulario: FormGroup) {
+    async AgregarInversionistas(formulario: FormGroup) {
 
         // console.log(formulario.value.INE)
         // console.log(JSON.stringify(formulario))
 
         let aplication = new FormData();
-        aplication.append('file', formulario.value.Comprobante_domicilio)
+        aplication.append('file', formulario.value.Comprobante_Domicilio)
         aplication.append('file', formulario.value.INE)
         , formulario.value.Comprobante_domicilio
         // aplication.append('file', JSON.stringify(formulario))
@@ -289,7 +326,7 @@ export class Inversionistas {
         }
 
 
-        const response = await fetch(this._http + 'clientes/comisionistas/agregaComisionista/comisionistas', {
+        const response = await fetch(this._http + 'clientes/inversionistas/agregaInversionista/inversionista', {
             method: 'POST',
             body: aplication,
             redirect: "follow"
