@@ -1,0 +1,232 @@
+<div class="inversion">
+    <div class="container-modulos">
+        <div class="separacion">
+            <div class="card-1 card">
+
+                <form class="form"  [formGroup]="formulario()">
+
+                    <div>
+                        <div class="d-flex">
+                            <div class="col-7" [hidden]="editar ? false : true">
+                                <h1 class="h1TitleCard">Movimiento en inversiones</h1>
+                            </div>
+                            <!-- <button (click)="formatoFechaLatina()" >carga</button> -->
+                            <!-- <button (click)="ver()" >ver</button>   -->
+        
+                            <div class="edicionRegistro col-7" [hidden]="editar ? true: false">
+                                <h1 class="h1TitleCard"><img src="/img-sai/icon-edicion-de-registro.png" style="width: 20px;">Edición de Registro</h1>
+                                <p>Los cambios afectarán el registro</p>
+                            </div>
+                        </div>
+                        <span  [hidden]="editar ? false: true">{{Hoy}}</span>
+                    </div>
+
+                    <div class="form-check">
+                        <div class="check">
+                            <label  class="form-check-label" >Ingreso</label>
+                            <label class="label-container" >
+                                <input type="radio" #radioBtn1 (change)="evaluaCheck(1)" checked name="radio">
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                        <div class="check Second-check">
+                            <label  class="form-check-label" >Egreso</label>
+                            <label class="label-container" >
+                                <input type="radio" #radioBtn2 (change)="evaluaCheck(2)" name="radio">
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <h4 class="H4ESPECIAL"><span [classList]="formulario().get('Id_ICPC')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'">*</span> Código de Inversionista</h4>
+                    <div class="d-flex">
+                        <div class="inputBRK">
+                            <span>INV-</span>
+                            <input [classList]="input_BRK ? 'input1 inputInActive' : 'input1' " type="text" maxlength="8" placeholder="XXXX" #inputINV (input)="soloDigito( $event )">
+                            <!-- <input [classList]="input_BRK ? 'input1 inputInActive' : 'input1' " type="text" maxlength="8" #brk placeholder="XXXX" #inputINV formControlName="Id_ICPC" (input)="soloDigito( $event )"> -->
+                            <!-- <input [classList]="input_BRK ? 'input1 inputInActive' : 'input1' " type="text" maxlength="8" #brk placeholder="XXXX" (change)="insertaNumINV( $event )" (input)="soloDigito( $event )"> -->
+                        </div>
+                        <button type="button" class="btn busquedaINV" (click)="busquedaInversionista( $event )" ><img src="/img-sai/icono_lupa.png" alt="buscar"></button>
+                        <!-- <span class="nombreInv" #nombreInv>{{nombreInversionista}}</span> -->
+                        <p class="nombreInv" #nombreInv>{{nombreInversionista}}</p>
+                    </div>
+
+                    <h4><span [classList]="formulario().get('Concepto')?.valid && formulario().get('Monto')?.valid && formulario().get('Id_CuentaB')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid' ">*</span> Detalle de movimiento</h4>
+                    <div class="d-flex justify-content-between-">
+
+                        <div class="select Concepto">
+                            <span class="spanExedioCaractereSelect" id="Concepto" [hidden]="selectConcepto">...</span>
+                            <select required #Concepto class="" formControlName="Concepto" (change)="optionConcepto( $event )">
+                                <option value="" disabled selected hidden>Concepto</option>
+                                    <!-- <option value="1" >prueba1</option> -->
+                                @for(item of check ? array[0] : array[1]; track $index ){
+                                    <option [value]="item.Id_Concepto">{{item.Concepto}}</option>
+                                }
+                            </select>
+                        </div>
+                        
+                        <div class="">
+                            <input class="Monto" type="text" formControlName="Monto" #Monto placeholder="0.00" (change)="getCurrencySaldo( $event )" (input)="parseDigito2( $event )">
+                        </div>
+                        
+                        <div class="select Cuenta">
+                            <span class="spanExedioCaractereSelect" id="Cuenta" [hidden]="selectCuenta">...</span>
+                            <select required #mySelect class="" formControlName="Id_CuentaB" (change)="optionCuenta( $event )">
+                                <option value="" disabled selected hidden>Cuenta</option>
+                                <!-- <option value="1" >prueba1</option> -->
+                            @for(item of arrayCuenta[0]; track $index ){
+                                <option [value]="item.Id_Cuenta">{{item.alias}}</option>
+                            }
+                            </select>
+                        </div>
+
+                    </div>
+
+                    <div class="divObservaciones">
+
+                        <h4 class="">Observaciones</h4>
+                        <textarea class="observaciones" name="" id="" formControlName="Observaciones" rows=0 cols=0 placeholder="Observaciones del movimiento"></textarea>
+
+                    </div>
+
+                    <div class="d-flex boxComprobante">
+
+                        <div class="inputfile-box AgregaComprobantes">
+                            <input type="file" #FileComprobante id="fileComprobante" class="inputfile"
+                                (change)='uploadComprobante($event)' accept="application/pdf">
+                            <label for="fileComprobante" class="Labelfile">
+                                <span class="file-button">Agregar comprobante</span>
+                            </label>
+
+                            <span class="file-box">
+                                <div class="boxNameComprobante disabledBox" id="boxNameComprobante">
+                                    <input type="text" #inputComprobante class="boxName"
+                                        disabled="true">
+                                    <span class="cerrar-file text-center" (click)="eliminarBoxComprobante()">x</span>
+                                </div>
+                            </span>
+                        </div>
+
+                    </div>
+
+                    <div class="d-flex btnsRegistro">
+                        <div class="row ">
+                            <button type="submit" (click)="enviar()" [hidden]="editar ? false:true" [classList]="formulario().valid ? 'btn G-C-Registro btnInActivo':'btn G-C-Registro btnActive'" >GUARDAR REGISSTRO</button>
+                            <!-- <button type="submit" (click)="ActualizarRegistro()" [hidden]="editar ? true:false" [classList]="actualizaRegistro ? 'btn G-C-Registro btnInActivo':'btn G-C-Registro btnActive'" >ACTUALIZAR CAMPOS</button> -->
+                            <button type="submit" (click)="ActualizarRegistro()" [hidden]="editar ? true:false" [classList]="formulario().valid ? 'btn G-C-Registro btnInActivo':'btn G-C-Registro btnActive'" >ACTUALIZAR CAMPOS</button>
+                            <button class="btn-second G-C-Registro mr-12" type="button" (click)="resetForm()">CANCELAR</button>
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+
+            <form class="InformaciónAdicional-Busqueda" >
+            <!-- <form class="InformaciónAdicional-Busqueda" [formGroup]="formulario()"> -->
+
+                <div class="tabsNav tabsNavAncho">
+
+                    <div class="tab">
+                        <!-- <input type="radio" name="tabs" id="t1" > -->
+                        <input type="radio" #TabsInformacion name="tabs" id="t1" checked>
+
+                    <!-- ------------------CARD HISTORICO--------------------- -->
+
+                        <label class="Extra" for="t1">Histórico</label>
+
+                        <div class="InformaciónAdicional DivContainer">
+                            <h1 class="h1TitleCardTab">Historial de  Movimientos</h1>
+                            <div class="TableBusqueda">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th class="thead-th-blod-No-Border Tipo_Movimiento"></th>
+                                        <th class="thead-th-blod-No-Border th-just-left- text-center ConceptoTb">Concepto</th>
+                                        <th class="thead-th-blod-No-Border th-just-left ClienteTb">Cliente</th>
+                                        <th class="thead-th-blod-No-Border th-just-left- text-center MontoTb">Monto</th>
+                                        <th class="thead-th-blod-No-Border th-just-left- text-center fechaTb">Fecha</th>
+                                        <th class="thead-th-blod-No-Border "></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="">
+                                        @for( item of arrayHistorico[0]; track $index ){
+                                            <tr>
+                                                <td class="tbody-td-ligth-No-Border Tipo_Movimiento"><div><span [classList]="item.Tipo_Movimiento == 'Ingreso' ? 'ingreso':'prestamo' "></span></div></td>
+                                                <td class="tbody-td-ligth-No-Border text-center ConceptoTb">{{item.Concepto}}</td>
+                                                <td class="tbody-td-ligth-No-Border ClienteTb">{{item.cliente}}</td>
+                                                <td class="tbody-td-ligth-No-Border text-center MontoTb">{{getCurrencyTable(item.Monto)}}</td>
+                                                <td class="tbody-td-ligth-No-Border text-center fechaTb">{{formatoFechaLatina(item.fecha)}}</td>
+
+                                                <td class="TD_Option"><button type="button" (click)="verDatosoMovInversion( item.Id_Mov_Inv )" class="TdOptionsTable"><img src="/img-sai/ojito_abierto.png"></button></td>
+                                                <td class="TD_Option"><button type="button" (click)="editaroMovInversion( item.Id_Mov_Inv )" class="TdOptionsTable"><img src="/img-sai/icon-edith.png"></button></td>
+                                                <td class="TD_Option"><button type="button" (click)="eliminaroMovInversion( item.Id_Mov_Inv )" class="TdOptionsTable"><img src="/img-sai/icon-trash.png"></button></td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- ---------------------------------------------- -->
+                    <!-- ------------------CARD BUSQUEDA --------------------- -->
+
+                    <div class="tab">
+                        <input type="radio" #TabsBusqueda name="tabs" id="t2">
+
+                        <label class="Busqueda" for="t2">Búsqueda</label>
+                        <div class="BusquedaDiv DivContainer">
+                            <h1 class="h1TitleCardTab">Búsqueda</h1>
+                            <div class="inputBusqueda">
+                                <p>Para hacer una búsqueda basado en el Nombre, código de Inversionista o monto</p>
+                                <input class="Nombre-Cliente" #Busqueda type="text" placeholder="Nombre ó número de Cliente " (input)="inputBusqueda($event)">
+                            </div>
+                            <div class="">
+                                <button class="btn NuevaBusqueda mr-12" (click)="busqueda()" [disabled]="disabledBtn"
+                                    [classList]="disabledBtn ? 'btn NuevaBusqueda mr-12 btnActive':'btn NuevaBusqueda mr-12 btnInActivo'"
+                                    type="button">Nueva búsqueda
+                                </button>
+                            </div>
+                            <h1 class="h1TitleCardTab">Coincidencias</h1>
+
+                            <div class="TableBusqueda">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th class="thead-th-blod-No-Border Tipo_Movimiento"></th>
+                                        <th class="thead-th-blod-No-Border th-just-left- text-center ConceptoTb">Concepto</th>
+                                        <th class="thead-th-blod-No-Border th-just-left ClienteTb">Cliente</th>
+                                        <th class="thead-th-blod-No-Border th-just-left- text-center MontoTb">Monto</th>
+                                        <th class="thead-th-blod-No-Border th-just-left- text-center fechaTb">Fecha</th>
+                                        <th class="thead-th-blod-No-Border "></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="">
+                                        @for( item of listaBusqueda[0]; track $index ){
+                                             <tr>
+                                                <td class="tbody-td-ligth-No-Border Tipo_Movimiento"><div><span [classList]="item.Tipo_Movimiento == 'Ingreso' ? 'ingreso':'prestamo' "></span></div></td>
+                                                <td class="tbody-td-ligth-No-Border text-center ConceptoTb">{{item.concepto}}</td>
+                                                <td class="tbody-td-ligth-No-Border ClienteTb">{{item.cliente}}</td>
+                                                <td class="tbody-td-ligth-No-Border text-center MontoTb">{{getCurrencyTable(item.Monto)}}</td>
+                                                <td class="tbody-td-ligth-No-Border fechaTb">{{formatoFechaLatina(item.fecha)}}</td>
+
+                                                <td class="TD_Option"><button type="button" (click)="verDatosoMovInversion( item.Id_Mov_Inv )" class="TdOptionsTable"><img src="/img-sai/ojito_abierto.png"></button></td>
+                                                <td class="TD_Option"><button type="button" (click)="editaroMovInversion( item.Id_Mov_Inv )" class="TdOptionsTable"><img src="/img-sai/icon-edith.png"></button></td>
+                                                <td class="TD_Option"><button type="button" (click)="eliminaroMovInversion( item.Id_Mov_Inv )" class="TdOptionsTable"><img src="/img-sai/icon-trash.png"></button></td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                  </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+

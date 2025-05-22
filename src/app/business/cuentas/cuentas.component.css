@@ -1,0 +1,206 @@
+
+.comisionistas{
+    overflow-y: auto;
+    word-wrap: break-word;
+    height: 100%;
+
+    .H4ESPECIAL{
+            margin-top: 40px;
+            margin-bottom: 12px;
+            font-size: 16px;
+            font-weight: var(--Medium);
+    }
+
+    .card-1{
+        width: 527px;
+        
+        margin-top: 45px;
+        margin-left: 22px;
+        margin-right: 12px;
+        margin-bottom: 23px;
+        padding: 5px 30px;
+    }
+    .card-2{
+        width: 512px;
+        margin-top: 45px;
+        margin-left: 12px;
+        margin-right: 22px;
+        margin-bottom: 23px;
+        padding: 5px 30px;
+    }
+
+    & .container-modulos{
+        /* display: grid; */
+        grid-template-rows: 370px 390px ;
+        & .separacion{
+            display: flex;
+
+            & .card{
+
+                & .edicionRegistro{
+
+                    right: 0px;
+                    margin-bottom: 14px;
+                    & h1{
+                        margin-bottom: 0;
+                        color: var(--Obligatorio);
+                    }
+                    & p{
+                        color: #9BA1A6;
+                        font-size: 11px;
+                        margin: 0;
+                        letter-spacing: .8px;
+                    }
+                }
+
+                & .form{
+                    
+                    & h4{
+                        margin-bottom: 12px;
+                        font-size: 16px;
+                        font-weight: var(--Medium);
+                    }
+
+                    & .noClave{
+                        margin-right: 12px;
+                        width: 246px;
+                    }
+                    & .noCuenta{
+                        width: 246px;
+                    }
+                    & .noTargeta{
+                        margin-right: 12px;
+                        width: 246px;
+                    }
+                    & .nombreBanco{
+                        width: 246px;
+                    }
+                    & .alias{
+                        width: 246px;
+                    }
+                    & .modeloDivisasSaldo{
+                        margin-top: 25px;
+                        
+
+                        & .modelo{
+                            width: 163px;
+                        }
+                        & .moneda{
+                            width: 163px;
+                        }
+                        & .saldoInicial{
+                            width: 163px;
+                        }
+                    }
+
+
+                }
+
+                & .modelo > select:invalid,
+                .moneda > select:invalid
+                {
+                    background: #BBBBBB ;
+                    color: transparent;
+                    background-clip: text;
+                }
+
+                & select option{
+                    background: #ffffff;
+                }
+
+                & .btnsRegistro{
+                    position: absolute;
+                    bottom: 19px;
+                        & .G-C-Registro{
+                            width: 528px;
+                            height: 30px;
+                            margin-bottom: 6px;
+                        }
+                    }
+
+            }
+
+/* -------------------------------------------------------------------------------------------------------------------------------------- */
+            & .InformaciónAdicional-Busqueda{
+                
+                & .tabsNavAncho{
+                    width: 605px;
+                }
+
+                & .BusquedaDiv{
+                    & .inputBusqueda{
+                        
+                        margin-bottom: 19px;
+                        
+                        & p{
+                            font-size: 12px;
+                            font-weight: var(--Normal);
+                            color: #656565;
+                        }
+                        
+                        & .Nombre-Cliente{
+                            width: 440px;
+                        }
+                    }
+                    
+                    & .NuevaBusqueda{
+                        width: 198px;
+                    }
+                    
+                    & .table{
+/* background: #9BA1A6; */
+
+                        width: 100%;
+                        thead, tbody{
+                            display: block;
+                            border-collapse: collapse;
+                        }
+
+                        tr{
+                            text-align: left;
+                        }
+
+                        tbody{
+
+                            display: block;
+                            height: 442px;
+                            overflow-y: auto;
+                            overflow-x: hidden;
+
+                        }
+
+                        
+
+
+
+
+                        & .noCuenta{
+                            max-width: 125px;
+                            min-width: 125px;
+                            padding: 6px 8px 6px 0px ;
+                        }
+                        & .alias{
+                            max-width: 90px;
+                            min-width: 90px;
+                            padding: 6px 8px 6px 8px ;
+                        }
+                        & .nombreBanco{
+                            max-width: 90px;
+                            min-width: 90px;
+                            padding: 6px 8px 6px 8px ;
+                        }
+                        & .modelo{
+                            max-width: 80px;
+                            min-width: 80px;
+                            padding: 6px 8px 6px 8px ;
+                        }
+
+                     
+                    }
+
+                }
+
+            }
+        }
+    }
+}

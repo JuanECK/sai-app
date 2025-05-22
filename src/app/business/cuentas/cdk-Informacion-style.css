@@ -1,0 +1,110 @@
+
+
+
+:host {
+  display: block;
+  background: #ffffff;
+  border-radius: 5px;
+}
+
+table{
+  border-collapse: collapse;
+
+  & thead, tbody { 
+  
+    & th, td {
+      text-align: left;
+      font-size: 14px;
+    }
+    & th{ padding:8px 3px 8px 25px ; 
+    max-width: 180px;
+    min-width: 180px;
+    }
+    & td{
+      color: #656565;
+      font-weight: var(--Normal);
+      max-width: 380px;
+    min-width: 380px;
+    }
+    & .trGris{
+      background: rgba(217, 217, 217, 0.300);
+    }
+  }
+}
+
+
+  .content-modalMsg{
+    display: flex;
+    justify-content: center;
+
+    flex-direction: column;
+    padding: 25px 51px 25px 51px ;
+
+    & .titulo{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      div{
+        cursor: pointer;
+        & img{
+          position: relative;
+          bottom: 12px;
+        }
+      }
+    }
+
+    & h1{
+      color: #00B3CF;
+      font-weight: var(--Medium);
+      margin: 0 0 25px 25px;
+    }
+    & .bodyCard{
+      margin: 0 0 20px 0;
+    }
+    & .btn-options{
+      background: rgba(217, 217, 217, 0.300);
+      height: 153px;
+      border:  1px solid rgb(0, 0, 0);
+
+      & h2 {
+        margin: 15px 0 0 30px;
+        font-weight: var(--Medium);
+      }
+      & p{
+        margin: 2px 0 15px 30px;
+        font-size: 12px;
+        color: #656565;
+      }
+
+      & .btn-acction{
+        margin: 0 0 0 30px;
+        display: flex;
+
+          align-items: center;
+
+        & .btn-group{
+          width: 80px;
+          margin-right: 28px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          cursor: pointer;
+
+          & img{
+            width: 40px;
+          }
+
+          & p {
+            margin: 0;
+          }
+        }
+
+        & .btn-group:nth-child(1), .btn-group:nth-child(3){
+          padding-bottom: 15px;
+        }
+        
+      }
+    }
+
+  }

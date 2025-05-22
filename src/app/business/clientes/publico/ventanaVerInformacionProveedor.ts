@@ -2,13 +2,14 @@ import { ChangeDetectionStrategy, Component, inject, OnInit } from "@angular/cor
 import { MatDialogModule } from "@angular/material/dialog";
 import { MatButtonModule } from '@angular/material/button';
 import { Dialog, DialogRef, DIALOG_DATA, DialogModule } from '@angular/cdk/dialog';
-import { Comisionistas } from "../../../core/services/comisionistas.service";
+// import { Comisionistas } from "../../../core/services/comisionistas.service";
 import { blob } from "stream/consumers";
 import { ModalMsgService } from "../../../core/services/modal-msg.service";
 import { ModalMsgComponent } from "../../../core/modal-msg/modal-msg.component";
+import { Inversionistas } from "../../../core/services/inversionistas.service";
 
 @Component({
-  selector: 'Ventana-Ver-Informacion-Msg',
+  selector: 'Ventana-Ver-Informacion-Publico',
   standalone: true,
   imports: [MatDialogModule, MatButtonModule],
   template: `
@@ -24,38 +25,34 @@ import { ModalMsgComponent } from "../../../core/modal-msg/modal-msg.component";
           <div class="text-center mensaje-modalMsg">
             <table class="table">
               <tbody>
-                @for( item of dataModal[0]; track $index ){
+                @for( item of dataModal; track $index ){
                   <tr class="trGris">
                     <th class="thead-th-blod-No-Border ">Nombre</th>
                     <td class="tbody-td-ligth-No-Border ">{{item.nombre}}</td>
                   </tr>
                   <tr>
                     <th class="thead-th-blod-No-Border ">Tipo de persona</th>
-                    <td class="tbody-td-ligth-No-Border ">{{item.Fisica_Moral === '1' ? 'Fisica':'Moral'}}</td>
-                  </tr>
-                  <tr class="trGris">
-                    <th class="thead-th-blod-No-Border ">RFC</th>
-                    <td class="tbody-td-ligth-No-Border ">{{item.RFC}}</td>
+                    <td class="tbody-td-ligth-No-Border ">{{item.fisica_moral === '1' ? 'Fisica':'Moral'}}</td>
                   </tr>
                   <tr>
                     <th class="thead-th-blod-No-Border ">No. telefónico</th>
                     <td class="tbody-td-ligth-No-Border ">{{item.telefono}}</td>
                   </tr>
-                  <tr class="trGris">
+                  <tr>
                     <th class="thead-th-blod-No-Border ">Correo</th>
                     <td class="tbody-td-ligth-No-Border ">{{item.correo}}</td>
                   </tr>
+                  <tr class="trGris">
+                    <th class="thead-th-blod-No-Border ">No de cuenta</th>
+                    <td class="tbody-td-ligth-No-Border ">{{noCuenta}}</td>
+                  </tr>
                   <tr>
-                    <th class="thead-th-blod-No-Border ">Dirección</th>
-                    <td class="tbody-td-ligth-No-Border ">{{direccion}}</td>
+                    <th class="thead-th-blod-No-Border ">Institución bancaria</th>
+                    <td class="tbody-td-ligth-No-Border ">{{instBancaria}}</td>
                   </tr>
                   <tr class="trGris">
-                    <th class="thead-th-blod-No-Border ">Beneficiario</th>
-                    <td class="tbody-td-ligth-No-Border ">{{item.Beneficiario1}}</td>
-                  </tr>
-                  <tr class="">
-                    <th class="thead-th-blod-No-Border ">No. de BRK</th>
-                    <td class="tbody-td-ligth-No-Border ">{{item.BRK}}</td>
+                    <th class="thead-th-blod-No-Border ">No. de Cliente</th>
+                    <td class="tbody-td-ligth-No-Border ">{{item.Num_Cliente}}</td>
                   </tr>
                 }
                 
@@ -63,7 +60,7 @@ import { ModalMsgComponent } from "../../../core/modal-msg/modal-msg.component";
             </table>
           </div>
         </div>
-        <div class="btn-options">
+        <!-- <div class="btn-options">
           <h2>Documentación</h2>
           <p>Puedes visualizar e imprimir estos documentos</p>
           <div class="btn-acction">
@@ -80,38 +77,50 @@ import { ModalMsgComponent } from "../../../core/modal-msg/modal-msg.component";
               <p>Contrato</p>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
   `,
-  styleUrl: 'cdk-Informacion-style.css',
+  styleUrl: './cdk-Informacion-style.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
-export class VentanaVerInformacion implements OnInit {
+export class VentanaVerInformacionPublico implements OnInit {
   constructor(
-    public servicio: Comisionistas
+    public servicio: Inversionistas
   ){}
   
   public readonly dataModal = inject(DIALOG_DATA);
   private readonly _modalMsg = inject(ModalMsgService)
   // data = this.dataModal.data.data
-  direccion:string = '';
+
+  noCuenta:string = '';
+  instBancaria:string = '';
   
   ngOnInit(): void {
+    console.log( this.dataModal)
+    this.revisarCuentas()
+  }
 
-    let calle = this.dataModal[0][0].Calle;
-    let NoExterior = this.dataModal[0][0].No_Exterior =='' ? '':', No. ' + this.dataModal[0][0].No_Exterior;
-    let colonia = this.dataModal[0][0].Colonia == '' ? '' : ', Col. ' + this.dataModal[0][0].Colonia
-    let CP = this.dataModal[0][0].CP == '' ? '' : ', CP. ' + this.dataModal[0][0].CP
-    let municipio = this.dataModal[0][0].Municipio == '' ? '' : ', ' + this.dataModal[0][0].Municipio
-    let estado = this.dataModal[0][0].Estado == '' ? '' : ', ' + this.dataModal[0][0].Estado
-
-    this.direccion = `${calle}${NoExterior}${colonia}${CP}${municipio}${estado}`; 
-    
+  revisarCuentas(){
+    if(this.dataModal[0].Banco_Tarjeta){
+      this.noCuenta = this.formatDigito(this.dataModal[0].tarjeta, 4)
+      this.instBancaria = this.dataModal[0].Banco_Tarjeta
+      return
+    }
+    if(this.dataModal[0].Banco_cuenta){
+      this.noCuenta = this.formatDigito(this.dataModal[0].CLABE, 3)
+      this.instBancaria = this.dataModal[0].Banco_cuenta
+      return
+    }
+    if(this.dataModal[0].FINCASH){
+      this.noCuenta = this.formatDigito(this.dataModal[0].FINCASH, 4)
+      this.instBancaria = 'FINCASH'
+      return
+    }
   }
 
   async verIdentificacion(){
-    this.servicio.descargaComprobante( this.dataModal[0][0].INE )
+    this.servicio.descargaComprobante( this.dataModal[0].INE )
     .then( (data:any)  => {
       if( data.status === 'error' ){
         this._modalMsg.openModalMsg<ModalMsgComponent>( ModalMsgComponent, { data:data.data }, false, '300px', 'exito')
@@ -124,7 +133,7 @@ export class VentanaVerInformacion implements OnInit {
   }
   async verDomicilio(){
    
-    this.servicio.descargaComprobante( this.dataModal[0][0].Comprobante_domicilio )
+    this.servicio.descargaComprobante( this.dataModal[0].Comprobante_Domicilio )
     .then( (data:any) => {
       if( data.status === 'error' ){
         this._modalMsg.openModalMsg<ModalMsgComponent>( ModalMsgComponent, { data:data.data }, false, '300px', 'exito')
@@ -135,6 +144,22 @@ export class VentanaVerInformacion implements OnInit {
     } )
     
   }
+  formatDigito( digito:string, size:number ){
+    let valorMonto = digito;
+    switch (size) {
+      case 3:
+        valorMonto = valorMonto
+        .replace(/\D/g, "")
+        .replace(/\B(?=(\d{3})+(?!\d)\.?)/g, " ");
+      break
+      case 4:
+        valorMonto = valorMonto
+        .replace(/\D/g, "")
+        .replace(/\B(?=(\d{4})+(?!\d)\.?)/g, ` `);
+      break
+    }
+  return valorMonto  
+}
   verContrato(){
     console.log('contrato')
     // -----------------queda peidniente porque aun no se tiene el machote del cocumento ---------------------

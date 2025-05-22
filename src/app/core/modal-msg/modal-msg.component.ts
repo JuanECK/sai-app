@@ -25,6 +25,10 @@ export class ModalMsgComponent implements OnInit {
   ngOnInit(): void {
     console.log(this.matDialog)
     this.typeMensaje(this.matDialog.TypeMsg)
+
+    // setTimeout(()=>{
+      
+    // },1000)
   }
 
   typeMensaje( mensaje:string ){

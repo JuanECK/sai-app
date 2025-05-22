@@ -27,11 +27,11 @@ import { ModalMsgComponent } from "../../../core/modal-msg/modal-msg.component";
                 @for( item of dataModal[0]; track $index ){
                   <tr class="trGris">
                     <th class="thead-th-blod-No-Border ">Nombre</th>
-                    <td class="tbody-td-ligth-No-Border ">{{item.Nombre_Razon_Social}}</td>
+                    <td class="tbody-td-ligth-No-Border ">{{item.nombre}}</td>
                   </tr>
                   <tr>
                     <th class="thead-th-blod-No-Border ">Tipo de persona</th>
-                    <td class="tbody-td-ligth-No-Border ">{{item.Fisica_Moral === '1' ? 'Fisica':'Moral'}}</td>
+                    <td class="tbody-td-ligth-No-Border ">{{item.fisica_moral === '1' ? 'Fisica':'Moral'}}</td>
                   </tr>
                   <tr class="trGris">
                     <th class="thead-th-blod-No-Border ">RFC</th>
@@ -39,11 +39,11 @@ import { ModalMsgComponent } from "../../../core/modal-msg/modal-msg.component";
                   </tr>
                   <tr>
                     <th class="thead-th-blod-No-Border ">No. telefónico</th>
-                    <td class="tbody-td-ligth-No-Border ">{{item.Telefono}}</td>
+                    <td class="tbody-td-ligth-No-Border ">{{item.telefono}}</td>
                   </tr>
                   <tr class="trGris">
                     <th class="thead-th-blod-No-Border ">Correo</th>
-                    <td class="tbody-td-ligth-No-Border ">{{item.Correo}}</td>
+                    <td class="tbody-td-ligth-No-Border ">{{item.correo}}</td>
                   </tr>
                   <tr>
                     <th class="thead-th-blod-No-Border ">Dirección</th>

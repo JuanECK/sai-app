@@ -46,9 +46,66 @@ export class DashboardComponent implements OnInit {
 
   }
 
+  getCurrencySaldo(event: any) {
+    let value = event.target.value
+    let returnvalor = value
+    if (value != '') {
+      this.activeDisabledBtn( event )
+      returnvalor = formatCurrency(+value, 'en', '', '', '1.2-4')
+      // this.formulario().patchValue({ ['saldoInicial']: returnvalor.replace(/[^0-9.]/g, "") })
+      event.target.value = returnvalor
+      return
+    }
+      this.activeDisabledBtn( event )
+    // this.formulario().patchValue({ ['saldoInicial']: 0 })
+    event.target.value = returnvalor
+  }
+
+  activeDisabledBtn( event:any ){
+     this.buttons = document.querySelectorAll('#table-diferencia-saldos button');
+    //  console.log('evento input',event.target.value)
+    for(let i = 0; i < this.buttons.length; i++){
+      if(event.target.id === this.buttons[i].id){
+        if(!event.target.value){
+          this.buttons[i].classList.remove('btn-DS-Active');
+          this.buttons[i].disabled = true;
+          break
+        }
+        // console.log('el botoon es',this.buttons[i].class)
+        this.buttons[i].classList.add('btn-DS-Active');
+        this.buttons[i].disabled = false;
+      }
+    }
+  }
+
+  parseDigito2(event: any) {
+    let cadena = event.target.value;
+    let numPuntos = 0
+    cadena = cadena
+      .replace(/[^0-9.]/g, "");
+    for (let i = 0; i < cadena.length; i++) {
+      if (cadena[0] === '.') {
+        cadena = cadena.slice(1)
+      }
+      if (cadena[i] === '.') {
+        numPuntos++
+        if (numPuntos > 1) {
+          cadena = cadena.slice(0, i)
+        }
+      }
+      if (cadena[i] === '.') {
+        let res = cadena.slice(i, cadena.length)
+        if (res.length > 5) {
+          cadena = cadena.slice(0, cadena.length - 1)
+        }
+      }
+
+    }
+    event.target.value = cadena
+  }
 
   setDataLogin() {
-    this.puenteData.disparadorData.emit({dato:'Inicio'})
+    this.puenteData.disparadorData.emit({dato:'Inicio', poisionX: 'dash'})
    }
 
    async getDataInicio(){
@@ -62,7 +119,7 @@ export class DashboardComponent implements OnInit {
     })
     const data = await respuesta.json();
     this.Array = data
-    console.log(this.Array)
+    // console.log(this.Array)
    }
 
    getCurrency(value:number){

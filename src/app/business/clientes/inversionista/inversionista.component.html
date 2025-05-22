@@ -1,9 +1,9 @@
 <div class="comisionistas">
-    <div class="container">
+    <div class="container-modulos">
         <div class="separacion">
             <!-- ------------------CARD 1 --------------------- -->
             <div class="card-1 card">
-                <!-- <button (click)="editarComisionista( 600 )" >ver</button> -->
+                <!-- <button (click)="verDatosComisionista( 600 )" >ver</button> -->
                 <button (click)="ver()" >ver-array</button>
                 <div class="d-flex">
                     <div class="col-7" [hidden]="editar ? false : true">
@@ -42,7 +42,7 @@
                             <h4 class="H4ESPECIAL"><span [classList]="formulario().get('nombre')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'">*</span> Nombre completo o Razón Social</h4>
                             <div>
                                 <input class="Nombre-Rsocial" type="text" formControlName="nombre" placeholder="Nombre (s) y apellido (s)">
-                                <input class="RFC" type="text" formControlName="RFC" placeholder="RFC">
+                                <input class="RFC" type="text" maxlength="13" formControlName="RFC" placeholder="RFC">
                             </div>
                         </div>
                     </div>
@@ -165,10 +165,10 @@
 
                             <div class="d-flex grupo-campos-">
                                 <div>
-                                    <h4><span [classList]="formulario().get('BRK')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'">*</span> No. de BRK</h4>
+                                    <h4><span [classList]="formulario().get('BRK')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'">*</span> No. de INV</h4>
                                     <div class="inputBRK">
-                                        <span>BRK-</span>
-                                        <input [classList]="input_BRK ? 'input1 inputInActive' : 'input1' " type="text" maxlength="4" #brk placeholder="" (change)="insertaNumBRK( $event )" (input)="soloDigito( $event )">
+                                        <span>INV-</span>
+                                        <input [classList]="input_BRK ? 'input1 inputInActive' : 'input1' " type="text" maxlength="4" #brk placeholder="" (change)="insertaNumINV( $event )" (input)="soloDigito( $event )">
                                     </div>
                                 </div>
                                 <div class="">
@@ -407,7 +407,7 @@
                                                 <!-- <td class=""><button type="button" [disabled]="item.BRK ? true:false" (click)="portafolioInvercion( item.Id_ICPC )" class="TdOptionsTable"><img [src]="item.BRK ?  '/img-sai/icon-Brief-disabled-35.png' : '/img-sai/icon-Brief.png'  " ></button></td> -->
                                                 <td class="TD_Option"><button type="button" (click)="verDatosComisionista( item.Id_ICPC )" class="TdOptionsTable"><img src="/img-sai/ojito_abierto.png"></button></td>
                                                 <td class="TD_Option"><button type="button" (click)="editarComisionista( item.Id_ICPC )" class="TdOptionsTable"><img src="/img-sai/icon-edith.png"></button></td>
-                                                <td class="TD_Option"><button type="button" (click)="editarComisionista( item.Id_ICPC )" class="TdOptionsTable"><img src="/img-sai/icon-trash.png"></button></td>
+                                                <td class="TD_Option"><button type="button" (click)="eliminarComisionista( item.Id_ICPC )" class="TdOptionsTable"><img src="/img-sai/icon-trash.png"></button></td>
                                             </tr>
                                         }
                                     </tbody>

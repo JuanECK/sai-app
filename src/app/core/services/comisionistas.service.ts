@@ -178,43 +178,91 @@ export class Comisionistas {
     }
 
 
-    async EnviarActualizacioRegistro( formularioActualizado: FormGroup ){
+    async EnviarActualizacioRegistro( formularioActualizado: FormGroup, InversionistaBusquedaID:Array<any> ){
+
+        let hayCambios:boolean = this.hayCambiosEnForm( formularioActualizado, InversionistaBusquedaID )
+
+        if( hayCambios ){
+            
+            let aplication = new FormData();
+            aplication.append('file', formularioActualizado.value.Comprobante_domicilio )
+            aplication.append('file', formularioActualizado.value.INE )
+            
+            for (const [key, value] of Object.entries(formularioActualizado.value)) {
+                if (typeof value != "object") {
+                    aplication.append(key, String(value))
+                }else{
+                    aplication.append(key, '')
+                }
+            }
+            
+            const response = await fetch(this._http + 'clientes/comisionistas/actualizaComisionista/comisionistas', {
+                method: 'POST',
+                body: aplication,
+                redirect: "follow"
+            })
+            const dataService = await response.json()
+            if (response.status === 200) {
+                const data = { mensaje:dataService.mensaje }
+                return {
+                    status:'',    
+                    data: data
+                }
+            }
+            else {
+                const data = { mensaje:dataService.error } 
+                return {
+                    status: 'error',
+                    data: data 
+                }
+            }
+            
+            
+        }
+        
+        const data = { mensaje:'No se detectaron modificaciones' } 
+        return {
+            status: 'edicion',
+            data: data 
+        }
 
         // console.log(formularioActualizado.value.Comprobante_domicilio)
-        let aplication = new FormData();
-        aplication.append('file', formularioActualizado.value.Comprobante_domicilio )
-        aplication.append('file', formularioActualizado.value.INE )
-
-        for (const [key, value] of Object.entries(formularioActualizado.value)) {
-            if (typeof value != "object") {
-                aplication.append(key, String(value))
-            }else{
-                aplication.append(key, '')
-            }
-        }
-
-        const response = await fetch(this._http + 'clientes/comisionistas/actualizaComisionista/comisionistas', {
-            method: 'POST',
-            body: aplication,
-            redirect: "follow"
-        })
-        const dataService = await response.json()
-        if (response.status === 200) {
-            const data = { mensaje:dataService.mensaje }
-            return {
-                status:'',    
-                data: data
-            }
-        }
-        else {
-            const data = { mensaje:dataService.error } 
-            return {
-                status: 'error',
-                data: data 
-            }
-        }
 
     }
+
+
+    hayCambiosEnForm( form:FormGroup, InversionistaBusquedaID:Array<any> ){
+
+        console.log({'formulario':form.value})
+        console.log({'server':InversionistaBusquedaID[0][0]})
+
+        console.log('formulario',Object.keys(form.value).length)
+        console.log('server',Object.keys(InversionistaBusquedaID[0][0]).length)
+
+        for( let i = 0; i< Object.keys(form.value).length ; i++){
+            let valor1 = Object.keys(form.value)[i]
+            // console.log('entre al primer for - ',i)
+            for( let j = 0; j < Object.keys(InversionistaBusquedaID[0][0]).length ; j++){
+                // console.log('entre al segundo for - ',j)
+                let valor2 = Object.keys(InversionistaBusquedaID[0][0])[j]
+                // console.log( 'valir1- ',valor1, ' valor2- ',valor2  )
+                let val1A = Object.values(form.value)[i] == null ? '': Object.values(form.value)[i]
+                if(valor1 === valor2){
+                    // console.log('entre a la validacion')
+                    if( val1A != Object.values(InversionistaBusquedaID[0][0])[j] ){
+                        // console.log('existe un cambio en ', valor1, ' el cambio es ', Object.values(form.value)[i])
+                        return true
+                    }
+                }
+            }
+
+        }
+
+        // console.log('no exstio ningun cambio')
+        return false
+
+    }
+
     async RegistraInversionista( formularioInversion: FormGroup ){
 
         const response = await fetch(this._http + 'clientes/comisionistas/registraInversionista', {

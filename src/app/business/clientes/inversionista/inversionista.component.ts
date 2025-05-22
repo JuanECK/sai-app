@@ -4,15 +4,17 @@ import { PuenteDataService } from '../../../core/services/puente-data.service';
 import { ModalMsgService } from '../../../core/services/modal-msg.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalMsgComponent } from '../../../core/modal-msg/modal-msg.component';
-import { VentanaBusquedaMsg } from '../comisionistas/ventanaBusquedaMsg';
+import { VentanaBusquedaInversionista } from './ventanaBusquedaInversionista'
 import { Inversionistas } from '../../../core/services/inversionistas.service';
 
-import { VentanaVerInformacion } from './ventanaVerInformacion';
+import { VentanaVerInformacionInversionista } from './ventanaVerInformacionInversionista';
+import { VentanaEliminaInversionista } from './ventanaEliminarInversionista';
 
 // let cuenta = 1;
-let porcentaje = [0, 0, 0, 0, 0]
-let pocicion = [ 0, 0, 0, 0]
-let BusquedaText = ''
+let porcentaje = [0, 0, 0, 0, 0];
+let pocicion = [ 0, 0, 0, 0];
+let BusquedaText = '';
+let InversionistaBusquedaID: Array<any>[] = [];
 // let editedRegistro:boolean = false;
 
 @Component({
@@ -107,7 +109,6 @@ arrayMunicipio: Array<any>[] = [];
 arrayCuentaAsociada: Array<any>[] = [];
 ComisionistaReferido: Array<any>[] = [];
 listaBusqueda: Array<any>[] = [];
-InversionistaBusquedaID: Array<any>[] = [];
 criterioBusqueda:string = '';
 selectEstado:boolean = true;
 selectBRK:boolean = true;
@@ -139,7 +140,7 @@ Hoy:string = "";
   private readonly _dialog = inject(MatDialog);
   
 ngOnInit(): void {
-  this.puenteData.disparadorData.emit({ dato: 'Inversionistas' })
+  this.puenteData.disparadorData.emit({ dato: 'Inversionistas', poisionX: '' })
   this.Hoy = this.fechaActual()
   this.estado()
   this.BRK()
@@ -171,12 +172,12 @@ fechaActual(){
   return fecha = dia + ' / ' + getMes[mes] + ' / ' + ano
 }
 
-insertaNumBRK( event:any ){
+insertaNumINV( event:any ){
   if( event.target.value === '' ){
     this.formulario().patchValue({['BRK']:''})
     return
   }
-  this.formulario().patchValue({['BRK']:'BRK-'+event.target.value})
+  this.formulario().patchValue({['BRK']:'INV-'+event.target.value})
 }
 
 
@@ -216,7 +217,7 @@ TipoDeCuenta( event:any ){
 
 cuenta_o_tarjeta( event:any ){
 
-  console.log(this.valor)
+  // console.log(this.valor)
 
 if( this.valor === 'Fincash' ){
   this.formulario().patchValue({['FINCASH']:event.target.value, ['Tipo_Cuenta_targeta']:this.valor});
@@ -299,6 +300,7 @@ async Municipio(event: any) {
   const estado = this.formulario().get('Id_Estado')?.value
   this.arrayMunicipio = await this.servicio.getMunicipio(estado)
   this.selectMunicipio = true
+  this.formulario().patchValue({['Id_Municipio']:''})
   if( event.target.selectedOptions[0].text.length > 16){
     this.selectEstado = false
   }else{
@@ -318,7 +320,7 @@ SeleccionMunicipio(event: any) {
 }
 
 remplazaDigito(event:any, quien:string) {
-  console.log(event.target.value)
+  // console.log(event.target.value)
   let valorMonto = event.target.value;
   valorMonto = valorMonto
   .replace(/\D/g, "")
@@ -376,29 +378,34 @@ resetForm() {
     this.brk.nativeElement.value=''
     this.brk.nativeElement.disabled = true
     this.input_BRK = false;
-
+    InversionistaBusquedaID = []
     // this.actualizaRegistro = false
 }
 
 async ActualizarRegistro() {
-    console.log(this.formulario().value)
+    // console.log(this.formulario().value)
 
     if ( this.formulario().valid ){
 
-      // if( this.formulario().get('usuario')?.value == null ){
-        // let credenciales = await this.servicio.GetCredenciales()
-        // this.formulario().patchValue({usuario:credenciales.Id})
-      // }
+      if( this.formulario().get('usuario')?.value == null ){
+        let credenciales = await this.servicio.GetCredenciales()
+        this.formulario().patchValue({usuario:credenciales.Id})
+      }
 
-      let registroActualizado = await this.servicio.EnviarActualizacioRegistro(this.formulario(), this.InversionistaBusquedaID)
+      let registroActualizado = await this.servicio.EnviarActualizacioRegistro(this.formulario(), InversionistaBusquedaID)
 
-      // if ( registroActualizado.status === 'error' ){
-      //   this._modalMsg.openModalMsg<ModalMsgComponent>( ModalMsgComponent, { data:registroActualizado.data }, false, '300px', 'error' )
-      //   return
-      // }
+      if ( registroActualizado.status === 'error' ){
+        this._modalMsg.openModalMsg<ModalMsgComponent>( ModalMsgComponent, { data:registroActualizado.data }, false, '300px', 'error' )
+        return
+      }
+
+      if ( registroActualizado.status === 'edicion' ){
+        this._modalMsg.openModalMsg<ModalMsgComponent>( ModalMsgComponent, { data:registroActualizado.data }, false, '300px', 'exito' )
+        return
+      }
       
-      // this._modalMsg.openModalMsg<ModalMsgComponent>( ModalMsgComponent, { data:registroActualizado.data }, false, '300px', 'exito' )
-      // this.resetForm()
+      this._modalMsg.openModalMsg<ModalMsgComponent>( ModalMsgComponent, { data:registroActualizado.data }, false, '300px', 'exito' )
+      this.resetForm()
       this.listaBusqueda = [];
     }
 }
@@ -419,10 +426,10 @@ async enviar() {
       }
       
       this._modalMsg.openModalMsg<ModalMsgComponent>( ModalMsgComponent, { data:registro.data }, false, '300px', 'exito' )
-      // this.resetForm()
+      this.resetForm()
       
     }
-    console.log(this.formulario().value)
+    // console.log(this.formulario().value)
 
 }
 
@@ -440,14 +447,14 @@ cargaFormularioComisionista( formComisionista:Array<any>, dataBeneficiarios:any 
   // console.log(formComisionista)
 
   // this.resetForm();
-  formComisionista[0].map((item:any)=>{
+  formComisionista.map((item:any)=>{
     this.formulario().patchValue({
       ['Id_ICPC']:item.Id_ICPC,
       ['nombre']:item.nombre,
       ['fisica_moral']:item.fisica_moral,
       ['correo']:item.correo,
       ['telefono']:item.telefono,
-      ['BRK']:item.BRK,
+      // ['BRK']:item.BRK,
       ['usuario']:item.usuario,
       ['Fecha_Nac']:item.Fecha_Nac,
       ['RFC']:item.RFC,
@@ -488,30 +495,30 @@ cargaFormularioComisionista( formComisionista:Array<any>, dataBeneficiarios:any 
 
     })
   })
-  formComisionista[0][0].fisica_moral === '1' ? (this.radioBtn1.nativeElement.checked = true) : (this.radioBtn2.nativeElement.checked = true)
-  this.servicio.getMunicipio(formComisionista[0][0].Id_Estado)
+  formComisionista[0].fisica_moral === '1' ? (this.radioBtn1.nativeElement.checked = true) : (this.radioBtn2.nativeElement.checked = true)
+  this.servicio.getMunicipio(formComisionista[0].Id_Estado)
   .then( datosMunicipio => {
     this.arrayMunicipio = datosMunicipio;
   } )
   setTimeout(() => {
-    this.formulario().patchValue({['Id_Municipio']:formComisionista[0][0].Id_Municipio,})
+    this.formulario().patchValue({['Id_Municipio']:formComisionista[0].Id_Municipio,})
   }, 100)
 
   document.getElementById("boxNameCargaDomicilio")?.classList.remove('disabledBox')
   document.getElementById("boxNameCargaIdentificacion")?.classList.remove('disabledBox')
-  this.inputDomicilio.nativeElement.value = formComisionista[0][0].Comprobante_Domicilio;
-  this.inputIdentificacion.nativeElement.value = formComisionista[0][0].INE;
+  this.inputDomicilio.nativeElement.value = formComisionista[0].Comprobante_Domicilio;
+  this.inputIdentificacion.nativeElement.value = formComisionista[0].INE;
 
-  if(formComisionista[0][0].Fecha_Contrato){
+  if(formComisionista[0].Fecha_Contrato){
     this.Piker = false;
     this.FechaContrato.nativeElement.disabled = true
   }
-
-  this.brk.nativeElement.value = formComisionista[0][0].BRK.replace(/\D/g, "")
+this.formulario().patchValue({['BRK']:formComisionista[0].BRK.replace(/\D/g, "")})
+  this.brk.nativeElement.value = formComisionista[0].BRK.replace(/\D/g, "")
   this.brk.nativeElement.disabled = true
   this.input_BRK = true;
 
-  this.cargaCuentaTargeta( formComisionista[0][0].CLABE, formComisionista[0][0].Banco_Cuenta, formComisionista[0][0].Tarjeta, formComisionista[0][0].Banco_Tarjeta, formComisionista[0][0].FINCASH )
+  this.cargaCuentaTargeta( formComisionista[0].CLABE, formComisionista[0].Banco_Cuenta, formComisionista[0].Tarjeta, formComisionista[0].Banco_Tarjeta, formComisionista[0].FINCASH )
 
   this.actualizaBeneficiario( dataBeneficiarios )
 
@@ -522,6 +529,7 @@ cargaCuentaTargeta( _Clave:string, _BancoCuenta:string, _tarjeta:string, _BancoT
   if( _Clave != '' ){
       this.formulario().patchValue({['Tipo_Cuenta_targeta']:'CLABE'})
       this.targeta_asociada.nativeElement.value ='CLABE'
+      this.valor = 'CLABE';
       this.Ref_input_Cuenta_Tarjeta.nativeElement.value = _Clave
       this.Ref_Inst_Bancaria.nativeElement.value = _BancoCuenta
       this.inst_Bancaria = false;
@@ -533,6 +541,7 @@ cargaCuentaTargeta( _Clave:string, _BancoCuenta:string, _tarjeta:string, _BancoT
   if( _tarjeta != '' ){
     this.formulario().patchValue({['Tipo_Cuenta_targeta']:'Debito'})
     this.targeta_asociada.nativeElement.value ='Debito'
+    this.valor = 'Debito';
     this.Ref_input_Cuenta_Tarjeta.nativeElement.value = _tarjeta
     this.Ref_Inst_Bancaria.nativeElement.value = _BancoTargeta
     this.inst_Bancaria = false;
@@ -544,6 +553,7 @@ cargaCuentaTargeta( _Clave:string, _BancoCuenta:string, _tarjeta:string, _BancoT
   if( _fincash != '' ){
     this.formulario().patchValue({['Tipo_Cuenta_targeta']:'Fincash'})
     this.targeta_asociada.nativeElement.value ='Fincash'
+    this.valor = 'Fincash';
     this.Ref_input_Cuenta_Tarjeta.nativeElement.value = _fincash
     this.inst_Bancaria = true;
     this.cuenta_targeta = true
@@ -557,9 +567,9 @@ cargaCuentaTargeta( _Clave:string, _BancoCuenta:string, _tarjeta:string, _BancoT
 
 async busqueda(){
     BusquedaText = this.criterioBusqueda
-    console.log(BusquedaText)
+    // console.log(BusquedaText)
     const data = await this.servicio.busqueda( this.criterioBusqueda )
-    console.log(data)
+    // console.log(data)
     if( data.status === 'error' ){
     // if( data[0].length === 0 ){
       this.listaBusqueda = []
@@ -611,7 +621,7 @@ async busqueda(){
 
   }
 
-  eliminarBoxComprobante() {
+eliminarBoxComprobante() {
   this.eliminarBoxFile('boxNameCargaDomicilio', this.inputDomicilio, this.FileDomicilio, 'Comprobante_Domicilio')
 }
 
@@ -630,10 +640,47 @@ uploadDomicilio(event: any) {
     this.inputDomicilio.nativeElement.value = event.target.files[0].name;
 }
 
-  editarComisionista( id:number ){
- console.log(id)
+  async eliminarComisionista( id:number ){
 
-    const dialogRef = this._dialog.open( VentanaBusquedaMsg, {
+    const dialogRef = this._dialog.open( VentanaEliminaInversionista, {
+      disableClose:true,
+      data:'',
+      width:'300px'
+    } )
+    dialogRef.afterClosed().subscribe( result => {
+      if( result ){
+        this.servicio.GetCredenciales()
+        .then( credenciales => {
+
+          this.servicio.eliminaInversionista( id, '0', credenciales.Id )
+          .then( respuesta => {
+
+            if(respuesta.status == 'error'){
+              this._modalMsg.openModalMsg<ModalMsgComponent>( ModalMsgComponent, { data:respuesta.data }, false, '300px', 'exito')
+              return
+            }
+
+            this._modalMsg.openModalMsg<ModalMsgComponent>( ModalMsgComponent, { data:respuesta.data }, false, '300px', 'exito')
+
+            this.servicio.busqueda( this.criterioBusqueda )
+            .then(  data => {
+              console.log(data)
+              this.listaBusqueda = data
+
+            } )
+
+          } )
+
+        } )
+
+      }
+    })
+  }
+
+  editarComisionista( id:number ){
+    // console.log(id)
+
+    const dialogRef = this._dialog.open( VentanaBusquedaInversionista, {
       disableClose:true,
       data: '',
       width: '300px',
@@ -648,9 +695,10 @@ uploadDomicilio(event: any) {
             this._modalMsg.openModalMsg<ModalMsgComponent>( ModalMsgComponent, { data:datos.data }, false, '300px', 'exito')
             return
           }
+          console.log(datos.busqueda)
           this.resetForm()
           this.editar = false
-          this.InversionistaBusquedaID=datos.Busqueda
+          InversionistaBusquedaID = datos.busqueda
           this.cargaFormularioComisionista( datos.busqueda, datos.datosBeneficiario )
 
           this.TabsInformacion.nativeElement.checked = true
@@ -666,7 +714,7 @@ uploadDomicilio(event: any) {
       this._modalMsg.openModalMsg<ModalMsgComponent>( ModalMsgComponent, { data:datos.data }, false, '300px', 'exito')
       return
     }
-    const dialogRef = this._dialog.open( VentanaVerInformacion, {
+    const dialogRef = this._dialog.open( VentanaVerInformacionInversionista, {
       disableClose:true,
       data:datos,
       width:'705px',
@@ -680,7 +728,7 @@ uploadDomicilio(event: any) {
 
 ver(){
   console.log(this.formulario().value)
-  console.log(porcentaje)
+  console.log(InversionistaBusquedaID)
 }
 
 eliminarBoxFile(HTMLElementBoxWho: string, HTMLElementRefFileHow: ElementRef, ElementRefHow: ElementRef, FormGroupNameKey: string) {

@@ -18,6 +18,6 @@ export class SaiComponent implements OnInit {
     this.setDataLogin();
   }
   setDataLogin() {
-    this.puenteData.disparadorData.emit({dato:'Inicio'})
+    this.puenteData.disparadorData.emit({dato:'Inicio' , poisionX: '' })
    }
 }

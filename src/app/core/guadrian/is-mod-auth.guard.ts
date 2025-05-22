@@ -11,13 +11,13 @@ export const isModAuthGuard: CanActivateFn = (route, state): MaybeAsync<GuardRes
   return inject(AuthService).showModul(roles).then(valor =>{
     perfilRetorno = valor;
     if(perfilRetorno) { 
-      console.log('INICIO In');
+      // console.log('INICIO In');
     
       // this.router.navigateByUrl('/inicio');
       return true; 
     } 
     // else {
-      console.log('INICIO Out');
+      // console.log('INICIO Out');
       // state.url['/']
       // inject(Router).navigateByUrl('')
       // router.navigate(['/sai']);

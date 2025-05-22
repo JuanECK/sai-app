@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { environment } from "../../../environments/environments";
 import { FormGroup } from "@angular/forms";
+import { from } from "rxjs";
 
 @Injectable({
     providedIn: 'root'
@@ -84,7 +85,7 @@ export class Inversionistas {
 
     async descargaComprobante( nameComprobante:string ){
 
-        const response = await fetch( this._http + 'download/comisionistas/'+nameComprobante,{
+        const response = await fetch( this._http + 'download/inversionista/'+nameComprobante,{
             method:'GET',
             headers:{
                 "Content-Type":"application/x-www-form-urlencoded"
@@ -114,7 +115,7 @@ export class Inversionistas {
 
         aplication.append('file', fileInput)
         // console.log(fileInput)
-        const response = await fetch(this._http + 'upload/single/comisionistas', {
+        const response = await fetch(this._http + 'upload/single/inversionista', {
             method: 'POST',
             body: aplication,
             redirect: "follow"
@@ -133,7 +134,7 @@ export class Inversionistas {
 
 
     async cargaComisionistaId( id:number, accion:string ){
-        console.log(id)
+        // console.log(id)
         const response = await fetch( this._http + 'clientes/inversionistas/cargaInversionista',{
             method:'POST',
             headers:{
@@ -151,14 +152,14 @@ export class Inversionistas {
                 return datos
             }
 
-            if( datos[0].length === 0 ){
-
-                const data = { mensaje:'¡Por el momento no se pueden cargar los datos!' }
-                return {
-                    status:'error',
-                    data}
-            }
         }
+        // if( datos[0].length === 0 ){
+
+            const data = { mensaje:'¡Por el momento no se pueden cargar los datos!' }
+            return {
+                status:'error',
+                data}
+        // }
 
     }
 
@@ -174,6 +175,13 @@ export class Inversionistas {
         const datos = await response.json()
         // console.log(datos)
         if( response.status === 200 ){
+            if( datos.status === 'error' ){
+                const data = { mensaje:datos.mensaje }
+            return {
+                status:'error',
+                data:data
+            }
+            }
             return datos;
         }else{
             const data = { mensaje:datos.error }
@@ -189,95 +197,116 @@ export class Inversionistas {
 
         // Evaluar si hubo cambios
 
-        this.hayCambiosEnForm( formularioActualizado, InversionistaBusquedaID )
+        let hayCambios:boolean = this.hayCambiosEnForm( formularioActualizado, InversionistaBusquedaID )
+        if( hayCambios ){
+            
+            console.log('cambios')
 
-        // console.log(formularioActualizado.value.Comprobante_domicilio)
+            let aplication = new FormData();
+            aplication.append('file', formularioActualizado.value.Comprobante_Domicilio )
+            aplication.append('file', formularioActualizado.value.INE )
 
+            for (const [key, value] of Object.entries(formularioActualizado.value)) {
+                if (typeof value != "object") {
+                    aplication.append(key, String(value))
+                }else{
+                    aplication.append(key, '')
+                }
+            }
 
-        // let aplication = new FormData();
-        // aplication.append('file', formularioActualizado.value.Comprobante_domicilio )
-        // aplication.append('file', formularioActualizado.value.INE )
+            const response = await fetch(this._http + 'clientes/inversionistas/actualizaInversionista/inversionista', {
+                method: 'POST',
+                body: aplication,
+                redirect: "follow"
+            })
+            const dataService = await response.json()
+            if (response.status === 200) {
+                const data = { mensaje:dataService.mensaje }
+                return {
+                    status:'',    
+                    data: data
+                }
+            }
+            else {
+                const data = { mensaje:dataService.error } 
+                return {
+                    status: 'error',
+                    data: data 
+                }
+            }
 
-        // for (const [key, value] of Object.entries(formularioActualizado.value)) {
-        //     if (typeof value != "object") {
-        //         aplication.append(key, String(value))
-        //     }else{
-        //         aplication.append(key, '')
-        //     }
-        // }
+        }
+        console.log('no exstio ningun cambio')
+        const data = { mensaje:'No se detectaron modificaciones' } 
+        return {
+            status: 'edicion',
+            data: data 
+        }
+        console.log(formularioActualizado.value.Comprobante_domicilio)
 
-        // const response = await fetch(this._http + 'clientes/inversionistas/actualizaInversionista/inversionista', {
-        //     method: 'POST',
-        //     body: aplication,
-        //     redirect: "follow"
-        // })
-        // const dataService = await response.json()
-        // if (response.status === 200) {
-        //     const data = { mensaje:dataService.mensaje }
-        //     return {
-        //         status:'',    
-        //         data: data
-        //     }
-        // }
-        // else {
-        //     const data = { mensaje:dataService.error } 
-        //     return {
-        //         status: 'error',
-        //         data: data 
-        //     }
-        // }
 
     }
 
 
     hayCambiosEnForm( form:FormGroup, InversionistaBusquedaID:Array<any> ){
-        // console.log( form.value )
-        
-        // form.value.map((item:any)=>{
-        //     if(  )
-        // })
-        console.log(Object.keys(form.value).length)
-        console.log(InversionistaBusquedaID)
 
-        // for( let i = 0; i< form.value.length ; i++){
+        console.log({'formulario':form.value})
+        console.log({'server':InversionistaBusquedaID[0]})
 
-        //     for( let j = 0; j< InversionistaBusquedaID.length ; j++){
+        for( let i = 0; i< Object.keys(form.value).length ; i++){
+            let valor1 = Object.keys(form.value)[i]
+            // console.log('entre al primer for - ',i)
+            for( let j = 0; j < Object.keys(InversionistaBusquedaID[0]).length ; j++){
+                // console.log('entre al segundo for - ',j)
+                let valor2 = Object.keys(InversionistaBusquedaID[0])[j]
+                // console.log( 'valir1- ',valor1, ' valor2- ',valor2  )
+                let val1A = Object.values(form.value)[i] == null ? '': Object.values(form.value)[i]
+                if(valor1 === valor2){
+                    // console.log('entre a la validacion')
+                    if( val1A != Object.values(InversionistaBusquedaID[0])[j] ){
+                        // console.log('existe un cambio en ', valor1, ' el cambio es ', Object.values(form.value)[i])
+                        return true
+                    }
+                }
+            }
 
-        //     }
+        }
 
-        // }
+        // console.log('no exstio ningun cambio')
+        return false
 
     }
 
 
-    async RegistraInversionista( formularioInversion: FormGroup ){
+    // async RegistraInversionista( formularioInversion: FormGroup ){
 
-        const response = await fetch(this._http + 'clientes/inversionistas/registraInversionista', {
-            method: 'POST',
-            headers:{
-                'Content-Type':'application/json'
-            },
-            body: JSON.stringify(formularioInversion),
-        })
-        const dataService = await response.json()
-        // console.log(dataService)
-        if (response.status === 200) {
-            const data = { mensaje:dataService.mensaje }
-            return {
-                status:'',    
-                data: data
-            }
-        }
-        else {
-            const data = { mensaje:dataService.error } 
-            return {
-                status: 'error',
-                data: data 
-            }
-        }
+    //     const response = await fetch(this._http + 'clientes/inversionistas/registraInversionista', {
+    //         method: 'POST',
+    //         headers:{
+    //             'Content-Type':'application/json'
+    //         },
+    //         body: JSON.stringify(formularioInversion),
+    //     })
+    //     const dataService = await response.json()
+    //     // console.log(dataService)
+    //     if (response.status === 200) {
+    //         const data = { mensaje:dataService.mensaje }
+    //         return {
+    //             status:'',    
+    //             data: data
+    //         }
+    //     }
+    //     else {
+    //         const data = { mensaje:dataService.error } 
+    //         return {
+    //             status: 'error',
+    //             data: data 
+    //         }
+    //     }
 
-    }
-    async eliminaComisionista( Id_ICPC:number, estatus:string, usuario:number ){
+    // }
+
+    async eliminaInversionista( Id_ICPC:number, estatus:string, usuario:number ){
 
         const response = await fetch(this._http + 'clientes/inversionistas/eliminarRegistro', {
             method: 'POST',

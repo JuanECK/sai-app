@@ -1,4 +1,4 @@
-.sai{
+/* .sai{
 
     background: #00B3CF;
     width: 100%;
@@ -18,7 +18,6 @@
             font-size: 96px;
             font-weight: var(--Bold);
             margin: 0;
-            /* letter-spacing: 1px; */
         }
         & h4{
             font-style: italic;
@@ -29,4 +28,45 @@
 
     }
 
+} */
+
+
+
+.saf{
+
+    & .container-modulos{
+        
+        .card-saf{
+            width: 1180px;
+            /* width: 1192px; */
+            margin-top: 45px;
+            height: 668px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color:#00B3CF;
+            background: #ffffff;
+
+                & .container-sai{
+
+                    text-align: center;
+                    align-items: center;
+
+                    & h1{
+                        font-style: italic;
+                        font-size: 96px;
+                        font-weight: var(--Bold);
+                        margin: 0;
+                    }
+                    & h4{
+                        font-style: italic;
+                        font-size: 20px;
+                        font-weight: var(--Bold);
+                        margin: 0;
+                    }
+
+                }
+        }
+
+    }
 }

@@ -1,0 +1,159 @@
+
+<div class="comisionistas">
+    <div class="container-modulos">
+        <div class="separacion">
+            <div class="card-1 card">
+                <div class="d-flex">
+                    <div class="col-7" [hidden]="editar ? false : true">
+                        <h1 class="h1TitleCard">Agregar Proveedor</h1>
+                    </div>
+                    <!-- <button (click)="editarProveedor(603)" >ver</button>  -->
+
+                    <div class="col-5- edicionRegistro col-7" [hidden]="editar ? true: false">
+                        <h1 class="h1TitleCard"><img src="/img-sai/icon-edicion-de-registro.png" style="width: 20px;">Edición de Registro</h1>
+                        <p>Los cambios afectarán el registro</p>
+                    </div>
+                </div>
+                <span  [hidden]="editar ? false: true">{{Hoy}}</span>
+
+                <form [formGroup]="formulario()">
+                    <div class="form-check">
+                        <div class="check">
+                            <label  class="form-check-label" >Persona Física</label>
+                            <label class="label-container" >
+                                <input type="radio" #radioBtn1 (change)="formulario().patchValue({'fisica_moral':1})" checked name="radio">
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                        <div class="check Second-check">
+                            <label  class="form-check-label" >Persona Moral</label>
+                            <label class="label-container" >
+                                <input type="radio" #radioBtn2 (change)="formulario().patchValue({'fisica_moral':0})" name="radio">
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                    </div>
+                </form>
+
+                <form class="form-comisionista" [formGroup]="formulario()">
+                    <div class="d-flex">
+                        <div class="divNombre">
+                            <h4 class="H4ESPECIAL"><span [classList]="formulario().get('nombre')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'" >*</span> Nombre completo o Razón Social</h4>
+                            <input class="Nombre-Rsocial" type="text" formControlName="nombre" placeholder="Nombre ó Razón social">
+                        </div>
+                        <div class="divRFC">
+                            <!-- <h4 class="H4ESPECIAL">RFC</h4> -->
+                            <input class="RFC" type="text" formControlName="RFC" maxlength="13" placeholder="RFC">
+                        </div>
+                    </div>
+
+                    <div class="d-flex">
+                        <div>
+                            <h4><span [classList]="formulario().get('telefono')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'" >*</span> Teléfono</h4>
+                            <div>
+                                <input class="numTel" type="text" formControlName="telefono" placeholder="Clave + Número telefónico">
+                            </div>
+                        </div>
+                        <div>
+                            <h4><span [classList]="formulario().get('correo')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'">*</span> Correo</h4>
+                            <input type="text" class="CorreoElectronico" formControlName="correo" placeholder="Correo electrónico" >
+                        </div>
+                    </div>
+
+                    <div class="">
+                        <h4>Actividad comercial</h4>
+                        <input type="text" class="actividadComercial" formControlName="actividad" placeholder="Especifique giro comercial">
+                    </div>
+
+                    <div class="d-flex grupo-campos-">
+                        <div class="">
+                            <!-- <h4 class="TipoCuenta"><span [classList]="cuenta_targeta ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'">*</span> Cuenta o tarjeta asociada</h4> -->
+                            <h4 class="TipoCuenta">Cuenta o tarjeta asociada</h4>
+
+                            <div class="select selectTipoCuenta">
+                                <span class="spanExedioCaractereSelect" id="" [ariaSelected]="true"
+                                    [hidden]="selectReferido">...</span>
+                                <select required #targeta_asociada class="" (change)="TipoDeCuenta( $event )">
+                                    <option value="" disabled selected hidden>Selecciona el tipo de cuenta
+                                        <option value="CLABE">Cuenta CLABE</option>
+                                        <option value="Debito">Targeta Debito</option>
+                                        <!-- <option value="Fincash">Targeta Fincash</option> -->
+
+                                </select>
+                            </div>
+                        </div>
+                        <div class="">
+                            <h4>{{titulo_cuenta_asociada}}</h4>
+                            <input [classList]="Banco_cuenta ? 'No-Fecha-Targeta inputInActive' : 'No-Fecha-Targeta' " #Ref_input_Cuenta_Tarjeta type="text" [attr.maxLength]="valor ==='CLABE' ? 18:16 "  [placeholder]="placeHolder_cuenta_asociada" [disabled]="Banco_cuenta" (change)="cuenta_o_tarjeta( $event )">
+                        </div>
+                    </div>
+                    <div class="">
+                        <h4>Institución Bancaria</h4>
+                        <input  [classList]="inst_Bancaria ? 'InstitucionBancaria inputInActive' : 'InstitucionBancaria' " #Ref_Inst_Bancaria type="text" placeholder="Banca emisora" [disabled]="inst_Bancaria" (change)="Institucion_Bancaria( $event )">
+                    </div>
+
+                    <div class="d-flex btnsRegistro">
+                        <div class="row ">
+                            <button type="submit" (click)="enviar()" [hidden]="editar ? false:true" [classList]="formulario().valid ? 'btn G-C-Registro btnInActivo':'btn G-C-Registro btnActive'" >GUARDAR REGISSTRO</button>
+                            <!-- <button type="submit" (click)="ActualizarRegistro()" [hidden]="editar ? true:false" [classList]="actualizaRegistro ? 'btn G-C-Registro btnInActivo':'btn G-C-Registro btnActive'" >ACTUALIZAR CAMPOS</button> -->
+                            <button type="submit" (click)="ActualizarRegistro()" [hidden]="editar ? true:false" [classList]="formulario().valid ? 'btn G-C-Registro btnInActivo':'btn G-C-Registro btnActive'" >ACTUALIZAR CAMPOS</button>
+
+                            <button class="btn-second G-C-Registro mr-12" type="button" (click)="resetForm()">CANCELAR</button>
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+
+            <form class="InformaciónAdicional-Busqueda" [formGroup]="formulario()">
+
+                <div class="tabsNav tabsNavAncho">
+
+                    <div class="tab">
+                        <input type="radio" #TabsBusqueda name="tabs" id="t2" checked>
+
+                        <label class="Busqueda" for="t2">Búsqueda</label>
+                        <div class="BusquedaDiv DivContainer">
+                            <h1 class="h1TitleCardTab">Búsqueda</h1>
+                                <div class="inputBusqueda">
+                                    <p>Para hacer una búsqueda escribe el Nombre del proveedor</p>
+                                    <input class="Nombre-Cliente" #Busqueda type="text" placeholder="Nombre ó número de Cliente " (input)="inputBusqueda($event)">
+                                </div>
+                                <div class="">
+                                    <button class="btn NuevaBusqueda mr-12" (click)="busqueda()" [disabled]="disabledBtn" [classList]="disabledBtn ? 'btn NuevaBusqueda mr-12 btnActive':'btn NuevaBusqueda mr-12 btnInActivo'" type="button">Nueva búsqueda</button>
+                                </div>
+                                <h1 class="h1TitleCardTab">Coincidencias</h1>
+
+                                <div class="TableBusqueda">
+                                    <table class="table">
+                                        <thead>
+                                          <tr>
+                                            <th class="thead-th-blod-No-Border th-just-left Nombre">Nombre</th>
+                                            <th class="thead-th-blod-No-Border th-just-left actividadComercial">Actividad comercial</th>
+                                            <th class="thead-th-blod-No-Border "></th>
+                                          </tr>
+                                        </thead>
+                                        <tbody class="">
+                                            @for( item of listaBusqueda[0]; track $index ){
+                                                <tr>
+                                                    <td class="tbody-td-ligth-No-Border Nombre">{{item.Nombre_Razon_Social}}</td>
+                                                    <td class="tbody-td-ligth-No-Border actividadComercial">{{item.Num_Proveedor}}</td>
+                                                    <td class="TD_Option"><button type="button" (click)="verDatosProveedor( item.Id_ICPC )" class="TdOptionsTable"><img src="/img-sai/ojito_abierto.png"></button></td>
+                                                    <td class="TD_Option"><button type="button" (click)="editarProveedor( item.Id_ICPC )" class="TdOptionsTable"><img src="/img-sai/icon-edith.png"></button></td>
+                                                    <td class="TD_Option"><button type="button" (click)="eliminarProveedor( item.Id_ICPC )" class="TdOptionsTable"><img src="/img-sai/icon-trash.png"></button></td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                      </table>
+                                </div>
+                        </div>
+                    </div>
+                    
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>

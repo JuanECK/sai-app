@@ -1,0 +1,69 @@
+:host {
+    display: block;
+    background: #222222;
+    border-radius: 16px;
+  }
+  .btn-group{
+      width: 100%;
+  }
+  .btn-group button {
+    background: #222222; 
+    border: 1px solid #222222;; 
+    color: white; 
+    padding: 10px 24px;
+    cursor: pointer; 
+    float: left; 
+    width: 50%;
+    height: 61px;
+  }
+  .btn-group :nth-child(2){
+    border-top: 1px solid rgb(255, 255, 255);
+    border-left: 1px solid rgb(255, 255, 255);
+    border-bottom-right-radius: 40px;
+    
+  }
+  .btn-group :nth-child(1){
+    border-top: 1px solid rgb(255, 255, 255);
+    border-bottom-left-radius: 40px;
+  }
+
+  .btn-group:after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+  .btn-group button:not(:last-child) {
+    border-right: none; 
+  }
+ 
+.btn-group button:hover {
+    color: #696969;
+  }
+
+  .content-modalMsg{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 16px;
+  
+    & .text-center{
+      & h1 {
+        font-size: 25px;
+        margin-bottom: 0px;
+        margin-top: 15px;
+        font-weight: var(--Medium);
+        color: #e4e4e4;
+      }
+    }
+  
+    & .mensaje-modalMsg{
+      font-size: 13px;
+      font-weight: var(--Normal);
+      color: #e4e4e4;
+      padding: 12px 20px;
+
+      
+    }
+
+  }

@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../core/services/auth.service';
 import { PuenteDataService, Persona} from '../../core/services/puente-data.service';
-import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-head',
   standalone: true,
-  imports: [RouterLink],
+  imports: [],
   templateUrl: './head.component.html',
   styleUrl: './head.component.css'
 })
@@ -38,7 +37,7 @@ export class HeadComponent implements OnInit {
 
     this.puenteData.disparadorData.subscribe(data =>{
           this.dataHead = data
-        })
+    })
    
   }
 

@@ -1,0 +1,143 @@
+<div class="noReconocidos">
+    <div class="container-modulos">
+        <div class="separacion">
+            <div class="card-1 card">
+                <div>
+
+                    <div class="d-flex">
+                        <div class="col-7" [hidden]="editar ? false : true">
+                            <h1 class="h1TitleCard">No Reconocidos</h1>
+                        </div>
+                        <!-- <button (click)="editarCuenta(14)" >carga</button> -->
+                        <!-- <button (click)="ver()" >ver</button>   -->
+    
+                        <div class="edicionRegistro col-7" [hidden]="editar ? true: false">
+                            <h1 class="h1TitleCard"><img src="/img-sai/icon-edicion-de-registro.png" style="width: 20px;">Edición de Registro</h1>
+                            <p>Los cambios afectarán el registro</p>
+                        </div>
+                    </div>
+    
+                    <span  [hidden]="editar ? false: true">{{Hoy}}</span>
+
+                </div>
+
+                <form [formGroup]="formulario()">
+                    <div class="form-check">
+                        <div class="check">
+                            <label  class="form-check-label" >Ingreso</label>
+                            <label class="label-container" >
+                                <input type="radio" #radioBtn1 (change)="formulario().patchValue({'Tipo_Movimiento':'Ingreso'})" checked name="radio">
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                        <div class="check Second-check">
+                            <label  class="form-check-label" >Prestamo</label>
+                            <label class="label-container" >
+                                <input type="radio" #radioBtn2 (change)="formulario().patchValue({'Tipo_Movimiento':'Préstamo'})" name="radio">
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class=" d-flex modeloDivisasSaldo justify-content-between">
+
+                        <div class="moneda">
+                            <h4 class="H4ESPECIAL"><span [classList]="formulario().get('Id_CuentaB')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'" >*</span> Cuenta de ingreso</h4>
+                            <div class="select CuentaB">
+    
+                                <span class="spanExedioCaractereSelect" [hidden]="selectCuenta">...</span>
+                                <select required #monedaSelect formControlName="Id_CuentaB">
+                                    <option value="" disabled selected hidden>Alias de la cuenta</option>
+                                    @for(item of arrayCuentaIngreso[0]; track $index ){
+                                        <option  [value]="item.Id_Cuenta">{{item.alias}}</option>
+                                    }
+                                </select>
+    
+                            </div>
+                        </div>
+
+                        <div class="">
+                            <!-- <h4 class="H4ESPECIAL">Saldo Inicial</h4> -->
+                             <h4 class="H4ESPECIAL"><span [classList]="formulario().get('Monto')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'" >*</span> Monto</h4>
+                            <input class="Monto" type="text" #Monto placeholder="0.00" (change)="getCurrencySaldo( $event )" (input)="parseDigito2( $event )">
+                        </div>
+
+                    </div>
+
+                    <div>
+                        <h4>Fecha de nacimiento</h4>
+                        <input class="custom-date-picker FechaIngreso mr-12 group2" type="date" max="hoy" formControlName="Fecha_Ingreso" >
+                        <!-- <input [hidden]="Benef3" class="custom-date-picker FechaIngreso mr-12 group2" type="date" max="hoy" formControlName="Fecha_Ingreso" > -->
+                    </div>
+
+                    <div class="divObservaciones">
+
+                        <h4 class="H4ESPECIAL">Observaciones</h4>
+                        <textarea class="observaciones" name="" id="" formControlName="Observaciones" rows=0 cols=0 placeholder="Observaciones"></textarea>
+
+                    </div>
+
+                    <div class="d-flex btnsRegistro">
+                        <div class="row ">
+                            <button type="submit" (click)="enviar()" [hidden]="editar ? false:true" [classList]="formulario().valid ? 'btn G-C-Registro btnInActivo':'btn G-C-Registro btnActive'" >GUARDAR REGISSTRO</button>
+                            <button type="submit" (click)="ActualizarRegistro()" [hidden]="editar ? true:false" [classList]="formulario().valid ? 'btn G-C-Registro btnInActivo':'btn G-C-Registro btnActive'" >ACTUALIZAR CAMPOS</button>
+
+                            <button class="btn-second G-C-Registro mr-12" type="button" (click)="resetForm()">CANCELAR</button>
+                        </div>
+                    </div>
+                    
+
+                </form>
+
+            </div>
+
+            <form class="InformaciónAdicional-Busqueda">
+
+                <div class="tabsNav tabsNavAncho">
+
+                    <div class="tab">
+                        <input type="radio" #TabsBusqueda name="tabs" id="t2" checked>
+                        <label class="Busqueda" for="t2">Histórico</label>
+                        <div class="BusquedaDiv DivContainer">
+                                
+                            <h1 class="h1TitleCardTab">Historial de  Movimientos</h1>
+                            <div class="TableBusqueda">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th class="thead-th-blod-No-Border Tipo_Movimiento"></th>
+                                        <th class="thead-th-blod-No-Border th-just-left alias">Cuenta</th>
+                                        <th class="thead-th-blod-No-Border th-just-left- text-center Monto">Monto</th>
+                                        <th class="thead-th-blod-No-Border th-just-left fecha">Ingreso</th>
+                                        <th class="thead-th-blod-No-Border "></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="">
+                                        @for( item of arrayHistorico[0]; track $index ){
+                                            <tr>
+                                                <td class="tbody-td-ligth-No-Border Tipo_Movimiento"><div><span [classList]="item.Tipo_Movimiento == 'Ingreso' ? 'ingreso':'prestamo' "></span></div></td>
+                                                <td class="tbody-td-ligth-No-Border alias">{{item.alias}}</td>
+                                                <td class="tbody-td-ligth-No-Border text-center Monto">{{getCurrencyTable(item.Monto)}}</td>
+                                                <td class="tbody-td-ligth-No-Border fecha">{{formatoFechaLatina(item.fecha)}}</td>
+
+                                                @if(item.Tipo_Movimiento === "Préstamo"){
+                                                    <td class="TD_Option"><button type="button" (click)="cambiarEstadoPrestamo( item.Id_Mov_Inv )" class="TdOptionsTable"><img src="/img-sai/icon-pago-prestamo.png"></button></td>
+                                                }
+                                                @else{
+                                                    <td class="TD_Option"><button type="button" (click)="verDatosobservaciones( item.Id_Mov_RN )" class="TdOptionsTable"><img src="/img-sai/icono-flecha-derecha.png"></button></td>
+                                                }
+                                                <td class="TD_Option"><button type="button" (click)="editarobservaciones( item.Id_Mov_RN )" class="TdOptionsTable"><img src="/img-sai/icon-edith.png"></button></td>
+                                                <td class="TD_Option"><button type="button" (click)="eliminarobservaciones( item.Id_Mov_RN )" class="TdOptionsTable"><img src="/img-sai/icon-trash.png"></button></td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

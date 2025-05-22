@@ -1,7 +1,9 @@
 
 <div class="dashboard">
-  <div class="container">
+  <div class="container-modulos">
+    
     <div class="separacion">
+
       <div class="prestamos-internos card">
         <!-- <button (click)="ver()">ver</button> -->
         <h1 class="H1PI" >Préstamos internos</h1>
@@ -30,7 +32,7 @@
           <thead>
             <tr>
               <th class="thead-th-blod th-banco1">Banco</th>
-              <th class="thead-th-blod th-indet1">Identificador</th>
+              <th class="thead-th-blod th-indet1">Alias</th>
               <th class="thead-th-blod th-cuen1">No. de Cuenta</th>
               <th class="thead-th-blod th-clabe1">Clabe</th>
               <th class="thead-th-blod th-negocio1">U. Negocio</th>
@@ -43,7 +45,7 @@
             @for( item of Array[3]; track $index ){
               <tr>
                 <td class="tbody-td-ligth th-banco1">{{item.Banco}}</td>
-                <td class="tbody-td-ligth th-indet1"><span>{{item.Identificador}}</span></td>
+                <td class="tbody-td-ligth th-indet1"><span>{{item.Alias}}</span></td>
                 <td class="tbody-td-ligth th-cuen1">{{item.Cuenta}}</td>
                 <td class="tbody-td-ligth th-clabe1">{{item.CLABE}}</td>
                 <td class="tbody-td-ligth th-negocio1">{{item.UnidadNegocio}}</td>
@@ -53,6 +55,7 @@
           </tbody>
         </table>
       </div>
+
     </div>
 
     <div class="separacion">
@@ -104,7 +107,7 @@
           <thead>
             <tr>
               <th class="thead-th-blod-saldos DS-banco">Banco</th>
-              <th class="thead-th-blod-saldos DS-ident">Identificador</th>
+              <th class="thead-th-blod-saldos DS-ident">Alias</th>
               <th class="thead-th-blod-saldos DS-SAnterior">Saldo anterior</th>
               <th class="thead-th-blod-saldos DS-SActual">Saldo actual</th>
               <!-- <th class="thead-th-blod-saldos DS-Guardar"></th> -->
@@ -115,7 +118,7 @@
             @for( item of Array[4]; track $index ){
             <tr>
               <td class="tbody-td-ligth-saldos DS-banco">{{item.Nombre_Banco}}</td>
-              <td class="tbody-td-ligth-saldos DS-ident"><span>{{item.Id_CuentaB}}</span></td>
+              <td class="tbody-td-ligth-saldos DS-ident"><span>{{item.Alias_Cuenta}}</span></td>
               <td class="tbody-td-ligth-saldos DS-SAnterior">{{getCurrency(item.Saldo_anterior)}}</td>
               <td class="tbody-td-ligth-saldos DS-SActual">
                 <div class="form-group-icon-SD">
@@ -124,7 +127,11 @@
                         $
                     </span>
                     <!-- <input class="inputSA" type="number"  [id]="item.Id_CuentaB" (change)="ver($event)" autocomplete="off"> -->
-                    <input class="inputSA" type="text" (input)="parseDigito($event)" [id]="item.Id_CuentaB" (change)="ver($event)" autocomplete="off">
+
+                    <!-- <input class="inputSA" type="text" (input)="parseDigito($event)" [id]="item.Id_CuentaB" (change)="ver($event)" autocomplete="off"> -->
+                    <input class="inputSA" type="text" #saldoInicialInput placeholder="0.00" [id]="item.Id_CuentaB" autocomplete="off" (change)="getCurrencySaldo( $event )" (input)="parseDigito2( $event )">
+
+
                     <!-- <input type="text" (input)="soloDigito($event)" [id]="item.Id_CuentaB" (change)="ver($event)" autocomplete="off"> -->
                   </div>
                  <button class="btn-DS" [id]="item.Id_CuentaB" (click)="actualizarSaldo($event)" disabled="true" >Guardar</button>
@@ -140,6 +147,8 @@
         <h4 class="H4DG">Diferencia global: <span>{{getCurrency(item.Diferencia_global)}}</span></h4>
         }
       </div>
+
     </div>
+
   </div>
 </div>

@@ -194,7 +194,7 @@ let porcentaje = [0, 0, 0, 0, 0]
               </div>
               
               <div class="row btnAccionPortafolio">
-                <button type="submit" (click)="creaPortafolioInversion()" [classList]="formulario().valid ? 'btn btnInActivo ':'btn btnActive'" >GUARDAR REGISSTRO</button>
+                <button type="submit" (click)="creaPortafolioInversion()" [classList]="formulario().valid ? 'btn btnInActivo ':'btn btnActive'" [mat-dialog-close]="true">GUARDAR REGISSTRO</button>
                 <!-- <button type="submit" (click)="ver()" [classList]="formulario().valid ? 'btn G-C-Registro btnInActivo':'btn G-C-Registro btnActive'" >GUARDAR REGISSTRO</button> -->
                 <button class="btn-second cancelPortafolio" id="dialog-close" type="button" (click)="Cerrar()" mat-dialog-close >CANCELAR</button>
               </div>
@@ -442,10 +442,11 @@ export class VentanaCreaPortafolio implements OnInit{
       }
       
       this._modalMsg.openModalMsg<ModalMsgComponent>( ModalMsgComponent, { data:registro.data }, false, '300px', 'exito' )
-      document.getElementById('dialog-close')?.click()
+      // document.getElementById('dialog-close')?.click()
+      
     }
     // console.log(this.formulario().value)
-
+    
   }
 
   ver(){console.log(this.formulario().value)}

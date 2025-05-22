@@ -1,3 +1,4 @@
+
 dialog {
     background: #7c7c7c;
     padding: 10px;
@@ -8,7 +9,6 @@ dialog {
     overflow-y: auto;
     word-wrap: break-word;
     height: 100%;
-
     .H4ESPECIAL{
             margin-top: 40px;
             margin-bottom: 12px;
@@ -40,12 +40,14 @@ dialog {
         padding: 5px 30px;
     }
 
-    & .container{
-        display: grid;
+    & .container-modulos{
+        /* display: grid;
+        justify-content: center;
+        margin-left: 180px; */
         grid-template-rows: 370px 390px ;
         & .separacion{
             display: flex;
-
+            
             & .card{
 
                 & .edicionRegistro{

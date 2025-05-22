@@ -1,6 +1,5 @@
 
 .dashboard{
-    /* background: #aa5050; */
     overflow-y: auto;
     word-wrap: break-word;
     height: 100%;
@@ -34,8 +33,15 @@
     }
 
     
-    & .container{
-        display: grid;
+    & .container-modulos{
+        /* display: grid;
+        justify-content: center;
+        margin-left: 180px; */
+
+
+        /* position: relative; */
+        /* left: 20px; */
+
         grid-template-rows: 370px 390px ;
         & .separacion{
             display: flex;
@@ -70,7 +76,7 @@
                 margin-bottom: 23px;
                 width: 320px;
                 /* width: 450px; */
-                height: 290px;
+                height: 325px;
         
               
             }
@@ -80,8 +86,7 @@
                 margin-right: 22px;
                 margin-bottom: 23px;
                 width: 720px;
-                /* width: 980px; */
-                height: 290px;
+                height: 325px;
         
                
             }
@@ -113,9 +118,15 @@
     min-width: 95px;
     padding: 6px 3px 6px 3px;}
 .th-indet1{
-   max-width: 70px;
-   min-width: 70px;
-   padding: 6px 3px 6px 3px;}
+    max-width: 70px;
+    min-width: 70px;
+    padding: 6px 3px 6px 3px;
+    & span{
+        display: flex;
+        justify-content: left;
+        text-align: left;
+    }
+}
 .th-cuen1{
     max-width: 110px;
     min-width: 110px;
@@ -145,7 +156,12 @@
    max-width: 70px;
    min-width: 70px;
    padding: 6px 3px 6px 3px;
-   text-align: center;
+   text-align: left;
+   & span{
+    display: flex;
+    justify-content: left;
+    text-align: left;
+}
 }
 .DS-SAnterior{
    max-width: 88px;
@@ -212,14 +228,14 @@ tbody {
 }
 .tbody-Abonos {
    display: block; 
-   height: 90px;       
+   height: 135px;       
    overflow-y: auto;   
    overflow-x: hidden;  
 }
 
 .tbody-DS{
     display: block; 
-   height: 175px;       
+   height: 210px;       
    overflow-y: auto;   
    overflow-x: hidden;  
 }

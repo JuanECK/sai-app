@@ -38,8 +38,10 @@
         font-size: 16px;
         font-weight: var(--Medium);
     }
-    & .container{
-        display: grid;
+    & .container-modulos{
+        /* display: grid;
+        justify-content: center;
+        margin-left: 180px; */
         grid-template-rows: 370px 390px ;
         & .separacion{
             display: flex;

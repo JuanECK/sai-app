@@ -1,6 +1,7 @@
-import { Component,  EventEmitter,  Input,  OnInit, Output } from '@angular/core';
+import { Component,  ElementRef,  EventEmitter,  Input,  OnInit, Output, ViewChild ,AfterContentInit } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { HeadService } from '../../core/services/head.service';
+import { PuenteDataService } from '../../core/services/puente-data.service';
 // import { PuenteDataService } from '../../core/services/puente-data.service';
 
 @Component({
@@ -15,14 +16,17 @@ export class SidebarComponent implements OnInit {
 
   constructor(
     private headService:HeadService,
-    // private puenteData:PuenteDataService
+    private puenteData:PuenteDataService
   ){}
  
+
+// @ViewChild('aside',{static: false}) aside!: ElementRef;
 
   sesion = localStorage.getItem('sesion');
   modulos:any
   public arrLista:any = []
   dataLogin:any=[]
+  dataSidebar:any
 
 
   @Output () migajaEvent: EventEmitter<string> = new EventEmitter();
@@ -30,7 +34,34 @@ export class SidebarComponent implements OnInit {
 
 
    ngOnInit(): void {
+    
     this.getModulo()
+    this.getDataLogin()
+  }
+  
+  ngAfterContentInit() {
+
+  }
+
+  getDataLogin(){
+
+    this.puenteData.disparadorData.subscribe(data =>{
+          this.dataSidebar = data
+          // console.log(data)
+
+          const asideElement = document.getElementById('miAside')!
+          if(data.poisionX === 'dash'){
+            asideElement.classList.remove('nuevoAsit')
+            return
+          }
+          asideElement.classList.add('nuevoAsit')
+
+          // asideElement.style.left = data.poisionX ;
+          // asideElement.style.backgroundColor = 'lightblue';
+          // asideElement.style.padding = '20px';
+          // asideElement.style.border = '1px solid black';
+
+    })
    
   }
 

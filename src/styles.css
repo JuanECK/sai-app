@@ -105,6 +105,13 @@ body{
     overflow-y: hidden;
 }
 
+
+.container-modulos{
+    display: grid;
+    justify-content: center;
+    margin-left: 180px;
+}
+
 .card{
     padding: 16px 12px;
     position: relative;
@@ -212,6 +219,33 @@ input[type=number] {
 /* .inputActive{} */
 
 
+/* -------------------Text Area------------------- */
+
+textarea:focus{
+  border:1px solid #D8D8D8;
+  background-color: #D8D8D8;
+  outline: none;
+}
+textarea{
+    border: 1px solid #00B3CF;
+    font-size: 14px;
+    padding: 8px 8px 8px 8px ;
+    resize: none;
+}
+textarea::placeholder{
+    font-size: 14px;
+    color: #BBBBBB;
+}
+
+textarea::-webkit-scrollbar{
+    background: #e0e0e0;
+    width: 10px;
+}
+textarea::-webkit-scrollbar-thumb{
+    background: #00B3CF;
+    border-radius: 50px;
+    cursor: pointer;
+}
 /* -------------------Modal Mensaje------------------- */
 
 /* mat-dialog-container { */
@@ -504,7 +538,7 @@ select {
 /* position: relative; */
   }
 
-  .boxNameCargaDomicilio, .boxNameCargaIdentificacion{
+  .boxNameCargaDomicilio, .boxNameCargaIdentificacion, .boxNameComprobante{
     position: relative;
     width: 100%;
     height: 100%;

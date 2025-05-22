@@ -14,8 +14,6 @@ export class VentanaBusquedaMsgService {
     // openDialog<CT>( componentRef: ComponentType<CT>, data?:any, closeModal?:boolean, width?:string):Promise<boolean> | boolean {
 
 
-        
-
         // const config = { data, closeModal }
 
         // const dialogRef = this._dialog.open(componentRef,{

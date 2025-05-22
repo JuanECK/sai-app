@@ -4,7 +4,6 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Comisionistas } from '../../../core/services/comisionistas.service';
 import { ModalMsgService } from '../../../core/services/modal-msg.service';
 import { ModalMsgComponent } from '../../../core/modal-msg/modal-msg.component';
-import { VentanaBusquedaMsg } from './ventanaBusquedaMsg';
 import { VentanaBusquedaMsgService } from '../../../core/services/ventanaBusquedaMsg.service';
 
 
@@ -15,10 +14,13 @@ import { MatDialog } from "@angular/material/dialog";
 import { VentanaVerInformacion } from './ventanaVerInformacion';
 import { VentanaCreaPortafolio } from './ventanaPortafolio';
 import { VentanaEliminaMsg } from './ventanaEliminarMsg';
+import { VentanaBusquedaMsg } from './ventanaBusquedaMsg';
 
 // -----------------------------------------------------------
 
 let BusquedaText = ''
+let InversionistaBusquedaID: Array<any>[] = [];
+
 // let editedRegistro:boolean = false;
 
 
@@ -303,6 +305,7 @@ export class ComisionistasComponent implements OnInit {
     this.arrayMunicipio = await this.servicio.getMunicipio(estado)
     // console.log(event.target.selectedOptions[0].text.length)
     this.selectMunicipio = true
+    this.formulario().patchValue({['Id_Municipio']:''})
     if( event.target.selectedOptions[0].text.length > 16){
       this.selectEstado = false
     }else{
@@ -343,6 +346,16 @@ export class ComisionistasComponent implements OnInit {
       data:{ReferidoBRK:this.ReferidoBRK, Id_ICPC:id},
       width:'713px',
       maxWidth: '100%'
+    })
+    dialogRef.afterClosed().subscribe( result => {
+      if(result){
+        this.servicio.busqueda( this.criterioBusqueda )
+        .then(  data => {
+          console.log(data)
+          this.listaBusqueda = data
+
+        } )
+      }
     })
   }
   
@@ -389,7 +402,7 @@ export class ComisionistasComponent implements OnInit {
 
             this.servicio.busqueda( this.criterioBusqueda )
             .then(  data => {
-console.log(data)
+              console.log(data)
               this.listaBusqueda = data
 
             } )
@@ -421,6 +434,7 @@ console.log(data)
           }
           this.resetForm()
           this.editar = false
+          InversionistaBusquedaID = datos;
           this.cargaFormularioComisionista( datos )
           this.TabsInformacion.nativeElement.checked = true
         } )
@@ -437,21 +451,21 @@ console.log(data)
     // this.resetForm();
     formComisionista[0].map((item:any)=>{
       this.formulario().patchValue({
-        ['nombre']:item.Nombre_Razon_Social,
-        ['fisica_moral']:item.Fisica_Moral,
-        ['correo']:item.Correo,
-        ['telefono']:item.Telefono,
+        ['nombre']:item.nombre,
+        ['fisica_moral']:item.fisica_moral,
+        ['correo']:item.correo,
+        ['telefono']:item.telefono,
         // ['usuario']: item.usuario,
         ['banco_cuenta']: item.Banco_Cuenta,
         ['CLABE']: item.CLABE,
-        ['fincash']: item.FINCASH,
+        ['fincash']: item.fincash,
         ['Banco_tarjeta']: item.Banco_Tarjeta,
-        ['tarjeta']: item.Tarjeta,
+        ['tarjeta']: item.tarjeta,
         ['RFC']: item.RFC,
         ['Comprobante_domicilio']: item.Comprobante_domicilio,
         ['INE']: item.INE,
-        ['Referido']:item.Referido_por,
-        ['Fecha_contrato']: item.Fecha_Contrato,
+        ['Referido']:item.Referido,
+        ['Fecha_contrato']: item.Fecha_contrato,
         ['Calle']: item.Calle,
         ['No_Exterior']:item.No_Exterior,
         ['No_Interior']:item.No_Interior,
@@ -459,7 +473,7 @@ console.log(data)
         ['Id_Estado']:item.Id_Estado,
         // ['Id_Municipio']:item.Id_Municipio,
         ['CP']:item.CP,
-        ['estatus']:item.Estatus,
+        ['estatus']:item.estatus,
         ['Id_ICPC']:item.Id_ICPC,
         
         ['NameDomicilio']: item.Comprobante_domicilio,
@@ -468,7 +482,7 @@ console.log(data)
 
       })
     })
-    formComisionista[0][0].Fisica_Moral === '1' ? (this.radioBtn1.nativeElement.checked = true) : (this.radioBtn2.nativeElement.checked = true)
+    formComisionista[0][0].fisica_moral === '1' ? (this.radioBtn1.nativeElement.checked = true) : (this.radioBtn2.nativeElement.checked = true)
     this.servicio.getMunicipio(formComisionista[0][0].Id_Estado)
     .then( datosMunicipio => {
       this.arrayMunicipio = datosMunicipio;
@@ -482,11 +496,11 @@ console.log(data)
     this.inputDomicilio.nativeElement.value = formComisionista[0][0].Comprobante_domicilio;
     this.inputIdentificacion.nativeElement.value = formComisionista[0][0].INE;
 
-    if(formComisionista[0][0].Fecha_Contrato){
+    if(formComisionista[0][0].Fecha_contrato){
       this.Piker = false;
       this.FechaContrato.nativeElement.disabled = true
     }
-    this.cargaCuentaTargeta( formComisionista[0][0].CLABE, formComisionista[0][0].Banco_Cuenta, formComisionista[0][0].Tarjeta, formComisionista[0][0].Banco_Tarjeta, formComisionista[0][0].FINCASH )
+    this.cargaCuentaTargeta( formComisionista[0][0].CLABE, formComisionista[0][0].Banco_Cuenta, formComisionista[0][0].tarjeta, formComisionista[0][0].Banco_Tarjeta, formComisionista[0][0].fincash )
 
     // setTimeout(() => {
     //   editedRegistro = true
@@ -553,7 +567,7 @@ console.log(data)
   }
 
   setDataLogin() {
-    this.puenteData.disparadorData.emit({ dato: 'Comisionistas' })
+    this.puenteData.disparadorData.emit({ dato: 'Comisionistas', poisionX: ''})
     // this.formulario().patchValue({INE:'prueba 11111'}) ;
   }
 
@@ -566,7 +580,7 @@ console.log(data)
   
   async ActualizarRegistro(){
 
-    console.log(this.formulario().value)
+    // console.log(this.formulario().value)
 
     if ( this.formulario().valid ){
 
@@ -577,17 +591,22 @@ console.log(data)
         this.formulario().patchValue({usuario:credenciales.Id})
       }
 
-      let registroActualizado = await this.servicio.EnviarActualizacioRegistro(this.formulario())
+      let registroActualizado = await this.servicio.EnviarActualizacioRegistro(this.formulario(), InversionistaBusquedaID)
 
       if ( registroActualizado.status === 'error' ){
         this._modalMsg.openModalMsg<ModalMsgComponent>( ModalMsgComponent, { data:registroActualizado.data }, false, '300px', 'error' )
         return
       }
-      
+
+      if ( registroActualizado.status === 'edicion' ){
+        this._modalMsg.openModalMsg<ModalMsgComponent>( ModalMsgComponent, { data:registroActualizado.data }, false, '300px', 'exito' )
+        return
+      }
+
       this._modalMsg.openModalMsg<ModalMsgComponent>( ModalMsgComponent, { data:registroActualizado.data }, false, '300px', 'exito' )
       this.resetForm()
       this.listaBusqueda = [];
-      // console.log(this.formulario().value)
+      
     }
 
 
@@ -618,7 +637,7 @@ console.log(data)
       
     }
     
-    ver(){
+  ver(){
     console.log(this.formulario().value)
 
   }
@@ -650,16 +669,19 @@ console.log(data)
     this.titulo_cuenta_asociada = 'No. de cuenta o tarjeta'
     this.placeHolder_cuenta_asociada = '16 ó 18 dígitos'
     this.maxlengthCuentas = 0
-    this.formulario().patchValue({['FINCASH']:'', 
+    this.formulario().patchValue({['fincash']:'', 
       ['CLABE']:'',
       ['Banco_cuenta']:'',
       ['Banco_Tarjeta']:'',
-      ['Tarjeta']:'',
+      ['tarjeta']:'',
       ['Tipo_Cuenta_targeta']:''});
   
       this.targeta_asociada.nativeElement.value=''
       this.Ref_input_Cuenta_Tarjeta.nativeElement.value=''
       this.Ref_Inst_Bancaria.nativeElement.value=''
+
+      InversionistaBusquedaID = []
+
 
     // this.radioBtn1.forEach((input) => {
     //   input.nativeElement.checked = true;
@@ -767,4 +789,3 @@ function dataDomicilio(valor: any) {
   if (valor.options.length > 10) { valor.size = 10 }
 }
 
-// fileName: "c9dde32d-f213-494f-9750-2459b03d2d22.pdf"
