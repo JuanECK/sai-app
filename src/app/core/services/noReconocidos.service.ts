@@ -57,6 +57,33 @@ export class noReconocidos {
         }
     }
 
+    async prestamoPagado( id:number ) {
+
+        const response = await fetch(this._http + 'observaciones/prestamo', {
+            method: 'POST',
+            headers: {
+                'Content-Type':'application/json'
+            },
+            body: JSON.stringify({ Id_Mov_RN: id })
+        })
+        const dataService = await response.json()
+        // console.log(dataService)
+        if (response.status === 200) {
+            const data = { mensaje:dataService.mensaje }
+            return {
+                status:'',    
+                data: data
+            }
+        }
+        else {
+            const data = { mensaje:dataService.error } 
+            return {
+                status: 'error',
+                data: data 
+            }
+        }
+    }
+
     async setAsignacion( formulario:any ) {
 
         const response = await fetch(this._http + 'observaciones/asigna', {

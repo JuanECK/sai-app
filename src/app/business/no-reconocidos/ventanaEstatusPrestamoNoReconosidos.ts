@@ -13,11 +13,11 @@ import { noReconocidos } from "../../core/services/noReconocidos.service";
 
     <div class="content-modalMsg">
       <div class="text-center">
-        <h1>Cambiar estado</h1>
+        <h1>Confirmar el pago</h1>
       </div>
       <div class="text-center mensaje-modalMsg">
-      Esta acción eliminará permanentemente la
-      información asociada a este
+        Esto cambiará el estatus del movimiento
+        a pagado
       </div>
     </div>
     <div class="btn-group">

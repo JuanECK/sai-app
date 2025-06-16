@@ -22,7 +22,7 @@ export class ModalMsgService {
         } )
 
         dialogRef.afterClosed().subscribe(result => {
-            console.log(`Dialog result: ${result}`);
+            // console.log(`Dialog result: ${result}`);
             return result
           });
 

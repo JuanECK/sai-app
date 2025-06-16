@@ -18,11 +18,18 @@ import { PublicoComponent } from './business/clientes/publico/publico.component'
 import { CuentasComponent } from './business/cuentas/cuentas.component';
 import { NoReconocidosComponent } from './business/no-reconocidos/no-reconocidos.component';
 import { ProveedorComponent } from './business/movimientos/proveedor/proveedor.component';
-
+import { OficinaComponent } from './business/movimientos/oficina/oficina.component';
+import { InmobiliarioComponent } from './business/movimientos/inmobiliario/inmobiliario.component';
+import { FacturasComponent } from './business/movimientos/facturas/facturas.component';
+import { PresupuestoComponent } from './business/movimientos/presupuesto/presupuesto.component';
+import { PrestamosComponent } from './business/movimientos/prestamos/prestamos.component';
+import { ComisionesComponent } from './business/movimientos/comisiones/comisiones.component';
+import { DivisasComponent } from './business/movimientos/divisas/divisas.component';
+import { EliminadosComponent } from './business/movimientos/eliminados/eliminados.component';
+import { FinanciamientoComponent } from './business/financiamiento/financiamiento.component';
 
 
 export const routes: Routes = [
-
 
     {    path:'', component: LayoutComponent, canActivate: [LoginGuardianService] ,
         children: [
@@ -35,12 +42,22 @@ export const routes: Routes = [
             { path:'Contratos', component:InversionComponent, canActivate: [isNavHeadNoActiveGuard]},
             { path:'Movimientos/Inversión', component:InversionComponent, canActivate: [isModAuthGuard], data:{roles:['Movimientos']}},
             { path:'Movimientos/Proveedor', component:ProveedorComponent, canActivate: [isModAuthGuard], data:{roles:['Movimientos']}},
+            { path:'Movimientos/Oficina', component:OficinaComponent, canActivate: [isModAuthGuard], data:{roles:['Movimientos']}},
+            { path:'Movimientos/Inmobiliario', component:InmobiliarioComponent, canActivate: [isModAuthGuard], data:{roles:['Movimientos']}},
+            { path:'Movimientos/Facturación', component:FacturasComponent, canActivate: [isModAuthGuard], data:{roles:['Movimientos']}},
+            { path:'Movimientos/Presupuesto', component:PresupuestoComponent, canActivate: [isModAuthGuard], data:{roles:['Movimientos']}},
+            { path:'Movimientos/Préstamos', component:PrestamosComponent, canActivate: [isModAuthGuard], data:{roles:['Movimientos']}},
+            { path:'Movimientos/Comisión', component:ComisionesComponent, canActivate: [isModAuthGuard], data:{roles:['Movimientos']}},
+            { path:'Movimientos/Comisión', component:ComisionesComponent, canActivate: [isModAuthGuard], data:{roles:['Movimientos']}},
+            { path:'Movimientos/Divisas', component:DivisasComponent, canActivate: [isModAuthGuard], data:{roles:['Movimientos']}},
+            { path:'Movimientos/Eliminados', component:EliminadosComponent, canActivate: [isModAuthGuard], data:{roles:['Movimientos']}},
             { path:'Clientes/Público', component:PublicoComponent, canActivate: [isModAuthGuard],data:{roles:['Clientes']}},
             { path:'Clientes/Proveedores', component:ProveedoresComponent, canActivate: [isModAuthGuard],data:{roles:['Clientes']}},
             { path:'Clientes/Comisionistas', component:ComisionistasComponent, canActivate: [isModAuthGuard],data:{roles:['Clientes']}},
             { path:'Clientes/Inversionistas', component:InversionistaComponent, canActivate: [isModAuthGuard],data:{roles:['Clientes']}},
             { path:'Cuentas', component:CuentasComponent, canActivate: [isModAuthGuard],data:{roles:['Cuentas']}},
             { path:'No reconocidos', component:NoReconocidosComponent, canActivate: [isModAuthGuard],data:{roles:['No reconocidos']}},
+            { path:'Financiamiento', component:FinanciamientoComponent, canActivate: [isModAuthGuard],data:{roles:['Financiamiento']}},
             // { path:'Clientes', component:ClientesComponent, canActivate: [ModulAuthorized],},
         ]
     },

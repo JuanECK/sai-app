@@ -1,0 +1,184 @@
+
+.table{
+
+    width: 100%;
+    thead, tbody{
+        display: block;
+        border-collapse: collapse;
+        background-color: rgb(255, 255, 255);
+    }
+
+    tr{
+        text-align: left;
+    }
+
+    tbody{
+
+        display: block;
+        height: 600px;
+        overflow-y: auto;
+        overflow-x: hidden;
+}
+
+.ModeloTb{
+    max-width: 158px;
+    min-width: 158px;
+    padding: 6px;
+}
+.MovimientoTb{
+    max-width: 158px;
+    min-width: 158px;
+    padding: 6px;
+}
+.ClienteTb{
+    max-width: 158px;
+    min-width: 158px;
+    padding: 6px;
+}
+.MontoTb{
+    max-width: 158px;
+    min-width: 158px;
+    padding: 6px;
+    font-weight: var(--Semi-Bold);
+    color: black;
+}
+.fechaBajaTb{
+    max-width: 158px;
+    min-width: 158px;
+    padding: 6px;
+}
+.ResponsableTb{
+    max-width: 158px;
+    min-width: 158px;
+    padding: 6px;
+}
+.AccionTb{
+    max-width: 80px;
+    min-width: 80px;
+    padding: 6px;
+}
+
+.TD_Option1{
+  padding: 0 !important;
+  display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+  & .TdOptionsTable{
+      width: 20px;
+      height: 20px;
+      margin: 0 5px 0 5px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      cursor: pointer;
+      border: none;
+      background: none;
+      & img{
+          width: 15px;
+          height: 15px;
+      }
+  }
+}
+    
+}
+.H4ESPECIAL{
+    margin-top: 40px;
+    margin-bottom: 12px;
+    font-size: 16px;
+    font-weight: var(--Medium);
+}
+
+
+.inversion{
+    overflow-y: auto;
+    word-wrap: break-word;
+    height: 100%;
+
+    .H4ESPECIAL{
+            margin-top: 40px;
+            margin-bottom: 12px;
+            font-size: 16px;
+            font-weight: var(--Medium);
+    }
+
+    .card-1{
+        width: 422px;
+        margin-top: 45px;
+        margin-left: 22px;
+        margin-right: 12px;
+        margin-bottom: 23px;
+        padding: 5px 30px;
+    }
+
+
+    & .container-modulos{
+        grid-template-rows: 370px 390px ;
+        & .separacion{
+            display: flex;
+
+/* -------------------------------------------------------------------------------------------------------------------------------------- */
+            & .InformaciónAdicional-Busqueda{
+                
+                & .tabsNavAncho{
+                    width: 1200px;
+                }
+
+                table tr:nth-child(2n + 1) {
+                    background-color: rgba(217, 217, 217, 0.300);
+                }
+                table thead tr{
+                    background-color: rgb(255, 255, 255);
+                }
+
+
+                & .BusquedaDiv{
+                    & .inputBusqueda{
+                        
+                        margin-bottom: 19px;
+                        
+                        & p{
+                            font-size: 12px;
+                            font-weight: var(--Normal);
+                            color: #656565;
+                        }
+                        
+                        & .Nombre-Cliente{
+                            width: 440px;
+                        }
+                    }
+                    
+                    & .NuevaBusqueda{
+                        width: 198px;
+                    }
+                    
+                    & .table{
+
+                        /* width: 100%;
+                        thead, tbody{
+                            display: block;
+                            border-collapse: collapse;
+                        }
+
+                        tr{
+                            text-align: left;
+                        } */
+
+                        tbody{
+
+                            display: block;
+                            height: 442px;
+                            overflow-y: auto;
+                            overflow-x: hidden;
+
+                        }
+   
+                    }
+
+                }
+
+            }
+        }
+    }
+}

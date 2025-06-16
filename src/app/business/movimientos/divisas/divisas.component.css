@@ -1,0 +1,324 @@
+.table{
+
+    width: 100%;
+    thead, tbody{
+        display: block;
+        border-collapse: collapse;
+    }
+
+    tr{
+        text-align: left;
+    }
+
+    tbody{
+
+        display: block;
+        height: 600px;
+        /* height: 442px; */
+        overflow-y: auto;
+        overflow-x: hidden;
+
+    }
+
+    
+}
+.H4ESPECIAL{
+    margin-top: 40px;
+    margin-bottom: 12px;
+    font-size: 16px;
+    font-weight: var(--Medium);
+}
+.nombreSinCoincidencias{
+    color: #00b3cf;
+}
+.Activo{
+  display: block;
+}
+.InActivo{
+    display: none !important;
+}
+.egreso{
+    /* rojo */
+    content: "";
+    margin:  0px 0px 0px 0px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #FF0A0A;
+}
+.ingreso{
+    /* verde */
+       content: "";
+    margin:  0px 0px 0px 0px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #3EBB12;
+}
+.inversion{
+    overflow-y: auto;
+    word-wrap: break-word;
+    height: 100%;
+
+    .H4ESPECIAL{
+            margin-top: 40px;
+            margin-bottom: 12px;
+            font-size: 16px;
+            font-weight: var(--Medium);
+    }
+
+    .card-1{
+        width: 422px;
+        /* width: 527px; */
+        
+        margin-top: 45px;
+        margin-left: 22px;
+        margin-right: 12px;
+        margin-bottom: 23px;
+        padding: 5px 30px;
+    }
+
+
+    & .container-modulos{
+        /* display: grid; */
+        grid-template-rows: 370px 390px ;
+        & .separacion{
+            display: flex;
+
+            & .card{
+
+                & .edicionRegistro{
+
+                    right: 0px;
+                    margin-bottom: 14px;
+                    & h1{
+                        margin-bottom: 0;
+                        color: var(--Obligatorio);
+                    }
+                    & p{
+                        color: #9BA1A6;
+                        font-size: 11px;
+                        margin: 0;
+                        letter-spacing: .8px;
+                    }
+                }
+
+                & .form{
+                    
+                    & h4{
+                        margin-bottom: 12px;
+                        font-size: 16px;
+                        font-weight: var(--Medium);
+                    }
+
+                }
+
+                & .Cliente > select:invalid,
+                .Concepto > select:invalid,
+                .cuentaPago > select:invalid,
+                .cuenta > select:invalid
+                {
+                    background: #BBBBBB ;
+                    color: transparent;
+                    background-clip: text;
+                }
+
+                & select option{
+                    background: #ffffff;
+                }
+
+
+                & .Cliente{
+                    width: 205px;
+                    margin-right: 12px;
+                    & select{
+                        text-overflow: ellipsis;
+                    }
+                }
+
+
+                & .OpcionesEspeciales{
+                    margin-top: 40px;
+                    display: grid;
+                    grid-template-columns: 1fr 1fr 1fr 1fr;
+                    font-size: 11px;
+
+                    & .saldo{
+                        width: 100px;
+                        & p{
+                            margin: 20px 0 0 0 ;
+                        }
+                    }
+                    & .form-check{
+                        margin: 25px 0 0 0px;
+                    }
+
+                    & .Monto{
+                        width: 80px;
+                        /* margin-right: 12px; */
+                        margin-left: 8px;
+                        
+                        & .MontoInp{
+                            width: 80px;
+                            
+                        }
+                    }
+
+                    & .cuentaPago{
+                        /* margin-left: 292px; */
+                        width: 100px;
+                        margin-left: 3px;
+                        & select{
+                            text-overflow: ellipsis;
+                        }
+                    }
+
+                    & .checkmark, .inp{
+                        margin-top: 15px;
+                    }
+
+                    & .Second-check{
+                        margin: 0 0 0 15px;
+                    }
+
+                }
+
+
+
+                & .Concepto{
+                    width: 205px;
+                    & select{
+                        text-overflow: ellipsis;
+                    }
+                }
+                
+                & .cuenta{
+                    /* margin-left: 292px; */
+                    width: 205px;
+                    & select{
+                        text-overflow: ellipsis;
+                    }
+
+                }
+                
+                & .observaciones{
+                    width: 405px;
+                    height: 100px;
+                }
+                
+                & .boxComprobante{
+                    margin-top: 30px;
+                    justify-content: space-between;
+                }
+                & .AgregaComprobantes{
+                    width: 420px;
+                    margin-bottom: 6px;
+                    & .cerrar-file{
+                        right: 30px;
+                    }
+                }
+                
+                & .btnsRegistro{
+                    position: absolute;
+                    bottom: 19px;
+                        & .G-C-Registro{
+                            width: 423px;
+                            height: 30px;
+                            margin-bottom: 6px;
+                        }
+                    }
+
+            }
+
+/* -------------------------------------------------------------------------------------------------------------------------------------- */
+            & .InformaciónAdicional-Busqueda{
+                
+                & .tabsNavAncho{
+                    width: 705px;
+                }
+
+                & .Tipo_Movimiento{
+                    max-width: 20px;
+                    min-width: 20px;
+                    padding: 0px 5px 0px 0px ;
+                    & div{
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                    }
+                
+                }
+
+                & .ConceptoTb{
+                    max-width: 100px;
+                    min-width: 100px;
+                    padding: 6px 8px 6px 8px ;
+                }
+                & .ClienteTb{
+                    max-width: 100px;
+                    min-width: 100px;
+                    padding: 6px 8px 6px 8px ;
+                }
+                & .MontoTb{
+                    max-width: 100px;
+                    min-width: 100px;
+                    padding: 6px 8px 6px 8px ;
+                }
+                & .fechaTb{
+                    max-width: 100px;
+                    min-width: 100px;
+                    padding: 6px 8px 6px 8px ;
+                }
+
+
+                & .BusquedaDiv{
+                    & .inputBusqueda{
+                        
+                        margin-bottom: 19px;
+                        
+                        & p{
+                            font-size: 12px;
+                            font-weight: var(--Normal);
+                            color: #656565;
+                        }
+                        
+                        & .Nombre-Cliente{
+                            width: 440px;
+                        }
+                    }
+                    
+                    & .NuevaBusqueda{
+                        width: 198px;
+                    }
+                    
+                    .table{
+
+                        /* width: 100%;
+                        thead, tbody{
+                            display: block;
+                            border-collapse: collapse;
+                        }
+
+                        tr{
+                            text-align: left;
+                        } */
+
+                        tbody{
+
+                            display: block;
+                            /* height: 600px; */
+                            height: 442px;
+                            overflow-y: auto;
+                            overflow-x: hidden;
+
+                        }
+
+    
+                    }
+
+                }
+
+            }
+        }
+    }
+}

@@ -1,0 +1,249 @@
+
+<div class="inversion">
+    <div class="container-modulos">
+        <div class="separacion">
+            <!-- <button (click)="formatoFechaLatina()" >carga</button> -->
+            <!-- <button (click)="ver()" >ver</button>  -->
+
+            <!-- <div class="card-1 card">
+
+                <form class="form"  [formGroup]="formulario()">
+
+                    <div>
+                        <div class="d-flex">
+                            <div class="col-10" [hidden]="editar ? false : true">
+                                <h1 class="h1TitleCard">Venta de divisa</h1>
+                            </div>
+        
+                            <div class="edicionRegistro col-7" [hidden]="editar ? true: false">
+                                <h1 class="h1TitleCard"><img src="/img-sai/icon-edicion-de-registro.png" style="width: 20px;">Edición de Registro</h1>
+                                <p>Los cambios afectarán el registro</p>
+                            </div>
+                        </div>
+                        <span  [hidden]="editar ? false: true">{{Hoy}}</span>
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                        <div class="Proveedor">
+                            <h4 class="H4ESPECIAL"><span [classList]="formulario().get('Id_ModeloNegocio')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid' ">*</span> Cliente</h4>
+                            <div class="select Cliente">
+                                <select required class="" formControlName="Id_ModeloNegocio" >
+                                    <option value="" disabled selected hidden>Yued</option>
+                                    @for(item of array[0]; track $index ){
+                                        <option [value]="item.Id_ModeloNegocio">{{item.Modelo_Negocio}}</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="Concepto">
+                            <h4 class="H4ESPECIAL"><span [classList]="formulario().get('Id_ICPC')?.valid  ? 'Obligatiro-is-valid':'Obligatiro-is-invalid' ">*</span> Concepto</h4>
+                            <div class="select Concepto">
+                                <select required class="" formControlName="Id_ICPC">
+                                    <option value="" disabled selected hidden>Recepción de capital</option>
+                                    @for(item of array[1]; track $index ){
+                                        <option [value]="item.Id_ICPC">{{item.Nombre_Razon_Social}}</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        
+                    </div>
+
+                    <div class="OpcionesEspeciales">
+
+                        <div class="saldo">
+                            <h4 class="">Saldo</h4>
+                            <div class="">
+                                <p>$300,00000.00</p>
+                            </div>
+                        </div>
+
+                        <div class="form-check">
+                            <div class="check">
+                                <label  class="form-check-label" >Ingreso</label>
+                                <label class="label-container" >
+                                    <input type="radio" class="inp" #radioBtn1 (change)="formulario().patchValue({'Tipo_Movimiento':'Ingreso'})" checked name="radio">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                            <div class="check Second-check">
+                                <label  class="form-check-label" >Egreso</label>
+                                <label class="label-container" >
+                                    <input type="radio" class="inp" #radioBtn2 (change)="formulario().patchValue({'Tipo_Movimiento':'Egreso'})" name="radio">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="Monto">
+                            <h4 class=""><span [classList]="formulario().get('Monto')?.valid  ? 'Obligatiro-is-valid':'Obligatiro-is-invalid' ">*</span> Monto</h4>
+                            <div class="">
+                                <input class="MontoInp" type="text" formControlName="Monto" #Monto placeholder="0.00" (change)="getCurrencySaldo( $event )" (input)="parseDigito2( $event )">
+                            </div>
+                        </div>
+                        
+                        <div class="cuentaPago">
+                            <h4 class=""><span [classList]="formulario().get('Id_CuentaB')?.valid  ? 'Obligatiro-is-valid':'Obligatiro-is-invalid' ">*</span> Ctas. Yued</h4>
+                            <div class="select cuentaPago">
+                                <select required class="" formControlName="Id_CuentaB" >
+                                    <option value="" disabled selected hidden>Master</option>
+                                    @for(item of array[2]; track $index ){
+                                        <option [value]="item.Id_CuentaB">{{item.alias}}</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+                    
+                    <div class="d-flex justify-content-between">
+                        <div class="Monto">
+                            <h4 class="H4ESPECIAL"><span [classList]="formulario().get('Monto')?.valid  ? 'Obligatiro-is-valid':'Obligatiro-is-invalid' ">*</span> Comisión</h4>
+                            <div class="">
+                                <input class="Monto" type="text" formControlName="Monto" #Monto placeholder="0.00" (change)="getCurrencySaldo( $event )" (input)="parseDigito2( $event )">
+                            </div>
+                        </div>
+                        
+                        <div class="cuenta">
+                            <h4 class="H4ESPECIAL"><span [classList]="formulario().get('Id_CuentaB')?.valid  ? 'Obligatiro-is-valid':'Obligatiro-is-invalid' ">*</span> Cuenta</h4>
+                            <div class="select cuenta">
+                                <select required class="" formControlName="Id_CuentaB" >
+                                    <option value="" disabled selected hidden>Divisas 01</option>
+                                    @for(item of array[2]; track $index ){
+                                        <option [value]="item.Id_CuentaB">{{item.alias}}</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    
+                    <div class="divObservaciones">
+
+                        <h4 class="">Observaciones</h4>
+                        <textarea class="observaciones" name="" id="" formControlName="Observaciones" rows=0 cols=0 placeholder="Observaciones del movimiento"></textarea>
+
+                    </div>
+
+                    <div class="d-flex btnsRegistro">
+                        <div class="row ">
+                            <button type="submit" (click)="enviar()" [hidden]="editar ? false:true" [classList]="formulario().valid ? 'btn G-C-Registro btnInActivo':'btn G-C-Registro btnActive'" >GUARDAR</button>
+                            <button type="submit" (click)="ActualizarRegistro()" [hidden]="editar ? true:false" [classList]="formulario().valid ? 'btn G-C-Registro btnInActivo':'btn G-C-Registro btnActive'" >ACTUALIZAR CAMPOS</button>
+                            <button class="btn-second G-C-Registro mr-12" type="button" (click)="resetForm()">CANCELAR</button>
+                        </div>
+                    </div>
+
+                </form>
+
+            </div> -->
+
+            <form class="InformaciónAdicional-Busqueda" >
+
+                <div class="tabsNav tabsNavAncho">
+
+                    <div class="tab">
+                        <input type="radio" #TabsInformacion name="tabs" id="t1" checked>
+
+                        <label class="Extra" for="t1">Histórico</label>
+
+                        <div class="InformaciónAdicional DivContainer">
+                            <h1 class="h1TitleCardTab">Historial de  Movimientos</h1>
+                            <div class="TableBusqueda">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th class="thead-th-blod-No-Border th-just-left- text-center ModeloTb">Modelo</th>
+                                        <th class="thead-th-blod-No-Border th-just-left- text-center MovimientoTb">Movimiento</th>
+                                        <th class="thead-th-blod-No-Border th-just-left ClienteTb">Cliente</th>
+                                        <th class="thead-th-blod-No-Border th-just-left- text-center MontoTb">Monto</th>
+                                        <th class="thead-th-blod-No-Border th-just-left- text-center fechaBajaTb">Fecha baja</th>
+                                        <th class="thead-th-blod-No-Border th-just-left ResponsableTb">Responsable</th>
+                                        <th class="thead-th-blod-No-Border"></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="">
+                                        @for( item of arrayHistorico[0]; track $index ){
+                                            <tr>
+                                                <td class="tbody-td-ligth-No-Border text-center ModeloTb">{{item.Modelo}}</td>
+                                                <td class="tbody-td-ligth-No-Border text-center MovimientoTb">{{item.Movimiento}}</td>
+                                                <td class="tbody-td-ligth-No-Border ClienteTb">{{item.Cliente}}</td>
+                                                <td class="tbody-td-ligth-No-Border text-center MontoTb">{{getCurrencyTable(item.Monto)}}</td>
+                                                <td class="tbody-td-ligth-No-Border text-center fechaBajaTb">{{formatoFechaLatina(item.Fecha_Baja)}}</td>
+                                                <td class="tbody-td-ligth-No-Border ResponsableTb">{{item.Responsable}}</td>
+                                                
+                                                <td class=""><div class="TD_Option1 AccionTb"><button type="button" (click)="RestaurarMov( item.Id_Mov, item.Tabla )" class="TdOptionsTable"><img src="/img-sai/icono-flecha-derecha.png"></button></div></td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- ---------------------------------------------- -->
+                    <!-- ------------------CARD BUSQUEDA --------------------- -->
+
+                    <div class="tab">
+                        <input type="radio" #TabsBusqueda name="tabs" id="t2">
+
+                        <label class="Busqueda" for="t2">Búsqueda</label>
+                        <div class="BusquedaDiv DivContainer">
+                            <h1 class="h1TitleCardTab">Búsqueda</h1>
+                            <div class="inputBusqueda">
+                                <p>Para hacer una búsqueda escribe el Modelo de negocio, o el comisionista</p>
+                                <input class="Nombre-Cliente" #Busqueda type="text" placeholder="Nombre ó número de Cliente " (input)="inputBusqueda($event)">
+                            </div>
+                            <div class="">
+                                <button class="btn NuevaBusqueda mr-12" (click)="busqueda()" [disabled]="disabledBtn"
+                                    [classList]="disabledBtn ? 'btn NuevaBusqueda mr-12 btnActive':'btn NuevaBusqueda mr-12 btnInActivo'"
+                                    type="button">Nueva búsqueda
+                                </button>
+                            </div>
+                            <h1 class="h1TitleCardTab">Coincidencias</h1>
+
+                            <div class="TableBusqueda">
+                                <table class="table">
+                                    <thead>
+                                     <tr>
+                                        <th class="thead-th-blod-No-Border th-just-left- text-center ModeloTb">Modelo</th>
+                                        <th class="thead-th-blod-No-Border th-just-left- text-center MovimientoTb">Movimiento</th>
+                                        <th class="thead-th-blod-No-Border th-just-left ClienteTb">Cliente</th>
+                                        <th class="thead-th-blod-No-Border th-just-left- text-center MontoTb">Monto</th>
+                                        <th class="thead-th-blod-No-Border th-just-left- text-center fechaBajaTb">Fecha baja</th>
+                                        <th class="thead-th-blod-No-Border th-just-left ResponsableTb">Responsable</th>
+                                        <th class="thead-th-blod-No-Border"></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="">
+                                        @for( item of listaBusqueda[0]; track $index ){
+                                            <tr>
+                                                <td class="tbody-td-ligth-No-Border text-center ModeloTb">{{item.Modelo}}</td>
+                                                <td class="tbody-td-ligth-No-Border text-center MovimientoTb">{{item.Movimiento}}</td>
+                                                <td class="tbody-td-ligth-No-Border ClienteTb">{{item.Cliente}}</td>
+                                                <td class="tbody-td-ligth-No-Border text-center MontoTb">{{getCurrencyTable(item.Monto)}}</td>
+                                                <td class="tbody-td-ligth-No-Border text-center fechaBajaTb">{{formatoFechaLatina(item.Fecha_Baja)}}</td>
+                                                <td class="tbody-td-ligth-No-Border ResponsableTb">{{item.Responsable}}</td>
+                                                
+                                                <td class=""><div class="TD_Option1 AccionTb"><button type="button" (click)="RestaurarMov( item.Id_Mov, item.Tabla )" class="TdOptionsTable"><img src="/img-sai/icono-flecha-derecha.png"></button></div></td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                  </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+

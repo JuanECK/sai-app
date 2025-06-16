@@ -1,0 +1,112 @@
+
+
+<div class="inversion">
+    <div class="container-modulos">
+        <div class="separacion">
+            <div class="card-1 card">
+
+                <!-- <form class="form"  [formGroup]="formulario()"> -->
+
+                    <div>
+                        <div class="d-flex">
+                            <div class="col-10" [hidden]="editar ? false : true">
+                                <h1 class="h1TitleCard">Prestamos Internos</h1>
+                            </div>
+                            <!-- <button (click)="resetPresupuesto()" >carga</button> -->
+                            <!-- <button (click)="ver()" >ver</button>    -->
+        
+                            <div class="edicionRegistro col-7" [hidden]="editar ? true: false">
+                                <h1 class="h1TitleCard"><img src="/img-sai/icon-edicion-de-registro.png" style="width: 20px;">Edición de Registro</h1>
+                                <p>Los cambios afectarán el registro</p>
+                            </div>
+                        </div>
+                        <span  [hidden]="editar ? false: true">{{Hoy}}</span>
+                    </div>
+
+                <form class="form"  [formGroup]="formulario()">
+                    <div class="d-flex justify-content-between Abono">
+                        <div class="Esquema">
+                            <h4 class=""><span [classList]="formulario().get('id_cuentaB')?.valid  ? 'Obligatiro-is-valid':'Obligatiro-is-invalid' ">*</span> Cuenta destino</h4>
+                            <div class="select Esquema">
+                                <select required class="" formControlName="id_cuentaB">
+                                    <option value="" disabled selected hidden>Elige la cuenta</option>
+                                    @for(item of array[0]; track $index ){
+                                         <option [value]="item.Id_CuentaB">{{item.alias}}</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="Monto">
+                            <h4 class=""><span [classList]="formulario().get('monto')?.valid  ? 'Obligatiro-is-valid':'Obligatiro-is-invalid' ">*</span> Monto</h4>
+                            <div class="">
+                                <input class="Monto" type="text" formControlName="monto" #Abono placeholder="0.00" (change)="getCurrencyAbono( $event )" (input)="parseDigito2( $event )">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex btnsRegistro">
+                        <div class="row ">
+                            <button type="submit" (click)="enviar()" [hidden]="editar ? false:true" [classList]="formulario().valid ? 'btn G-C-Registro btnInActivo':'btn G-C-Registro btnActive'" >GUARDAR</button>
+                            <button type="submit" (click)="Actualizar()" [hidden]="editar ? true:false" [classList]="formulario().valid ? 'btn G-C-Registro btnInActivo':'btn G-C-Registro btnActive'" >ACTUALIZAR CAMPOS</button>
+                            <button class="btn-second G-C-Registro mr-12" type="button" (click)="resetForm()">CANCELAR</button>
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+
+            <form class="InformaciónAdicional-Busqueda" >
+
+                <div class="tabsNav tabsNavAncho">
+
+                    <div class="tab">
+                        <input type="radio" #TabsInformacion name="tabs" id="t1" checked>
+
+                    <!-- ------------------CARD HISTORICO--------------------- -->
+
+                        <label class="Extra" for="t1">Histórico</label>
+
+                        <div class="InformaciónAdicional DivContainer">
+                            <h1 class="h1TitleCardTab">Historial de  Movimientos</h1>
+                            <div class="TableBusqueda">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th class="thead-th-blod-No-Border th-just-left ConceptoTb">Origen</th>
+                                        <th class="thead-th-blod-No-Border th-just-left- text-center MontoTb">Monto</th>
+                                        <th class="thead-th-blod-No-Border th-just-left- text-center MontoTb">Cta. Pago</th>
+                                        <th class="thead-th-blod-No-Border th-just-left- text-center fechaTb">Fecha</th>
+                                        <th class="thead-th-blod-No-Border "></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="">
+                                        @for( item of arrayHistorico[0]; track $index ){
+                                            <tr>
+                                                <td class="tbody-td-ligth-No-Border ConceptoTb">{{item.Origen}}</td>
+                                                <td class="tbody-td-ligth-No-Border text-center MontoTb">{{getCurrencyTable(item.Monto)}}</td>
+                                                <td class="tbody-td-ligth-No-Border text-center MontoTb">{{item.ctaPago}}</td>
+                                                <td class="tbody-td-ligth-No-Border text-center fechaTb">{{formatoFechaLatina(item.fecha)}}</td>
+
+                                                <td class="TD_Option"><button type="button" (click)="cambiarEstadoPrestamo( item.Id_Fondeo )" class="TdOptionsTable"><img src="/img-sai/icon-pago-prestamo.png"></button></td>
+                                                <td class="TD_Option"><button type="button" (click)="editaroMov( item.Id_Fondeo )" class="TdOptionsTable"><img src="/img-sai/icon-edith.png"></button></td>
+                                                <td class="TD_Option"><button type="button" (click)="eliminaroMov( item.Id_Fondeo )" class="TdOptionsTable"><img src="/img-sai/icon-trash.png"></button></td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+

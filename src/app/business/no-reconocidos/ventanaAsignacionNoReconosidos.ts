@@ -18,7 +18,7 @@ import { noReconocidos } from "../../core/services/noReconocidos.service";
   template: `
 
       <div class="content-modalMsg">
-        <div class="titulo" [mat-dialog-close]="true" id="cerrar">
+        <div class="titulo">
           <h4>Relacionar movimiento a Cliente</h4>
           <!-- <div mat-dialog-close >
             <img src="/img-sai/icono-X-.png" alt="Cerrar">
@@ -67,6 +67,7 @@ import { noReconocidos } from "../../core/services/noReconocidos.service";
                 <button type="submit" (click)="enviarAsignacion()" id="agrega" [disabled]="btnAsignar ? false: true"  [classList]="btnAsignar ? 'btn G-C-Registro btnInActivo':'btn G-C-Registro btnActive'" >GUARDAR REGISSTRO</button>
                 <!-- <button type="submit" (click)="enviarAsignacion()" [mat-dialog-close]="true" id="agrega" [disabled]="btnAsignar ? false: true"  [classList]="btnAsignar ? 'btn G-C-Registro btnInActivo':'btn G-C-Registro btnActive'" >GUARDAR REGISSTRO</button> -->
                 <button class="btn-second G-C-Registro mr-12" mat-dialog-close type="button">CANCELAR</button>
+                <button [mat-dialog-close]="true" id="cerrar"></button>
               </div>
             </div>
           </div>

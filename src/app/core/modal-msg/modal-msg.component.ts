@@ -23,7 +23,7 @@ export class ModalMsgComponent implements OnInit {
   type:boolean = false
   // data = this.matDialog.data.data.error
   ngOnInit(): void {
-    console.log(this.matDialog)
+    // console.log(this.matDialog)
     this.typeMensaje(this.matDialog.TypeMsg)
 
     // setTimeout(()=>{

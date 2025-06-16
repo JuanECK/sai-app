@@ -21,7 +21,7 @@
 
                 </div>
 
-                <form [formGroup]="formulario()">
+                <form class="form" [formGroup]="formulario()">
                     <div class="form-check">
                         <div class="check">
                             <label  class="form-check-label" >Ingreso</label>
@@ -65,7 +65,8 @@
                     </div>
 
                     <div>
-                        <h4>Fecha de nacimiento</h4>
+                        <h4><span [classList]="formulario().get('Fecha_Ingreso')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'" >*</span> Fecha de ingreso</h4>
+                        <!-- <h4>Fecha de ingreso</h4> -->
                         <input class="custom-date-picker FechaIngreso mr-12 group2" type="date" max="hoy" formControlName="Fecha_Ingreso" >
                         <!-- <input [hidden]="Benef3" class="custom-date-picker FechaIngreso mr-12 group2" type="date" max="hoy" formControlName="Fecha_Ingreso" > -->
                     </div>
@@ -121,7 +122,7 @@
                                                 <td class="tbody-td-ligth-No-Border fecha">{{formatoFechaLatina(item.fecha)}}</td>
 
                                                 @if(item.Tipo_Movimiento === "Préstamo"){
-                                                    <td class="TD_Option"><button type="button" (click)="cambiarEstadoPrestamo( item.Id_Mov_Inv )" class="TdOptionsTable"><img src="/img-sai/icon-pago-prestamo.png"></button></td>
+                                                    <td class="TD_Option"><button type="button" (click)="cambiarEstadoPrestamo( item.Id_Mov_RN )" class="TdOptionsTable"><img src="/img-sai/icon-pago-prestamo.png"></button></td>
                                                 }
                                                 @else{
                                                     <td class="TD_Option"><button type="button" (click)="verDatosobservaciones( item.Id_Mov_RN )" class="TdOptionsTable"><img src="/img-sai/icono-flecha-derecha.png"></button></td>

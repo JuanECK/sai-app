@@ -38,6 +38,7 @@ export class InversionComponent implements OnInit {
   @ViewChild('radioBtn1') radioBtn1!: ElementRef;
   @ViewChild('radioBtn2') radioBtn2!: ElementRef;
   @ViewChild('Monto') Monto!: ElementRef;
+  @ViewChild('TabsInformacion') TabsInformacion!: ElementRef;
 
 
   criterioBusqueda: string = '';
@@ -325,6 +326,7 @@ async ActualizarRegistro() {
       this.resetForm()
       this.cargaHistorico();
       this.listaBusqueda = [];
+      this.TabsInformacion.nativeElement.checked = true;
     }
 }
 
@@ -410,7 +412,7 @@ async ActualizarRegistro() {
         ['Monto']:item.Monto,
         ['Concepto']:item.Concepto,
         ['Observaciones']:item.Observaciones,
-        ['Comprobante']:item.Comprobante ? '' : item.Comprobante,
+        ['Comprobante']:item.Comprobante,
         ['usuario']:item.usuario,
         ['estatus']:item.Estatus,
         

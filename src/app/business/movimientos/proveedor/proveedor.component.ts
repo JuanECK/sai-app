@@ -7,8 +7,8 @@ import { ModalMsgService } from '../../../core/services/modal-msg.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalMsgComponent } from '../../../core/modal-msg/modal-msg.component';
 import { formatCurrency } from '@angular/common';
-import { VentanaBusquedaMovProveedor } from './ventanaBusquedaMovInversion';
 import { VentanaVerInformacionMovProvedor } from './ventanaVerInformacionMovProveedor';
+import { VentanaBusquedaMovProveedor } from './ventanaBusquedaMovInversion';
 import { VentanaEliminaMovProveedor } from './ventanaEliminarCuentas';
 
 let BusquedaText = '';
@@ -38,6 +38,7 @@ export class ProveedorComponent implements OnInit {
   @ViewChild('radioBtn1') radioBtn1!: ElementRef;
   @ViewChild('radioBtn2') radioBtn2!: ElementRef;
   @ViewChild('Monto') Monto!: ElementRef;
+  @ViewChild('TabsInformacion') TabsInformacion!: ElementRef;
 
 
 
@@ -113,7 +114,9 @@ export class ProveedorComponent implements OnInit {
     var getMes = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
     return fecha = dia + ' / ' + getMes[mes] + ' / ' + ano
   }
+
   ver(){
+    
     console.log(this.formulario().value)
   }
 
@@ -174,7 +177,7 @@ eliminarBoxFile(HTMLElementBoxWho: string, HTMLElementRefFileHow: ElementRef, El
         ['Monto']:item.Monto,
         ['Concepto']:item.Id_Concepto,
         ['Observaciones']:item.Observaciones,
-        ['Comprobante']:item.Comprobante ? '' : item.Comprobante,
+        ['Comprobante']:item.Comprobante,
         ['usuario']:item.usuario,
         ['estatus']:item.Estatus,
         // ['comprobanteCambio']:item.comprobanteCambio,
@@ -320,6 +323,8 @@ async ActualizarRegistro() {
       this.resetForm()
       this.cargaHistorico();
       this.listaBusqueda = [];
+      this.TabsInformacion.nativeElement.checked = true;
+
     }
 }
 

@@ -585,7 +585,7 @@ async busqueda(){
 }
 
   validaFecha( event:any, quien:string ){
-    console.log(event.target.value)
+    // console.log(event.target.value)
     let fecha_nacimiento = event.target.value
     var hoy = new Date();
     var cumpleanos = new Date(fecha_nacimiento);

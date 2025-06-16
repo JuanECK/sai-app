@@ -8,8 +8,8 @@
 
                     <div>
                         <div class="d-flex">
-                            <div class="col-7" [hidden]="editar ? false : true">
-                                <h1 class="h1TitleCard">Movimiento en inversiones</h1>
+                            <div class="col-12" [hidden]="editar ? false : true">
+                                <h1 class="h1TitleCard">Pago a Proveedores / Compra de productos</h1>
                             </div>
                             <!-- <button (click)="formatoFechaLatina()" >carga</button> -->
                             <!-- <button (click)="ver()" >ver</button>   -->
@@ -27,7 +27,7 @@
                             <h4><span [classList]="formulario().get('Id_ICPC')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid' ">*</span> Proveedor</h4>
                             <div class="select Proveedor">
                                 <select required #Concepto class="" formControlName="Id_ICPC" >
-                                    <option value="" disabled selected hidden>Concepto</option>
+                                    <option value="" disabled selected hidden>Elige el proveedor</option>
                                     @for(item of array[0]; track $index ){
                                         <option [value]="item.Id_ICPC">{{item.proveedor}}</option>
                                     }
@@ -39,7 +39,7 @@
                             <h4><span [classList]="formulario().get('Concepto')?.valid  ? 'Obligatiro-is-valid':'Obligatiro-is-invalid' ">*</span> Concepto</h4>
                             <div class="select Concepto">
                                 <select required #mySelect class="" formControlName="Concepto">
-                                    <option value="" disabled selected hidden>Cuenta</option>
+                                    <option value="" disabled selected hidden>Elige el concepto</option>
                                     @for(item of array[1]; track $index ){
                                         <option [value]="item.Id_Concepto">{{item.Concepto}}</option>
                                     }
@@ -61,7 +61,7 @@
                             <h4 class="H4ESPECIAL"><span [classList]="formulario().get('Id_CuentaB')?.valid  ? 'Obligatiro-is-valid':'Obligatiro-is-invalid' ">*</span> Cuenta de pago</h4>
                             <div class="select cuentaPago">
                                 <select required #mySelect class="" formControlName="Id_CuentaB" >
-                                    <option value="" disabled selected hidden>Cuenta</option>
+                                    <option value="" disabled selected hidden>Elige la cuenta</option>
                                     @for(item of array[2]; track $index ){
                                         <option [value]="item.Id_CuentaB">{{item.alias}}</option>
                                     }

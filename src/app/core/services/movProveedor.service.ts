@@ -193,8 +193,8 @@ export class Proveedor {
         console.log(BusquedaID)
         
         BusquedaID[0].Comprobante == null ? BusquedaID[0].Comprobante = '': BusquedaID[0].Comprobante
-        const { concepto, nombre, Estatus, clabe, Tipo_Movimiento,  ...usuarioData } = BusquedaID[0][0]
-        
+        let { concepto, nombre, Estatus, clabe, Tipo_Movimiento,  ...usuarioData } = BusquedaID[0][0]
+        usuarioData = Object.assign({Concepto:usuarioData.Id_Concepto}, usuarioData)
         // console.log( {Busqueda:usuarioData[0]})
 
         for( let i = 0; i< Object.keys(form.value).length ; i++){

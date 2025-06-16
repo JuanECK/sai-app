@@ -331,18 +331,31 @@ export class NoReconocidosComponent implements OnInit {
 
   }
 
-  cambiarEstadoPrestamo(id: number){
+  async cambiarEstadoPrestamo(id: number){
 
      const dialogRef = this._dialog.open(VentanaEstatusPrestamoNoReconosidos, {
        disableClose: true,
        data: id,
-       width: '400px',
+       width: '300px',
        maxWidth: '100%',
      })
  
      dialogRef.afterClosed().subscribe(result => {
       if(result){
-        this.cargaHistorico();
+         this.servicio.prestamoPagado( id )
+         .then( respuesta => {
+          
+            if (respuesta.status == 'error') {
+              this._modalMsg.openModalMsg<ModalMsgComponent>(ModalMsgComponent, { data: respuesta.data }, false, '300px', 'error')
+              return
+            }
+
+            this._modalMsg.openModalMsg<ModalMsgComponent>(ModalMsgComponent, { data: respuesta.data }, false, '300px', 'exito')
+
+            console.log(id)
+            this.cargaHistorico();
+         } )
+
       }
      })
 
