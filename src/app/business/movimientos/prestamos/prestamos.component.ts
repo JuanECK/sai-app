@@ -27,7 +27,7 @@ export class PrestamosComponent implements OnInit {
 
     // -------Variables de referencia---
   @ViewChild('Abono') Abono!: ElementRef;
-     // ---------------------------------
+     // ------------------------------
   // -------Variables de entorno------
   listaBusqueda: Array<any>[] = [];
   arrayHistorico: Array<any>[] = [];
@@ -38,7 +38,7 @@ export class PrestamosComponent implements OnInit {
   private readonly _modalMsg = inject(ModalMsgService);
   private readonly _dialog = inject(MatDialog);
 
-    // ---------------------------------
+    // -------------------------------
   // -------Variables Formulario------
 
   formulario = signal<FormGroup>(
@@ -52,7 +52,7 @@ export class PrestamosComponent implements OnInit {
     })
   )
 
-    // ---------------------------------
+  // -------------------------------------
   
   // -------Procedimientos de inicio------
 
@@ -84,7 +84,7 @@ export class PrestamosComponent implements OnInit {
     return fecha = dia + ' / ' + getMes[mes] + ' / ' + ano
   }
 
-  // ---------------------------------
+  // --------------------------------------
   // ------- Procedimientos Generales------
 
   ver(){

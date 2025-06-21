@@ -27,6 +27,7 @@ import { ComisionesComponent } from './business/movimientos/comisiones/comisione
 import { DivisasComponent } from './business/movimientos/divisas/divisas.component';
 import { EliminadosComponent } from './business/movimientos/eliminados/eliminados.component';
 import { FinanciamientoComponent } from './business/financiamiento/financiamiento.component';
+import { ReportesComponent } from './business/reportes/reportes.component';
 
 
 export const routes: Routes = [
@@ -56,6 +57,8 @@ export const routes: Routes = [
             { path:'Clientes/Comisionistas', component:ComisionistasComponent, canActivate: [isModAuthGuard],data:{roles:['Clientes']}},
             { path:'Clientes/Inversionistas', component:InversionistaComponent, canActivate: [isModAuthGuard],data:{roles:['Clientes']}},
             { path:'Cuentas', component:CuentasComponent, canActivate: [isModAuthGuard],data:{roles:['Cuentas']}},
+            { path:'Reportes', component:ReportesComponent, canActivate: [isNavHeadNoActiveGuard]},
+            { path:'Reportes/Individuales', component:ReportesComponent, canActivate: [isModAuthGuard],data:{roles:['Reportes']}},
             { path:'No reconocidos', component:NoReconocidosComponent, canActivate: [isModAuthGuard],data:{roles:['No reconocidos']}},
             { path:'Financiamiento', component:FinanciamientoComponent, canActivate: [isModAuthGuard],data:{roles:['Financiamiento']}},
             // { path:'Clientes', component:ClientesComponent, canActivate: [ModulAuthorized],},
