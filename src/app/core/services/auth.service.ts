@@ -224,6 +224,15 @@ getID(){
   return Datos
 }
 
+getIDAuth(){
+  const sesion = localStorage.getItem('sesion');
+  if(!sesion){
+    return false
+  }
+  return true
+
+}
+
 
 // ------------------------------------------------------------------------------
 

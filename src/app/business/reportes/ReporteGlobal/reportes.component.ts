@@ -1,4 +1,4 @@
-import { Component, ElementRef, inject, OnInit, signal, ViewChild } from '@angular/core';
+import { Component, ElementRef, inject, OnInit, signal, ViewChild, Renderer2 } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ModalMsgService } from '../../../core/services/modal-msg.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -16,9 +16,12 @@ import { ReportesGlobalInmobiliario1 } from '../../../core/reportes/ReporteInmob
 import { ReportesGlobalInmobiliarioICPC1 } from '../../../core/reportes/ReporteInmobiliario/ReportesICPC1';
 import { ReportesGlobalIngresos1 } from '../../../core/reportes/ReporteNoReconocido/ReportesGlobalIngresos1';
 import { ReportesGlobalPrestamos1 } from '../../../core/reportes/ReporteNoReconocido/ReportesGlobalPrestamos1';
+import { AuthUserActiveService } from '../../../core/services/authUserActive.service';
+
 
 
 let BusquedaID: Array<any>[] = [];
+
 
 @Component({
   selector: 'app-reportes-Globales',
@@ -29,8 +32,11 @@ let BusquedaID: Array<any>[] = [];
 export class ReportesGlobalesComponent implements OnInit {
 
   constructor(
+private renderer: Renderer2,
+
     public puenteData:PuenteDataService,
     private servicio:Reportes,
+    private authService:AuthUserActiveService,
     private reporteIndividualInversion1:ReportesIndividual1,
     private reporteGlobalInversion1:ReportesGlobal1,
     private reporteCatalogoInversion1:ReportesCatalogo1,
@@ -67,6 +73,8 @@ Ingresos:boolean = false;
 Prestamos:boolean = false;
 Abonos:boolean = false;
 Incrementos:boolean = false;
+
+dataLocalUrl:any
 
 divisas:boolean = true;
 facturacion:boolean = true;
@@ -108,11 +116,19 @@ private readonly _dialog = inject(MatDialog);
 
 // ------------------------------------------
 // -------Procedimientos de inicio-----------
-  ngOnInit(): void {
-    this.setDataLogin();
+ngOnInit(): void {
+  let iframe2 = document.getElementsByTagName("iframe")[0];
+  this.setDataLogin();
     this.cargaDataInicial();
     this.Hoy = this.fechaActual();
+
+      iframe2.contentWindow?.addEventListener('mousemove', () => {
+          this.authService.simulateUserActivity();
+          // console.log('iframe')
+        });
+
   }
+
   async cargaDataInicial(){
     this.array = await this.servicio.GetDataInicialG();
   }
@@ -134,6 +150,7 @@ private readonly _dialog = inject(MatDialog);
     .replace(/\D/g, "")
     event.target.value = valorMonto 
   }
+
 // ------------------------------------------
 // ------- Procedimientos Generales----------
 resetForm(MN:boolean = false) {
@@ -173,6 +190,7 @@ resetForm(MN:boolean = false) {
 
     this.reporte = '';
     this.iframe.nativeElement.src = "" 
+    // this.gen()
 
     this.Prestamos = false;
     this.Ingresos = false;
@@ -180,6 +198,15 @@ resetForm(MN:boolean = false) {
     this.Prestamos = false;
 
 }
+
+// gen(){
+//   console.log('iframe33333')
+//   let iframe2 = document.getElementsByTagName("iframe")[0];
+//       iframe2.contentWindow?.addEventListener('mousemove', () => {
+//           this.authService.simulateUserActivity();
+//           console.log('iframe')
+//       });
+// }
 
 
 evaluaModelo( event:any ){
@@ -270,6 +297,9 @@ async enviar() {
        switch (this.reporte) {
         case '1':
           //"Divisas"
+
+          // this.iframe.nativeElement.src = this.reporteIndividualDivisas1.genera(registro.data)
+
           this.reporteIndividualDivisas1.genera(registro.data, this.iframe)
 
           break;
@@ -560,5 +590,19 @@ evaluaIncrementos( event:any ){
 // ------------------------------------------
 }
 
-
+// (function(){
+//    var moviendo= false;
+//    document.onmousemove = function(){
+//           moviendo= true;
+//    };
+//    setInterval (function() {
+//       if (!moviendo) {
+//         console.log('no se a movido')
+//         // No ha habido movimiento desde hace un segundo, aquí tu codigo
+//       } else {
+//         console.log('movido')
+//           moviendo=false;
+//       }
+//    }, 1000); // Cada segundo, pon el valor que quieras.
+// })()
 

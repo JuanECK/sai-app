@@ -262,8 +262,17 @@ export class ReportesIndividualDivisas1 {
             title: `Individual - ${this.array[0][0].Modelo_Negocio}`
         })
 
-        this.iframe.nativeElement.src = pdf.output('bloburl');
-        // this.iframe.nativeElement.src = pdf.output('datauristring');
+        // return pdf.output('bloburl')
+        // let samplePdf = pdf.output('datauristring')
+
+        // const blob = new Blob([samplePdf], { type: 'application/pdf' });
+
+        // const url = URL.createObjectURL(blob)
+
+        // return url
+
+        // this.iframe.nativeElement.src = pdf.output('bloburl');
+        this.iframe.nativeElement.src = pdf.output('datauristring');
 
     }
 

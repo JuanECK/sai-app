@@ -8,6 +8,8 @@ import { PuenteDataService } from './puente-data.service';
 import { Observable, Subject, timer } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { time } from 'console';
+import { promises } from 'dns';
+import { AuthService } from './auth.service';
 //////////
 
 
@@ -23,23 +25,18 @@ export class AuthUserActiveService {
   constructor(
     private router: Router,
     private inject:Injector,
+    private auth:AuthService,
     // private puenteData:PuenteDataService,
     // private http: HttpClient,
   ) { }
 
   public actividad = signal(true);
   private time:any;
+   private _http:string = `${environment.apiUrl}`
 
   
-// Method to reset user activity timer
-  resetUserActivityTimer(timeout:number) {
-    // this.userActivity$.next();
-    // timer(timeout).pipe(takeUntil(this.userActivity$)).subscribe(() => {
-    //   // Perform logout logic here
-    //   this.logout();
-    // });
-
-
+  resetUserActivityTimer() {
+ 
     effect(()=>{
 
       if(this.actividad()){
@@ -49,23 +46,49 @@ export class AuthUserActiveService {
         }
 
         this.time = setTimeout(()=>{
-          console.log('deslogeadoService')
-        },5000)
-
+          this.logOut()
+        },180000)
+        
         untracked(()=>{
           this.actividad.set(false);
         })
-
+        
       }
-
+      
     },{injector:this.inject})
   }
-
+  
   simulateUserActivity() {
-
+    
     this.actividad.set(true);
   }
+  
+  logOut(){
+    if(this.auth.getIDAuth()){
+      // alert('session terminada')
+      this.isAuthenticado()
+    }
+  }
 
+  async isAuthenticado(){
+    
+    const response = await fetch(this._http + 'auth/cookie', {
+      method: 'POST',
+      // mode:"cors",
+      credentials:"include",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+
+    })
+    const data = await response.json();
+    if(data.respuesta === true){
+      this.auth.logOut()
+    }
+    
+    // return dataCookie
+    
+  }
   // // Method to logout user
   // logout(): void {
   //   console.log('deslogeeo')
