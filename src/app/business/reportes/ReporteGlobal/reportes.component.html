@@ -1,0 +1,184 @@
+
+
+<div class="inversion">
+    <div class="container-modulos">
+        <div class="separacion">
+            <div class="card-1 card">
+
+                <!-- <form class="form"  [formGroup]="formulario()"> -->
+
+                    <div>
+                        <div class="d-flex">
+                            <div class="col-10">
+                                <h1 class="h1TitleCard">Generar reporte</h1>
+                            </div>
+                        </div>
+                        <span >{{Hoy}}</span>
+                    </div>
+
+                <form class="form"  [formGroup]="formulario()">
+                    <div class="">
+                        <div class="Esquema">
+                            <h4 class=""><span [classList]="formulario().get('Id_Modelo')?.valid  ? 'Obligatiro-is-valid':'Obligatiro-is-invalid' ">*</span> Modelo de negocio</h4>
+                            <div class="select Esquema">
+                                <select required class="" formControlName="Id_Modelo" (change)="evaluaModelo( $event )">
+                                    <option value="" disabled selected hidden>Inversión</option>
+                                    @for(item of array[0]; track $index ){
+                                         <option [value]="item.Id_ModeloNegocio">{{item.Modelo_Negocio}}</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+
+<!-- -----------------------------------------------------------------ESQUEMAS------------------------------------------------------ -->
+
+ <!-- /////////////////////////////////////////////////////////////  DIVISAS  /////////////////////////////////////////////////////////  -->
+                    <div [hidden]="divisas">
+                
+                        <!-- <h4 class=""> Componentes del reporte</h4> -->
+                        <h4 class="h4Esp"><span [classList]="formulario().get('check1')?.valid && formulario().get('check2')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'">*</span> Componentes del reporte</h4>
+                        <div class="d-flex divCheckbox">
+                            <div>
+                                <input type="checkbox" class="checkbox" formControlName="check1" (click)="divisasEvaluaCheck( $event )">
+                                <span>Comisiones y devoluciones</span>
+                            </div>
+                        </div>
+                        <h4 class="H4ESPECIAL "><span [classList]="formulario().get('fechaInicial')?.valid && formulario().get('fechaFin')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'">*</span> Periodo del reporte</h4>
+                        
+                        <div class="divDate">
+                            <input class="custom-date-picker fechaVencimiento mr-12- " type="date"   #FechaVencimiento id="fechaInicial" formControlName="fechaInicial">
+                            <input class="custom-date-picker fechaVencimiento mr-12- " type="date"   #FechaVencimiento id="fechaFin" formControlName="fechaFin">
+                        </div>
+
+                    </div>
+
+ <!-- /////////////////////////////////////////////////////////////  FACTURACION  /////////////////////////////////////////////////////////  -->
+                    <div [hidden]="facturacion">
+                        <h4 class="h4Esp"><span [classList]="formulario().get('check1')?.valid && formulario().get('check2')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'">*</span> Componentes del reporte</h4>
+                        <div class="d-flex divCheckbox">
+                            <div>
+                                <input type="checkbox" class="checkbox" formControlName="check1" (click)="facturacionEvaluaCheck( $event )">
+                                <span>Comisiones y status</span>
+                            </div>
+                        </div>
+                        <h4 class="H4ESPECIAL "><span [classList]="formulario().get('fechaInicial')?.valid && formulario().get('fechaFin')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'">*</span> Periodo del reporte</h4>
+                        
+                        <div class="divDate">
+                            <input class="custom-date-picker fechaVencimiento mr-12- " type="date"   #FechaVencimiento id="fechaInicial" formControlName="fechaInicial">
+                            <input class="custom-date-picker fechaVencimiento mr-12- " type="date"   #FechaVencimiento id="fechaFin" formControlName="fechaFin">
+                        </div>
+                    </div>
+
+
+ <!-- /////////////////////////////////////////////////////////////  INVERSIONES  /////////////////////////////////////////////////////////  -->
+                    <div [hidden]="inversiones">
+                        <h4 class="h4Esp"><span [classList]="formulario().get('check1')?.valid && formulario().get('check2')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'">*</span> Componentes del reporte</h4>
+                        <div class="d-flex divCheckbox">
+                            <div>
+                                <input type="checkbox" class="checkbox" formControlName="check1" (click)="inversionesEvaluaCheck( $event )" #checkIE>
+                                <span>Ingresos y egresos</span>
+                            </div>
+                        </div>
+                        <h4 class="H4ESPECIAL- "><span [classList]="formulario().get('fechaInicial')?.valid && formulario().get('fechaFin')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'">*</span> Periodo del reporte</h4>
+                        
+                        <div class="divDate">
+                            <input class="custom-date-picker fechaVencimiento mr-12- " type="date"   #FechaVencimiento id="fechaInicial" formControlName="fechaInicial">
+                            <input class="custom-date-picker fechaVencimiento mr-12- " type="date"   #FechaVencimiento id="fechaFin" formControlName="fechaFin">
+                        </div>
+
+                        <h4 class="h4Esp"><span [classList]="catalogo ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'">*</span> Catálogos</h4>
+                        <div class="d-flex divCheckbox">
+                            <div>
+                                <input type="checkbox" class="checkbox" (change)="inversionesCatalogoEvalua( $event )" #checkCatalogo>
+                                <span>Cátálogo de clientes</span>
+                            </div>
+                        </div>
+                    </div>
+
+ <!-- /////////////////////////////////////////////////////////////  NO RECONOCIDOS  /////////////////////////////////////////////////////////  -->
+                    <div [hidden]="noReconocidos">
+                        <h4 class="h4Esp"><span [classList]="formulario().get('check1')?.valid || formulario().get('check2')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'">*</span> Componentes del reporte</h4>
+                        <div class="d-flex divCheckbox">
+                            <div>
+                                <input type="checkbox" class="checkbox" formControlName="check1" (click)="evaluaIngresos( $event )" #checkIngresos>
+                                <span>Ingresos</span>
+                            </div>
+                            <div>
+                                <input type="checkbox" class="checkbox" formControlName="check2" (click)="evaluaPrestamo( $event )" #checkPrestamo>
+                                <span>Préstamo</span>
+                            </div>
+                        </div>
+                        <h4 class="H4ESPECIAL "><span [classList]="formulario().get('fechaInicial')?.valid && formulario().get('fechaFin')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'">*</span> Periodo del reporte</h4>
+                        
+                        <div class="divDate">
+                            <input class="custom-date-picker fechaVencimiento mr-12- " type="date"   #FechaVencimiento id="fechaInicial" formControlName="fechaInicial">
+                            <input class="custom-date-picker fechaVencimiento mr-12- " type="date"   #FechaVencimiento id="fechaFin" formControlName="fechaFin">
+                        </div>
+                    </div>
+
+ <!-- /////////////////////////////////////////////////////////////  PRESUPUESTO  /////////////////////////////////////////////////////////  -->
+                    <div [hidden]="presupuesto">
+                        <h4 class="h4Esp"><span [classList]="formulario().get('check1')?.valid || formulario().get('check2')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'">*</span> Componentes del reporte</h4>
+                        <div class="d-flex divCheckbox">
+                            <div>
+                                <input type="checkbox" class="checkbox" formControlName="check1" (click)="evaluaAbonos( $event )" #checkAbonos>
+                                <span>Abonos</span>
+                            </div>
+                            <div>
+                                <input type="checkbox" class="checkbox" formControlName="check2" (click)="evaluaIncrementos( $event )" #checkIncrementos>
+                                <span>Incrementos</span>
+                            </div>
+                        </div>
+                        <h4 class="H4ESPECIAL "><span [classList]="formulario().get('fechaInicial')?.valid && formulario().get('fechaFin')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'">*</span> Periodo del reporte</h4>
+                        
+                        <div class="divDate">
+                            <input class="custom-date-picker fechaVencimiento mr-12- " type="date"   #FechaVencimiento id="fechaInicial" formControlName="fechaInicial">
+                            <input class="custom-date-picker fechaVencimiento mr-12- " type="date"   #FechaVencimiento id="fechaFin" formControlName="fechaFin">
+                        </div>
+                    </div>
+
+
+                    <div class="d-flex btnsRegistro">
+                        <div class="row ">
+                            <button type="submit" (click)="enviar()" [hidden]="catalogo ? true:false"  [classList]="formulario().valid ? 'btn G-C-Registro btnInActivo':'btn G-C-Registro btnActive'" >Generar reporte</button>
+                            <button type="submit" (click)="enviarCatalogo()" [hidden]="catalogo ? false:true"  [classList]="formularioCatalogo().valid ? 'btn G-C-Registro btnInActivo':'btn G-C-Registro btnActive'" >Generar reporte</button>
+                            <button class="btn-second G-C-Registro mr-12" type="button" (click)="resetForm(true)">Limpiar campos</button>
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+
+            <form class="InformaciónAdicional-Busqueda" >
+
+                <div class="tabsNav tabsNavAncho">
+
+                    <div class="tab">
+                        <input type="radio" #TabsInformacion name="tabs" id="t1" checked>
+
+                    <!-- ------------------CARD HISTORICO--------------------- -->
+
+                        <label class="Extra" for="t1">Histórico</label>
+
+                        <div class="InformaciónAdicional DivContainer">
+                            <!-- <h1 class="h1TitleCardTab">Visualizador PDF</h1> -->
+                            <div class="iframePDF">
+                               <iframe src="" id="iframe" #iframe frameborder="0" allowfullscreen ></iframe>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+
+

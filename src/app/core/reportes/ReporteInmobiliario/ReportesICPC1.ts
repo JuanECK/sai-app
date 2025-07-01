@@ -149,8 +149,10 @@ export class ReportesGlobalInmobiliarioICPC1 {
                 if (data.row.index % 2 === 0) { // Fila par
                     // data.cell.styles.fillColor = [240, 40, 240]; // Gris claro
                     data.cell.styles.fillColor = [255, 255, 255]; // Blanco
+                    data.cell.styles.textColor = [0, 0, 0]
                 } else { // Fila impar
                     data.cell.styles.fillColor = [220, 220, 220]; // Gris claro
+                    data.cell.styles.textColor = [0, 0, 0]
                 }
                 // if (data.column.index === 0) { //Primera columna
                 if (data.row.index === 0) {

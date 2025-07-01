@@ -1,0 +1,150 @@
+
+
+<div class="inversion">
+    <div class="container-modulos">
+        <div class="separacion">
+            <div class="card-1 card">
+
+                <!-- <form class="form"  [formGroup]="formulario()"> -->
+
+                    <div>
+                        <div class="d-flex">
+                            <div class="col-10">
+                                <h1 class="h1TitleCard">Generar reporte</h1>
+                            </div>
+                        </div>
+                        <span >{{Hoy}}</span>
+                    </div>
+
+                <form class="form"  [formGroup]="formulario()">
+                    <div class="">
+                        <div class="Esquema">
+                            <h4 class=""><span [classList]="formulario().get('Id_Modelo')?.valid  ? 'Obligatiro-is-valid':'Obligatiro-is-invalid' ">*</span> Modelo de negocio</h4>
+                            <div class="select Esquema">
+                                <select required class="" formControlName="Id_Modelo" (change)="evaluaModelo( $event )">
+                                    <option value="" disabled selected hidden>Inversión</option>
+                                    @for(item of array[0]; track $index ){
+                                         <option [value]="item.Id_ModeloNegocio">{{item.Modelo_Negocio}}</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+
+<!-- -----------------------------------------------------------------ESQUEMAS------------------------------------------------------ -->
+
+ <!-- /////////////////////////////////////////////////////////////  INVERSION  /////////////////////////////////////////////////////////  -->
+                    <div [hidden]="inversion">
+
+                        <h4 class="H4ESPECIAL h4Esp"><span [classList]="formulario().get('Id_ICPC')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'">*</span> No de Cliente</h4>
+                        <div class="d-flex">
+                            <div class="inputCliente">
+                                <span>INV-</span>
+                                <input [classList]="input_BRK ? 'input1 inputInActive' : 'input1' " type="text" maxlength="8" placeholder="XXXX" #inputINV (input)="soloDigito( $event )">
+                            </div>
+                            <button type="button" class="btn busqueda" (click)="busquedaInversionista( $event )" ><img src="/img-sai/icono_lupa.png" alt="buscar"></button>
+                        </div>
+                        <p class="nombreCliente" #nombreInv>{{nombreInversionista}}</p>
+                        
+                        
+                        <!-- <h4 class=""> Componentes del reporte</h4> -->
+                        <h4 class=""><span [classList]="formulario().get('check1')?.valid || formulario().get('check2')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'">*</span> Componentes del reporte</h4>
+                        <div class="d-flex divCheckbox">
+                            <div>
+                                <input type="checkbox" class="checkbox" formControlName="check1">
+                                <span>Ingresos</span>
+                            </div>
+                            <div>
+                                <input type="checkbox" class="checkbox" formControlName="check2">
+                                <span>Ingresos</span>
+                            </div>
+                        </div>
+                        <h4 class="H4ESPECIAL "><span [classList]="formulario().get('fechaInicial')?.valid && formulario().get('fechaFin')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'">*</span> Periodo del reporte</h4>
+                        
+                        <div class="divDate">
+                            <input class="custom-date-picker fechaVencimiento mr-12- " type="date"   #FechaVencimiento id="fechaInicial" formControlName="fechaInicial">
+                            <input class="custom-date-picker fechaVencimiento mr-12- " type="date"   #FechaVencimiento id="fechaFin" formControlName="fechaFin">
+                        </div>
+
+                    </div>
+
+ <!-- /////////////////////////////////////////////////////////////  INMOBILIARIO  /////////////////////////////////////////////////////////  -->
+                    <div [hidden]="inmobiliario">
+
+                        <h4 class="H4ESPECIAL h4Esp"><span [classList]="formulario().get('Id_ICPC')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'">*</span> Nombre de la propiedad</h4>
+                            <div class="select Esquema">
+                                <select required class="" formControlName="Id_ICPC">
+                                    <option value="" disabled selected hidden>Sierra Gorda</option>
+                                    @for(item of array[1]; track $index ){
+                                         <option [value]="item.Id_ICPC">{{item.Nombre_Razon_Social}}</option>
+                                    }
+                                </select>
+                            </div>
+                        
+                        
+                        <!-- <h4 class=""> Componentes del reporte</h4> -->
+                        <h4 class="h4Esp"><span [classList]="formulario().get('check1')?.valid || formulario().get('check2')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'">*</span> Componentes del reporte</h4>
+                        <div class="d-flex divCheckbox">
+                            <div>
+                                <input type="checkbox" class="checkbox" formControlName="check1">
+                                <span>Ingresos</span>
+                            </div>
+                            <div>
+                                <input type="checkbox" class="checkbox" formControlName="check2">
+                                <span>Ingresos</span>
+                            </div>
+                        </div>
+                        <h4 class="H4ESPECIAL "><span [classList]="formulario().get('fechaInicial')?.valid && formulario().get('fechaFin')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'">*</span> Periodo del reporte</h4>
+                        
+                        <div class="divDate">
+                            <input class="custom-date-picker fechaVencimiento mr-12- " type="date"   #FechaVencimiento id="fechaInicial" formControlName="fechaInicial">
+                            <input class="custom-date-picker fechaVencimiento mr-12- " type="date"   #FechaVencimiento id="fechaFin" formControlName="fechaFin">
+                        </div>
+
+                    </div>
+
+
+                    <div class="d-flex btnsRegistro">
+                        <div class="row ">
+                            <button type="submit" (click)="enviar()"  [classList]="formulario().valid ? 'btn G-C-Registro btnInActivo':'btn G-C-Registro btnActive'" >Generar reporte</button>
+                            <button class="btn-second G-C-Registro mr-12" type="button" (click)="resetForm(true)">Limpiar campos</button>
+                            <!-- <button class="btn-second G-C-Registro mr-12" type="button" (click)="Reporte3()">Generar</button>
+                            <button class="btn-second G-C-Registro mr-12" type="button" (click)="Reporte1()">Generar Comodin</button> -->
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+
+            <form class="InformaciónAdicional-Busqueda" >
+
+                <div class="tabsNav tabsNavAncho">
+
+                    <div class="tab">
+                        <input type="radio" #TabsInformacion name="tabs" id="t1" checked>
+
+                    <!-- ------------------CARD HISTORICO--------------------- -->
+
+                        <label class="Extra" for="t1">Histórico</label>
+
+                        <div class="InformaciónAdicional DivContainer">
+                            <!-- <h1 class="h1TitleCardTab">Visualizador PDF</h1> -->
+                            <div class="iframePDF">
+                               <iframe src="" id="iframe" #iframe frameborder="0" allowfullscreen ></iframe>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+
+

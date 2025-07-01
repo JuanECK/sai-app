@@ -1,5 +1,11 @@
-import { Component , } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, effect, HostListener, Injector, OnInit, signal, untracked} from '@angular/core';
+import { Router, RouterOutlet } from '@angular/router';
+// import { NgIdleKeepaliveModule } from '@ng-idle/keepalive'; // para detectar usuarios inactivos
+// import * as MomentModule from 'moment'
+import { Idle, DEFAULT_INTERRUPTSOURCES } from '@ng-idle/core';
+import { Keepalive } from '@ng-idle/keepalive';
+import { AuthUserActiveService } from './core/services/authUserActive.service';
+
 
 @Component({
   selector: 'app-root',
@@ -8,17 +14,60 @@ import { RouterOutlet } from '@angular/router';
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent {
-  // _http = process.env["WEBSERVICE_URL"]
+export class AppComponent implements OnInit{
 
-  constructor(){
-    // console.log('app.component')
+  constructor(
+    private authService: AuthUserActiveService,
+     private inject:Injector,
+  ) {}
 
-      // console.log({message:process.env['WEBSERVICE_URL']})
+
+   public actividad = signal(true);
+    private time:any;
+
+  ngOnInit(): void {
+    this.authService.resetUserActivityTimer(5000)
+    // this.resetUserActivityTimer()
   }
 
-  // handleEvent(event: string){
-  //   console.log(event)
-  // }
+    @HostListener('window:mousemove') onMouseMove() {
+    // @HostListener('window:mousemove')
+    // @HostListener('mousemove',['$event'])
+      // console.log('mousemove')
+    this.authService.simulateUserActivity();
+    // public enviarMouse(btn:any){
+      // this.actividad.set(true);
+    }
+  
+
+  @HostListener('window:keypress') onKeyPress() {   
+    this.authService.simulateUserActivity();
+  }
+
+    resetUserActivityTimer() {
+
+      effect(()=>{
+  
+        if(this.actividad()){
+  
+          if(this.time){
+            clearTimeout(this.time)
+          }
+  
+          this.time = setTimeout(()=>{
+            console.log('deslogeadoAPP')
+          },5000)
+  
+          untracked(()=>{
+            this.actividad.set(false);
+          })
+  
+        }
+  
+      },{injector:this.inject})
+    }
+
+
+
 
 }

@@ -20,6 +20,8 @@
     "@angular/platform-browser": "^19.0.0",
     "@angular/platform-browser-dynamic": "^19.0.0",
     "@angular/router": "^19.0.0",
+    "@ng-idle/keepalive": "^16.0.0",
+    "@types/moment": "^2.11.29",
     "@types/node": "^18.11.18",
     "dotenv": "^16.4.7",
     "env-var": "^7.5.0",

@@ -61,7 +61,8 @@ export class ReportesGlobalInmobiliario1 {
             body: [['Elaboracion:', date],
             ['Periodo:', `${this.formatoFechaLatina(this.array[0][0].Fecha_inicial)} a ${this.formatoFechaLatina(this.array[0][0].Fecha_final)}`],
             ['Solicitante:', this.array[0][0].Solicitante],
-            ['Tipo:', 'Global de Inmobiliario'],
+            ['Tipo:', this.array[0][0].Modelo_Negocio],
+            // ['Tipo:', 'Global de Inmobiliario'],
             ],
             tableWidth: 8, // Tamaño de la Tabla
 
@@ -121,8 +122,8 @@ export class ReportesGlobalInmobiliario1 {
             body: [
                 // ['Retiro de capital:', `${formatCurrency(this.array[1][0].Retiro_Capital, 'en', '$ ', '', '1.2-4')} MXN`],
             // [ 'Retiro de rendimientos:',`${ formatCurrency( 2000000000000000000000, 'en', '$ ', '', '1.2-4') } MXN` ],
-            ['Ingresos:', `${formatCurrency(this.array[1][0].Retiro_Rendimientos, 'en', '$ ', '', '1.2-4')} MXN`],
-            ['Egresos:', `${formatCurrency(this.array[1][0].Aporte_Capital, 'en', '$ ', '', '1.2-4')} MXN`],
+            ['Ingresos:', `${formatCurrency(this.array[1][0].Ingresos, 'en', '$ ', '', '1.2-4')} MXN`],
+            ['Egresos:', `${formatCurrency(this.array[1][0].Egresos, 'en', '$ ', '', '1.2-4')} MXN`],
             // ['Saldo global:', `${formatCurrency(200000000, 'en', '$ ', '', '1.2-4')} MXN`],
                 // [ 'Saldo a la fecha:',`${ formatCurrency( this.array[1][0].Egresos, 'en', '$ ', '', '1.2-4') } MXN` ],
             ],
@@ -217,15 +218,17 @@ export class ReportesGlobalInmobiliario1 {
             styles: { overflow: 'linebreak' },
             head: [['Propiedad', 'Tipo', 'Concepto', 'Monto', 'Fecha']],
             // body: bodyRows(20),
-            body: this.array[2].map((item:any) => [item.Concepto, item.Fecha, item.Monto, item.Fecha]),
+            body: this.array[2].map((item:any) => [item.Propiedad, item.Tipo, item.Concepto, formatCurrency(item.Monto, 'en', '$', '','1.2-4'), this.formatoFechaLatina(item.fecha) ]),
             tableWidth: 19.2, // Tamaño de la Tabla
 
             didParseCell: function (data) {
                 if (data.row.index % 2 === 0) { // Fila par
                     // data.cell.styles.fillColor = [240, 40, 240]; // Gris claro
                     data.cell.styles.fillColor = [255, 255, 255]; // Blanco
+                    data.cell.styles.textColor = [0, 0, 0]
                 } else { // Fila impar
                     data.cell.styles.fillColor = [220, 220, 220]; // Gris claro
+                    data.cell.styles.textColor = [0, 0, 0]
                 }
                 // if (data.column.index === 0) { //Primera columna
                 if (data.row.index === 0) {

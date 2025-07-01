@@ -13,7 +13,7 @@ export class Reportes {
     private _http: string = `${environment.apiUrl}`;
 
     async GetDataInicial() {
-        console.log('reporte')
+
         const response = await fetch(this._http + 'Reportes/cargaDataInicioI', {
             method: 'GET',
             headers: {
@@ -21,31 +21,32 @@ export class Reportes {
             }
         })
         const data = await response.json()
-          console.log({Inicio:data})
+        // console.log({ Inicio: data })
         if (response.status === 200) {
             return data
         }
     }
-    async getHistorico() {
-        const response = await fetch(this._http + 'Reportes/cargaHistoricoReportes', {
+    async GetDataInicialG() {
+
+        const response = await fetch(this._http + 'Reportes/cargaDataInicioG', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
             }
         })
         const data = await response.json()
-        console.log(data)
+        // console.log({ Inicio: data })
         if (response.status === 200) {
             return data
         }
     }
 
-    async busquedaInversionista( number:string ) {
+    async busquedaInversionista(number: string) {
 
         const response = await fetch(this._http + 'Reportes/cargaNombreInv', {
             method: 'POST',
             headers: {
-                'Content-Type':'application/json'
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify({ criterio: number })
         })
@@ -64,7 +65,7 @@ export class Reportes {
         const response = await fetch(this._http + 'auth/credenciales', {
             method: 'POST',
             headers: {
-                'Content-Type':'application/json'
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify({ id: Datos })
         })
@@ -74,136 +75,83 @@ export class Reportes {
         }
     }
 
-    async cargaMovPrestamoId( id:number ){
-        // console.log(id)
-        const response = await fetch( this._http + 'Reportes/cargaMovReportes',{
-            method:'POST',
-            headers:{
-                'Content-Type':'application/json'
-            },
-            body:JSON.stringify({id:id})
-        } )
-        const datos = await response.json()
-        console.log(datos)
-        if( response.status === 200 ){
-            if( datos[0].length === 0 ){
-                const data = { mensaje:'¡Por el momento no se pueden cargar los datos!' }
-                return {
-                    status:'error',
-                    data}
-            }
-            return datos
-        }
+    async ReporteIndividual(formulario: FormGroup) {
 
-    }
-
-    async prestamoPagado( id:number ) {
-
-        const response = await fetch(this._http + 'Reportes/prestamo', {
+        const response = await fetch(this._http + 'Reportes/ReporteIndividual', {
             method: 'POST',
             headers: {
-                'Content-Type':'application/json'
+                'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ Id_Fondeo: id })
+            body: JSON.stringify({ formulario: formulario.value }),
         })
         const dataService = await response.json()
-        // console.log(dataService)
+        console.log({ ReporteI: dataService })
         if (response.status === 200) {
-            const data = { mensaje:dataService.mensaje }
+            // const data = { mensaje:dataService.mensaje }
             return {
-                status:'',    
-                data: data
+                status: '',
+                data: dataService
             }
         }
         else {
-            const data = { mensaje:dataService.error } 
+            const data = { mensaje: dataService.error }
             return {
                 status: 'error',
-                data: data 
-            }
-        }
-    }
-
-    async EnviarActualizacio( formularioActualizado: FormGroup, BusquedaID:Array<any> ){
-
-            const response = await fetch(this._http + 'Reportes/actualizaMovReportes', {
-                method: 'POST',
-                headers:{
-                    'Content-Type':'application/json'
-                },
-            body: JSON.stringify({formulario:formularioActualizado.value}) ,
-            })
-            const dataService = await response.json()
-            if (response.status === 200) {
-                const data = { mensaje:dataService.mensaje }
-                return {
-                    status:'',    
-                    data: data
-                }
-            }
-            else {
-                const data = { mensaje:dataService.error } 
-                return {
-                    status: 'error',
-                    data: data 
-                }
-            }
-            
-        }
-
-
-
-    async eliminaPresupuesto( Id:number, estatus:string, usuario:number ){
-
-        const response = await fetch(this._http + 'Reportes/eliminarRegistro', {
-            method: 'POST',
-            headers:{
-                'Content-Type':'application/json'
-            },
-            body: JSON.stringify( { Id:Id, estatus:estatus, usuario:usuario } ),
-        })
-        const dataService = await response.json()
-        // console.log(dataService)
-        if (response.status === 200) {
-            const data = { mensaje:dataService.mensaje }
-            return {
-                status:'',    
                 data: data
-            }
-        }
-        else {
-            const data = { mensaje:dataService.error } 
-            return {
-                status: 'error',
-                data: data 
             }
         }
 
     }
+    async ReporteGlobal(formulario: FormGroup) {
 
-    async AgregarMovPresupuesto(formulario: FormGroup) {
-
-        const response = await fetch(this._http + 'Reportes/agregaMovReportes', {
+        const response = await fetch(this._http + 'Reportes/ReporteGlobal', {
             method: 'POST',
-            headers:{
-                'Content-Type':'application/json'
+            headers: {
+                'Content-Type': 'application/json'
             },
-            body: JSON.stringify({formulario:formulario.value}) ,
+            body: JSON.stringify({ formulario: formulario.value }),
         })
         const dataService = await response.json()
-        // console.log(dataService)
+        console.log({ ReporteG: dataService })
         if (response.status === 200) {
-            const data = { mensaje:dataService.mensaje }
+            // const data = { mensaje:dataService.mensaje }
             return {
-                status:'',    
-                data: data
+                status: '',
+                data: dataService
             }
         }
         else {
-        const data = {mensaje:dataService.error} 
+            const data = { mensaje: dataService.error }
             return {
                 status: 'error',
-                data: data 
+                data: data
+            }
+        }
+
+    }
+    async ReporteGlobalCatalogo(formulario: FormGroup) {
+
+        const response = await fetch(this._http + 'Reportes/ReporteGlobalCatalogo', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ formulario: formulario.value }),
+        })
+        const dataService = await response.json()
+        // console.log({ Reporte: dataService })
+        if (response.status === 200) {
+            // const data = { mensaje:dataService.mensaje }
+            return {
+                status: '',
+                data: dataService
+            }
+        }
+        else {
+            const data = { mensaje: dataService.error }
+            return {
+                status: 'error',
+                data: data
             }
         }
 

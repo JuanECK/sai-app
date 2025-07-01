@@ -47,7 +47,7 @@ export class ReportesIndividualPresupuesto1 {
 
         pdf.setFont('Helvetica', 'bold');
         pdf.setFontSize(15);
-         pdf.text('Balance del periodo', 15, 1.1);
+         pdf.text('Balance del periodo', 15, 1.8);
         pdf.text('Resumen de movimientos', 1.2, 5.6);
 
 
@@ -60,7 +60,7 @@ export class ReportesIndividualPresupuesto1 {
             body: [['Elaboracion:', date],
             ['Periodo:', `${this.formatoFechaLatina(this.array[0][0].Fecha_inicial)} a ${this.formatoFechaLatina(this.array[0][0].Fecha_final)}`],
             ['Solicitante:', this.array[0][0].Solicitante],
-            ['Tipo:', 'Global de Presupuesto'],
+            ['Tipo:', this.array[0][0].Tipo_reporte],
             ],
             tableWidth: 8, // Tamaño de la Tabla
 
@@ -113,16 +113,16 @@ export class ReportesIndividualPresupuesto1 {
         autoTable(pdf, {
             // // body:bodyRows(3),
             // body: this.array[2].map(item => [item.Concepto, item.Fecha, item.Monto]),
-            startY: 2.13,
+            startY: 2.1,
             margin: {
                 left: 10,
             },
             body: [
                 // ['Recepción de capital:', `${formatCurrency(this.array[1][0].Retiro_Capital, 'en', '$ ', '', '1.2-4')} MXN`],
             // [ 'Retiro de rendimientos:',`${ formatCurrency( 2000000000000000000000, 'en', '$ ', '', '1.2-4') } MXN` ],
-            ['Abonos:', `${formatCurrency(this.array[1][0].Retiro_Rendimientos, 'en', '$ ', '', '1.2-4')} MXN`],
-            ['Incrementos:', `${formatCurrency(this.array[1][0].Aporte_Capital, 'en', '$ ', '', '1.2-4')} MXN`],
-            ['Comisiones generadas:', `${formatCurrency(2000, 'en', '$ ', '', '1.2-4')} MXN`],
+            ['Abonos:', `${formatCurrency(this.array[1][0].Abonos, 'en', '$ ', '', '1.2-4')} MXN`],
+            ['Incrementos:', `${formatCurrency(this.array[1][0].incrementos, 'en', '$ ', '', '1.2-4')} MXN`],
+            ['Comisiones generadas:', `${formatCurrency(this.array[1][0].presupuesto, 'en', '$ ', '', '1.2-4')} MXN`],
                 // [ 'Saldo a la fecha:',`${ formatCurrency( this.array[1][0].Egresos, 'en', '$ ', '', '1.2-4') } MXN` ],
             ],
 
@@ -169,7 +169,7 @@ export class ReportesIndividualPresupuesto1 {
 
                 if (data.row.cells[0].raw == 'Comisiones generadas:' && data.column.index === 0) {
                     data.cell.styles.cellPadding = { top: 0.28, right: 0, bottom: 0.29, left: 0.1763888888888889 };
-                    console.log(data.cell.styles.cellPadding)
+                    // console.log(data.cell.styles.cellPadding)
                 }
 
                 if (data.row.cells[0].raw == 'Comisiones generadas:' && data.column.index === 1) {
@@ -177,7 +177,7 @@ export class ReportesIndividualPresupuesto1 {
                     data.cell.styles.fontSize = 14;
                     data.cell.styles.fontStyle = 'bold';
 
-                    console.log(height[0].length)
+                    // console.log(height[0].length)
                     if ((height[0].length > 24)) {
                         data.cell.styles.fontSize = 12;
                         data.cell.styles.cellPadding = { top: 0.25, right: 0.1763888888888889, bottom: 0.18, left: 0.1763888888888889 };
@@ -222,15 +222,17 @@ export class ReportesIndividualPresupuesto1 {
             styles: { overflow: 'linebreak' },
             head: [['Concepto', 'Monto', 'Cuenta', 'Fecha']],
             // body: bodyRows(20),
-            body: this.array[2].map((item:any) => [item.Concepto, item.Fecha, item.Monto, item.Fecha]),
+            body: this.array[2].map((item:any) => [item.Movimiento, formatCurrency(item.Monto, 'en', '$ ', '', '1.2-4'), item.ctaPago, this.formatoFechaLatina(item.Fecha)]),
             tableWidth: 19.2, // Tamaño de la Tabla
 
             didParseCell: function (data) {
                 if (data.row.index % 2 === 0) { // Fila par
                     // data.cell.styles.fillColor = [240, 40, 240]; // Gris claro
                     data.cell.styles.fillColor = [255, 255, 255]; // Blanco
+                    data.cell.styles.textColor = [0, 0, 0]
                 } else { // Fila impar
                     data.cell.styles.fillColor = [220, 220, 220]; // Gris claro
+                    data.cell.styles.textColor = [0, 0, 0]
                 }
                 // if (data.column.index === 0) { //Primera columna
                 if (data.row.index === 0) {

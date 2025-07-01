@@ -32,7 +32,7 @@ export class ReportesCatalogo1 {
         this.iframe = ifr
 
         let pdf = new jsPDF({
-            orientation: 'portrait',
+            orientation: 'landscape',
             unit: 'cm',
             format: 'letter',
             // format: [4, 2]
@@ -60,7 +60,7 @@ export class ReportesCatalogo1 {
             body: [['Elaboracion:', date],
             ['Periodo:', `${this.formatoFechaLatina(this.array[0][0].Fecha_inicial)} a ${this.formatoFechaLatina(this.array[0][0].Fecha_final)}`],
             ['Solicitante:', this.array[0][0].Solicitante],
-            ['Tipo:', 'Global de Inversiones'],
+            ['Tipo:', this.array[0][0].Tipo_reporte],
             ],
             tableWidth: 8, // Tamaño de la Tabla
 
@@ -133,16 +133,16 @@ export class ReportesCatalogo1 {
                 left: 1.2,
             },
             styles: { overflow: 'linebreak' },
-            head: [['No','Nombre del cliente', 'No Cliente', 'Correo', 'Fecha de Teléfono']],
+            head: [['No','Nombre del cliente', 'No Cliente', 'Correo', 'Teléfono']],
             // body: bodyRows(20),
-            body: this.array[2].map((item:any, index:number) => [index + 1, item.Concepto, item.Fecha, item.Monto, item.Fecha]),
-            tableWidth: 19.2, // Tamaño de la Tabla
+            body: this.array[1].map((item:any, index:number) => [index + 1, item.Nombre_Cliente, item.NoCliente, item.Correo, item.Telefono]),
+            tableWidth: 25.2, // Tamaño de la Tabla
 
              columnStyles: {
 
                 0: {// Column 1
-                    cellWidth: 0.8,
-                    halign: 'center',
+                    // cellWidth: 0.8,
+                    // halign: 'center',
                 },
             },
 
@@ -151,8 +151,10 @@ export class ReportesCatalogo1 {
                 if (data.row.index % 2 === 0) { // Fila par
                     // data.cell.styles.fillColor = [240, 40, 240]; // Gris claro
                     data.cell.styles.fillColor = [255, 255, 255]; // Blanco
+                    data.cell.styles.textColor = [0, 0, 0]
                 } else { // Fila impar
                     data.cell.styles.fillColor = [220, 220, 220]; // Gris claro
+                    data.cell.styles.textColor = [0, 0, 0]
                 }
                 // if (data.column.index === 0) { //Primera columna
                 if (data.row.index === 0) {

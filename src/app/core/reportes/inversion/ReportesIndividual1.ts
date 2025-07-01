@@ -60,8 +60,8 @@ export class ReportesIndividual1 {
             body: [['Elaboracion:', date],
             ['Periodo:', `${this.formatoFechaLatina(this.array[0][0].Fecha_inicial)} a ${this.formatoFechaLatina(this.array[0][0].Fecha_final)}`],
             ['Solicitante:', this.array[0][0].Solicitante],
-            ['Tipo:', 'Individual'],
-            ['Cliente:', this.array[0][0].Inversionista],
+            ['Tipo:', this.array[0][0].Tipo_reporte],
+            ['Cliente:', this.array[0][0].Cliente],
             ['Modelo:', this.array[0][0].Modelo_Negocio],
             ],
             tableWidth: 8, // Tamaño de la Tabla
@@ -123,8 +123,8 @@ export class ReportesIndividual1 {
             // [ 'Retiro de rendimientos:',`${ formatCurrency( 2000000000000000000000, 'en', '$ ', '', '1.2-4') } MXN` ],
             ['Retiro de rendimientos:', `${formatCurrency(this.array[1][0].Retiro_Rendimientos, 'en', '$ ', '', '1.2-4')} MXN`],
             ['Aporte a capital:', `${formatCurrency(this.array[1][0].Aporte_Capital, 'en', '$ ', '', '1.2-4')} MXN`],
-            ['Saldo a la fecha:', `${formatCurrency(2000, 'en', '$ ', '', '1.2-4')} MXN`],
-                // [ 'Saldo a la fecha:',`${ formatCurrency( this.array[1][0].Egresos, 'en', '$ ', '', '1.2-4') } MXN` ],
+            // ['Saldo a la fecha:', `${formatCurrency(2000, 'en', '$ ', '', '1.2-4')} MXN`],
+                [ 'Saldo a la fecha:',`${ formatCurrency( this.array[1][0].Saldo, 'en', '$ ', '', '1.2-4') } MXN` ],
             ],
 
             tableWidth: 10.4, // Tamaño de la Tabla
@@ -251,15 +251,17 @@ export class ReportesIndividual1 {
             styles: { overflow: 'linebreak' },
             head: [['Concepto', 'Fecha', 'Monto']],
             // body: bodyRows(20),
-            body: this.array[2].map((item:any) => [item.Concepto, item.Fecha, item.Monto]),
+            body: this.array[2].map((item:any) => [item.Concepto, this.formatoFechaLatina(item.Fecha_Captura), formatCurrency(item.Monto, 'en', '$', '','1.2-4')]),
             tableWidth: 19.2, // Tamaño de la Tabla
 
             didParseCell: function (data) {
                 if (data.row.index % 2 === 0) { // Fila par
                     // data.cell.styles.fillColor = [240, 40, 240]; // Gris claro
                     data.cell.styles.fillColor = [255, 255, 255]; // Blanco
+                    data.cell.styles.textColor = [0, 0, 0]
                 } else { // Fila impar
                     data.cell.styles.fillColor = [220, 220, 220]; // Gris claro
+                    data.cell.styles.textColor = [0, 0, 0]
                 }
                 // if (data.column.index === 0) { //Primera columna
                 if (data.row.index === 0) {
