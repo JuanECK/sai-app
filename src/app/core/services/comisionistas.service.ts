@@ -166,6 +166,13 @@ export class Comisionistas {
         const datos = await response.json()
         // console.log(datos)
         if( response.status === 200 ){
+            if( datos.status === 'error' ){
+                const data = { mensaje:datos.mensaje }
+            return {
+                status:'error',
+                data:data
+            }
+            }
             return datos;
         }else{
             const data = { mensaje:datos.error }
