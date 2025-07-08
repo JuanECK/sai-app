@@ -84,6 +84,7 @@ export class AuthService {
       // })
     })
     const data = await response.json();
+    // console.log(data)
     if(data.respuesta === true){
       dataCookie = true
     }else{
@@ -191,6 +192,7 @@ async showModul ( roles:any ) {
   let respuestaModulo:boolean = true;
 let id = this.getID();
 // console.log(id)
+// console.log(id)
 
 const response = await fetch( this._http + "auth/modulo", {
   method: 'POST',
@@ -220,8 +222,8 @@ for(let i=0; i < data[0].length; i++){
 
 getID(){
   const sesion = localStorage.getItem('sesion');
-  const { Datos } = JSON.parse(sesion!)
-  return Datos
+    const { Datos } = JSON.parse(sesion!)
+    return Datos
 }
 
 getIDAuth(){

@@ -67,18 +67,15 @@ export class LoginComponent implements OnInit {
       return this.AuthService.login( usuario, contrasenia ).then(valor =>{
         this.usuarioRetorno = valor.log
         if(this.usuarioRetorno){
-          // console.log("COMPROBAMOS-USUARIO: " + this.usuarioRetorno);
-          // const { Clave_Usuario, Usuario, ...UsuarioData } = valor.data.user
+
           const {Usuario, ...UsuarioData } = valor.data.user
           localStorage.setItem('sesion', JSON.stringify(UsuarioData));
 
-          // const { Nombre_Completo, ...UsuarioD} = UsuarioData 
-          // this.emitDataLogin.disparadorLogin.emit(UsuarioD)
 
           this.router.navigate(['/']);
           return true;
         }else{
-          // console.log("Redirigimosssss: ");
+
           this.errorPass = false;
           return false;
         }

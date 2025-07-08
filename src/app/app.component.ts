@@ -24,7 +24,8 @@ export class AppComponent implements OnInit {
   public actividad = signal(true);
 
   ngOnInit(): void {
-    this.authService.resetUserActivityTimer()
+    // Activar y desactivar el Cierre de sesion automatico por inactividad
+    // this.authService.resetUserActivityTimer()
   }
 
   @HostListener('window:mousemove') onMouseMove() {

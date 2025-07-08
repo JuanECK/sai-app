@@ -49,7 +49,7 @@ import { formatCurrency } from "@angular/common";
                   </tr>
                   <tr>
                     <th class="thead-th-blod-No-Border ">Modelo de Negocio</th>
-                    <td class="tbody-td-ligth-No-Border ">{{item.modelo}}</td>
+                    <td class="tbody-td-ligth-No-Border ">{{item.nombre_negocio}}</td>
                   </tr>
                   <tr class="trGris">
                     <th class="thead-th-blod-No-Border ">Alias de la cuenta</th>

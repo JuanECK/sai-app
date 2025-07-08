@@ -143,9 +143,14 @@
            
           </tbody>
         </table>
-        @for( item of Array[5]; track $index ){
+        <!-- @for( item of Array[5]; track $index ){
         <h4 class="H4DG">Diferencia global: <span>{{getCurrency(item.Diferencia_global)}}</span></h4>
-        }
+        } -->
+         @for( item of Array[5]; track $index ){
+         <h4 class="H4DG1">Diferencia saldo MXN: <span>{{getCurrency(item.Diferencia_global_pesos)}}</span></h4>
+         <h4 class="H4DG">Diferencia saldo USD: <span>{{getCurrency(item.Diferencia_global_usd)}}</span></h4>
+   }
+
       </div>
 
     </div>

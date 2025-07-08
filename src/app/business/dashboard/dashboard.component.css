@@ -1,10 +1,9 @@
-
-.dashboard{
+.dashboard {
     overflow-y: auto;
     word-wrap: break-word;
     height: 100%;
 
-    & h1{
+    & h1 {
         margin: 0;
         font-size: 20px;
         font-weight: var(--Medium);
@@ -12,11 +11,13 @@
         margin-left: 3px;
     }
 
-    .H1PI, .H1AE, .abonos{
+    .H1PI,
+    .H1AE,
+    .abonos {
         margin-left: 45px;
     }
 
-    .H4DG{
+    /* .H4DG{
         color: #00B3CF;
         font-size: 20px;
         font-weight: var(--Bold);
@@ -26,14 +27,41 @@
         & span{
             margin-left: 10px;
         }
+    } */
+
+
+    .H4DG {
+        color: #00B3CF;
+        font-size: 15px;
+        font-weight: var(--Normal);
+        margin-top: 4px;
+        margin-bottom: 0px;
+        margin-left: 370px;
+
+        & span {
+            margin-left: 10px;
+        }
     }
 
-    .abonos{
+    .H4DG1 {
+        color: #00B3CF;
+        font-size: 15px;
+        font-weight: var(--Normal);
+        margin-top: 12px;
+        margin-bottom: 0px;
+        margin-left: 370px;
+
+        & span {
+            margin-left: 10px;
+        }
+    }
+
+    .abonos {
         margin-top: 21px;
     }
 
-    
-    & .container-modulos{
+
+    & .container-modulos {
         /* display: grid;
         justify-content: center;
         margin-left: 180px; */
@@ -42,10 +70,12 @@
         /* position: relative; */
         /* left: 20px; */
 
-        grid-template-rows: 370px 390px ;
-        & .separacion{
+        grid-template-rows: 370px 390px;
+
+        & .separacion {
             display: flex;
-            & .prestamos-internos{
+
+            & .prestamos-internos {
                 margin-top: 45px;
                 margin-left: 22px;
                 margin-right: 12px;
@@ -54,10 +84,11 @@
                 /* width: 450px; */
                 height: 290px;
                 /* height: 273px; */
-        
-                
+
+
             }
-            & .saldos-cuentas-propias{
+
+            & .saldos-cuentas-propias {
                 margin-top: 45px;
                 margin-left: 12px;
                 margin-right: 22px;
@@ -66,10 +97,11 @@
                 /* width: 980px; */
                 height: 290px;
                 /* height: 273px; */
-        
-                
+
+
             }
-            & .adeudo-europe{
+
+            & .adeudo-europe {
                 margin-top: 17px;
                 margin-left: 22px;
                 margin-right: 12px;
@@ -77,200 +109,225 @@
                 width: 320px;
                 /* width: 450px; */
                 height: 325px;
-        
-              
+
+
             }
-            & .diferencia-saldos{
+
+            & .diferencia-saldos {
                 margin-top: 17px;
                 margin-left: 12px;
                 margin-right: 22px;
                 margin-bottom: 23px;
                 width: 720px;
                 height: 325px;
-        
-               
+
+
             }
         }
     }
-    
+
 }
 
-.PrestInt{
-    max-width:110px; 
-    min-width:110px; 
-    padding-left: 45px;}
+.PrestInt {
+    max-width: 110px;
+    min-width: 110px;
+    padding-left: 45px;
+}
 
-.AdeudoEurope{
-    max-width:110px;
-    min-width:110px;
-    padding-left: 45px;}
+.AdeudoEurope {
+    max-width: 110px;
+    min-width: 110px;
+    padding-left: 45px;
+}
 
-.AdeudoEurope-Monte{
-    max-width:103px;
-    min-width:103px;
-    padding-left: 45px;}
+.AdeudoEurope-Monte {
+    max-width: 103px;
+    min-width: 103px;
+    padding-left: 45px;
+}
 
 
 /* --------saldos de cuentas propias------- */
 
-.th-banco1{
+.th-banco1 {
     max-width: 95px;
     min-width: 95px;
-    padding: 6px 3px 6px 3px;}
-.th-indet1{
+    padding: 6px 3px 6px 3px;
+}
+
+.th-indet1 {
     max-width: 70px;
     min-width: 70px;
     padding: 6px 3px 6px 3px;
-    & span{
+
+    & span {
         display: flex;
         justify-content: left;
         text-align: left;
     }
 }
-.th-cuen1{
+
+.th-cuen1 {
     max-width: 110px;
     min-width: 110px;
-    padding: 6px 3px 6px 3px;}
-.th-clabe1{
+    padding: 6px 3px 6px 3px;
+}
+
+.th-clabe1 {
     max-width: 125px;
     min-width: 125px;
-    padding: 6px 3px 6px 3px;}
-.th-negocio1{
+    padding: 6px 3px 6px 3px;
+}
+
+.th-negocio1 {
     max-width: 110px;
     min-width: 110px;
-    padding: 6px 3px 6px 3px;}
-.th-saldo1{
-   max-width: 150px;
-   min-width: 150px;
-   padding: 6px 3px 6px 3px;}
+    padding: 6px 3px 6px 3px;
+}
+
+.th-saldo1 {
+    max-width: 150px;
+    min-width: 150px;
+    padding: 6px 3px 6px 3px;
+}
+
 /* ----------------------------------- */
 
 
 /* --------Diferencia de saldos------- */
-.DS-banco{
-   max-width: 95px;
-   min-width: 95px;
-   padding: 6px 3px 6px 3px;
+.DS-banco {
+    max-width: 95px;
+    min-width: 95px;
+    padding: 6px 3px 6px 3px;
 }
-.DS-ident{
-   max-width: 70px;
-   min-width: 70px;
-   padding: 6px 3px 6px 3px;
-   text-align: left;
-   & span{
-    display: flex;
-    justify-content: left;
+
+.DS-ident {
+    max-width: 70px;
+    min-width: 70px;
+    padding: 6px 3px 6px 3px;
     text-align: left;
+
+    & span {
+        display: flex;
+        justify-content: left;
+        text-align: left;
+    }
 }
+
+.DS-SAnterior {
+    max-width: 88px;
+    min-width: 88px;
+    padding: 6px 3px 6px 3px;
 }
-.DS-SAnterior{
-   max-width: 88px;
-   min-width: 88px;
-   padding: 6px 3px 6px 3px;
-}
-.DS-SActual{
-   max-width: 260px;
-   min-width: 260px;
-   /* max-width: 180px;
+
+.DS-SActual {
+    max-width: 260px;
+    min-width: 260px;
+    /* max-width: 180px;
    min-width: 180px; */
-   padding: 6px 3px 6px 3px;
+    padding: 6px 3px 6px 3px;
 }
-.DS-Guardar{
-   max-width: 70px;
-   min-width: 70px;
-   padding: 6px 3px 6px 3px;
+
+.DS-Guardar {
+    max-width: 70px;
+    min-width: 70px;
+    padding: 6px 3px 6px 3px;
 }
-.DS-difer{
-   max-width: 155px;
-   min-width: 155px;
-   padding: 6px 3px 6px 3px;
+
+.DS-difer {
+    max-width: 155px;
+    min-width: 155px;
+    padding: 6px 3px 6px 3px;
 }
 
 
-.btn-DS{
+.btn-DS {
     border: none;
     padding: 3px 15px;
-    margin-left: 15px ;
+    margin-left: 15px;
     border-radius: 2px;
     background: #BBBBBB;
     font-size: 10px;
     font-weight: var(--Normal);
 }
-.btn-DS-Active{
+
+.btn-DS-Active {
     background: #00B3CF;
 }
 
 /* ----------------------------------- */
 
 
-thead, tbody { 
-   display: block; 
-   border-collapse: collapse;
+thead,
+tbody {
+    display: block;
+    border-collapse: collapse;
 }
 
-tr{
-   text-align: left; 
-} 
+tr {
+    text-align: left;
+}
 
 
 tbody {
-   display: block; 
-   height: 220px;       
-   overflow-y: auto;   
-   overflow-x: hidden;  
+    display: block;
+    height: 220px;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .tbody-AE {
-   display: block; 
-   height: 30px;       
-   overflow-y: auto;   
-   overflow-x: hidden;  
+    display: block;
+    height: 30px;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
+
 .tbody-Abonos {
-   display: block; 
-   height: 135px;       
-   overflow-y: auto;   
-   overflow-x: hidden;  
+    display: block;
+    height: 135px;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
-.tbody-DS{
-    display: block; 
-   height: 210px;       
-   overflow-y: auto;   
-   overflow-x: hidden;  
+.tbody-DS {
+    display: block;
+    height: 210px;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
-.form-group-icon-SD{
+.form-group-icon-SD {
 
     display: flex;
 
-    & .input-Saldo-Actual{
+    & .input-Saldo-Actual {
 
         position: relative;
-    
-        & .icon{
+
+        & .icon {
             position: absolute;
             display: block;
             bottom: .3rem;
             left: .5rem;
-        
+
         }
 
-        & input{
-            
+        & input {
+
             border: 1px solid #939393;
             height: 18px;
             border-radius: 2px;
             font-size: 12px;
             color: rgb(56, 56, 56);
             font-weight: var(--Normal);
-            padding-top:2px ;
+            padding-top: 2px;
             margin: 1px;
             padding-left: 1rem;
         }
-    
-        & input[type="text"]:focus{
-            border:1px solid #D8D8D8;
+
+        & input[type="text"]:focus {
+            border: 1px solid #D8D8D8;
             background-color: #D8D8D8;
             outline: none;
         }
