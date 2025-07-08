@@ -16,15 +16,19 @@
     width: 50%;
     height: 61px;
   }
-  .btn-group :nth-child(2){
+   .btn-group :nth-child(2){
     border-top: 1px solid rgb(255, 255, 255);
     border-left: 1px solid rgb(255, 255, 255);
     border-bottom-right-radius: 40px;
+    font-size: 20px;
+    font-weight: var(--Semi-Bold);
     
   }
   .btn-group :nth-child(1){
     border-top: 1px solid rgb(255, 255, 255);
     border-bottom-left-radius: 40px;
+    font-size: 18px;
+    font-weight: var(--Thin);
   }
 
   .btn-group:after {
@@ -35,10 +39,10 @@
   .btn-group button:not(:last-child) {
     border-right: none; 
   }
- 
+/*  
 .btn-group button:hover {
     color: #696969;
-  }
+  } */
 
   .content-modalMsg{
     display: flex;

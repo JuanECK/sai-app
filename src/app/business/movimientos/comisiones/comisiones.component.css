@@ -1,3 +1,27 @@
+.table{
+
+    width: 100%;
+    thead, tbody{
+        display: block;
+        border-collapse: collapse;
+    }
+
+    tr{
+        text-align: left;
+    }
+
+    tbody{
+
+        display: block;
+        height: 600px;
+        /* height: 442px; */
+        overflow-y: auto;
+        overflow-x: hidden;
+
+    }
+
+    
+}
 .H4ESPECIAL{
     margin-top: 40px;
     margin-bottom: 12px;
@@ -10,7 +34,7 @@
 .egreso{
     /* rojo */
     content: "";
-    position: absolute;
+    /* position: absolute; */
     margin:  0px 0px 0px 0px;
     width: 14px;
     height: 14px;
@@ -20,7 +44,7 @@
 .ingreso{
     /* amarillo */
        content: "";
-    position: absolute;
+    /* position: absolute; */
     /* margin:  0px 0px 0px 0px; */
     margin:  0px 0px 0px 0px;
     width: 14px;
@@ -245,7 +269,7 @@
                     
                     & .table{
 
-                        width: 100%;
+                        /* width: 100%;
                         thead, tbody{
                             display: block;
                             border-collapse: collapse;
@@ -253,7 +277,7 @@
 
                         tr{
                             text-align: left;
-                        }
+                        } */
 
                         tbody{
 

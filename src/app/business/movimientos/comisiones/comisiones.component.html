@@ -189,7 +189,7 @@
                                     <tbody class="">
                                         @for( item of listaBusqueda[0]; track $index ){
                                             <tr>
-                                                <td class="tbody-td-ligth-No-Border Tipo_Movimiento"><div><span [classList]="item.Tipo_Movimiento == 'Ingreso' ? 'ingreso':'egreso' "></span></div></td>
+                                               <td class="tbody-td-ligth-No-Border Tipo_Movimiento"><div><span [classList]="item.Tipo_Movimiento == 'Ingreso' ? 'ingreso':'egreso' "></span></div></td>
                                                 <td class="tbody-td-ligth-No-Border ConceptoTb">{{item.Modelo}}</td>
                                                 <td class="tbody-td-ligth-No-Border ClienteTb">{{item.Comisionista}}</td>
                                                 <td class="tbody-td-ligth-No-Border text-center MontoTb">{{getCurrencyTable(item.Comision)}}</td>

@@ -64,7 +64,7 @@ import { noReconocidos } from "../../core/services/noReconocidos.service";
 
             <div class="d-flex btnsRegistro">
               <div class="row ">
-                <button type="submit" (click)="enviarAsignacion()" id="agrega" [disabled]="btnAsignar ? false: true"  [classList]="btnAsignar ? 'btn G-C-Registro btnInActivo':'btn G-C-Registro btnActive'" >GUARDAR REGISSTRO</button>
+                <button type="submit" (click)="enviarAsignacion()" id="agrega" [disabled]="btnAsignar ? false: true"  [classList]="btnAsignar ? 'btn G-C-Registro btnInActivo':'btn G-C-Registro btnActive'" >GUARDAR REGISTRO</button>
                 <!-- <button type="submit" (click)="enviarAsignacion()" [mat-dialog-close]="true" id="agrega" [disabled]="btnAsignar ? false: true"  [classList]="btnAsignar ? 'btn G-C-Registro btnInActivo':'btn G-C-Registro btnActive'" >GUARDAR REGISSTRO</button> -->
                 <button class="btn-second G-C-Registro mr-12" mat-dialog-close type="button">CANCELAR</button>
                 <button [mat-dialog-close]="true" id="cerrar"></button>

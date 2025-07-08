@@ -69,8 +69,6 @@
 
     .card-1{
         width: 422px;
-        /* width: 527px; */
-        
         margin-top: 45px;
         margin-left: 22px;
         margin-right: 12px;
@@ -80,7 +78,6 @@
 
 
     & .container-modulos{
-        /* display: grid; */
         grid-template-rows: 370px 390px ;
         & .separacion{
             display: flex;
@@ -230,7 +227,7 @@
 
             }
 
-/* -------------------------------------------------------------------------------------------------------------------------------------- */
+  /* -------------------------------------------------------------------------------------------------------------------------------------- */
             & .InformaciónAdicional-Busqueda{
                 
                 & .tabsNavAncho{
@@ -306,7 +303,6 @@
                         tbody{
 
                             display: block;
-                            /* height: 600px; */
                             height: 442px;
                             overflow-y: auto;
                             overflow-x: hidden;
