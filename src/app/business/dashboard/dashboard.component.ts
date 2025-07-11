@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PuenteDataService } from '../../core/services/puente-data.service';
 import { Location } from '@angular/common';
 import { environment } from '../../../environments/environments';
 import { PipeTransform } from '@angular/core'
 import { formatCurrency } from '@angular/common';
+import { ModalMsgService } from '../../core/services/modal-msg.service';
+import { ModalMsgComponent } from '../../core/modal-msg/modal-msg.component';
 
 
 
@@ -39,6 +41,7 @@ export class DashboardComponent implements OnInit {
   public inputs:any
   public buttons:any
 
+    private readonly _modalMsg = inject(ModalMsgService);
 
   ngOnInit(): void {
     this.setDataLogin();
@@ -166,10 +169,14 @@ export class DashboardComponent implements OnInit {
      })
      const datos = await response.json()
      if(datos.Respuesta === 'OK'){
-      event.target.parentNode.childNodes[0].childNodes[1].value = '';
-      event.target.classList.remove('btn-DS-Active');
-      event.target.disabled = true;
-      this.getDataInicio()
+       event.target.parentNode.childNodes[0].childNodes[1].value = '';
+       event.target.classList.remove('btn-DS-Active');
+       event.target.disabled = true;
+       this.getDataInicio()
+      }else{
+        console.log(datos)
+        this._modalMsg.openModalMsg<ModalMsgComponent>( ModalMsgComponent, { data:datos }, false, '300px', 'error' )
+       
      }
     //  console.log(datos)
    }
