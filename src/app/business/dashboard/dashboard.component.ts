@@ -119,7 +119,7 @@ export class DashboardComponent implements OnInit {
     })
     const data = await respuesta.json();
     this.Array = data
-    // console.log(this.Array)
+    console.log(this.Array)
    }
 
    getCurrency(value:number){
