@@ -117,7 +117,8 @@ export class Comisiones {
             body: JSON.stringify({criterio:criterio})
         } )
         const datos = await response.json()
-        console.log(datos)
+        // console.log(datos)
+        const { data, status } = datos
         if( response.status === 200 ){
             if( datos.status === 'error' ){
                 const data = { mensaje:datos.mensaje }
@@ -126,7 +127,7 @@ export class Comisiones {
                 data:data
             }
             }
-            return datos;
+            return data;
         }else{
             const data = { mensaje:datos.error }
             return {

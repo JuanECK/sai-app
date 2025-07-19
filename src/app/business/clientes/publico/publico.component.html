@@ -6,7 +6,7 @@
                     <div class="col-7" [hidden]="editar ? false : true">
                         <h1 class="h1TitleCard">Agregar Cliente General</h1>
                     </div>
-                    <!-- <button (click)="verDatosProveedor(610)" >ver</button>  -->
+                    <!-- <button (click)="ver()" >ver</button>  -->
 
                     <div class="col-5- edicionRegistro col-7" [hidden]="editar ? true: false">
                         <h1 class="h1TitleCard"><img src="/img-sai/icon-edicion-de-registro.png" style="width: 20px;">Edición de Registro</h1>
@@ -90,6 +90,33 @@
                         <input  [classList]="inst_Bancaria ? 'InstitucionBancaria inputInActive' : 'InstitucionBancaria' " #Ref_Inst_Bancaria type="text" placeholder="Banca emisora" [disabled]="inst_Bancaria" (change)="Institucion_Bancaria( $event )">
                     </div>
 
+
+
+                    <h4>Alta al Catálogo de Divisa</h4>
+                    <div class="divisas">
+
+                        <div class="select Catalogo">
+                            <select required class="Estado-" #Catalogo formControlName="tipoClienteDivisa"  (change)="evaluaCatalogo( $event )" >
+                                    <option value="" disabled selected hidden>Sin asignar</option>
+                                @for(item of array[0]; track $index ){
+                                    <option [value]="item.Id_Tipo_ClienteDivisa">{{item.TipoPerfil}}</option> }
+                            </select>
+                        </div>
+
+                        <div class="select Divisa">
+                            <select required [classList]="cataDivisa ? ' inputInActive' : '' " #TipoDivisa (change)="evaluaDivisa( $event )" [disabled]="cataDivisa">
+                                    <option value="" disabled selected hidden>Sin asignar</option>
+                                @for(item of array[1]; track $index ){
+                                    <option [value]="item.Id_Tipo_Divisa">{{item.Moneda}}</option>
+                                }
+                            </select>
+                        </div>
+
+                        <div>
+                            <input [classList]="cataDivisa ? 'Saldo inputInActive' : 'Saldo' " type="text" #Monto  placeholder="0.00" [disabled]="cataDivisa" (change)="getCurrencySaldo( $event )" (input)="parseDigito2( $event )">
+                        </div>
+                    </div>
+
                     <div class="d-flex btnsRegistro">
                         <div class="row ">
                             <button type="submit" (click)="enviar()" [hidden]="editar ? false:true" [classList]="formulario().valid ? 'btn G-C-Registro btnInActivo':'btn G-C-Registro btnActive'" >GUARDAR REGISSTRO</button>
@@ -119,7 +146,7 @@
                                     <input class="Nombre-Cliente" #Busqueda type="text" placeholder="Nombre ó número de Cliente " (input)="inputBusqueda($event)">
                                 </div>
                                 <div class="">
-                                    <button class="btn NuevaBusqueda mr-12" (click)="busqueda()" [disabled]="disabledBtn" [classList]="disabledBtn ? 'btn NuevaBusqueda mr-12 btnActive':'btn NuevaBusqueda mr-12 btnInActivo'" type="button">Nueva búsqueda</button>
+                                    <button class="btn NuevaBusqueda mr-12" (click)="busqueda()" [disabled]="disabledBtn" #Monto [classList]="disabledBtn ? 'btn NuevaBusqueda mr-12 btnActive':'btn NuevaBusqueda mr-12 btnInActivo'" type="button">Nueva búsqueda</button>
                                 </div>
                                 <h1 class="h1TitleCardTab">Coincidencias</h1>
 

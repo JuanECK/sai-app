@@ -391,7 +391,7 @@ async ActualizarRegistro() {
   
       if (data.status === 'error') {
   
-        this.listaBusqueda = []
+        this.listaBusqueda = [] 
   
         this._modalMsg.openModalMsg<ModalMsgComponent>(ModalMsgComponent, { data: data.data }, false, '300px', 'exito')
         this.Busqueda.nativeElement.value = '';
@@ -401,6 +401,7 @@ async ActualizarRegistro() {
       this.listaBusqueda = data
       this.Busqueda.nativeElement.value = '';
       this.disabledBtn = true;
+      console.log(this.listaBusqueda)
     }
 
 

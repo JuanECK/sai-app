@@ -13,6 +13,21 @@ export class Publico {
     private _http: string = `${environment.apiUrl}`;
 
 
+    async GetDataInicial() {
+        const response = await fetch(this._http + 'clientes/Publico/dataInicial', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        const data = await response.json()
+          console.log(data)
+        if (response.status === 200) {
+            return data
+        }
+    }
+
+
     async GetCredenciales() {
 
         const sesion = localStorage.getItem('sesion');
@@ -131,15 +146,27 @@ export class Publico {
 
 
     hayCambiosEnForm( form:FormGroup, BusquedaID:Array<any> ){
-        console.log(BusquedaID)
+
+        console.log(form.value)
+        // console.log(BusquedaID)
+        
+        // BusquedaID[0].Comprobante == null ? BusquedaID[0].Comprobante = '': BusquedaID[0].Comprobante
+        let { Id_Tipo_ClienteDivisa,Saldo_Apertura,Id_Moneda,Banco_Tarjeta,  ...usuarioData } = BusquedaID[0]
+        // usuarioData.push({'Concepto':usuarioData.Id_Concepto})
+        usuarioData = Object.assign({tipoClienteDivisa:Id_Tipo_ClienteDivisa},{saldoApertura:Saldo_Apertura},{tipoDivisa:Id_Moneda},{Banco_tarjeta:Banco_Tarjeta}, usuarioData)
+        // console.log(typeof usuarioData)
+        
+        console.log( {Busqueda:usuarioData})
 
         for( let i = 0; i< Object.keys(form.value).length ; i++){
             let valor1 = Object.keys(form.value)[i]
-            for( let j = 0; j < Object.keys(BusquedaID[0]).length ; j++){
-                let valor2 = Object.keys(BusquedaID[0])[j]
-                let val1A = Object.values(form.value)[i] == null ? '': Object.values(form.value)[i]
+            for( let j = 0; j < Object.keys(usuarioData).length ; j++){
+                let valor2 = Object.keys(usuarioData)[j]
+                let val1A = Object.values(form.value)[i]
+                // let val1A = Object.values(form.value)[i] == null ? '': Object.values(form.value)[i]
                 if(valor1 === valor2){
-                    if( val1A != Object.values(BusquedaID[0])[j] ){
+                    if( val1A != Object.values(usuarioData)[j] ){
+                        console.log( valor1, ' - ',valor2)
                         return true
                     }
                 }
@@ -147,6 +174,23 @@ export class Publico {
         }
 
         return false
+        // console.log(BusquedaID)
+        // console.log(form)
+
+        // for( let i = 0; i< Object.keys(form.value).length ; i++){
+        //     let valor1 = Object.keys(form.value)[i]
+        //     for( let j = 0; j < Object.keys(BusquedaID[0]).length ; j++){
+        //         let valor2 = Object.keys(BusquedaID[0])[j]
+        //         let val1A = Object.values(form.value)[i] == null ? '': Object.values(form.value)[i]
+        //         if(valor1 === valor2){
+        //             if( val1A != Object.values(BusquedaID[0])[j] ){
+        //                 return true
+        //             }
+        //         }
+        //     }
+        // }
+
+        // return false
     }
 
 

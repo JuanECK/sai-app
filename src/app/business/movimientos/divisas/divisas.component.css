@@ -137,13 +137,13 @@
                 & .OpcionesEspeciales{
                     margin-top: 40px;
                     display: grid;
-                    grid-template-columns: 1fr 1fr 1fr 1fr;
+                    grid-template-columns: 1fr 1fr ;
                     font-size: 11px;
 
                     & .saldo{
-                        width: 100px;
-                        & p{
-                            margin: 20px 0 0 0 ;
+                        width: 205px;
+                        & p{font-size: 16px;
+                            margin: 18px 0 0 0 ;
                         }
                     }
                     & .form-check{
@@ -151,14 +151,14 @@
                     }
 
                     & .Monto{
-                        width: 80px;
+                        width: 205px;
                         /* margin-right: 12px; */
-                        margin-left: 8px;
+                        margin-left: 5px;
                         
-                        & .MontoInp{
+                        /* & .MontoInp{
                             width: 80px;
                             
-                        }
+                        } */
                     }
 
                     & .cuentaPago{

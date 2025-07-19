@@ -31,10 +31,6 @@ import { Inversionistas } from "../../../core/services/inversionistas.service";
                     <td class="tbody-td-ligth-No-Border ">{{item.nombre}}</td>
                   </tr>
                   <tr>
-                    <th class="thead-th-blod-No-Border ">Tipo de persona</th>
-                    <td class="tbody-td-ligth-No-Border ">{{item.fisica_moral === '1' ? 'Fisica':'Moral'}}</td>
-                  </tr>
-                  <tr>
                     <th class="thead-th-blod-No-Border ">No. telefónico</th>
                     <td class="tbody-td-ligth-No-Border ">{{item.telefono}}</td>
                   </tr>
@@ -53,6 +49,18 @@ import { Inversionistas } from "../../../core/services/inversionistas.service";
                   <tr class="trGris">
                     <th class="thead-th-blod-No-Border ">No. de Cliente</th>
                     <td class="tbody-td-ligth-No-Border ">{{item.Num_Cliente}}</td>
+                  </tr>
+                  <tr>
+                    <th class="thead-th-blod-No-Border ">Tipo de persona</th>
+                    <td class="tbody-td-ligth-No-Border ">{{item.fisica_moral === '1' ? 'Fisica':'Moral'}}</td>
+                  </tr>
+                  <tr class="trGris">
+                    <th class="thead-th-blod-No-Border ">Alta Catálogo de Divisas</th>
+                    <td class="tbody-td-ligth-No-Border ">{{item.Id_Tipo_ClienteDivisa == '0' ? 'No':'Si'}}</td>
+                  </tr>
+                  <tr class="trGris">
+                    <th class="thead-th-blod-No-Border ">Tipo de Perfil</th>
+                    <td class="tbody-td-ligth-No-Border ">{{item.TipoPerfil}}</td>
                   </tr>
                 }
                 

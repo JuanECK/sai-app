@@ -26,7 +26,7 @@
 
                         <div class="">
                             <h4 class="H4ESPECIAL"><span [classList]="formulario().get('clabe')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'" >*</span> No. de cuenta CLABE</h4>
-                            <input class="noClave" type="text" maxLength="23" placeholder="Cuenta Clabe" #ClaveInput (change)="setFormularioClave( $event )" (input)="formatDigitoBancarios( $event, 3 )">
+                            <input [classList]= "movimientos ?  'btnDisabled noClave': 'noClave' " type="text" maxLength="23" placeholder="Cuenta Clabe" [disabled]="movimientos ? true:false" #ClaveInput (change)="setFormularioClave( $event )" (input)="formatDigitoBancarios( $event, 3 )">
                         </div>
                         <div class="">
                             <h4 class="H4ESPECIAL">No de Cuenta</h4>
@@ -61,9 +61,9 @@
                         <div class="modelo">
                             <h4 class="H4ESPECIAL"><span [classList]="formulario().get('modelo')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'" >*</span> Modelo de Negocio</h4>
 
-                            <div class="select modelo">
+                            <div class="select modelo" >
                                 <span class="spanExedioCaractereSelect" [ariaSelected]="true" [hidden]="selectModelo">...</span>
-                                <select required #modeloSelect formControlName="modelo">
+                                <select required #modeloSelect formControlName="modelo"  [classList]=" movimientos ? 'btnDisabled' : ''">
                                     <option value="" disabled selected hidden>Elige un modelo</option>
     
                                     @for(item of arrayModelo[0]; track $index ){
@@ -78,7 +78,7 @@
                             <div class="select moneda">
     
                                 <span class="spanExedioCaractereSelect" [hidden]="selectDivisa">...</span>
-                                <select required #monedaSelect formControlName="moneda">
+                                <select required #monedaSelect formControlName="moneda" [classList]=" movimientos ? 'btnDisabled' : ''">
                                     <option value="" disabled selected hidden>Elige una divisa</option>
                                     @for(item of arrayDivisa[0]; track $index ){
                                         <option  [value]="item.Moneda">{{item.Moneda}}</option>
@@ -90,7 +90,7 @@
 
                         <div class="">
                             <h4 class="H4ESPECIAL">Saldo Inicial</h4>
-                            <input class="saldoInicial" type="text" #saldoInicialInput placeholder="0.00" (change)="getCurrencySaldo( $event )" (input)="parseDigito2( $event )">
+                            <input [classList]=" movimientos ? 'btnDisabled saldoInicial' : 'saldoInicial'" [disabled]="movimientos ? true:false" type="text" #saldoInicialInput placeholder="0.00" (change)="getCurrencySaldo( $event )" (input)="parseDigito2( $event )">
                         </div>
 
                     </div>
@@ -147,7 +147,10 @@
                                                     <td class="tbody-td-ligth-No-Border text-center modelo">{{item.modelo}}</td>
                                                     <td class="TD_Option"><button type="button" (click)="verDatosCuenta( item.Id_cuenta )" class="TdOptionsTable"><img src="/img-sai/ojito_abierto.png"></button></td>
                                                     <td class="TD_Option"><button type="button" (click)="editarCuenta( item.Id_cuenta )" class="TdOptionsTable"><img src="/img-sai/icon-edith.png"></button></td>
-                                                    <td class="TD_Option"><button type="button" (click)="eliminarCuenta( item.Id_cuenta )" class="TdOptionsTable"><img src="/img-sai/icon-trash.png"></button></td>
+                                                    
+                                                    <td class="TD_Option"><button type="button" [disabled]="item.Movimientos == '1' ? true:false" (click)="eliminarCuenta( item.Id_cuenta )" class="TdOptionsTable"><img [src]="item.Movimientos == '1' ?  '/img-sai/icon-trash-gris.png' : '/img-sai/icon-trash.png' " ></button></td>
+
+                                                    <!-- <td class="TD_Option"><button type="button" (click)="eliminarCuenta( item.Id_cuenta )" class="TdOptionsTable"><img src="/img-sai/icon-trash.png"></button></td> -->
                                                 </tr>
                                             }
                                         </tbody>

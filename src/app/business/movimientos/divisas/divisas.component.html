@@ -12,7 +12,7 @@
                                 <h1 class="h1TitleCard">Venta de divisa</h1>
                             </div>
                             <!-- <button (click)="formatoFechaLatina()" >carga</button> -->
-                            <!-- <button (click)="ver()" >ver</button>  -->
+                            <button (click)="ver()" >ver</button> 
         
                             <div class="edicionRegistro col-7" [hidden]="editar ? true: false">
                                 <h1 class="h1TitleCard"><img src="/img-sai/icon-edicion-de-registro.png" style="width: 20px;">Edición de Registro</h1>
@@ -29,7 +29,7 @@
                                 <select required class="" formControlName="Id_ICPC" (change)="evaluaCliente( $event )">
                                     <option value="" disabled selected hidden>Yued</option>
                                     @for(item of array[0]; track $index ){
-                                        <option [value]="item.Id_ICPC">{{item.Nombre_Razon_Social}}</option>
+                                        <option [value]="item.Id_ICPC" [id]="item.Id_ICPC" >{{item.Nombre_Razon_Social}}</option>
                                     }
                                 </select>
                             </div>
@@ -38,10 +38,10 @@
                         <div class="Concepto">
                             <h4 class="H4ESPECIAL"><span [classList]="formulario().get('Concepto')?.valid  ? 'Obligatiro-is-valid':'Obligatiro-is-invalid' ">*</span> Concepto</h4>
                             <div class="select Concepto">
-                                <select required class="" #Concepto formControlName="Concepto">
+                                <select required class="" #Concepto formControlName="Concepto" (change)="evaluaConcepto( $event )">
                                     <option value="" disabled selected hidden>Recepción de capital</option>
                                     @for(item of arrayConcepto[0]; track $index ){
-                                        <option [value]="item.Id_Concepto">{{item.Concepto}}</option>
+                                        <option [value]="item.Id_Concepto" [id]="item.TipoMovimiento">{{item.Concepto}}</option>
                                     }
                                 </select>
                             </div>
@@ -59,7 +59,7 @@
                             </div>
                         </div>
 
-                        <div class="form-check">
+                        <!-- <div class="form-check">
                             <div class="check">
                                 <label  class="form-check-label" >Ingreso</label>
                                 <label class="label-container" >
@@ -74,7 +74,7 @@
                                     <span class="checkmark"></span>
                                 </label>
                             </div>
-                        </div>
+                        </div> -->
 
                         <div class="Monto">
                             <h4 class=""><span [classList]="formularioYued().get('Monto')?.valid  ? 'Obligatiro-is-valid':'Obligatiro-is-invalid' ">*</span> Monto</h4>
@@ -83,7 +83,7 @@
                             </div>
                         </div>
                         
-                        <div class="cuentaPago">
+                        <!-- <div class="cuentaPago">
                             <h4 class=""><span [classList]="formularioYued().get('Tipo_Cuenta')?.valid  ? 'Obligatiro-is-valid':'Obligatiro-is-invalid' ">*</span> Ctas. Yued</h4>
                             <div class="select cuentaPago">
                                 <select required class="" formControlName="Tipo_Cuenta" >
@@ -93,23 +93,25 @@
                                     }
                                 </select>
                             </div>
-                        </div>
+                        </div> -->
 
                     </div>
                 </form>
                 <form class="form"  [formGroup]="formulario()">
-                    <div class="d-flex justify-content-between">
+                    <div class="d-flex justify-content-between" >
                         <div class="Monto">
-                            <h4 class="H4ESPECIAL"><span [classList]="formulario().get('Comision')?.valid  ? 'Obligatiro-is-valid':'Obligatiro-is-invalid' ">*</span> Comisión</h4>
+                            <h4 class="H4ESPECIAL" [hidden]="Dolares"><span [classList]="formulario().get('Comision')?.valid  ? 'Obligatiro-is-valid':'Obligatiro-is-invalid' ">*</span> Comisión</h4>
                             <div class="">
-                                <input class="Monto" type="text" formControlName="Comision" #Comision placeholder="0.00" (change)="getCurrencySaldo( $event )" (input)="parseDigito2( $event )">
+                                <input class="Monto" type="text" [hidden]="Dolares"  #Comision placeholder="0.00" (change)="getCurrencySaldo( $event )" (input)="parseDigito2( $event )">
+                                <!-- <input class="Monto" type="text" [disabled]="Dolares" formControlName="Comision" #Comision placeholder="0.00" (change)="getCurrencySaldo( $event )" (input)="parseDigito2( $event )"> -->
                             </div>
                         </div>
                         
                         <div class="cuenta">
-                            <h4 class="H4ESPECIAL"><span [classList]="formulario().get('Id_CuentaB')?.valid  ? 'Obligatiro-is-valid':'Obligatiro-is-invalid' ">*</span> Cuenta</h4>
+                            <h4 class="H4ESPECIAL" [hidden]="Dolares"><span [classList]="formulario().get('Id_CuentaB')?.valid  ? 'Obligatiro-is-valid':'Obligatiro-is-invalid' ">*</span> Cuenta</h4>
                             <div class="select cuenta">
-                                <select required class="" formControlName="Id_CuentaB" >
+                                <select required class="" [hidden]="Dolares" #Cuenta (change)="evaluaCuentaB( $event )" >
+                                <!-- <select required class="" [disabled]="Dolares" formControlName="Id_CuentaB" > -->
                                     <option value="" disabled selected hidden>Divisas 01</option>
                                     @for(item of arrayCuenta[0]; track $index ){
                                         <option [value]="item.Id_CuentaB">{{item.alias}}</option>
@@ -122,7 +124,7 @@
                     
                     <div class="divObservaciones">
 
-                        <h4 class="">Observaciones</h4>
+                        <h4 class="" >Observaciones</h4>
                         <textarea class="observaciones" name="" id="" formControlName="Observaciones" rows=0 cols=0 placeholder="Observaciones del movimiento"></textarea>
 
                     </div>
@@ -157,7 +159,7 @@
                                 <table class="table">
                                     <thead>
                                     <tr>
-                                        <th class="thead-th-blod-No-Border Tipo_Movimiento"></th>
+                                        <!-- <th class="thead-th-blod-No-Border Tipo_Movimiento"></th> -->
                                         <th class="thead-th-blod-No-Border th-just-left ConceptoTb">Cliente</th>
                                         <th class="thead-th-blod-No-Border th-just-left ClienteTb">Concepto</th>
                                         <th class="thead-th-blod-No-Border th-just-left- text-center MontoTb">Comisión</th>
@@ -168,7 +170,7 @@
                                     <tbody class="">
                                         @for( item of arrayHistorico[0]; track $index ){
                                             <tr>
-                                                <td class="tbody-td-ligth-No-Border Tipo_Movimiento"><div><span [classList]="item.Tipo_Movimiento == 'Ingreso' ? 'ingreso':'egreso' "></span></div></td>
+                                                <!-- <td class="tbody-td-ligth-No-Border Tipo_Movimiento"><div><span [classList]="item.Tipo_Movimiento == 'Ingreso' ? 'ingreso':'egreso' "></span></div></td> -->
                                                 <td class="tbody-td-ligth-No-Border ConceptoTb">{{item.Cliente}}</td>
                                                 <td class="tbody-td-ligth-No-Border ClienteTb">{{item.Concepto}}</td>
                                                 <td class="tbody-td-ligth-No-Border text-center MontoTb">{{getCurrencyTable(item.Comision)}}</td>
@@ -211,7 +213,7 @@
                                 <table class="table">
                                     <thead>
                                     <tr>
-                                        <th class="thead-th-blod-No-Border Tipo_Movimiento"></th>
+                                        <!-- <th class="thead-th-blod-No-Border Tipo_Movimiento"></th> -->
                                         <th class="thead-th-blod-No-Border th-just-left ConceptoTb">Cliente</th>
                                         <th class="thead-th-blod-No-Border th-just-left ClienteTb">Concepto</th>
                                         <th class="thead-th-blod-No-Border th-just-left- text-center MontoTb">Comisión</th>
@@ -222,7 +224,7 @@
                                     <tbody class="">
                                         @for( item of listaBusqueda[0]; track $index ){
                                             <tr>
-                                                <td class="tbody-td-ligth-No-Border Tipo_Movimiento"><div><span [classList]="item.Tipo_Movimiento == 'Ingreso' ? 'ingreso':'egreso' "></span></div></td>
+                                                <!-- <td class="tbody-td-ligth-No-Border Tipo_Movimiento"><div><span [classList]="item.Tipo_Movimiento == 'Ingreso' ? 'ingreso':'egreso' "></span></div></td> -->
                                                 <td class="tbody-td-ligth-No-Border ConceptoTb">{{item.Cliente}}</td>
                                                 <td class="tbody-td-ligth-No-Border ClienteTb">{{item.Concepto}}</td>
                                                 <td class="tbody-td-ligth-No-Border text-center MontoTb">{{getCurrencyTable(item.Comision)}}</td>

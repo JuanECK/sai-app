@@ -369,18 +369,22 @@ select {
     color: #303030;
     background-image: none;
     cursor: pointer;
-    max-width: 100%
+    max-width: 100%;
+    /* z-index: -1 !important; */
   }
-
+  
   .select {
+    /* position: relative; */
     position: absolute;
     display: flex;
     min-width: 0;
     overflow: hidden;
+    /* z-index: 1 !important; */
+
   }
   
   .spanExedioCaractereSelect{
-    position: absolute;
+    /* position: absolute; */
     top: 4px;
     right: 26px;
     z-index: 10;
@@ -393,6 +397,7 @@ select {
     -moz-user-select: none;
     -ms-user-select:none;
     user-select: none;
+
   }
   /* select::-ms-expand {
     display: none;
@@ -425,6 +430,7 @@ select {
     width: 100vw;
     color: #2e2e2e;
     background: #ffffff;
+    
   }
 
   select option:checked {

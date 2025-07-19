@@ -90,7 +90,7 @@ export class Cuentas {
             body: JSON.stringify({criterio:criterio})
         } )
         const datos = await response.json()
-        // console.log(datos)
+        console.log(datos)
         if( response.status === 200 ){
             if( datos.status === 'error' ){
                 const data = { mensaje:datos.mensaje }

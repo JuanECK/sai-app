@@ -30,11 +30,10 @@ export class DivisasComponent implements OnInit {
   @ViewChild('Busqueda') Busqueda!: ElementRef;
   @ViewChild('Concepto') Concepto!: ElementRef;
   @ViewChild('Comision') Comision!: ElementRef;
+  @ViewChild('Cuenta') Cuenta!: ElementRef;
   @ViewChild('FileComprobante') FileComprobante!: ElementRef;
   @ViewChild('inputComprobante') inputComprobante!: ElementRef;
   @ViewChild('inputINV') inputINV!: ElementRef;
-  @ViewChild('radioBtn1') radioBtn1!: ElementRef;
-  @ViewChild('radioBtn2') radioBtn2!: ElementRef;
   @ViewChild('Monto') Monto!: ElementRef;
   @ViewChild('TabsInformacion') TabsInformacion!: ElementRef;
 
@@ -56,11 +55,12 @@ export class DivisasComponent implements OnInit {
   yued:boolean = false;
   saldo:string ='';
   Moneda:string ='';
+  clienteEspecial:Array<any>[] = [];
+
+  Dolares: boolean = false;
 
   formu:Array<any>[] = []
-  // selectDivisas: boolean = true;
-  // selectConcepto: boolean = true;
-  // selectCuenta: boolean = true;
+
   nombreInversionista: string = '';
   
   private readonly _modalMsg = inject(ModalMsgService);
@@ -87,9 +87,9 @@ export class DivisasComponent implements OnInit {
 
     new FormGroup({
 
-      Tipo_Movimiento: new FormControl('Ingreso'),
+      Tipo_Movimiento: new FormControl(''),
+      // Tipo_Movimiento: new FormControl('Egreso'),
       Monto: new FormControl('',[Validators.required]),
-      Tipo_Cuenta: new FormControl('',[Validators.required]),
        
     })
   )
@@ -100,10 +100,12 @@ export class DivisasComponent implements OnInit {
   
   // -------Procedimientos de inicio------
   ngOnInit(): void {
+
     this.setDataLogin();
     this.cargaDataInicial();
     this.cargaHistorico();
     this.Hoy = this.fechaActual();
+    
   }
     async cargaDataInicial(){
     this.array = await this.servicio.GetDataInicial();
@@ -129,13 +131,6 @@ export class DivisasComponent implements OnInit {
 
   ver(){
     
-    // this.formu.push(this.formulario().value, this.formularioYued().value)
-    // const newForm = new FormGroup({
-    //   form1:this.formulario().value,
-    //   form2:this.formularioYued().value
-    // })
-    // this.formulario().registerControl('new',this.formularioYued())
-    // console.log(this.formu)
     console.log(this.formulario().value)
     console.log(this.formularioYued().value)
   }
@@ -147,8 +142,7 @@ export class DivisasComponent implements OnInit {
 
 
   resetForm() {
-  // this.selectCuenta = true;
-  // this.selectConcepto = true;
+
   this.formu = []
   this.formulario().patchValue({
 
@@ -164,15 +158,17 @@ export class DivisasComponent implements OnInit {
 
   this.formularioYued().patchValue({
 
-    ['Tipo_Movimiento']:'Ingreso',
+    ['Tipo_Movimiento']:'',
     ['Monto']:'',
     ['Tipo_Cuenta']:'',
 
   });
-  // this.inputINV.nativeElement.value = '';
-  // this.nombreInversionista = '';
-  this.radioBtn1.nativeElement.checked = true
+
   this.editar = true
+  this.Dolares = false
+  this.yued = false
+  this.Comision.nativeElement.value = ''
+  this.Cuenta.nativeElement.value = ''
 }
 
 cargaFormularioSeleccionado( form: Array<any> ){
@@ -183,17 +179,14 @@ cargaFormularioSeleccionado( form: Array<any> ){
       if( this.array[5][0].Id_ICPC == valor){
          this.arrayCuenta.push(this.array[6]) 
          this.yued = true
-        //  console.log(this.array[5][i].Id_ICPC,' - 6 - ',form[0][0].Id_ICPC)
          return true
         } else if( this.array[5][1].Id_ICPC == valor ){
-          // console.log(this.array[5][i].Id_ICPC,' - 7 -',form[0][0].Id_ICPC)
           this.yued = true
           this.arrayCuenta.push(this.array[7]) 
           return true
         }
         
       }
-      // console.log(2)
       this.yued = false
     this.arrayCuenta.push(this.array[3]) 
     return false
@@ -202,7 +195,6 @@ cargaFormularioSeleccionado( form: Array<any> ){
 
   async cargaFormulario(form: Array<any>, valor:any) {
 
-    // console.log(valor)
     this.arrayConcepto = []
     this.arrayCuenta = []
     let cargaSaldo = this.cargaFormularioSeleccionado( form )
@@ -219,7 +211,6 @@ cargaFormularioSeleccionado( form: Array<any> ){
       this.arrayConcepto.push(this.array[1])
     }
 
-    form[0][0].Tipo_Movimiento === 'Ingreso' ? (this.radioBtn1.nativeElement.checked = true) : (this.radioBtn2.nativeElement.checked = true)
     
     form[0].map((item: any) => {
       this.formulario().patchValue({
@@ -245,7 +236,6 @@ cargaFormularioSeleccionado( form: Array<any> ){
     })
 
     
-    // let num = form[0][0].Tipo_Movimiento === 'Ingreso' ? 1 : 2;
     this.Monto.nativeElement.value = this.getCurrency(form[0][0].Monto)
     this.Comision.nativeElement.value = this.getCurrency(form[0][0].Comision)
 
@@ -264,55 +254,64 @@ cargaFormularioSeleccionado( form: Array<any> ){
   // ---------------------------------
   // ------- Procedimientos de pantalla 1------
 
+
   async evaluaCliente( event:any ){
-    let valor = event.target.selectedOptions[0].value
-    this.resetParcial();
-    this.arrayConcepto = []
-    this.arrayCuenta = []
-    let respuesta = this.eva(valor)
-    this.yued = respuesta.tipo
-
-      if(this.yued){
-        this.array[5].map(item =>{
-          if(item.Id_ICPC == valor){
-            this.arrayCuenta.push(this.array[6]) 
-          }else{
-            this.arrayCuenta.push(this.array[7]) 
-          }
-        })
-      this.arrayConcepto.push(this.array[2]) 
-      this.saldoResp = await this.servicio.GetSaldoYued(respuesta.idcp)
-      this.saldo = formatCurrency(this.saldoResp[0][0].Saldo, 'en', '$', '', '1.2-4')
-      this.Moneda =  this.saldoResp[0][0].Moneda
-      // this.formulario().patchValue({['Id_ICPC']:valor})
-      
-      return
-    }
     
-    this.arrayCuenta.push(this.array[3]) 
-    this.arrayConcepto.push(this.array[1])
-    this.formulario().patchValue({['Id_ICPC']:valor})
+    this.resetParcial();
+    this.arrayConcepto = [];
+    this.arrayCuenta = [];
 
+    let id = event.target.selectedOptions[0].id
+    
+    let data = await this.servicio.GetConcepto( event.target.value );
+    console.log(data)
+
+    this.arrayConcepto = [data.Conceptos]
+    this.arrayCuenta = [data.Cuentas] 
+
+    this.clienteEspecial = [this.array[0].filter( cliente =>  cliente.Id_ICPC == id  )]
+    console.log({cliente:this.clienteEspecial})
+
+    if( this.clienteEspecial[0][0].Moneda == 'USD' ){
+      this.Dolares = true
+      this.formulario().patchValue({['Id_CuentaB']:'0', ['Comision']:'0'});
+    }else{
+      this.Dolares = false
+    }
+
+    if( this.clienteEspecial[0][0].ClienteDivisas == 1){
+
+      this.saldo = formatCurrency(this.clienteEspecial[0][0].Saldo, 'en', '$', '', '1.2-4')
+      this.Moneda =  this.clienteEspecial[0][0].Moneda
+      this.yued = true
+
+    }else {
+      this.yued = false
+    }
 
   }
 
-  eva( v:any ){
-
-  for( let i = 0; i < this.array[5].length; i++ ){
-      if( this.array[5][i].Id_ICPC == v ){
-        return {tipo:true, idcp:this.array[5][i].Id_ICPC}
-      } 
+  evaluaConcepto( event:any ){
+    let tipo = event.target.selectedOptions[0].id
+    console.log(tipo)
+    if( tipo == 'E' ){
+        this.formularioYued().patchValue({['Tipo_Movimiento']:'Egreso'});
+      }
+      if( tipo == 'I' ){
+      this.formularioYued().patchValue({['Tipo_Movimiento']:'Ingreso'});
     }
-    return {tipo:false, idcp:''}
+  }
+
+  evaluaCuentaB( event:any ){
+    console.log(event.target.value)
+    this.formulario().patchValue({['Id_CuentaB']:event.target.value});
   }
 
   resetParcial(){
     this.formu = []
-    this.radioBtn1.nativeElement.checked = true
-    // this.Concepto.nativeElement.value = ''
+
     this.formulario().patchValue({
 
-      // ['Id_ICPC']:'',
       ['Concepto']:'',
       ['Id_CuentaB']:'',
       ['Comision']:'',
@@ -321,27 +320,20 @@ cargaFormularioSeleccionado( form: Array<any> ){
     });
     this.formularioYued().patchValue({
 
-      ['Tipo_Movimiento']:'Ingreso',
+      ['Tipo_Movimiento']:'',
       ['Monto']:'',
       ['Tipo_Cuenta']:'',
 
     });
 
-  }
+  this.Monto.nativeElement.value = ''
+  this.Comision.nativeElement.value = ''
+  this.Cuenta.nativeElement.value = ''
 
-
-  evaluaIngreso(){
-    this.formularioYued().patchValue({'Tipo_Movimiento':'Ingreso'})
-    this.formularioYued().patchValue({['Monto']:''})
-    
-  }
-  evaluaEgreso(){
-    this.formularioYued().patchValue({'Tipo_Movimiento':'Egreso'})
-    this.formularioYued().patchValue({['Monto']:''})
   }
 
   evaluaSaldoEgresoYued(value:string){
-     if( this.formularioYued().get('Tipo_Movimiento')?.value == 'Egreso' && value > this.saldoResp[0][0].Saldo){
+     if( value > this.clienteEspecial[0][0].Saldo){
       return true
     }
      return false
@@ -379,7 +371,7 @@ cargaFormularioSeleccionado( form: Array<any> ){
     event.target.value = returnvalor
   }
 
-      parseDigito2(event: any) {
+  parseDigito2(event: any) {
     let cadena = event.target.value;
     let numPuntos = 0
     cadena = cadena
@@ -423,6 +415,7 @@ async enviar() {
       
       this._modalMsg.openModalMsg<ModalMsgComponent>( ModalMsgComponent, { data:registro.data }, false, '300px', 'exito' )
       this.resetForm()
+      this.cargaDataInicial();
       this.cargaHistorico();
       this.listaBusqueda = [];
       this.formulario().patchValue({['Id_ICPC']:''})
@@ -440,7 +433,6 @@ async ActualizarRegistro() {
         this.formulario().patchValue({usuario:credenciales.Id})
       }
 
-      // this.formu.push(this.formulario().value, this.formularioYued().value)
       const objeto = Object.assign(this.formulario().value, this.formularioYued().value)
       let registroActualizado = await this.servicio.EnviarActualizacio(objeto, BusquedaID)
 
@@ -456,6 +448,7 @@ async ActualizarRegistro() {
       
       this._modalMsg.openModalMsg<ModalMsgComponent>( ModalMsgComponent, { data:registroActualizado.data }, false, '300px', 'exito' )
       this.resetForm()
+      this.cargaDataInicial();
       this.cargaHistorico();
       this.listaBusqueda = [];
       this.TabsInformacion.nativeElement.checked = true;

@@ -86,6 +86,7 @@ export class PresupuestoComponent implements OnInit {
   
   // -----------------------Procedimientos de inicio---------------------
   ngOnInit(): void {
+    // this.Monto.nativeElement.disabled = true
     this.cargaDataInicial();
     this.setDataLogin();
     this.cargaHistorico();

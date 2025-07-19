@@ -40,6 +40,10 @@ import { Inmobiliario } from "../../../core/services/movInmobiliario.service";
                   </tr>
                   <tr class="">
                     <th class="thead-th-blod-No-Border ">Monto</th>
+                    <td class="tbody-td-ligth-No-Border ">{{getCurrency(item.Monto)}}</td>
+                  </tr>
+                  <tr class="">
+                    <th class="thead-th-blod-No-Border ">Comisión obtenida</th>
                     <td class="tbody-td-ligth-No-Border ">{{getCurrency(item.Comision)}}</td>
                   </tr>
                   <tr class="trGris">

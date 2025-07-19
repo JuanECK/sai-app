@@ -9,6 +9,8 @@ import { VentanaEliminaPublico } from './ventanaEliminarProveedor';
 import { VentanaVerInformacionPublico } from './ventanaVerInformacionProveedor';
 import { VentanaBusquedaPublico } from './ventanaBusquedaProveedor';
 import { MatDialog } from '@angular/material/dialog';
+import { BlobOptions } from 'buffer';
+import { formatCurrency } from '@angular/common';
 
 let BusquedaText = '';
 let BusquedaID: Array<any>[] = [];
@@ -35,27 +37,31 @@ export class PublicoComponent implements OnInit{
   @ViewChild('Ref_input_Cuenta_Tarjeta') Ref_input_Cuenta_Tarjeta!: ElementRef;
   @ViewChild('Ref_Inst_Bancaria') Ref_Inst_Bancaria!: ElementRef;
   @ViewChild('targeta_asociada') targeta_asociada!: ElementRef;
-  
+  @ViewChild('Catalogo') Catalogo!: ElementRef;
+  @ViewChild('Monto') Monto!: ElementRef;
+  @ViewChild('TipoDivisa') TipoDivisa!: ElementRef;
+
 
   formulario = signal<FormGroup>(
     new FormGroup({
       nombre: new FormControl( '', [Validators.required]),
       fisica_moral: new FormControl( 1, ),
-      correo: new FormControl( '', ),
-      telefono: new FormControl( '', ),
-      Id_ICPC: new FormControl( '', ),
-      Banco_cuenta: new FormControl( '', ),
-      CLABE: new FormControl( '', ),
-      FINCASH: new FormControl( '', ),
-      Banco_tarjeta: new FormControl( '', ),
-      tarjeta: new FormControl( '', ),
-      Estatus: new FormControl( '', ),
-      usuario: new FormControl( '', ),
+      correo: new FormControl( '' ),
+      telefono: new FormControl( '' ),
+      Id_ICPC: new FormControl( '' ),
+      Banco_cuenta: new FormControl( '' ),
+      CLABE: new FormControl( '' ),
+      FINCASH: new FormControl( '' ),
+      Banco_tarjeta: new FormControl( '' ),
+      tarjeta: new FormControl( '' ),
+      Estatus: new FormControl( '' ),
+      usuario: new FormControl( '' ),
+      tipoClienteDivisa : new FormControl(0),
+      tipoDivisa : new FormControl(''),
+      saldoApertura: new FormControl(''),
 
     })
   )
-
-
 
   editar:boolean = true;
   Hoy:string = "";
@@ -70,14 +76,26 @@ export class PublicoComponent implements OnInit{
   disabledBtn:boolean = true;
   listaBusqueda: Array<any>[] = [];
 
+  catalogoDivisas: Array<any>[] = [];
+  divisa: Array<any>[] = [];
+  array: Array<any>[] = [];
+
+  cataDivisa:boolean = true
+
   private readonly _modalMsg = inject(ModalMsgService);
   private readonly _dialog = inject(MatDialog);
 
   ngOnInit(): void {
     this.setDataLogin();
+    this.cargaDataInicial();
     this.Hoy = this.fechaActual()
 
   }
+
+  async cargaDataInicial(){
+    this.array = await this.servicio.GetDataInicial();
+  }
+
   ver(){console.log(this.formulario().value)}
 
   setDataLogin() {
@@ -92,6 +110,80 @@ export class PublicoComponent implements OnInit{
     var dia = hoy.getDate();
     var getMes = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre']
     return fecha = dia + ' / ' + getMes[mes] + ' / ' + ano
+  }
+
+evaluaCatalogo( event:any ){
+  if( event.target.value == 0 ){
+
+    this.formulario().patchValue({['tipoClienteDivisa']: '', ['tipoDivisa']:'', ['saldoApertura']:''})
+    this.Monto.nativeElement.value = ''
+    this.TipoDivisa.nativeElement.value = ''
+    event.target.value = ''
+    this.cataDivisa = true
+    return 
+  }
+  if( event.target.value == 2 || event.target.value == 0 ){
+
+    this.cataDivisa = true
+    this.formulario().patchValue({['tipoDivisa']:'', ['saldoApertura']:''})
+    this.Monto.nativeElement.value = ''
+    this.TipoDivisa.nativeElement.value = ''
+  }else{
+
+    this.cataDivisa = false
+    
+  }
+  
+  this.formulario().patchValue({['tipoClienteDivisa']: event.target.value})
+}
+
+evaluaDivisa( event:any ){
+  if( event.target.value == 0 ){
+    this.formulario().patchValue({['tipoDivisa']: ''})
+    event.target.value = ''
+    return 
+  }
+  this.formulario().patchValue({['tipoDivisa']: event.target.value})
+  
+}
+
+  getCurrencySaldo(event: any) {
+    let value = event.target.value
+    let returnvalor = value
+    if (value != '') {
+      returnvalor = formatCurrency(+value, 'en', '', '', '1.2-4')
+      this.formulario().patchValue({ ['saldoApertura']: returnvalor.replace(/[^0-9.]/g, "") })
+      event.target.value = returnvalor
+      return
+    }
+    this.formulario().patchValue({ ['saldoApertura']: 0 })
+    event.target.value = returnvalor
+  }
+
+  parseDigito2(event: any) {
+    let cadena = event.target.value;
+    let numPuntos = 0
+    cadena = cadena
+      .replace(/[^0-9.]/g, "");
+    for (let i = 0; i < cadena.length; i++) {
+      if (cadena[0] === '.') {
+        cadena = cadena.slice(1)
+      }
+      if (cadena[i] === '.') {
+        numPuntos++
+        if (numPuntos > 1) {
+          cadena = cadena.slice(0, i)
+        }
+      }
+      if (cadena[i] === '.') {
+        let res = cadena.slice(i, cadena.length)
+        if (res.length > 5) {
+          cadena = cadena.slice(0, cadena.length - 1)
+        }
+      }
+
+    }
+    event.target.value = cadena
   }
 
   TipoDeCuenta( event:any ){
@@ -131,7 +223,7 @@ export class PublicoComponent implements OnInit{
 
   Institucion_Bancaria( event:any ){
   
-    if( this.valor === 'CLABE' ){
+    if( this.targeta_asociada.nativeElement.value === 'CLABE' ){
       console.log(event.target.value)
       this.formulario().patchValue({['Banco_cuenta']:event.target.value});
       // if( this.formulario().get('CLABE')?.value != '' ){
@@ -141,7 +233,7 @@ export class PublicoComponent implements OnInit{
         
       // }
       
-    }else if (this.valor === 'Debito'){
+    }else if (this.targeta_asociada.nativeElement.value === 'Debito'){
       this.formulario().patchValue({['Banco_tarjeta']:event.target.value});
       // if( this.formulario().get('tarjeta')?.value != '' ){
         
@@ -155,9 +247,9 @@ export class PublicoComponent implements OnInit{
 
   cuenta_o_tarjeta( event:any ){
 
-    // console.log(this.valor)
+    console.log(this.targeta_asociada.nativeElement.value)
   
-  if( this.valor === 'Fincash' ){
+  if( this.targeta_asociada.nativeElement.value === 'Fincash' ){
     this.formulario().patchValue({['FINCASH']:event.target.value, 
       // ['Tipo_Cuenta_targeta']:this.valor
     });
@@ -165,7 +257,7 @@ export class PublicoComponent implements OnInit{
     return
   }
   
-  if( this.valor === 'CLABE' ){
+  if( this.targeta_asociada.nativeElement.value === 'CLABE' ){
     this.formulario().patchValue({['CLABE']:event.target.value});
     // if( this.formulario().get('banco_cuenta')?.value != '' ){
       
@@ -173,7 +265,7 @@ export class PublicoComponent implements OnInit{
     //   // this.formulario().patchValue({['Tipo_Cuenta_targeta']:this.valor});
     // }
     
-  }else if (this.valor === 'Debito'){
+  }else if (this.targeta_asociada.nativeElement.value === 'Debito'){
     this.formulario().patchValue({['tarjeta']:event.target.value});
     // if( this.formulario().get('Banco_tarjeta')?.value != '' ){
       
@@ -221,8 +313,10 @@ export class PublicoComponent implements OnInit{
           let credenciales = await this.servicio.GetCredenciales()
           this.formulario().patchValue({usuario:credenciales.Id})
         }
+        if( this.Monto.nativeElement.value == '' ){this.formulario().patchValue({['saldoApertura']:0})}
   
         let registroActualizado = await this.servicio.EnviarActualizacioProveedor(this.formulario(), BusquedaID)
+
   
         if ( registroActualizado.status === 'error' ){
           this._modalMsg.openModalMsg<ModalMsgComponent>( ModalMsgComponent, { data:registroActualizado.data }, false, '300px', 'error' )
@@ -245,7 +339,24 @@ export class PublicoComponent implements OnInit{
 
   resetForm() {
 
-    this.formulario().reset();
+    this.formulario().reset({
+      'nombre':'',
+      'fisica_moral':1,
+      'correo':'',
+      'telefono':'',
+      'Id_ICPC':'',
+      'Banco_cuenta':'',
+      'CLABE':'',
+      'FINCASH':'',
+      'Banco_tarjeta':'',
+      'tarjeta':'',
+      'Estatus':'',
+      'usuario':'',
+      'tipoClienteDivisa':0,
+      'tipoDivisa':'',
+      'saldoApertura':'',
+    });
+
     this.radioBtn1.nativeElement.checked = 1
     this.formulario().patchValue({fisica_moral:true})
     this.editar = true
@@ -255,18 +366,29 @@ export class PublicoComponent implements OnInit{
     this.titulo_cuenta_asociada = 'No. de cuenta o tarjeta'
     this.placeHolder_cuenta_asociada = '16 ó 18 dígitos'
     this.maxlengthCuentas = 0
-    this.formulario().patchValue({
-      ['FINCASH']:'', 
-      ['CLABE']:'',
-      ['Banco_cuenta']:'',
-      ['Banco_Tarjeta']:'',
-      ['tarjeta']:'',
-      // ['Tipo_Cuenta_targeta']:''
-    });
+    // this.formulario().patchValue({
+
+
+
+    //   ['FINCASH']:'', 
+    //   ['CLABE']:'',
+    //   ['Banco_cuenta']:'',
+    //   ['Banco_Tarjeta']:'',
+    //   ['tarjeta']:'',
+    //   // ['tipoClienteDivisa']:'',
+    //   // ['tipoDivisa']:'',
+    //   // ['saldoApertura']:'',
+      
+    // });
   
       this.targeta_asociada.nativeElement.value=''
       this.Ref_input_Cuenta_Tarjeta.nativeElement.value=''
       this.Ref_Inst_Bancaria.nativeElement.value=''
+
+       this.cataDivisa = true
+      this.Catalogo.nativeElement.value = ''
+      this.Monto.nativeElement.value = ''
+      this.TipoDivisa.nativeElement.value = ''
 
       this.listaBusqueda = [];
 
@@ -300,7 +422,9 @@ export class PublicoComponent implements OnInit{
     }
 
       async verDatosProveedor( id:number ){
-        const datos = await this.servicio.cargaProveedorId( id )
+        let datos = await this.servicio.cargaProveedorId( id )
+        let item = this.array[0].filter(item => item.Id_Tipo_ClienteDivisa == datos[0].Id_Tipo_ClienteDivisa)
+        datos[0] = { TipoPerfil:item[0].TipoPerfil, ...datos[0] } 
         if(datos.status === 'error'){
           this._modalMsg.openModalMsg<ModalMsgComponent>( ModalMsgComponent, { data:datos.data }, false, '300px', 'exito')
           return
@@ -363,10 +487,23 @@ export class PublicoComponent implements OnInit{
               ['tarjeta']:item.tarjeta,
               ['Estatus']:item.Estatus,
               ['usuario']:item.usuario,
+              ['tipoClienteDivisa']:item.Id_Tipo_ClienteDivisa,
+              ['tipoDivisa']:item.Id_Moneda,
+              ['saldoApertura']:item.Saldo_Apertura,
 
             })
           })
 
+          if( formProveedor[0].Id_Tipo_ClienteDivisa == 1  ) {
+            this.cataDivisa = false;
+            // this.formulario().patchValue({
+            //   // ['tipoDivisa']:formProveedor[0].Id_Moneda,
+            //   // ['saldoApertura']:formProveedor[0].Saldo_Apertura,
+            // })
+            this.Monto.nativeElement.value = formatCurrency(formProveedor[0].Saldo_Apertura, 'en', '', '', '1.2-4')
+            this.TipoDivisa.nativeElement.value = formProveedor[0].Id_Moneda;
+
+          }
           formProveedor[0].fisica_moral === '1' ? (this.radioBtn1.nativeElement.checked = true) : (this.radioBtn2.nativeElement.checked = true)
           this.cargaCuentaTargeta( formProveedor[0].CLABE, formProveedor[0].Banco_cuenta, formProveedor[0].tarjeta, formProveedor[0].Banco_Tarjeta, formProveedor[0].FINCASH )
 

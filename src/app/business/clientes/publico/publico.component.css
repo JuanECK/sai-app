@@ -74,7 +74,7 @@
                     }
 
                     & .correoTelefono{
-                        margin-bottom: 50px;
+                        /* margin-bottom: 50px; */
                         & .numTel{
                             margin-right: 12px;
                             width: 246px;
@@ -89,7 +89,9 @@
                 & .TipoCuenta{
                     width: 273px;
                 }
-                & .selectTipoCuenta > select:invalid{
+                & .selectTipoCuenta > select:invalid,
+                & .divisas > .Catalogo > select:invalid,
+                & .divisas > .Divisa > select:invalid{
                     background: #BBBBBB ;
                     color: transparent;
                     background-clip: text;
@@ -109,6 +111,29 @@
                   & .actividadComercial{
                     width: 246px;
                   }
+
+                  & .divisas{
+                    display: flex;
+                    /* grid-template-columns: 1fr 1fr 1fr ;
+                    grid-template-areas: "Catalogo Divisa Saldo"; */
+                  }
+
+                  & .Catalogo{
+                        width: 145px;
+                        margin-right: 12px;
+                        z-index: 10;
+                    }
+                    & .Divisa{
+                        width: 175px;
+                        margin-right: 12px;
+                        left: 187px;
+                        z-index: 5;
+                    }
+                    & .Saldo{
+                        width: 171px;
+                        margin-left: 344px;
+                  }
+
 
                   & .btnsRegistro{
                     position: absolute;

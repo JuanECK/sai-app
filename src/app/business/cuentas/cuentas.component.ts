@@ -68,6 +68,7 @@ export class CuentasComponent implements OnInit {
   selectModelo: boolean = true;
   arrayModelo: Array<any>[] = [];
   selectDivisa: boolean = true;
+  movimientos:boolean = false;
 
   // Inyección directa de servicios mediante inject
   private readonly _modalMsg = inject(ModalMsgService);
@@ -178,7 +179,7 @@ export class CuentasComponent implements OnInit {
   /** Carga lista de divisas disponibles */
   async ModeloNegocio() {
     this.arrayDivisa = await this.servicio.getDivisa();
-    console.log(this.arrayDivisa);
+    // console.log(this.arrayDivisa);
   }
 
   /**
@@ -248,6 +249,9 @@ export class CuentasComponent implements OnInit {
     this.modeloSelect.nativeElement.value = '';
     this.monedaSelect.nativeElement.value = '';
     this.listaBusqueda = [];
+     this.movimientos = false
+    this.modeloSelect.nativeElement.disabled = false
+    this.monedaSelect.nativeElement.disabled = false
   }
 
   /** Captura texto de búsqueda y habilita/deshabilita botón */
@@ -338,6 +342,9 @@ export class CuentasComponent implements OnInit {
       });
     });
 
+    this.movimientos = true
+    this.modeloSelect.nativeElement.disabled = true
+    this.monedaSelect.nativeElement.disabled = true
     this.ClaveInput.nativeElement.value = formCuenta[0].clabe;
     this.noCuentaInput.nativeElement.value = formCuenta[0].noCuenta;
     this.TargetaInput.nativeElement.value = formCuenta[0].tarjeta;

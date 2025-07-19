@@ -20,7 +20,7 @@ export class Divisas {
             }
         })
         const data = await response.json()
-        //   console.log(data)
+          console.log({inicio:data})
         if (response.status === 200) {
             return data
         }
@@ -57,6 +57,22 @@ export class Divisas {
             return data
         }
     }
+
+    async GetConcepto( icpc:number ) {
+
+        const response = await fetch(this._http + 'movimientos/Divisas/cargaConcepto', {
+            method: 'POST',
+            headers: {
+                'Content-Type':'application/json'
+            },
+            body: JSON.stringify({ icpc: icpc })
+        })
+        const data = await response.json()
+        if (response.status === 200) {
+            return data
+        }
+    }
+
     async GetSaldoYued( id:number ) {
 
         const response = await fetch(this._http + 'movimientos/Divisas/cargaSaldoYued', {
@@ -131,7 +147,8 @@ export class Divisas {
             body: JSON.stringify({criterio:criterio})
         } )
         const datos = await response.json()
-        console.log(datos)
+        // console.log(datos)
+        const { data, status } = datos
         if( response.status === 200 ){
             if( datos.status === 'error' ){
                 const data = { mensaje:datos.mensaje }
@@ -140,7 +157,7 @@ export class Divisas {
                 data:data
             }
             }
-            return datos;
+            return data;
         }else{
             const data = { mensaje:datos.error }
             return {
