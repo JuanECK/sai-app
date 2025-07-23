@@ -57,6 +57,20 @@ export class Inmobiliario {
             return data
         }
     }
+    async GetConcepto( concepto:string ) {
+
+        const response = await fetch(this._http + 'movimientos/Inmobiliario/cargaConcepto', {
+            method: 'POST',
+            headers: {
+                'Content-Type':'application/json'
+            },
+            body: JSON.stringify({ concepto: concepto })
+        })
+        const data = await response.json()
+        if (response.status === 200) {
+            return data
+        }
+    }
 
     async descargaComprobante( nameComprobante:string ){
 
@@ -145,16 +159,25 @@ export class Inmobiliario {
 
         if( hayCambios ){
 
-                let aplication = new FormData();
-                aplication.append('file', formularioActualizado.value.Comprobante )
-                
-                for (const [key, value] of Object.entries(formularioActualizado.value)) {
-                    if (typeof value != "object") {
-                        aplication.append(key, String(value))
-                    }else{
-                        aplication.append(key, '')
-                    }
+            let fileBits:any = []
+            let fileName:string = '0SAF0_SAF0.pdf'
+            let options:any={type:'application/pdf'}
+
+            let Arr1 = typeof formularioActualizado.value.Comprobant == "object" ? formularioActualizado.value.INE : new File(fileBits , fileName, options)
+
+            let aplication = new FormData();
+            aplication.append('file', Arr1)
+
+            
+            // aplication.append('file', formularioActualizado.value.Comprobante )
+            
+            for (const [key, value] of Object.entries(formularioActualizado.value)) {
+                if (typeof value != "object") {
+                    aplication.append(key, String(value))
+                }else{
+                    aplication.append(key, '')
                 }
+            }
 
             const response = await fetch(this._http + 'movimientos/Inmobiliario/actualizaMovInmobiliario/movInmobiliario', {
                 method: 'POST',
@@ -263,8 +286,8 @@ export class Inmobiliario {
             redirect: "follow"
         })
         const dataService = await response.json()
-        // console.log(dataService)
-        if (response.status === 200) {
+        console.log(dataService)
+        if (dataService.status === 200) {
             const data = { mensaje:dataService.mensaje }
             return {
                 status:'',    
@@ -272,7 +295,7 @@ export class Inmobiliario {
             }
         }
         else {
-        const data = {mensaje:dataService.error} 
+        const data = {mensaje:dataService.mensaje} 
             return {
                 status: 'error',
                 data: data 

@@ -20,7 +20,7 @@ export class Facturas {
             }
         })
         const data = await response.json()
-        //   console.log(data)
+          console.log(data)
         if (response.status === 200) {
             return data
         }

@@ -88,7 +88,7 @@
                             </select> -->
 
                             <div class="select Estado">
-                                <span class="spanExedioCaractereSelect" id="estado" [ariaSelected]="true" [hidden]="selectEstado">...</span>
+                                <!-- <span class="spanExedioCaractereSelect" id="estado" [ariaSelected]="true" [hidden]="selectEstado">...</span> -->
                                 <select required #Estado class="Estado-" formControlName="Id_Estado" (change)="Municipio( $event )">
                                     <option value="" disabled selected hidden>* Estado</option>
 
@@ -98,7 +98,7 @@
                             </div>
 
                             <div class="select Municipio">
-                                <span class="spanExedioCaractereSelect" id="municipio" [hidden]="selectMunicipio">...</span>
+                                <!-- <span class="spanExedioCaractereSelect" id="municipio" [hidden]="selectMunicipio">...</span> -->
                                 <select required #mySelect class="Municipio-" formControlName="Id_Municipio" (change)="SeleccionMunicipio( $event )">
                                 <!-- <select required #mySelect class="selection" formControlName="Id_Municipio" onmousedown="if(this.options.length>10){this.size=10, this.style.marginTop='30px' }else{this.size=this.options.length-1, this.style.marginTop='30px' , this.style.overflow = 'hidden'}" onchange="this.size=0, this.style.marginTop='0px';" onblur="this.size=0, this.style.marginTop='0px';"> -->
                                     <option value="" disabled selected hidden>* Municipio</option>
@@ -115,7 +115,7 @@
                     <div class="NomRefIntDiv">
                         <h4 class="h4RefInt"><span [classList]="formulario().get('Referido')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'" >*</span> Referencia interna</h4>
                         <div class="select NomRefInt">
-                            <span class="spanExedioCaractereSelect" id="estado" [ariaSelected]="true" [hidden]="selectEstado">...</span>
+                            <!-- <span class="spanExedioCaractereSelect" id="estado" [ariaSelected]="true" [hidden]="selectEstado">...</span> -->
                             <select required #comisionistaReferido class="Estado-" formControlName="Referido">
                                 <option value="" disabled selected hidden>Nombre de la referecia interna</option>
 
@@ -194,8 +194,7 @@
                                     <h4 class="TipoCuenta"><span [classList]="cuenta_targeta ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'">*</span> Cuenta o tarjeta asociada</h4>
 
                                     <div class="select selectTipoCuenta">
-                                        <span class="spanExedioCaractereSelect" id="" [ariaSelected]="true"
-                                            [hidden]="selectReferido">...</span>
+                                        <!-- <span class="spanExedioCaractereSelect" id="" [ariaSelected]="true" [hidden]="selectReferido">...</span> -->
                                         <select required #targeta_asociada class="" (change)="TipoDeCuenta( $event )">
                                             <option value="" disabled selected hidden>Selecciona el tipo de cuenta
                                                 <option value="CLABE">Cuenta CLABE</option>

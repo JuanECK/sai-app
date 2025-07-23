@@ -54,7 +54,7 @@
                     <div class="d-flex justify-content-between-">
 
                         <div class="select Concepto">
-                            <span class="spanExedioCaractereSelect" id="Concepto" [hidden]="selectConcepto">...</span>
+                            <!-- <span class="spanExedioCaractereSelect" id="Concepto" [hidden]="selectConcepto">...</span> -->
                             <select required #Concepto class="" formControlName="Concepto" (change)="optionConcepto( $event )">
                                 <option value="" disabled selected hidden>Concepto</option>
                                     <!-- <option value="1" >prueba1</option> -->
@@ -69,7 +69,7 @@
                         </div>
                         
                         <div class="select Cuenta">
-                            <span class="spanExedioCaractereSelect" id="Cuenta" [hidden]="selectCuenta">...</span>
+                            <!-- <span class="spanExedioCaractereSelect" id="Cuenta" [hidden]="selectCuenta">...</span> -->
                             <select required #mySelect class="" formControlName="Id_CuentaB" (change)="optionCuenta( $event )">
                                 <option value="" disabled selected hidden>Cuenta</option>
                                 <!-- <option value="1" >prueba1</option> -->

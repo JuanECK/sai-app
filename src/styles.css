@@ -370,6 +370,7 @@ select {
     background-image: none;
     cursor: pointer;
     max-width: 100%;
+    text-overflow: ellipsis;
     /* z-index: -1 !important; */
   }
   

@@ -124,7 +124,7 @@ export class Divisas {
             body:JSON.stringify({id:id})
         } )
         const datos = await response.json()
-        console.log(datos)
+        // console.log(datos)
         if( response.status === 200 ){
             if( datos[0].length === 0 ){
                 const data = { mensaje:'¡Por el momento no se pueden cargar los datos!' }
@@ -176,6 +176,7 @@ export class Divisas {
 
         if( hayCambios ){
 
+            console.log('hay cambios')
 
             const response = await fetch(this._http + 'movimientos/Divisas/actualizaMovDivisas', {
                 method:'POST',
@@ -229,7 +230,7 @@ export class Divisas {
                 let val1A = Object.values(form)[i]
                 if(valor1 === valor2){
                     if( val1A != Object.values(usuarioData)[j] ){
-                        console.log( valor1, ' - ',valor2)
+                        // console.log( valor1, ' - ',valor2)
                         return true
                     }
                 }

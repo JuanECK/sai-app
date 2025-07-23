@@ -62,7 +62,7 @@
                             <h4 class="H4ESPECIAL"><span [classList]="formulario().get('modelo')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'" >*</span> Modelo de Negocio</h4>
 
                             <div class="select modelo" >
-                                <span class="spanExedioCaractereSelect" [ariaSelected]="true" [hidden]="selectModelo">...</span>
+                                <!-- <span class="spanExedioCaractereSelect" [ariaSelected]="true" [hidden]="selectModelo">...</span> -->
                                 <select required #modeloSelect formControlName="modelo"  [classList]=" movimientos ? 'btnDisabled' : ''">
                                     <option value="" disabled selected hidden>Elige un modelo</option>
     
@@ -77,7 +77,7 @@
                             <h4 class="H4ESPECIAL"><span [classList]="formulario().get('moneda')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'" >*</span> Divisa</h4>
                             <div class="select moneda">
     
-                                <span class="spanExedioCaractereSelect" [hidden]="selectDivisa">...</span>
+                                <!-- <span class="spanExedioCaractereSelect" [hidden]="selectDivisa">...</span> -->
                                 <select required #monedaSelect formControlName="moneda" [classList]=" movimientos ? 'btnDisabled' : ''">
                                     <option value="" disabled selected hidden>Elige una divisa</option>
                                     @for(item of arrayDivisa[0]; track $index ){

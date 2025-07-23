@@ -68,7 +68,7 @@
                     
                     <div class="d-flex justify-content-between">
                         <div class="Monto">
-                            <h4 class="H4ESPECIAL"><span [classList]="formulario().get('Monto')?.valid  ? 'Obligatiro-is-valid':'Obligatiro-is-invalid' ">*</span> Monto</h4>
+                            <h4 class="H4ESPECIAL"><span [classList]="formulario().get('Monto')?.valid  ? 'Obligatiro-is-valid':'Obligatiro-is-invalid' ">*</span> Comision</h4>
                             <div class="">
                                 <input class="Monto" type="text" formControlName="Monto" #Monto placeholder="0.00" (change)="getCurrencySaldo( $event )" (input)="parseDigito2( $event )">
                             </div>

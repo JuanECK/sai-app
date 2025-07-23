@@ -33,7 +33,7 @@ export class Eliminados {
             }
         })
         const data = await response.json()
-        // console.log({Historico:data})
+        console.log({Historico:data})
         if (response.status === 200) {
             return data
         }

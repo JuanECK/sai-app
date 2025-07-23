@@ -45,7 +45,7 @@
                             <h4 class="H4ESPECIAL"><span [classList]="formulario().get('Id_CuentaB')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'" >*</span> Cuenta de ingreso</h4>
                             <div class="select CuentaB">
     
-                                <span class="spanExedioCaractereSelect" [hidden]="selectCuenta">...</span>
+                                <!-- <span class="spanExedioCaractereSelect" [hidden]="selectCuenta">...</span> -->
                                 <select required #monedaSelect formControlName="Id_CuentaB">
                                     <option value="" disabled selected hidden>Alias de la cuenta</option>
                                     @for(item of arrayCuentaIngreso[0]; track $index ){

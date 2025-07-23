@@ -66,7 +66,7 @@
                     <div class="">
 
                         <div class="select Estado">
-                            <span class="spanExedioCaractereSelect" id="estado" [ariaSelected]="true" [hidden]="selectEstado">...</span>
+                            <!-- <span class="spanExedioCaractereSelect" id="estado" [ariaSelected]="true" [hidden]="selectEstado">...</span> -->
                             <select required #Estado class="Estado-" formControlName="Id_Estado" (change)="Municipio( $event )">
                                     <option value="" disabled selected hidden>* Estado</option>
 
@@ -76,7 +76,7 @@
                         </div>
 
                         <div class="select Municipio">
-                            <span class="spanExedioCaractereSelect" id="municipio" [hidden]="selectMunicipio">...</span>
+                            <!-- <span class="spanExedioCaractereSelect" id="municipio" [hidden]="selectMunicipio">...</span> -->
                             <select required #mySelect class="Municipio-" formControlName="Id_Municipio" (change)="SeleccionMunicipio( $event )">
                                     <option value="" disabled selected hidden>* Municipio</option>
                                 @for(item of arrayMunicipio[0]; track $index ){
@@ -185,8 +185,7 @@
                                     <h4 class="TipoCuenta"><span [classList]="cuenta_targeta ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'">*</span> Cuenta o tarjeta asociada</h4>
 
                                     <div class="select selectTipoCuenta">
-                                        <span class="spanExedioCaractereSelect" id="" [ariaSelected]="true"
-                                            [hidden]="selectReferido">...</span>
+                                        <!-- <span class="spanExedioCaractereSelect" id="" [ariaSelected]="true" [hidden]="selectReferido">...</span> -->
                                         <select required #targeta_asociada class="" (change)="TipoDeCuenta( $event )">
                                         <!-- <select required #comisionistaReferido class="" formControlName="Tipo_Cuenta_targeta"  (change)="TipoDeCuenta( $event )"> -->
                                             <option value="" disabled selected hidden>Selecciona el tipo de cuenta
@@ -338,7 +337,7 @@
                                 <h4 class="InvRefInt"><span [classList]="formulario().get('Recomendado')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'">*</span> Comisionista referente</h4>
                                 
                                 <div class="select selectTipoCuenta">
-                                    <span class="spanExedioCaractereSelect" id="estado" [ariaSelected]="true" [hidden]="selectBRK">...</span>
+                                    <!-- <span class="spanExedioCaractereSelect" id="estado" [ariaSelected]="true" [hidden]="selectBRK">...</span> -->
                                     <select required #comisionistaReferido class="" formControlName="Recomendado" (change)="ChangueBRK( $event )">
                                         <option value="" disabled selected hidden>Elige del catálogo de comisionistas</option>
 

@@ -26,14 +26,14 @@
                         <div class="check">
                             <label  class="form-check-label" >Ingreso</label>
                             <label class="label-container" >
-                                <input type="radio" #radioBtn1 (change)="formulario().patchValue({'Tipo_Movimiento':'Ingreso'})" checked name="radio">
+                                <input type="radio" #radioBtn1 (change)="evaluaConcepto( 'Ingreso' )" checked name="radio">
                                 <span class="checkmark"></span>
                             </label>
                         </div>
                         <div class="check Second-check">
                             <label  class="form-check-label" >Egreso</label>
                             <label class="label-container" >
-                                <input type="radio" #radioBtn2 (change)="formulario().patchValue({'Tipo_Movimiento':'Egreso'})" name="radio">
+                                <input type="radio" #radioBtn2 (change)=" evaluaConcepto( 'Egreso' )" name="radio">
                                 <span class="checkmark"></span>
                             </label>
                         </div>
@@ -57,7 +57,7 @@
                             <div class="select Concepto">
                                 <select required class="" formControlName="Concepto">
                                     <option value="" disabled selected hidden>Elige un concepto</option>
-                                    @for(item of array[1]; track $index ){
+                                    @for(item of arrayConcepto[0]; track $index ){
                                         <option [value]="item.Id_Concepto">{{item.Concepto}}</option>
                                     }
                                 </select>
@@ -79,7 +79,7 @@
                             <div class="select cuentaPago">
                                 <select required class="" formControlName="Id_CuentaB" >
                                     <option value="" disabled selected hidden>Cuenta</option>
-                                    @for(item of array[2]; track $index ){
+                                    @for(item of array[1]; track $index ){
                                         <option [value]="item.Id_CuentaB">{{item.alias}}</option>
                                     }
                                 </select>

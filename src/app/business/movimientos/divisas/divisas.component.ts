@@ -113,6 +113,7 @@ export class DivisasComponent implements OnInit {
 
   async cargaHistorico() {
     this.arrayHistorico = await this.servicio.getHistorico();
+    // console.log({history:this.arrayHistorico})
 
   }
   setDataLogin() {
@@ -195,21 +196,40 @@ cargaFormularioSeleccionado( form: Array<any> ){
 
   async cargaFormulario(form: Array<any>, valor:any) {
 
+    this.resetParcial();
+
     this.arrayConcepto = []
     this.arrayCuenta = []
-    let cargaSaldo = this.cargaFormularioSeleccionado( form )
-    if(cargaSaldo){
-      this.saldoResp = await this.servicio.GetSaldoYued(form[0][0].Id_ICPC)
-      this.saldo = formatCurrency(this.saldoResp[0][0].Saldo, 'en', '$', '', '1.2-4')
-    }
-    if(this.yued){
-      this.arrayConcepto.push(this.array[2]) 
-      console.log(2)
-    }else{
-      this.yued = false
-      console.log(1)
-      this.arrayConcepto.push(this.array[1])
-    }
+    this.clienteEspecial = []
+
+    let data = await this.servicio.GetConcepto( form[0][0].Id_ICPC );
+    
+    this.arrayConcepto = [data.Conceptos]
+    this.arrayCuenta = [data.Cuentas] 
+    
+    // let cargaSaldo = this.cargaFormularioSeleccionado( form )
+    // if(cargaSaldo){
+      //   this.saldoResp = await this.servicio.GetSaldoYued(form[0][0].Id_ICPC)
+      //   this.saldo = formatCurrency(this.saldoResp[0][0].Saldo, 'en', '$', '', '1.2-4')
+      // }
+      
+      
+      if( form[0][0].Moneda == 'USD' ){
+        this.Dolares = true
+      }else{
+        this.Dolares = false
+      }
+      
+      if( form[0][0].ClienteDivisas == 1){
+        this.clienteEspecial.push([{'Saldo':form[0][0].Saldo}])
+        this.saldo = formatCurrency(form[0][0].Saldo, 'en', '$', '', '1.2-4')
+        this.Moneda =  form[0][0].Moneda
+        this.yued = true
+        
+      }else {
+        this.yued = false
+      }
+      console.log({Data:this.clienteEspecial})
 
     
     form[0].map((item: any) => {
@@ -238,7 +258,7 @@ cargaFormularioSeleccionado( form: Array<any> ){
     
     this.Monto.nativeElement.value = this.getCurrency(form[0][0].Monto)
     this.Comision.nativeElement.value = this.getCurrency(form[0][0].Comision)
-
+    this.Cuenta.nativeElement.value = this.getCurrency(form[0][0].Id_CuentaB)
 
     this.nombreInversionista = form[0][0].nombre
 
@@ -262,9 +282,10 @@ cargaFormularioSeleccionado( form: Array<any> ){
     this.arrayCuenta = [];
 
     let id = event.target.selectedOptions[0].id
+
     
+    console.log(event.target.value)
     let data = await this.servicio.GetConcepto( event.target.value );
-    console.log(data)
 
     this.arrayConcepto = [data.Conceptos]
     this.arrayCuenta = [data.Cuentas] 
@@ -274,7 +295,7 @@ cargaFormularioSeleccionado( form: Array<any> ){
 
     if( this.clienteEspecial[0][0].Moneda == 'USD' ){
       this.Dolares = true
-      this.formulario().patchValue({['Id_CuentaB']:'0', ['Comision']:'0'});
+      // this.formulario().patchValue({['Id_CuentaB']:'0', ['Comision']:'0'});
     }else{
       this.Dolares = false
     }
@@ -314,6 +335,7 @@ cargaFormularioSeleccionado( form: Array<any> ){
 
       ['Concepto']:'',
       ['Id_CuentaB']:'',
+      ['Id_Mov_Div']:'',
       ['Comision']:'',
       ['Observaciones']:'',
 
@@ -332,8 +354,8 @@ cargaFormularioSeleccionado( form: Array<any> ){
 
   }
 
-  evaluaSaldoEgresoYued(value:string){
-     if( value > this.clienteEspecial[0][0].Saldo){
+  evaluaSaldoEgresoYued(value:string, saldo:any){
+     if( value > saldo){
       return true
     }
      return false
@@ -342,7 +364,7 @@ cargaFormularioSeleccionado( form: Array<any> ){
   getCurrencySaldoYued(event: any) {
     let value = event.target.value
     let returnvalor = value
-    if( this.evaluaSaldoEgresoYued(value) ){
+    if( this.evaluaSaldoEgresoYued(value, this.clienteEspecial[0][0].Saldo) ){
       event.target.value = ''
       let data = { mensaje: `El egreso solicitado excede el saldo actual` };
       this._modalMsg.openModalMsg<ModalMsgComponent>(ModalMsgComponent, { data: data }, false, '300px', 'error');
@@ -513,6 +535,7 @@ async ActualizarRegistro() {
               return
             }
             this.resetForm()
+            console.log(datos)
             this.editar = false
             // this.cargaHistorico();
             BusquedaID = datos;
@@ -522,6 +545,7 @@ async ActualizarRegistro() {
     });
 
   }
+
   async eliminaroMov(id: number) {
 
     const dialogRef = this._dialog.open(VentanaEliminaMovDivisas, {
@@ -545,6 +569,7 @@ async ActualizarRegistro() {
                 this._modalMsg.openModalMsg<ModalMsgComponent>(ModalMsgComponent, { data: respuesta.data }, false, '300px', 'exito')
 
                 this.cargaHistorico();
+                this.cargaDataInicial();
                 this.listaBusqueda = [];
                 this.TabsInformacion.nativeElement.checked = true;
               })

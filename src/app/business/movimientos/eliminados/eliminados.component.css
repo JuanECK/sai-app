@@ -11,6 +11,11 @@
     tr{
         text-align: left;
     }
+    tbody tr:hover{
+        background: #00b3cf31;
+        cursor: pointer;
+    }
+
 
     tbody{
 
@@ -26,8 +31,8 @@
     padding: 6px;
 }
 .MovimientoTb{
-    max-width: 158px;
-    min-width: 158px;
+    max-width: 100px;
+    min-width: 100px;
     padding: 6px;
 }
 .ClienteTb{
@@ -42,9 +47,16 @@
     font-weight: var(--Semi-Bold);
     color: black;
 }
-.fechaBajaTb{
+.ComisionTb{
     max-width: 158px;
     min-width: 158px;
+    padding: 6px;
+    font-weight: var(--Semi-Bold);
+    color: black;
+}
+.fechaBajaTb{
+    max-width: 100px;
+    min-width: 100px;
     padding: 6px;
 }
 .ResponsableTb{
@@ -53,8 +65,8 @@
     padding: 6px;
 }
 .AccionTb{
-    max-width: 80px;
-    min-width: 80px;
+    max-width: 50px;
+    min-width: 50px;
     padding: 6px;
 }
 
@@ -125,12 +137,20 @@
                     width: 1200px;
                 }
 
-                table tr:nth-child(2n + 1) {
+                table tbody tr:nth-child(2n + 1) {
                     background-color: rgba(217, 217, 217, 0.300);
+                }
+                table tbody tr:nth-child(2n + 1):hover {
+                    background: #00b3cf31;
+                    cursor: pointer;
                 }
                 table thead tr{
                     background-color: rgb(255, 255, 255);
                 }
+                /* table thead tr{
+                    background: #656565;
+                } */
+
 
 
                 & .BusquedaDiv{

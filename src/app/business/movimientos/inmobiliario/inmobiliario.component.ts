@@ -46,8 +46,8 @@ export class InmobiliarioComponent implements OnInit {
   listaBusqueda: Array<any>[] = [];
   arrayHistorico: Array<any>[] = [];
   array: Array<any>[] = [];
-  array1: Array<any>[] = [];
-  array2: Array<any>[] = [];
+  arrayConcepto: Array<any>[] = [];
+
   editar: boolean = true;
   Hoy: string = "";
   input_BRK: boolean = false;
@@ -74,7 +74,9 @@ export class InmobiliarioComponent implements OnInit {
       Comprobante: new FormControl( '' ),
       usuario: new FormControl( '' ),
       estatus: new FormControl( '' ),
+
       comprobanteCambio: new FormControl( '' ),
+      eliminadoComp: new FormControl( '' ),
        
     })
   )
@@ -88,16 +90,22 @@ export class InmobiliarioComponent implements OnInit {
     this.setDataLogin();
     this.cargaHistorico();
     this.cargaDataInicial();
+    this.cargaDataInicialConcepto();
     this.Hoy = this.fechaActual();
   }
     async cargaDataInicial(){
     this.array = await this.servicio.GetDataInicial();
   }
+    async cargaDataInicialConcepto(){
+    this.arrayConcepto = await this.servicio.GetConcepto( 'Ingreso' );
+  
+    console.log(this.arrayConcepto)
+  }
 
   async cargaHistorico() {
     this.arrayHistorico = await this.servicio.getHistorico();
-
   }
+
   setDataLogin() {
     this.puenteData.disparadorData.emit({ dato: 'Inmobiliario', poisionX: '' })
   }
@@ -135,7 +143,8 @@ eliminarBoxFile(HTMLElementBoxWho: string, HTMLElementRefFileHow: ElementRef, El
   document.getElementById(HTMLElementBoxWho)?.classList.add('disabledBox')
   HTMLElementRefFileHow.nativeElement.value = "";
   ElementRefHow.nativeElement.value = "";
-  this.formulario().patchValue({ [FormGroupNameKey]: '',['comprobanteCambio']:'' })
+  this.formulario().patchValue({ [FormGroupNameKey]: '' })
+  // this.formulario().patchValue({ [FormGroupNameKey]: '',['comprobanteCambio']:'' })
 }
   resetForm() {
   this.eliminarBoxComprobante()
@@ -206,6 +215,15 @@ eliminarBoxFile(HTMLElementBoxWho: string, HTMLElementRefFileHow: ElementRef, El
   // ---------------------------------
   // ------- Procedimientos de pantalla 1------
 
+  async evaluaConcepto( valor:string ){
+    this.arrayConcepto = await this.servicio.GetConcepto( valor )
+    if ( valor  == 'Ingreso' ){
+      this.formulario().patchValue({'Tipo_Movimiento':'Ingreso'});
+      return
+    }
+    this.formulario().patchValue({'Tipo_Movimiento':'Egreso'});
+  }
+
   getCurrencySaldo(event: any) {
     let value = event.target.value
     let returnvalor = value
@@ -218,7 +236,8 @@ eliminarBoxFile(HTMLElementBoxWho: string, HTMLElementRefFileHow: ElementRef, El
     this.formulario().patchValue({ ['Monto']: 0 })
     event.target.value = returnvalor
   }
-      parseDigito2(event: any) {
+  
+  parseDigito2(event: any) {
     let cadena = event.target.value;
     let numPuntos = 0
     cadena = cadena
@@ -257,7 +276,16 @@ eliminarBoxFile(HTMLElementBoxWho: string, HTMLElementRefFileHow: ElementRef, El
     document.getElementById("boxNameComprobante")?.classList.remove('disabledBox')
     this.formulario().patchValue({ Comprobante: event.target.files[0] });
     this.inputComprobante.nativeElement.value = event.target.files[0].name;
+// --------------------------------------
+if( BusquedaID ){
+  if( BusquedaID[0][0].Comprobant != '' ){
+    if( BusquedaID[0][0].Comprobant != this.formulario().get('eliminadoComp')?.value ){
+      this.formulario().patchValue({ eliminadoComp:BusquedaID[0][0].Comprobant });
+    }
+  }
 }
+}
+// --------------------------------------
 
 eliminarBoxComprobante() {
   this.eliminarBoxFile('boxNameComprobante', this.inputComprobante, this.FileComprobante, 'Comprobante')
@@ -273,6 +301,7 @@ async enviar() {
 
       let registro = await this.servicio.AgregarMovInmobiliario( this.formulario() )
       if ( registro.status === 'error' ){
+        
         this._modalMsg.openModalMsg<ModalMsgComponent>( ModalMsgComponent, { data:registro.data }, false, '300px', 'error' )
         return
       }
