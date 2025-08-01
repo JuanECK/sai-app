@@ -76,6 +76,7 @@ export class InmobiliarioComponent implements OnInit {
       estatus: new FormControl( '' ),
 
       comprobanteCambio: new FormControl( '' ),
+      // ---------
       eliminadoComp: new FormControl( '' ),
        
     })
@@ -139,14 +140,22 @@ export class InmobiliarioComponent implements OnInit {
 
   return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`
 }
+
 eliminarBoxFile(HTMLElementBoxWho: string, HTMLElementRefFileHow: ElementRef, ElementRefHow: ElementRef, FormGroupNameKey: string) {
   document.getElementById(HTMLElementBoxWho)?.classList.add('disabledBox')
   HTMLElementRefFileHow.nativeElement.value = "";
   ElementRefHow.nativeElement.value = "";
-  this.formulario().patchValue({ [FormGroupNameKey]: '' })
-  // this.formulario().patchValue({ [FormGroupNameKey]: '',['comprobanteCambio']:'' })
+  // --------------------------------------
+  // this.formulario().patchValue({ [FormGroupNameKey]: '' })
+  // --------------------------------------
+
+  this.formulario().patchValue({ ['eliminadoComp']:  this.formulario().get('comprobanteCambio')?.value})
+
+  this.formulario().patchValue({ [FormGroupNameKey]: '',['comprobanteCambio']:'',})
+
 }
-  resetForm() {
+
+resetForm() {
   this.eliminarBoxComprobante()
   // this.selectCuenta = true;
   // this.selectConcepto = true;
@@ -163,6 +172,7 @@ eliminarBoxFile(HTMLElementBoxWho: string, HTMLElementRefFileHow: ElementRef, El
     ['usuario']:'',
     ['estatus']:'',
     ['comprobanteCambio']:'',
+    ['eliminadoComp']:'',
     
   });
   // this.inputINV.nativeElement.value = '';
@@ -188,6 +198,7 @@ eliminarBoxFile(HTMLElementBoxWho: string, HTMLElementRefFileHow: ElementRef, El
         ['Comprobante']:item.Comprobante,
         // ['usuario']:item.usuario,
         ['estatus']:item.Estatus,
+         ['comprobanteCambio']:item.Comprobante,
         
       })
     })
@@ -198,6 +209,7 @@ eliminarBoxFile(HTMLElementBoxWho: string, HTMLElementRefFileHow: ElementRef, El
     if(form[0][0].Comprobante){
       document.getElementById("boxNameComprobante")?.classList.remove('disabledBox')
       this.inputComprobante.nativeElement.value = form[0][0].Comprobante;
+
     }
 
 
@@ -276,16 +288,21 @@ eliminarBoxFile(HTMLElementBoxWho: string, HTMLElementRefFileHow: ElementRef, El
     document.getElementById("boxNameComprobante")?.classList.remove('disabledBox')
     this.formulario().patchValue({ Comprobante: event.target.files[0] });
     this.inputComprobante.nativeElement.value = event.target.files[0].name;
+
+    // this.formulario().patchValue({ ['eliminadoComp']:'',})
+
+
+
 // --------------------------------------
-if( BusquedaID ){
-  if( BusquedaID[0][0].Comprobant != '' ){
-    if( BusquedaID[0][0].Comprobant != this.formulario().get('eliminadoComp')?.value ){
-      this.formulario().patchValue({ eliminadoComp:BusquedaID[0][0].Comprobant });
-    }
-  }
-}
-}
+// if( BusquedaID ){
+//   if( BusquedaID[0][0].Comprobante != '' ){
+//     if( BusquedaID[0][0].Comprobante != this.formulario().get('eliminadoComp')?.value ){
+//       this.formulario().patchValue({ eliminadoComp:BusquedaID[0][0].Comprobante });
+//     }
+//   }
+// }
 // --------------------------------------
+}
 
 eliminarBoxComprobante() {
   this.eliminarBoxFile('boxNameComprobante', this.inputComprobante, this.FileComprobante, 'Comprobante')
@@ -324,7 +341,9 @@ async ActualizarRegistro() {
       //   this.formulario().patchValue({['comprobanteCambio']:''})
       // }
       // if( BusquedaID[0][0].Comprobante != null && this.formulario().get('Comprobante')?.value == "" ){
-        this.formulario().patchValue({['comprobanteCambio']:BusquedaID[0][0].Comprobante,})
+      // ------------------------------------------
+      // this.formulario().patchValue({['comprobanteCambio']:BusquedaID[0][0].Comprobante,})
+      // ------------------------------------------
       // }
       
       // console.log(this.formulario().value)

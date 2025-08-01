@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { PuenteDataService } from '../../core/services/puente-data.service';
 import { Location } from '@angular/common';
 import { environment } from '../../../environments/environments';
@@ -7,6 +7,7 @@ import { PipeTransform } from '@angular/core'
 import { formatCurrency } from '@angular/common';
 import { ModalMsgService } from '../../core/services/modal-msg.service';
 import { ModalMsgComponent } from '../../core/modal-msg/modal-msg.component';
+import { HeadService } from '../../core/services/head.service';
 
 
 
@@ -14,6 +15,7 @@ import { ModalMsgComponent } from '../../core/modal-msg/modal-msg.component';
 @Component({
   selector: 'app-bashboard',
   standalone: true,
+  // imports: [RouterLink, RouterLinkActive],
   imports: [],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
@@ -21,8 +23,15 @@ import { ModalMsgComponent } from '../../core/modal-msg/modal-msg.component';
 
 
 export class DashboardComponent implements OnInit {
+
+  
   
   constructor(
+// ------------------------------
+// private headService:HeadService,
+// ------------------------------
+
+
       private puenteData:PuenteDataService,
   ){
 
@@ -41,11 +50,24 @@ export class DashboardComponent implements OnInit {
   public inputs:any
   public buttons:any
 
+
+  // -----------------------
+  sesion = localStorage.getItem('sesion');
+  modulos:any
+  public arrLista:any = []
+  dataLogin:any=[]
+  dataSidebar:any
+  // -----------------------
+
     private readonly _modalMsg = inject(ModalMsgService);
 
   ngOnInit(): void {
     this.setDataLogin();
     this.getDataInicio();
+// ----------------------------
+// this.getModulo()
+// this.getDataLogin()
+// ----------------------------
 
   }
 
@@ -201,5 +223,58 @@ export class DashboardComponent implements OnInit {
     event.target.value = valorMonto 
     // return formatCurrency(valorMonto, 'en', '$', '','1.2-4')
   }
+
+// ---------------------------------------------------------------------------------------------------------------------
+
+  // getDataLogin(){
+
+  //   this.puenteData.disparadorData.subscribe(data =>{
+  //         this.dataSidebar = data
+
+  //         const asideElement = document.getElementById('miAside')!
+  //         if(data.poisionX === 'dash'){
+  //           asideElement.classList.remove('nuevoAsit')
+  //           return
+  //         }
+  //         asideElement.classList.add('nuevoAsit')
+
+  //   })
+   
+  // }
+
+  // async getModulo(){
+  //   let id = 0;
+  //   let padre = 0
+  //   if( this.sesion ){
+  //     const { Datos } = JSON.parse(this.sesion!)
+  //     const resultado = await this.headService.getModulos( Datos )
+
+  //     resultado[0].map((dato:any)=>{ 
+  //       if( id !== dato.Id_moduloPadre ){
+
+  //         if(id !== 0){
+  //           padre++
+  //         }
+
+  //         id = dato.Id_moduloPadre
+  //         const arrListaA = [dato.moduloPadre,[{moduloHijo:dato.moduloHijo ,Id_moduloHijo:dato.Id_moduloHijo}]]
+  //         this.arrLista.push(arrListaA)
+
+  //       }else {
+
+  //         const arrListaA = {moduloHijo:dato.moduloHijo ,Id_moduloHijo:dato.Id_moduloHijo}
+  //         this.arrLista[padre][1].push(arrListaA)
+
+  //       }
+  //     })
+      
+  //   }
+  // }
+
+
+
+
+
+
 
 }

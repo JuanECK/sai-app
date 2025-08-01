@@ -104,7 +104,7 @@
 
 
 .inversion{
-    overflow-y: auto;
+    /* overflow-y: auto; */
     word-wrap: break-word;
     height: 100%;
 

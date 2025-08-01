@@ -191,7 +191,7 @@ export class movInvercion {
             body: JSON.stringify({criterio:criterio})
         } )
         const datos = await response.json()
-        console.log(datos)
+        console.log(datos.data)
         if( response.status === 200 ){
             if( datos.status === 'error' ){
                 const data = { mensaje:datos.mensaje }
@@ -200,7 +200,7 @@ export class movInvercion {
                 data:data
             }
             }
-            return datos;
+            return datos.data;
         }else{
             const data = { mensaje:datos.error }
             return {
@@ -325,7 +325,7 @@ export class movInvercion {
 
     async AgregarMovInvercion(formulario: FormGroup) {
 
-        console.log(formulario.value.Comprobante)
+        // console.log(formulario.value.Comprobante)
 
         if(formulario.value.Comprobante == ''){
 
@@ -339,7 +339,7 @@ export class movInvercion {
             })
             const dataService = await response.json()
             // console.log(dataService)
-            if (response.status === 200) {
+            if (dataService.status === 200) {
                 const data = { mensaje:dataService.mensaje }
                 return {
                     status:'',    

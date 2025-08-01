@@ -28,36 +28,44 @@ import { Inversionistas } from "../../../core/services/inversionistas.service";
                 @for( item of dataModal; track $index ){
                   <tr class="trGris">
                     <th class="thead-th-blod-No-Border ">Nombre</th>
-                    <td class="tbody-td-ligth-No-Border ">{{item.nombre}}</td>
+                    <td colspan="2" class="tbody-td-ligth-No-Border ">{{item.nombre}}</td>
                   </tr>
                   <tr>
                     <th class="thead-th-blod-No-Border ">Tipo de persona</th>
-                    <td class="tbody-td-ligth-No-Border ">{{item.Fisica_Moral === '1' ? 'Fisica':'Moral'}}</td>
+                    <td colspan="2" class="tbody-td-ligth-No-Border ">{{item.fisica_moral === '1' ? 'Fisica':'Moral'}}</td>
                   </tr>
                   <tr class="trGris">
                     <th class="thead-th-blod-No-Border ">RFC</th>
-                    <td class="tbody-td-ligth-No-Border ">{{item.RFC}}</td>
+                    <td colspan="2" class="tbody-td-ligth-No-Border ">{{item.RFC}}</td>
                   </tr>
                   <tr>
                     <th class="thead-th-blod-No-Border ">No. telefónico</th>
-                    <td class="tbody-td-ligth-No-Border ">{{item.telefono}}</td>
+                    <td colspan="2" class="tbody-td-ligth-No-Border ">{{item.telefono}}</td>
                   </tr>
                   <tr class="trGris">
                     <th class="thead-th-blod-No-Border ">Correo</th>
-                    <td class="tbody-td-ligth-No-Border ">{{item.correo}}</td>
+                    <td colspan="2" class="tbody-td-ligth-No-Border ">{{item.correo}}</td>
                   </tr>
                   <tr>
                     <th class="thead-th-blod-No-Border ">Dirección</th>
-                    <td class="tbody-td-ligth-No-Border ">{{direccion}}</td>
+                    <td colspan="2" class="tbody-td-ligth-No-Border ">{{direccion}}</td>
                   </tr>
-                  <tr class="trGris">
-                    <th class="thead-th-blod-No-Border ">Beneficiario</th>
-                    <td class="tbody-td-ligth-No-Border ">{{item.Beneficiario1}}</td>
-                  </tr>
-                  <tr class="">
-                    <th class="thead-th-blod-No-Border ">No. de BRK</th>
-                    <td class="tbody-td-ligth-No-Border ">{{item.BRK}}</td>
-                  </tr>
+
+                  
+                  @for( item of val; track $index ){
+                    @if( item.Item != '' ){
+                      <tr class="trGris">
+                        <!-- <tr [classList]=" item.Item == '' ?  'trGris' : ''"> -->
+                          <th class="thead-th-blod-No-Border ">Beneficiario {{$index +1}}</th>
+                          <td class="tbody-td-ligth-No-Border beneficiario">{{item.Item}}</td>
+                          <td class="tbody-td-ligth-No-Border porciento">{{item.porciento}} %</td>
+                        </tr>
+                      }
+                    }
+                    <tr class="trGris">
+                      <th class="thead-th-blod-No-Border ">No. de BRK</th>
+                      <td colspan="2" class="tbody-td-ligth-No-Border ">INV - {{item.BRK}}</td>
+                    </tr>
                 }
                 
               </tbody>
@@ -97,6 +105,7 @@ export class VentanaVerInformacionInversionista implements OnInit {
   private readonly _modalMsg = inject(ModalMsgService)
   // data = this.dataModal.data.data
   direccion:string = '';
+  val:any[] = [];
   
   ngOnInit(): void {
     console.log( this.dataModal)
@@ -110,6 +119,13 @@ export class VentanaVerInformacionInversionista implements OnInit {
 
     this.direccion = `${calle}${NoExterior}${colonia}${CP}${municipio}${estado}`; 
     
+    this.val.push({'Item':this.dataModal[0].Beneficiario1, 'porciento':this.dataModal[0].Porcentaje_Beneficiario1},
+       {'Item':this.dataModal[0].Beneficiario2, 'porciento':this.dataModal[0].Porcentaje_Beneficiario2},
+        {'Item':this.dataModal[0].Beneficiario3, 'porciento':this.dataModal[0].Porcentaje_Beneficiario3},
+         {'Item':this.dataModal[0].Beneficiario4, 'porciento':this.dataModal[0].Porcentaje_Beneficiario4},
+          {'Item':this.dataModal[0].Beneficiario5, 'porciento':this.dataModal[0].Porcentaje_Beneficiario5} )
+    console.log(this.val)
+
   }
 
   async verIdentificacion(){

@@ -1,115 +1,7 @@
-<!-- <div class="container">
-    <nav>
-            <ul class="mcd-menu">
-                
-                <li>
-                    <a href="" class="active-">
-                        <i class="fa fa-comments-o"></i>
-                        <strong>Blog</strong>
-                        <small>what they say</small>
-                    </a>
-                    <ul>
-                        <li><a href="#"><i class="fa fa-globe"></i>Mission</a></li>
-                        <li><a href="#"><i class="fa fa-globe"></i>Mission</a></li>
-                        <li>
-                            <a href="#"><i class="fa fa-group"></i>Our Team</a>
-                            <ul>
-                                <li><a href="#"><i class="fa fa-female"></i>Leyla    Sparks</a></li>
-                                <li>
-                                    <a href="#"><i class="fa fa-male"></i>Gleb Ismailov</a>
-                                    <ul>
-                                        <li><a href="#"><i class="fa fa-leaf"></i>About</a></li>
-                                        <li><a href="#"><i class="fa fa-tasks"></i>Skills</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="#"><i class="fa fa-female"></i>Viktoria Gibbers</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="#"><i class="fa fa-trophy"></i>Rewards</a></li>
-                        <li><a href="#"><i class="fa fa-certificate"></i>Certificates</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="">
-                        <i class="fa fa-envelope-o"></i>
-                        <strong>Contacts</strong>
-                        <small>drop a line</small>
-                    </a>
-                </li>
-                <li>
-                    <a href="">
-                        <i class="fa fa-envelope-o"></i>
-                        <strong>Contacts</strong>
-                        <small>drop a line</small>
-                    </a>
-                </li>
-            </ul>
-        </nav>
-    </div> -->
 
+<!-- <aside id="miAside"> -->
 
-
-
-
-
-
-
-
-<!-- <aside>
-    <div class="sidebar">
- 
-        <ul class="mcd-menu">
-
-            @for( item of arrLista; track $index ){
-                <li>
-
-                    @if(item[1].length > 1){
-
-                         <a [routerLink]="['/'+item[0]]" (click)="$event.stopPropagation();$event.preventDefault()"> 
-                        <a [routerLink]="['/'+item[0]]" >
-                            <div class="link-side " routerLinkActive="link-Active">
-                                <div class="icon"><img [src]="['img-sai/icon-'+item[0]+'.png']" alt="link-side"></div>
-                                {{item[0]}}
-                            </div>
-                        </a>
-                        <ul>
-                            <li>
-                                @for (items of item[1]; track $index) {
-                                    @if( item[1].length > 1 ){
-    
-                                    <a [routerLink]="['/'+item[0]+'/'+items.moduloHijo]" >
-                                        <div class="link-side_hijos"routerLinkActive="link-Active">
-                                            {{items.moduloHijo}}
-                                        </div>
-                                    </a>
-    
-                                    }
-                                }
-                            </li>
-                        </ul>
-
-                    } @else {
-
-                        <a [routerLink]="['/'+item[0]]"  >
-                            @if( item[0] == 'No reconocidos' ){
-                                    <div class="link-side "routerLinkActive="link-Active">
-                                        <div class="icon"><img [src]="['img-sai/icon-Noreconocidos.png']" alt="link-side"></div>
-                                        No reconocidos
-                                    </div>
-                            }@else {
-                                <div class="link-side "routerLinkActive="link-Active">
-                                    <div class="icon"><img [src]="['img-sai/icon-'+item[0]+'.png']" alt="link-side"></div>
-                                    {{item[0]}}
-                                </div>
-                            }
-                        </a>
-                    }
-                </li>
-            }
-        </ul>
-    </div>
-</aside> -->
-<aside id="miAside">
+    <div id="miAside" class="aside">
     <div class="sidebar">
  
         <ul class="mcd-menu">
@@ -150,26 +42,9 @@
             }
         </ul>
     </div>
-</aside>
+    </div>
+    
+<!-- </aside> -->
 
 
-
-<!-- <li><a href="#" ><i class="fa fa-globe"></i>Mission</a></li>
-<li><a href="#"><i class="fa fa-globe"></i>Mission</a></li> -->
-<!-- <li>
-    <a href="#"><i class="fa fa-group"></i>Our Team</a>
-    <ul>
-        <li><a href="#"><i class="fa fa-female"></i>Leyla    Sparks</a></li>
-        <li>
-            <a href="#"><i class="fa fa-male"></i>Gleb Ismailov</a>
-            <ul>
-                <li><a href="#"><i class="fa fa-leaf"></i>About</a></li>
-                <li><a href="#"><i class="fa fa-tasks"></i>Skills</a></li>
-            </ul>
-        </li>
-        <li><a href="#"><i class="fa fa-female"></i>Viktoria Gibbers</a></li>
-    </ul>
-</li> -->
-<!-- <li><a href="#"><i class="fa fa-trophy"></i>Rewards</a></li>
-<li><a href="#"><i class="fa fa-certificate"></i>Certificates</a></li> -->
 

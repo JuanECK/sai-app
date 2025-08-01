@@ -57,8 +57,8 @@ export class PublicoComponent implements OnInit{
       Estatus: new FormControl( '' ),
       usuario: new FormControl( '' ),
       tipoClienteDivisa : new FormControl(0),
-      tipoDivisa : new FormControl(''),
-      saldoApertura: new FormControl(''),
+      tipoDivisa : new FormControl(0),
+      saldoApertura: new FormControl(0),
 
     })
   )

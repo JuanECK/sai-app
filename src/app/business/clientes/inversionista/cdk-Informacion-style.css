@@ -23,15 +23,29 @@ table{
     & td{
       color: #656565;
       font-weight: var(--Normal);
-      max-width: 380px;
-    min-width: 380px;
+
     }
-    & .trGris{
+    & .beneficiario{
+      color: #656565;
+      font-weight: var(--Normal);
+      width:300px;
+    /* min-width: 8px; */
+    }
+    & .porciento{
+      color: #656565;
+      font-weight: var(--Normal);
+      width: 80px;
+      text-align: center;
+    }
+   
+    /* & .trGris{
       background: rgba(217, 217, 217, 0.300);
-    }
+    } */
   }
 }
-
+table tbody tr:nth-child(2n + 1) {
+    background-color: rgba(217, 217, 217, 0.300);
+}
 
   .content-modalMsg{
     display: flex;

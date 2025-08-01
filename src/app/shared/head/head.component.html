@@ -1,24 +1,26 @@
 
 <header>
-    <nav class="navbar">
-        <div class="container-navbar">
-            
-            <div class="breadcrumbs">
-                <h1 class="bread" href="#">Módulo Control de Finanzas / <span class="crumbs">{{dataHead.dato}}</span></h1>
-            </div>
-            <div class="nav-option">
+    <div class="headerContent">
+        <nav class="navbar">
+            <div class="container-navbar">
                 
-                <a class="nav-link"> <span class="icono-error"><img src="img-sai/icon-avatar.png" alt="user-option"></span> {{usuarioLogueado}}</a>
+                <div class="breadcrumbs">
+                    <h1 class="bread" href="#">Módulo Control de Finanzas / <span class="crumbs">{{dataHead.dato}}</span></h1>
+                </div>
+                <div class="nav-option">
+                    
+                    <a class="nav-link"> <span class="icono-error"><img src="img-sai/icon-avatar.png" alt="user-option"></span> {{usuarioLogueado}}</a>
+                </div>
+                <div class="nav-option">
+                    
+                    <a class="nav-link" (click)="salir()"><span class="icono-nav"><img src="img-sai/icon-exit.png" alt="logOut-option"></span> Salir</a>
+                </div>
+                <div class="nav-option">
+                    
+                  <a class="nav-link"  (click)="ver()"><span class="icono-nav"><img src="img-sai/icon-bell.png" alt="user-option"></span> Notificaciones</a>
+                </div>
+        
             </div>
-            <div class="nav-option">
-                
-                <a class="nav-link" (click)="salir()"><span class="icono-nav"><img src="img-sai/icon-exit.png" alt="logOut-option"></span> Salir</a>
-            </div>
-            <div class="nav-option">
-                
-              <a class="nav-link"  (click)="ver()"><span class="icono-nav"><img src="img-sai/icon-bell.png" alt="user-option"></span> Notificaciones</a>
-            </div>
-    
-        </div>
-    </nav>
+        </nav>
+    </div>
 </header>

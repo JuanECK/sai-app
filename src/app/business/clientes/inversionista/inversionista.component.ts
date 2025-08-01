@@ -89,12 +89,12 @@ export class InversionistaComponent implements OnInit {
       Recomendado: new FormControl('',[Validators.required]),
       Fecha_Contrato: new FormControl(''),
       Calle: new FormControl('', [Validators.required]),
-      No_Exterior: new FormControl(''),
+      No_Exterior: new FormControl('', [Validators.required]),
       No_Interior: new FormControl(''),
-      Colonia: new FormControl(''),
+      Colonia: new FormControl('', [Validators.required]),
       Id_Estado: new FormControl('', [Validators.required]),
       Id_Municipio: new FormControl('', [Validators.required]),
-      CP: new FormControl(''),
+      CP: new FormControl('', [Validators.required]),
 
       estatus: new FormControl(''),
 
@@ -131,6 +131,7 @@ placeHolder_cuenta_asociada:string = '16 ó 18 dígitos'
 cuenta_targeta: boolean = false;
 valor:string = ''
 maxlengthCuentas!:number;
+
 // actualizaRegistro:boolean = false;
 
 
@@ -180,6 +181,11 @@ insertaNumINV( event:any ){
   this.formulario().patchValue({['BRK']:'INV-'+event.target.value})
 }
 
+mayus( event:any ){
+  let valor = event.target.value.toUpperCase()
+  return event.target.value = valor
+}
+
 
 // -------------------Tipos de cuentas asiciadas y sus variantes-----------------------
 TipoDeCuenta( event:any ){
@@ -215,26 +221,41 @@ TipoDeCuenta( event:any ){
 
 }
 
+formatDigitoBancarios(event: any, valor: string = '') {
+  let valorMonto = event ? event.target.value : valor;
+  let size = this.valor == 'CLABE' ? 3 : 4;
+
+  switch (size) {
+    case 3:
+      valorMonto = valorMonto.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d)\.?)/g, " ");
+      break;
+    case 4:
+      valorMonto = valorMonto.replace(/\D/g, "").replace(/\B(?=(\d{4})+(?!\d)\.?)/g, " ");
+      break;
+  }
+  return event ? event.target.value = valorMonto : valorMonto;
+}
+
 cuenta_o_tarjeta( event:any ){
 
   // console.log(this.valor)
 
 if( this.valor === 'Fincash' ){
-  this.formulario().patchValue({['FINCASH']:event.target.value, ['Tipo_Cuenta_targeta']:this.valor});
+  this.formulario().patchValue({['FINCASH']:event.target.value.replace(/[^0-9.]/g, ""), ['Tipo_Cuenta_targeta']:this.valor});
   this.cuenta_targeta = true
   return
 }
 
 if( this.valor === 'CLABE' ){
-  this.formulario().patchValue({['CLABE']:event.target.value});
+  this.formulario().patchValue({['CLABE']:event.target.value.replace(/[^0-9.]/g, "")});
   if( this.formulario().get('Banco_cuenta')?.value != '' ){
     
     this.cuenta_targeta = true
-    this.formulario().patchValue({['Tipo_Cuenta_targeta']:this.valor});
+    this.formulario().patchValue({['Tipo_Cuenta_targeta']:this.valor.replace(/[^0-9.]/g, "")});
   }
   
 }else if (this.valor === 'Debito'){
-  this.formulario().patchValue({['Tarjeta']:event.target.value});
+  this.formulario().patchValue({['Tarjeta']:event.target.value.replace(/[^0-9.]/g, "")});
   if( this.formulario().get('Banco_Tarjeta')?.value != '' ){
     
     this.cuenta_targeta = true
@@ -376,7 +397,7 @@ resetForm() {
     this.Ref_input_Cuenta_Tarjeta.nativeElement.value=''
     this.Ref_Inst_Bancaria.nativeElement.value=''
     this.brk.nativeElement.value=''
-    this.brk.nativeElement.disabled = true
+    this.brk.nativeElement.disabled = false
     this.input_BRK = false;
     InversionistaBusquedaID = []
     // this.actualizaRegistro = false
@@ -518,7 +539,11 @@ this.formulario().patchValue({['BRK']:formComisionista[0].BRK.replace(/\D/g, "")
   this.brk.nativeElement.disabled = true
   this.input_BRK = true;
 
-  this.cargaCuentaTargeta( formComisionista[0].CLABE, formComisionista[0].Banco_Cuenta, formComisionista[0].Tarjeta, formComisionista[0].Banco_Tarjeta, formComisionista[0].FINCASH )
+  this.cargaCuentaTargeta( this.formatDigitoBancarios(null,formComisionista[0].CLABE),
+     formComisionista[0].Banco_cuenta,
+      this.formatDigitoBancarios(null,formComisionista[0].Tarjeta),
+       formComisionista[0].Banco_Tarjeta,
+        this.formatDigitoBancarios(null,formComisionista[0].FINCASH) )
 
   this.actualizaBeneficiario( dataBeneficiarios )
 

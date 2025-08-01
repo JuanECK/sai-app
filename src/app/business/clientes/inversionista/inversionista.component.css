@@ -1,5 +1,5 @@
 .comisionistas{
-    overflow-y: auto;
+    /* overflow-y: auto; */
     word-wrap: break-word;
     height: 100%;
 
@@ -88,8 +88,20 @@
                         width: 214px;
                         margin-right: 12px;
                     }
-                    & .Calle::placeholder{
+                    & .Calle::placeholder,
+                    .Colonia::placeholder
+                    {
                         background: linear-gradient(90deg, var(--Obligatorio) 6px, #BBBBBB 6px);
+                        color: transparent;
+                        background-clip: text;
+                    }
+                    & .Numero::placeholder{
+                        background: linear-gradient(90deg, var(--Obligatorio) 12px, #BBBBBB 12px);
+                        color: transparent;
+                        background-clip: text;
+                    }
+                    & .CP::placeholder{
+                        background: linear-gradient(90deg, var(--Obligatorio) 40px, #BBBBBB 40px);
                         color: transparent;
                         background-clip: text;
                     }

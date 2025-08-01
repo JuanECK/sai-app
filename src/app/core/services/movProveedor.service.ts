@@ -126,7 +126,7 @@ export class Proveedor {
                 data:data
             }
             }
-            return datos;
+            return datos.data;
         }else{
             const data = { mensaje:datos.error }
             return {

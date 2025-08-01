@@ -19,7 +19,7 @@
     background: #FFC412;
 }
 .noReconocidos{
-    overflow-y: auto;
+    /* overflow-y: auto; */
     word-wrap: break-word;
     height: 100%;
 

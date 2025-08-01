@@ -7,7 +7,7 @@
                     <div class="col-7" [hidden]="editar ? false : true">
                         <h1 class="h1TitleCard">Agregar Proveedor</h1>
                     </div>
-                    <!-- <button (click)="editarProveedor(603)" >ver</button>  -->
+                    <!-- <button (click)="ver()" >ver</button>  -->
 
                     <div class="col-5- edicionRegistro col-7" [hidden]="editar ? true: false">
                         <h1 class="h1TitleCard"><img src="/img-sai/icon-edicion-de-registro.png" style="width: 20px;">Edición de Registro</h1>
@@ -83,7 +83,7 @@
                         </div>
                         <div class="">
                             <h4>{{titulo_cuenta_asociada}}</h4>
-                            <input [classList]="Banco_cuenta ? 'No-Fecha-Targeta inputInActive' : 'No-Fecha-Targeta' " #Ref_input_Cuenta_Tarjeta type="text" [attr.maxLength]="valor ==='CLABE' ? 18:16 "  [placeholder]="placeHolder_cuenta_asociada" [disabled]="Banco_cuenta" (change)="cuenta_o_tarjeta( $event )">
+                            <input [classList]="Banco_cuenta ? 'No-Fecha-Targeta inputInActive' : 'No-Fecha-Targeta' " #Ref_input_Cuenta_Tarjeta type="text" [attr.maxLength]="valor ==='CLABE' ? 23:19 "  [placeholder]="placeHolder_cuenta_asociada" [disabled]="Banco_cuenta" (input)="formatDigitoBancarios( $event )" (change)="cuenta_o_tarjeta( $event )">
                         </div>
                     </div>
                     <div class="">

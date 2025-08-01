@@ -81,12 +81,12 @@ export class ComisionistasComponent implements OnInit {
       Referido: new FormControl('',[Validators.required]),
       Fecha_contrato: new FormControl(''),
       Calle: new FormControl('', [Validators.required]),
-      No_Exterior: new FormControl(''),
+      No_Exterior: new FormControl('', [Validators.required]),
       No_Interior: new FormControl(''),
-      Colonia: new FormControl(''),
+      Colonia: new FormControl('', [Validators.required]),
       Id_Estado: new FormControl('', [Validators.required]),
       Id_Municipio: new FormControl('', [Validators.required]),
-      CP: new FormControl(''),
+      CP: new FormControl('', [Validators.required]),
       estatus: new FormControl(''),
       Id_ICPC: new FormControl(''),
       
@@ -125,6 +125,11 @@ export class ComisionistasComponent implements OnInit {
   private readonly _dialog = inject(MatDialog);
 
   // @ViewChildren("radio") checkboxes: QueryList<ElementRef>;
+
+  mayus( event:any ){
+    let valor = event.target.value.toUpperCase()
+    return event.target.value = valor
+  }
 
   TipoDeCuenta( event:any ){
 
@@ -183,26 +188,41 @@ export class ComisionistasComponent implements OnInit {
   
   }
 
+  formatDigitoBancarios(event: any, valor: string = '') {
+    let valorMonto = event ? event.target.value : valor;
+    let size = this.valor == 'CLABE' ? 3 : 4;
+
+    switch (size) {
+      case 3:
+        valorMonto = valorMonto.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d)\.?)/g, " ");
+        break;
+      case 4:
+        valorMonto = valorMonto.replace(/\D/g, "").replace(/\B(?=(\d{4})+(?!\d)\.?)/g, " ");
+        break;
+    }
+    return event ? event.target.value = valorMonto : valorMonto;
+  }
+
   cuenta_o_tarjeta( event:any ){
 
-    console.log(this.valor)
+    // console.log(this.valor)
   
   if( this.valor === 'Fincash' ){
-    this.formulario().patchValue({['fincash']:event.target.value, ['Tipo_Cuenta_targeta']:this.valor});
+    this.formulario().patchValue({['fincash']:event.target.value.replace(/[^0-9.]/g, ""), ['Tipo_Cuenta_targeta']:this.valor});
     this.cuenta_targeta = true
     return
   }
   
   if( this.valor === 'CLABE' ){
-    this.formulario().patchValue({['CLABE']:event.target.value});
+    this.formulario().patchValue({['CLABE']:event.target.value.replace(/[^0-9.]/g, "")});
     if( this.formulario().get('banco_cuenta')?.value != '' ){
       
       this.cuenta_targeta = true
-      this.formulario().patchValue({['Tipo_Cuenta_targeta']:this.valor});
+      this.formulario().patchValue({['Tipo_Cuenta_targeta']:this.valor.replace(/[^0-9.]/g, "")});
     }
     
   }else if (this.valor === 'Debito'){
-    this.formulario().patchValue({['tarjeta']:event.target.value});
+    this.formulario().patchValue({['tarjeta']:event.target.value.replace(/[^0-9.]/g, "")});
     if( this.formulario().get('Banco_tarjeta')?.value != '' ){
       
       this.cuenta_targeta = true
@@ -500,7 +520,11 @@ export class ComisionistasComponent implements OnInit {
       this.Piker = false;
       this.FechaContrato.nativeElement.disabled = true
     }
-    this.cargaCuentaTargeta( formComisionista[0][0].CLABE, formComisionista[0][0].Banco_Cuenta, formComisionista[0][0].tarjeta, formComisionista[0][0].Banco_Tarjeta, formComisionista[0][0].fincash )
+    this.cargaCuentaTargeta( this.formatDigitoBancarios(null,formComisionista[0][0].CLABE),
+     formComisionista[0][0].Banco_Cuenta, 
+     this.formatDigitoBancarios(null,formComisionista[0][0].tarjeta), 
+     formComisionista[0][0].Banco_Tarjeta, 
+     this.formatDigitoBancarios(null,formComisionista[0][0].fincash) )
 
     // setTimeout(() => {
     //   editedRegistro = true

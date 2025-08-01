@@ -53,7 +53,7 @@
                                 <select required #mySelect class="" formControlName="Id_CuentaB" >
                                     <option value="" disabled selected hidden>Cuenta</option>
                                     @for(item of array[1]; track $index ){
-                                        <option [value]="item.Id_CuentaB">{{item.Alias_Cuenta}}</option>
+                                        <option [value]="item.Id_CuentaB">{{item.alias}}</option>
                                     }
                                 </select>
                             </div>
@@ -155,7 +155,7 @@
                         <div class="BusquedaDiv DivContainer">
                             <h1 class="h1TitleCardTab">Búsqueda</h1>
                             <div class="inputBusqueda">
-                                <p>Para hacer una búsqueda basado en el Nombre, código de Inversionista o monto</p>
+                                <p>Para hacer una búsqueda escribe el concepto</p>
                                 <input class="Nombre-Cliente" #Busqueda type="text" placeholder="Nombre ó número de Cliente " (input)="inputBusqueda($event)">
                             </div>
                             <div class="">

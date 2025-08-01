@@ -54,6 +54,7 @@ export class InversionComponent implements OnInit {
   selectConcepto:boolean = true;
   selectCuenta:boolean = true;
   nombreInversionista: string='';
+  reconocido: boolean = false;
 
   private readonly _modalMsg = inject(ModalMsgService);
   private readonly _dialog = inject(MatDialog);
@@ -427,16 +428,21 @@ async ActualizarRegistro() {
       this.inputComprobante.nativeElement.value = form[0][0].Comprobante;
     }
 
-  if(num === 1){
-    this.check = true
-    // return
-  }
-  if(num === 2){
-    this.check = false
-    // return
-  }
+    if(num === 1){
+      this.check = true
+      // return
+    }
+    if(num === 2){
+      this.check = false
+      // return
+    }
 
-  this.nombreInversionista = form[0][0].nombre
+    this.nombreInversionista = form[0][0].nombre
+
+    if( form[0][0].reconocido == 1 ){
+      this.reconocido = true;
+      this.radioBtn2.nativeElement.disabled = true
+    }
 
   }
 
@@ -534,6 +540,8 @@ async ActualizarRegistro() {
   this.inputINV.nativeElement.value = '';
   this.nombreInversionista = '';
   this.radioBtn1.nativeElement.checked = true
+  this.radioBtn2.nativeElement.disabled = false
+  this.reconocido = false
   this.editar = true
 }
 

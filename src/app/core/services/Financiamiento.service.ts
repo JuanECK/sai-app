@@ -148,7 +148,7 @@ export class Financiamiento {
             body: JSON.stringify({criterio:criterio})
         } )
         const datos = await response.json()
-        console.log(datos)
+        // console.log(datos)
         if( response.status === 200 ){
             if( datos.status === 'error' ){
                 const data = { mensaje:datos.mensaje }
@@ -157,7 +157,7 @@ export class Financiamiento {
                 data:data
             }
             }
-            return datos;
+            return datos.data;
         }else{
             const data = { mensaje:datos.error }
             return {

@@ -22,6 +22,28 @@
 
     
 }
+.off{
+    color: #9BA1A6;
+    user-select: none;
+    /* cursor:default; */
+}
+
+.cursorDef{
+    user-select: none;
+cursor:default;
+background-color: #ccc;
+}
+
+.checkmarkOff {
+    position: absolute;
+    top: 5px;
+    left: 10px;
+    width: 16px;
+    height: 16px;
+    margin: 0 calc(50% - 18px);
+    background-color: #D9D9D9;
+    border-radius: 50%;
+}
 
 .H4ESPECIAL{
     margin-top: 40px;
@@ -54,7 +76,7 @@
     background: #3EBB12;
 }
 .inversion{
-    overflow-y: auto;
+    /* overflow-y: auto; */
     word-wrap: break-word;
     height: 100%;
 

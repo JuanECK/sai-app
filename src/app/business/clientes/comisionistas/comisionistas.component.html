@@ -65,9 +65,9 @@
                         <div class="mb-12">
                             <h4>Dirección</h4>
                             <input class="Calle PlaceHolderObligatorio-" formControlName="Calle" type="text" placeholder="* Calle">
-                            <input class="Numero text-center Not-padding" type="text" maxlength="20" formControlName="No_Exterior" placeholder="Número">
+                            <input class="Numero text-center Not-padding" type="text" maxlength="20" formControlName="No_Exterior" placeholder="* Número">
                             <input class="NumeroInt text-center Not-padding" type="text" maxlength="20" formControlName="No_Interior" placeholder="Número Int.">
-                            <input class="CP text-center Not-padding" type="text" maxlength="5" formControlName="CP" placeholder="C.P">
+                            <input class="CP text-center Not-padding" type="text" maxlength="5" minlength="5" formControlName="CP" placeholder="* C.P" (input)="mayus( $event )">
                         </div>
 
                         <div class="">
@@ -108,7 +108,7 @@
                                 </select>
                             </div>
 
-                            <input class="Colonia" type="text" formControlName="Colonia" placeholder="Colonia">
+                            <input class="Colonia" type="text" formControlName="Colonia" placeholder="* Colonia">
                         </div>
                     <!-- </div> -->
 
@@ -206,7 +206,7 @@
                                 </div>
                                 <div class="">
                                     <h4>{{titulo_cuenta_asociada}}</h4>
-                                    <input [classList]="Banco_cuenta ? 'No-Fecha-Targeta inputInActive' : 'No-Fecha-Targeta' " #Ref_input_Cuenta_Tarjeta type="text" [attr.maxLength]="valor ==='CLABE' ? 18:16 "  [placeholder]="placeHolder_cuenta_asociada" [disabled]="Banco_cuenta" (change)="cuenta_o_tarjeta( $event )">
+                                    <input [classList]="Banco_cuenta ? 'No-Fecha-Targeta inputInActive' : 'No-Fecha-Targeta' " #Ref_input_Cuenta_Tarjeta type="text" [attr.maxLength]="valor ==='CLABE' ? 23:19 "  [placeholder]="placeHolder_cuenta_asociada" [disabled]="Banco_cuenta" (input)="formatDigitoBancarios( $event )" (change)="cuenta_o_tarjeta( $event )">
                                 </div>
                             </div>
                             <div class="">

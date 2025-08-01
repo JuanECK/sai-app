@@ -307,7 +307,7 @@ resetForm() {
     }
     let monto = this.formulario().get('Monto')?.value;
     let interes = this.formulario().get('Interes')?.value;
-    let calculo = monto * interes;
+    let calculo = (monto * interes)/100;
     this.comision = `${formatCurrency(calculo, 'en', '$', '', '1.2-4')} MXN`
     this.formulario().patchValue({ ['Comision']:this.comision.replace(/[^0-9.]/g, "")})
   }
@@ -551,6 +551,7 @@ async ActualizarRegistro() {
         return
       }
       this.listaBusqueda = data
+      console.log({data:this.listaBusqueda})
       this.Busqueda.nativeElement.value = '';
       this.disabledBtn = true;
     }

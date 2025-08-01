@@ -149,11 +149,25 @@ export class ProveedoresComponent implements OnInit{
         
       // }
     }
-  
+   
+  }
+
+  formatDigitoBancarios(event: any, valor: string = '') {
+    let valorMonto = event ? event.target.value : valor;
+    let size = this.valor == 'CLABE' ? 3 : 4;
+
+    switch (size) {
+      case 3:
+        valorMonto = valorMonto.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d)\.?)/g, " ");
+        break;
+      case 4:
+        valorMonto = valorMonto.replace(/\D/g, "").replace(/\B(?=(\d{4})+(?!\d)\.?)/g, " ");
+        break;
+    }
+    return event ? event.target.value = valorMonto : valorMonto;
   }
 
   cuenta_o_tarjeta( event:any ){
-
     // console.log(this.valor)
   
   // if( this.valor === 'Fincash' ){
@@ -165,7 +179,7 @@ export class ProveedoresComponent implements OnInit{
   // }
   
   if( this.valor === 'CLABE' ){
-    this.formulario().patchValue({['CLABE']:event.target.value});
+    this.formulario().patchValue({['CLABE']:event.target.value.replace(/[^0-9.]/g, "")});
     // if( this.formulario().get('banco_cuenta')?.value != '' ){
       
     //   this.cuenta_targeta = true
@@ -173,7 +187,7 @@ export class ProveedoresComponent implements OnInit{
     // }
     
   }else if (this.valor === 'Debito'){
-    this.formulario().patchValue({['tarjeta']:event.target.value});
+    this.formulario().patchValue({['tarjeta']:event.target.value.replace(/[^0-9.]/g, "")});
     // if( this.formulario().get('Banco_tarjeta')?.value != '' ){
       
     //   this.cuenta_targeta = true
@@ -345,7 +359,10 @@ export class ProveedoresComponent implements OnInit{
 
         cargaFormularioProveedor( formProveedor:Array<any> ){
 
-          console.log(formProveedor)
+          // console.log(formProveedor)
+
+          this.valor == 'CLABE' ? formProveedor[0].CLABE = this.formatDigitoBancarios(null, formProveedor[0].CLABE):
+          formProveedor[0].tarjeta = this.formatDigitoBancarios(null, formProveedor[0].tarjeta);
  
           formProveedor.map((item:any)=>{
             this.formulario().patchValue({
@@ -450,5 +467,8 @@ export class ProveedoresComponent implements OnInit{
             })
           }
 
+          ver(){
+            console.log(this.formulario().value)
+          }
 
 }

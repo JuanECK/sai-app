@@ -126,7 +126,7 @@ export class Oficina {
                 data:data
             }
             }
-            return datos;
+            return datos.data;
         }else{
             const data = { mensaje:datos.error }
             return {

@@ -140,7 +140,7 @@ export class Inmobiliario {
                 data:data
             }
             }
-            return datos;
+            return datos.data;
         }else{
             const data = { mensaje:datos.error }
             return {
@@ -151,26 +151,27 @@ export class Inmobiliario {
 
     }
 
-
     async EnviarActualizacio( formularioActualizado: FormGroup, BusquedaID:Array<any> ){
 
         let hayCambios:boolean = this.hayCambiosEnForm( formularioActualizado, BusquedaID )
 
 
         if( hayCambios ){
-
+// ---------------------------------------------------------------
             let fileBits:any = []
             let fileName:string = '0SAF0_SAF0.pdf'
             let options:any={type:'application/pdf'}
 
-            let Arr1 = typeof formularioActualizado.value.Comprobant == "object" ? formularioActualizado.value.INE : new File(fileBits , fileName, options)
+            let Arr1 = typeof formularioActualizado.value.Comprobante == "object" ? formularioActualizado.value.Comprobante : new File(fileBits , fileName, options)
 
             let aplication = new FormData();
             aplication.append('file', Arr1)
 
+            // --------------------------------------------------------------
             
             // aplication.append('file', formularioActualizado.value.Comprobante )
-            
+          
+
             for (const [key, value] of Object.entries(formularioActualizado.value)) {
                 if (typeof value != "object") {
                     aplication.append(key, String(value))

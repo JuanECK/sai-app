@@ -1,38 +1,27 @@
 
-aside{
+
+.aside{
     background-color: #ffffff;
-    /* background-color: #00B3CF; */
     position: absolute;
     left: calc(100vw / 2 - 650px);
-    /* left: calc(100vw / 2 - 650px); */
     top: 134px;
     width: 169px;
-    /* height: 750px; */
-    z-index: 1000; 
-
+    z-index: 510; 
+    /* overflow-y: auto; */
 }
 
 .nuevoAsit{
   left: calc(100vw / 2 - 700px);
 }
-/* aside{
-    background-color: #00B3CF;
-    position: fixed;
-    top: 89px;
-    width: 169px;
-    z-index: 1000; 
-} */
 
 @media ( max-width: 1400px ) {
-  /* .nuevoAsit{
-    left: 0;
-    } */
+
     .nuevoAsit{
       left: 0;
     }
   }
   @media ( max-width: 1300px ) {
-  aside{
+  .aside{
     left: 0;
   }
 }
@@ -41,16 +30,15 @@ aside{
 
     background-color: #00B3CF;
     height: 700px;
-    /* background-color: #00B3CF; */
+
     padding: 0;
     margin: 0;
     display: flex;
     flex-direction: column;
-    /* justify-content: center; */
+
     align-items: center;
     position: relative;
-    /* top: -11px; */
-    /* height: 100%; */
+
 }
 
 .mcd-menu {
@@ -73,10 +61,6 @@ aside{
     text-align: center;
 }
 
-/* .mcd-menu li a .link-side:hover{
-  background: #0195AC;
-} */
-
 .link-side{
   background-color: #00B3CF;
     display: flex;
@@ -98,6 +82,92 @@ aside{
 }
 
 
+
+.mcd-menu li:hover a > .link-side{
+  background: #0195AC;
+}
+
+.link-side:hover{
+  & img{      
+    transform: scale(1.1);
+  }
+}
+.link-Active{
+  background: #0195AC;
+}
+
+
+
+.mcd-menu li ul,
+.mcd-menu li ul li ul {
+  position: absolute;
+  height: auto;
+
+  padding: 0;
+  margin: 0;
+
+  background: #4adef5;
+  list-style: none;
+  opacity: 0;
+  visibility: hidden;
+
+  z-index: 999;
+  left:169px;
+  
+  top: 0px;
+  border-left: 4px solid #007486;
+
+
+}
+.mcd-menu li ul li a .link-side_hijos:hover{
+  background: #0195AC
+}
+
+.mcd-menu li ul:before {
+  content: "";
+  position: absolute;
+  top: 40px;
+  left: -9px;
+  border-right: 5px solid #007486;
+  border-bottom: 5px solid transparent;
+  border-top: 5px solid transparent;
+
+}
+
+.mcd-menu li:hover > ul,
+.mcd-menu li ul li:hover > ul {
+  display: block;
+  opacity: 1;
+  visibility: visible;
+  animation: grow-shrink 500ms ease-in-out both;
+
+}
+
+@keyframes grow-shrink {
+  
+  0% {
+    scale: 98%;
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+    scale: 100%;
+  }
+}
+
+
+
+/* ------------------------------------------------------------------------------------------------------ */
+
+/* aside{
+    background-color: #00B3CF;
+    position: fixed;
+    top: 89px;
+    width: 169px;
+    z-index: 1000; 
+} */
+
 /* .mcd-menu li a i {
   float: left;
   font-size: 20px;
@@ -113,21 +183,6 @@ aside{
   display: block;
   font-size: 10px;
 } */
-
-.mcd-menu li:hover a > .link-side{
-  /* color: #e67e22; */
-  background: #0195AC;
-}
-
-.link-side:hover{
-    & img{      
-      transform: scale(1.1);
-  }
-}
-.link-Active{
-    background: #0195AC;
-}
-
 /* ----decoracion de bordes al activo ----*/
 /* .mcd-menu li a .link-Active {
   position: relative;
@@ -157,54 +212,6 @@ aside{
   border-bottom: 5px solid transparent;
 } */
 /* ------------------------------------------- */
-
-.mcd-menu li ul,
-.mcd-menu li ul li ul {
-  position: absolute;
-  height: auto;
-  /* min-width: 200px; */
-  padding: 0;
-  margin: 0;
-  /* background: #00B3CF; */
-  background: #4adef5;
-  list-style: none;
-  opacity: 0;
-  visibility: hidden;
-  transition: all 300ms linear;
-  -o-transition: all 300ms linear;
-  -ms-transition: all 300ms linear;
-  -moz-transition: all 300ms linear;
-  -webkit-transition: all 300ms linear;
-  z-index: 1000;
-  left:200px;
-  top: 0px;
-  border-left: 4px solid #007486;
-
-
-}
-.mcd-menu li ul li a .link-side_hijos:hover{
-  background: #0195AC
-}
-
-/* chebron primer Ul */
-.mcd-menu li ul:before {
-  content: "";
-  position: absolute;
-  top: 40px;
-  left: -9px;
-  border-right: 5px solid #007486;
-  border-bottom: 5px solid transparent;
-  border-top: 5px solid transparent;
-
-}
-
-.mcd-menu li:hover > ul,
-.mcd-menu li ul li:hover > ul {
-  display: block;
-  opacity: 1;
-  visibility: visible;
-  left:169px;
-}
 
 /* .mcd-menu li ul li a { */
   /* padding: 10px; */

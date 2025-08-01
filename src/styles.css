@@ -101,7 +101,8 @@ body{
     margin:0 !important;
     padding: 0 !important;
     font-family: 'Roboto';
-    background: #00B3CF;
+    /* background: #00B3CF; */
+    background: #ebebec;
     overflow-y: hidden;
 }
 
@@ -772,9 +773,10 @@ select {
 
 .label-container input {
     position: absolute;
-    top: 5px;
+    top: 6px;
+
     margin: 0;
-    opacity: 0.5;
+    opacity: 1;
     cursor: pointer;
 }
 

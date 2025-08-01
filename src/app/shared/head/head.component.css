@@ -2,10 +2,15 @@
 /* f1f2f2 */
 
 header {
-    background-color: #ffffff;
     height: 78px;
     width: 100vw;
-    border-radius: 2px;
+    margin: 5px 0px;
+    /* border-radius: 2px; */
+}
+.headerContent{
+    /* height: 78px; */
+    background-color: #ffffff;
+    
 }
 .navbar{
     display: flex;

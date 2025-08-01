@@ -30,10 +30,10 @@
                             </label>
                         </div>
                         <div class="check Second-check">
-                            <label  class="form-check-label" >Egreso</label>
-                            <label class="label-container" >
+                            <label  [classList]=" reconocido ? 'form-check-label off':'form-check-label'" >Egreso</label>
+                            <label  [classList]=" reconocido ? 'label-container cursorDef':'label-container'">
                                 <input type="radio" #radioBtn2 (change)="evaluaCheck(2)" name="radio">
-                                <span class="checkmark"></span>
+                                <span [classList]=" reconocido ? 'checkmarkOff':'checkmark'"></span>
                             </label>
                         </div>
                     </div>
