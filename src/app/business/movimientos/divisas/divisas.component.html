@@ -100,7 +100,7 @@
                 <form class="form"  [formGroup]="formulario()">
                     <div class="d-flex justify-content-between" >
                         <div class="Monto">
-                            <h4 class="H4ESPECIAL" [hidden]="Dolares"><span [classList]="formulario().get('Comision')?.valid  ? 'Obligatiro-is-valid':'Obligatiro-is-invalid' ">*</span> Comisión</h4>
+                            <h4 class="H4ESPECIAL" [hidden]="Dolares"><span [classList]="formulario().get('Comision')?.valid  ? 'Obligatiro-is-valid':'Obligatiro-is-invalid' ">*</span> Comisión Progreso</h4>
                             <div class="">
                                 <input class="Monto" type="text" [hidden]="Dolares"  #Comision placeholder="0.00" (change)="getCurrencySaldo( $event )" (input)="parseDigito2( $event )">
                                 <!-- <input class="Monto" type="text" [disabled]="Dolares" formControlName="Comision" #Comision placeholder="0.00" (change)="getCurrencySaldo( $event )" (input)="parseDigito2( $event )"> -->

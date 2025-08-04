@@ -36,6 +36,7 @@ export class ComisionesComponent implements OnInit {
   @ViewChild('radioBtn2') radioBtn2!: ElementRef;
   @ViewChild('Monto') Monto!: ElementRef;
   @ViewChild('TabsInformacion') TabsInformacion!: ElementRef;
+  @ViewChild('comisionistaSelect') comisionistaSelect!: ElementRef;
 
 
   // ---------------------------------
@@ -46,11 +47,12 @@ export class ComisionesComponent implements OnInit {
   listaBusqueda: Array<any>[] = [];
   arrayHistorico: Array<any>[] = [];
   array: Array<any>[] = [];
-  array1: Array<any>[] = [];
+  arrayComisionista: Array<any>[] = [];
   array2: Array<any>[] = [];
   editar: boolean = true;
   Hoy: string = "";
   input_BRK: boolean = false;
+  edicionComisionista: boolean = false;
   // selectComisiones: boolean = true;
   // selectConcepto: boolean = true;
   // selectCuenta: boolean = true;
@@ -90,6 +92,7 @@ export class ComisionesComponent implements OnInit {
   }
     async cargaDataInicial(){
     this.array = await this.servicio.GetDataInicial();
+    
   }
 
   async cargaHistorico() {
@@ -121,7 +124,7 @@ export class ComisionesComponent implements OnInit {
   // ------- Procedimientos Generales------
 
 
-  resetForm() {
+  async resetForm( ) {
   // this.selectCuenta = true;
   // this.selectConcepto = true;
   this.formulario().patchValue({
@@ -139,17 +142,35 @@ export class ComisionesComponent implements OnInit {
   });
   // this.inputINV.nativeElement.value = '';
   // this.nombreInversionista = '';
+  this.comisionistaSelect.nativeElement.value = ''
   this.radioBtn1.nativeElement.checked = true
+  
+  // if(this.edicionComisionista){
+    // this.check = false
+  // }else{
+    this.check = true
+  // }
+  // this.edicionComisionista = false
+
   this.editar = true
 }
-  cargaFormulario(form: Array<any>) {
+
+cargaFormulario(form: Array<any>) {
 
     // console.log(form[0][0])
-    form[0][0].Tipo_Movimiento === 'Ingreso' ? (this.radioBtn1.nativeElement.checked = true) : (this.radioBtn2.nativeElement.checked = true)
+    // form[0][0].Tipo_Movimiento === 'Ingreso' ? (this.radioBtn1.nativeElement.checked = true) : (this.radioBtn2.nativeElement.checked = true)
+    form[0][0].Tipo_Movimiento == 'Ingreso' ? (
+      this.radioBtn1.nativeElement.checked = true,
+      this.cargaComisionistaEdicion( 'I' )
+    ):(
+      this.radioBtn2.nativeElement.checked = true,
+      this.cargaComisionistaEdicion( 'E' )
+      
+    )
     
     form[0].map((item: any) => {
       this.formulario().patchValue({
-
+        
         ['Id_Mov_Com']:item.Id_Mov_Com,
         ['Id_ModeloNegocio']:item.Id_Modelo,
         ['Id_ICPC']:item.Id_ICPC,
@@ -162,8 +183,11 @@ export class ComisionesComponent implements OnInit {
       })
     })
     
+    this.comisionistaSelect.nativeElement.value = form[0][0].Id_ICPC
     // let num = form[0][0].Tipo_Movimiento === 'Ingreso' ? 1 : 2;
     this.Monto.nativeElement.value = this.getCurrency(form[0][0].Comision)
+
+      
 
 
 
@@ -180,6 +204,42 @@ export class ComisionesComponent implements OnInit {
 
   // ---------------------------------
   // ------- Procedimientos de pantalla 1------
+
+   async cargaComisionistaEdicion( tipo:string ){
+  if( tipo == 'I' ){
+    this.arrayComisionista =  await this.servicio.cargaComisionistas( 'I' )
+    return
+  }
+  this.arrayComisionista = await this.servicio.cargaComisionistas( 'E' )
+
+  }
+
+  async evaluaCheck( num:number ){
+    this.formulario().patchValue({['Id_ICPC']:''})
+    // this.Concepto.nativeElement.value = '';
+    // this.selectConcepto = true;
+    this.comisionistaSelect.nativeElement.value = ''
+    this.arrayComisionista = []
+    this.check = false
+    if(num === 1){
+      this.formulario().patchValue({'Tipo_Movimiento':'Ingreso'})
+      this.arrayComisionista = await this.servicio.cargaComisionistas( 'I' )
+      return
+    }
+    if(num === 2){
+      this.formulario().patchValue({'Tipo_Movimiento':'Egreso'})
+      this.arrayComisionista = await this.servicio.cargaComisionistas( 'E' )
+      // this.comisionistaSelect.nativeElement.value = ''
+      // this.check = false
+      return
+    }
+
+  }
+
+  evaluaComisionista( event:any ){
+    // console.log(event.target.value)
+    this.formulario().patchValue({['Id_ICPC']:event.target.value})
+  }
 
   getCurrencySaldo(event: any) {
     let value = event.target.value
@@ -327,8 +387,11 @@ async ActualizarRegistro() {
               this._modalMsg.openModalMsg<ModalMsgComponent>(ModalMsgComponent, { data: datos.data }, false, '300px', 'exito')
               return
             }
-            this.resetForm()
+            // this.resetForm()
+            this.resetParcialEdicion()   
+            // this.edicionComisionista = true
             this.editar = false
+
             // this.cargaHistorico();
             BusquedaID = datos;
             this.cargaFormulario(datos)
@@ -337,6 +400,25 @@ async ActualizarRegistro() {
     });
 
   }
+
+  resetParcialEdicion(){
+      this.formulario().patchValue({
+
+    ['Id_Mov_Com']:'',
+    ['Id_ModeloNegocio']:'',
+    ['Id_ICPC']:'',
+    ['Id_CuentaB']:'',
+    ['Tipo_Movimiento']:'Ingreso',
+    ['Monto']:'',
+    ['Observaciones']:'',
+    ['usuario']:'',
+    ['estatus']:'',
+    
+  });
+
+  this.check = false
+  }
+
   async eliminaroMov(id: number) {
 
     const dialogRef = this._dialog.open(VentanaEliminaMovComisiones, {

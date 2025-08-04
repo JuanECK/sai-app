@@ -26,14 +26,16 @@
                         <div class="check">
                             <label  class="form-check-label" >Ingreso</label>
                             <label class="label-container" >
-                                <input type="radio" #radioBtn1 (change)="formulario().patchValue({'Tipo_Movimiento':'Ingreso'})" checked name="radio">
+                                <input type="radio" #radioBtn1 (change)="evaluaCheck(1)" checked name="radio">
+                                <!-- <input type="radio" #radioBtn1 (change)="formulario().patchValue({'Tipo_Movimiento':'Ingreso'})" checked name="radio"> -->
                                 <span class="checkmark"></span>
                             </label>
                         </div>
                         <div class="check Second-check">
                             <label  class="form-check-label" >Egreso</label>
                             <label class="label-container" >
-                                <input type="radio" #radioBtn2 (change)="formulario().patchValue({'Tipo_Movimiento':'Egreso'})" name="radio">
+                                <input type="radio" #radioBtn2 (change)="evaluaCheck(2)" name="radio">
+                                <!-- <input type="radio" #radioBtn2 (change)="formulario().patchValue({'Tipo_Movimiento':'Egreso'})" name="radio"> -->
                                 <span class="checkmark"></span>
                             </label>
                         </div>
@@ -55,9 +57,10 @@
                         <div class="Concepto">
                             <h4 class="H4ESPECIAL"><span [classList]="formulario().get('Id_ICPC')?.valid  ? 'Obligatiro-is-valid':'Obligatiro-is-invalid' ">*</span> Comisionista</h4>
                             <div class="select Concepto">
-                                <select required class="" formControlName="Id_ICPC">
+                                <select required class="" #comisionistaSelect (change)="evaluaComisionista( $event )">
+                                <!-- <select required class="" #comisionistaSelect formControlName="Id_ICPC"> -->
                                     <option value="" disabled selected hidden>Rodrigo 2</option>
-                                    @for(item of array[1]; track $index ){
+                                    @for(item of check ? array[1] : arrayComisionista[0]; track $index ){
                                         <option [value]="item.Id_ICPC">{{item.Nombre_Razon_Social}}</option>
                                     }
                                 </select>

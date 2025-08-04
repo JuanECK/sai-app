@@ -56,6 +56,7 @@ export class DivisasComponent implements OnInit {
   saldo:string ='';
   Moneda:string ='';
   clienteEspecial:Array<any>[] = [];
+  tipoMovimiento:string = ''
 
   Dolares: boolean = false;
 
@@ -170,6 +171,7 @@ export class DivisasComponent implements OnInit {
   this.yued = false
   this.Comision.nativeElement.value = ''
   this.Cuenta.nativeElement.value = ''
+  this.tipoMovimiento = ''
 }
 
 cargaFormularioSeleccionado( form: Array<any> ){
@@ -284,8 +286,8 @@ cargaFormularioSeleccionado( form: Array<any> ){
     let id = event.target.selectedOptions[0].id
 
     
-    console.log(event.target.value)
     let data = await this.servicio.GetConcepto( event.target.value );
+    console.log(data.Conceptos)
 
     this.arrayConcepto = [data.Conceptos]
     this.arrayCuenta = [data.Cuentas] 
@@ -314,12 +316,13 @@ cargaFormularioSeleccionado( form: Array<any> ){
 
   evaluaConcepto( event:any ){
     let tipo = event.target.selectedOptions[0].id
-    console.log(tipo)
     if( tipo == 'E' ){
-        this.formularioYued().patchValue({['Tipo_Movimiento']:'Egreso'});
+        this.formularioYued().patchValue({['Tipo_Movimiento']:'Egreso', ['Monto']: ''});
+        this.tipoMovimiento = 'E'
       }
       if( tipo == 'I' ){
-      this.formularioYued().patchValue({['Tipo_Movimiento']:'Ingreso'});
+        this.formularioYued().patchValue({['Tipo_Movimiento']:'Ingreso', ['Monto']: ''});
+        this.tipoMovimiento = 'I'
     }
   }
 
@@ -351,6 +354,7 @@ cargaFormularioSeleccionado( form: Array<any> ){
   this.Monto.nativeElement.value = ''
   this.Comision.nativeElement.value = ''
   this.Cuenta.nativeElement.value = ''
+  this.tipoMovimiento = ''
 
   }
 
@@ -364,12 +368,15 @@ cargaFormularioSeleccionado( form: Array<any> ){
   getCurrencySaldoYued(event: any) {
     let value = event.target.value
     let returnvalor = value
-    if( this.evaluaSaldoEgresoYued(value, this.clienteEspecial[0][0].Saldo) ){
-      event.target.value = ''
-      let data = { mensaje: `El egreso solicitado excede el saldo actual` };
-      this._modalMsg.openModalMsg<ModalMsgComponent>(ModalMsgComponent, { data: data }, false, '300px', 'error');
-      return
+    if(this.tipoMovimiento == 'E'){
+      if( this.evaluaSaldoEgresoYued(value, this.clienteEspecial[0][0].Saldo) ){
+        event.target.value = ''
+        let data = { mensaje: `El egreso solicitado excede el saldo actual` };
+        this._modalMsg.openModalMsg<ModalMsgComponent>(ModalMsgComponent, { data: data }, false, '300px', 'error');
+        return
+      }
     }
+
     if (value != '') {
       returnvalor = formatCurrency(+value, 'en', '', '', '1.2-4')
       this.formularioYued().patchValue({ ['Monto']: returnvalor.replace(/[^0-9.]/g, "") })

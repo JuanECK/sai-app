@@ -354,7 +354,7 @@ evaluaDivisa( event:any ){
       'usuario':'',
       'tipoClienteDivisa':0,
       'tipoDivisa':'',
-      'saldoApertura':'',
+      'saldoApertura':0,
     });
 
     this.radioBtn1.nativeElement.checked = 1

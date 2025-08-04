@@ -107,6 +107,29 @@ export class Comisiones {
 
     }
 
+    async cargaComisionistas( comisionista:string ){
+        // console.log(id)
+        const response = await fetch( this._http + 'movimientos/Comisiones/cargaComisionista',{
+            method:'POST',
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify({comisionista:comisionista})
+        } )
+        const datos = await response.json()
+        console.log(datos)
+        // if( response.status === 200 ){
+        //     if( datos[0].length === 0 ){
+        //         const data = { mensaje:'¡Por el momento no se pueden cargar los datos!' }
+        //         return {
+        //             status:'error',
+        //             data}
+        //     }
+            return datos
+        // }
+
+    }
+
     async busqueda( criterio:string ){
 
         const response = await fetch( this._http + 'movimientos/Comisiones/busqueda',{
