@@ -499,7 +499,7 @@ async ActualizarRegistro() {
 
       this.listaBusqueda = []
 
-      this._modalMsg.openModalMsg<ModalMsgComponent>(ModalMsgComponent, { data: data.data }, false, '300px', 'error')
+      this._modalMsg.openModalMsg<ModalMsgComponent>(ModalMsgComponent, { data: data.data }, false, '300px', 'exito')
       this.Busqueda.nativeElement.value = '';
       this.disabledBtn = true;
       return
