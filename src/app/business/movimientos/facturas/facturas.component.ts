@@ -113,11 +113,13 @@ resetForm() {
     ['Estatus_Pagado']:'',
 
   });
+  this.comision = 0 +'%'
   this.editar = true
   this.switch = true
   this.switchbtn.nativeElement.checked = false;
 }
-  cargaFormulario(form: Array<any>) {
+
+cargaFormulario(form: Array<any>) {
     
     form[0].map((item: any) => {
       this.formulario().patchValue({
