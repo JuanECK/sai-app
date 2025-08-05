@@ -266,8 +266,8 @@ export class Oficina {
             redirect: "follow"
         })
         const dataService = await response.json()
-        // console.log(dataService)
-        if (response.status === 200) {
+        console.log(dataService)
+        if (dataService.status === 200) {
             const data = { mensaje:dataService.mensaje }
             return {
                 status:'',    
@@ -275,7 +275,7 @@ export class Oficina {
             }
         }
         else {
-        const data = {mensaje:dataService.error} 
+        const data = {mensaje:dataService.mensaje} 
             return {
                 status: 'error',
                 data: data 
