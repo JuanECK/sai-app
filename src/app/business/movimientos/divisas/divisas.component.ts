@@ -284,7 +284,9 @@ cargaFormularioSeleccionado( form: Array<any> ){
     this.arrayCuenta = [];
 
     let id = event.target.selectedOptions[0].id
+    // let id = select.split("-");
 
+    console.log(id[0])
     
     let data = await this.servicio.GetConcepto( event.target.value );
     console.log(data.Conceptos)
@@ -297,7 +299,7 @@ cargaFormularioSeleccionado( form: Array<any> ){
 
     if( this.clienteEspecial[0][0].Moneda == 'USD' ){
       this.Dolares = true
-      // this.formulario().patchValue({['Id_CuentaB']:'0', ['Comision']:'0'});
+      this.formulario().patchValue({['Id_CuentaB']:0, ['Comision']:0});
     }else{
       this.Dolares = false
     }
@@ -574,7 +576,7 @@ async ActualizarRegistro() {
                 }
 
                 this._modalMsg.openModalMsg<ModalMsgComponent>(ModalMsgComponent, { data: respuesta.data }, false, '300px', 'exito')
-
+                this.resetForm()
                 this.cargaHistorico();
                 this.cargaDataInicial();
                 this.listaBusqueda = [];

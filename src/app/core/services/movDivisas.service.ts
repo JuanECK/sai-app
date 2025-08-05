@@ -186,7 +186,8 @@ export class Divisas {
             body: JSON.stringify({formulario:formulario})
             })
             const dataService = await response.json()
-            if (response.status === 200) {
+            console.log(dataService)
+            if (dataService.status === 200) {
                 const data = { mensaje:dataService.mensaje }
                 return {
                     status:'',    
@@ -194,7 +195,7 @@ export class Divisas {
                 }
             }
             else {
-                const data = { mensaje:dataService.error } 
+                const data = { mensaje:dataService.mensaje } 
                 return {
                     status: 'error',
                     data: data 
@@ -252,7 +253,7 @@ export class Divisas {
             body: JSON.stringify( { Id:Id, estatus:estatus, usuario:usuario } ),
         })
         const dataService = await response.json()
-        // console.log(dataService)
+        console.log(dataService)
         if (response.status === 200) {
             const data = { mensaje:dataService.mensaje }
             return {
