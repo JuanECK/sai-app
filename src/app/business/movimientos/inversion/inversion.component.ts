@@ -499,12 +499,13 @@ async ActualizarRegistro() {
 
       this.listaBusqueda = []
 
-      this._modalMsg.openModalMsg<ModalMsgComponent>(ModalMsgComponent, { data: data.data }, false, '300px', 'exito')
+      this._modalMsg.openModalMsg<ModalMsgComponent>(ModalMsgComponent, { data: data.data }, false, '300px', 'error')
       this.Busqueda.nativeElement.value = '';
       this.disabledBtn = true;
       return
     }
-    this.listaBusqueda = data
+    console.log(data)
+    this.listaBusqueda = [data]
     this.Busqueda.nativeElement.value = '';
     this.disabledBtn = true;
   }
