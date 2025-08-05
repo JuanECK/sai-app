@@ -129,7 +129,7 @@ resetForm() {
         
       })
     })
-    
+    this.comision = form[0][0].Comision_propia + '%'
     this.Monto.nativeElement.value = this.getCurrency(form[0][0].Monto)
     console.log(form[0][0].Estatus_Pagado)
     if(form[0][0].Estatus_Pagado == '1'){
