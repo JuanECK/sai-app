@@ -237,7 +237,8 @@ export class movInvercion {
                     redirect: "follow"
                 })
                 const dataService = await response.json()
-                if (response.status === 200) {
+                console.log(dataService)
+                if (dataService.status === 200) {
                     const data = { mensaje:dataService.mensaje }
                     return {
                         status:'',    
