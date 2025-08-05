@@ -454,7 +454,7 @@ async ActualizarRegistro() {
         this.disabledBtn = true;
         return
       }
-      this.listaBusqueda = data
+      this.listaBusqueda = [data]
       this.Busqueda.nativeElement.value = '';
       this.disabledBtn = true;
     }

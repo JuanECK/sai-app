@@ -290,8 +290,10 @@ tbody {
 }
 
 .tbody-Abonos {
+    background: #00B3CF;
     display: block;
-    height: 120px;
+    height: 105px;
+    /* height: 120px; */
     overflow-y: auto;
     overflow-x: hidden;
 }
