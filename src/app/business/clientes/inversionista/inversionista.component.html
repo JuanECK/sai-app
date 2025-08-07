@@ -4,7 +4,7 @@
             <!-- ------------------CARD 1 --------------------- -->
             <div class="card-1 card">
                 <!-- <button (click)="verDatosComisionista( 600 )" >ver</button> -->
-                <!-- <button (click)="ver()" >ver-array</button> -->
+                <button (click)="ver()" >ver-array</button>
                 <div class="d-flex">
                     <div class="col-7" [hidden]="editar ? false : true">
                         <h1 class="h1TitleCard">Agregar Inversionistas</h1>
@@ -323,7 +323,7 @@
                                 <button class="btn btnAgregaBeneFiciario" [classList]="btnAgregaBeneficiario ? 'btn btnAgregaBeneFiciario btnInActivo':'btn btnAgregaBeneFiciario btnActive'"  (click)="agregaBeneficiario()">Agregar beneficiario</button>
                                 <nav class="nav-inversionista">
 
-                                    <a class="btn-nav-inversionista activeBenef" id="1" (click)="IrA( 'page-1', '1')" [hidden]="Benef1">1</a>
+                                    <a class="btn-nav-inversionista activeBenef" id="1" (click)="IrA( 'page-1', '1')" #benefScroll [hidden]="Benef1">1</a>
                                     <a class="btn-nav-inversionista" id="2" (click)="IrA( 'page-2', '2' )" [hidden]="Benef2">2</a>
                                     <a class="btn-nav-inversionista" id="3" (click)="IrA( 'page-3', '3' )" [hidden]="Benef3">3</a>
                                     <a class="btn-nav-inversionista" id="4" (click)="IrA( 'page-4', '4' )" [hidden]="Benef4">4</a>
@@ -354,9 +354,9 @@
 
                             <div class="d-flex btnsRegistro">
                                 <div class="row ">
-                                    <button type="submit" (click)="enviar()" [hidden]="editar ? false:true" [classList]="formulario().valid ? 'btn G-C-Registro btnInActivo':'btn G-C-Registro btnActive'" >GUARDAR REGISTRO</button>
+                                    <button type="submit" (click)="enviar()" [hidden]="editar ? false:true" [classList]="formulario().valid && cuentaPrcentaje == 100 ? 'btn G-C-Registro btnInActivo':'btn G-C-Registro btnActive'" >GUARDAR REGISTRO</button>
                                     <!-- <button type="submit" (click)="ActualizarRegistro()" [hidden]="editar ? true:false" [classList]="actualizaRegistro ? 'btn G-C-Registro btnInActivo':'btn G-C-Registro btnActive'" >ACTUALIZAR CAMPOS</button> -->
-                                    <button type="submit" (click)="ActualizarRegistro()" [hidden]="editar ? true:false" [classList]="formulario().valid ? 'btn G-C-Registro btnInActivo':'btn G-C-Registro btnActive'" >ACTUALIZAR CAMPOS</button>
+                                    <button type="submit" (click)="ActualizarRegistro()" [hidden]="editar ? true:false" [classList]="formulario().valid && cuentaPrcentaje == 100 ? 'btn G-C-Registro btnInActivo':'btn G-C-Registro btnActive'" >ACTUALIZAR CAMPOS</button>
                                     <button class="btn-second G-C-Registro mr-12" type="button" (click)="resetForm()">CANCELAR</button>
                                 </div>
                             </div>

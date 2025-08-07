@@ -34,7 +34,7 @@ export class Financiamiento {
             }
         })
         const data = await response.json()
-        // console.log({Historico:data})
+        console.log({Historico:data})
         if (response.status === 200) {
             return data
         }
@@ -320,7 +320,7 @@ export class Financiamiento {
         })
         const dataService = await response.json()
         // console.log(dataService)
-        if (response.status === 200) {
+        if (dataService.status === 200) {
             const data = { mensaje:dataService.mensaje }
             return {
                 status:'',    
@@ -328,7 +328,7 @@ export class Financiamiento {
             }
         }
         else {
-        const data = {mensaje:dataService.error} 
+        const data = {mensaje:dataService.mensaje} 
             return {
                 status: 'error',
                 data: data 

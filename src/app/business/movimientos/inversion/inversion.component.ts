@@ -335,6 +335,7 @@ async ActualizarRegistro() {
 
   async cargaHistorico() {
     this.arrayHistorico = await this.servicio.getHistorico();
+    console.log(this.arrayHistorico)
   }
 
   getCurrency(value: number) {
@@ -440,6 +441,7 @@ async ActualizarRegistro() {
     this.nombreInversionista = form[0][0].nombre
 
     if( form[0][0].reconocido == 1 ){
+      this.Monto.nativeElement.disabled = true
       this.reconocido = true;
       this.radioBtn2.nativeElement.disabled = true
     }
@@ -538,6 +540,7 @@ async ActualizarRegistro() {
     ['estatus']:'',
     
   });
+  this.Monto.nativeElement.disabled = false
   this.inputINV.nativeElement.value = '';
   this.nombreInversionista = '';
   this.radioBtn1.nativeElement.checked = true

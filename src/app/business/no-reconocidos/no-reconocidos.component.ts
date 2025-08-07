@@ -211,7 +211,7 @@ export class NoReconocidosComponent implements OnInit {
 
     this.editar = true
     // this.arrayCuentaIngreso = [];
-     this.radioBtn1.nativeElement.checked = 1
+    //  this.radioBtn1.nativeElement.checked = 1
      this.Monto.nativeElement.value = ''
 
   }
@@ -286,7 +286,7 @@ export class NoReconocidosComponent implements OnInit {
     // this.ClaveInput.nativeElement.value = formNoReconosidos[0].clabe
     // this.noCuentaInput.nativeElement.value = formNoReconosidos[0].noCuenta
     // this.TargetaInput.nativeElement.value = formNoReconosidos[0].tarjeta
-    formNoReconosidos[0].Tipo_Movimiento === 'Ingreso' ? (this.radioBtn1.nativeElement.checked = true) : (this.radioBtn2.nativeElement.checked = true)
+    // formNoReconosidos[0].Tipo_Movimiento === 'Ingreso' ? (this.radioBtn1.nativeElement.checked = true) : (this.radioBtn2.nativeElement.checked = true)
     this.Monto.nativeElement.value = this.getCurrency(formNoReconosidos[0].Monto)
 
   }

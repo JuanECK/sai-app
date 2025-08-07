@@ -47,7 +47,64 @@ export class InversionistaComponent implements OnInit {
   @ViewChild('Ref_Inst_Bancaria') Ref_Inst_Bancaria!: ElementRef;
   @ViewChild('brk') brk!: ElementRef;
   @ViewChild('targeta_asociada') targeta_asociada!: ElementRef;
+  @ViewChild('benefScroll') benefScroll!: ElementRef;
 
+  // formulario = signal<FormGroup>(
+  //   new FormGroup({
+  //     Id_ICPC: new FormControl(''),
+
+  //     nombre: new FormControl('22', [Validators.required]), //Nombre_Razon_Social
+  //     fisica_moral: new FormControl(1),
+  //     correo: new FormControl('22@ll.com', [Validators.required, Validators.email]),
+  //     telefono: new FormControl('22', [Validators.required]),
+  //     BRK: new FormControl('22', [Validators.required]),
+
+  //     usuario: new FormControl(''),
+
+  //     Fecha_Nac: new FormControl('22', [Validators.required]),
+  //     RFC: new FormControl(''),
+  //     Beneficiario1: new FormControl('', [Validators.required]),
+  //     Fecha_Nac_Beneficiario1: new FormControl('', [Validators.required]),
+  //     Porcentaje_Beneficiario1: new FormControl('', [Validators.required]),
+  //     Beneficiario2: new FormControl(''),
+  //     Fecha_Nac_Beneficiario2: new FormControl(''),
+  //     Porcentaje_Beneficiario2: new FormControl(''),
+  //     Beneficiario3: new FormControl(''),
+  //     Fecha_Nac_Beneficiario3: new FormControl(''),
+  //     Porcentaje_Beneficiario3: new FormControl(''),
+  //     Beneficiario4: new FormControl(''),
+  //     Fecha_Nac_Beneficiario4: new FormControl(''),
+  //     Porcentaje_Beneficiario4: new FormControl(''),
+  //     Beneficiario5: new FormControl(''),
+  //     Fecha_Nac_Beneficiario5: new FormControl(''),
+  //     Porcentaje_Beneficiario5: new FormControl(''),
+
+  //     Banco_cuenta: new FormControl(''),
+  //     CLABE: new FormControl(''),
+  //     FINCASH: new FormControl('555555'),
+  //     Banco_Tarjeta: new FormControl(''),
+  //     Tarjeta: new FormControl(''),
+
+  //     INE: new FormControl('22', [Validators.required]),
+  //     Comprobante_Domicilio: new FormControl('22', [Validators.required]),
+  //     Recomendado: new FormControl('22',[Validators.required]),
+  //     Fecha_Contrato: new FormControl(''),
+  //     Calle: new FormControl('22', [Validators.required]),
+  //     No_Exterior: new FormControl('22', [Validators.required]),
+  //     No_Interior: new FormControl(''),
+  //     Colonia: new FormControl('22', [Validators.required]),
+  //     Id_Estado: new FormControl('22', [Validators.required]),
+  //     Id_Municipio: new FormControl('22', [Validators.required]),
+  //     CP: new FormControl('12345', [Validators.required]),
+
+  //     estatus: new FormControl(''),
+
+  //     Tipo_Cuenta_targeta: new FormControl('22', [Validators.required]),
+
+  //   })
+  // )
+
+  
   formulario = signal<FormGroup>(
     new FormGroup({
       Id_ICPC: new FormControl(''),
@@ -131,6 +188,7 @@ placeHolder_cuenta_asociada:string = '16 ó 18 dígitos'
 cuenta_targeta: boolean = false;
 valor:string = ''
 maxlengthCuentas!:number;
+cuentaPrcentaje!:number;
 
 // actualizaRegistro:boolean = false;
 
@@ -400,19 +458,46 @@ resetForm() {
     this.brk.nativeElement.disabled = false
     this.input_BRK = false;
     InversionistaBusquedaID = []
+
+    this.Benef1=true;
+    this.Benef2=true;
+    this.Benef3=true;
+    this.Benef4=true;
+    this.Benef5=true;
+
+    porcentaje = [0, 0, 0, 0, 0]
+    pocicion = [ 0, 0, 0, 0]
+
+    let scrollBeneficiarios = [...document.getElementsByClassName( 'btn-nav-inversionista' )]
+    scrollBeneficiarios.forEach( item => {
+      item.classList.remove('activeBenef')
+    } )
+    this.benefScroll.nativeElement.classList.add('activeBenef')
+    // this.benefScroll.nativeElement.click()
+    // this.IrA( 'page-1', '1')
+
+    // console.log(scrollBeneficiarios)
     // this.actualizaRegistro = false
 }
 
 async ActualizarRegistro() {
     // console.log(this.formulario().value)
 
-    if ( this.formulario().valid ){
+    if ( this.formulario().valid && this.cuentaPrcentaje == 100 ){
+
+      if(this.evaluaUsuariosFechasPrcentajes() == false){
+        const data = { mensaje:'Algunos campos obligatorios relacionados con los beneficiarios no han sido completados' }
+        this._modalMsg.openModalMsg<ModalMsgComponent>( ModalMsgComponent, { data:data }, false, '300px', 'exito' )
+        // console.log( 'aun fltan datos')
+        return
+      }
 
       if( this.formulario().get('usuario')?.value == null ){
         let credenciales = await this.servicio.GetCredenciales()
         this.formulario().patchValue({usuario:credenciales.Id})
       }
 
+      // console.log( 'se envio exitoso' )
       let registroActualizado = await this.servicio.EnviarActualizacioRegistro(this.formulario(), InversionistaBusquedaID)
 
       if ( registroActualizado.status === 'error' ){
@@ -432,25 +517,75 @@ async ActualizarRegistro() {
 }
 
 async enviar() {
-    if (this.formulario().valid) {
 
-      
-      if( this.formulario().get('usuario')?.value ==='' || this.formulario().get('usuario')?.value == null){
-        let credenciales = await this.servicio.GetCredenciales()
-        this.formulario().patchValue({usuario:credenciales.Id})
-      }
 
-      let registro = await this.servicio.AgregarInversionistas( this.formulario() )
-      if ( registro.status === 'error' ){
-        this._modalMsg.openModalMsg<ModalMsgComponent>( ModalMsgComponent, { data:registro.data }, false, '300px', 'error' )
+    if (this.formulario().valid && this.cuentaPrcentaje == 100) {
+
+      if(this.evaluaUsuariosFechasPrcentajes() == false){
+        const data = { mensaje:'Algunos campos obligatorios relacionados con los beneficiarios no han sido completados' }
+        this._modalMsg.openModalMsg<ModalMsgComponent>( ModalMsgComponent, { data:data }, false, '300px', 'exito' )
+        // console.log( 'aun fltan datos')
         return
       }
+
+      // console.log( 'se envio exitoso' )
       
-      this._modalMsg.openModalMsg<ModalMsgComponent>( ModalMsgComponent, { data:registro.data }, false, '300px', 'exito' )
-      this.resetForm()
-      
-    }
+      if( this.formulario().get('usuario')?.value ==='' || this.formulario().get('usuario')?.value == null){
+          let credenciales = await this.servicio.GetCredenciales()
+          this.formulario().patchValue({usuario:credenciales.Id})
+        }
+        
+        let registro = await this.servicio.AgregarInversionistas( this.formulario() )
+        if ( registro.status === 'error' ){
+            this._modalMsg.openModalMsg<ModalMsgComponent>( ModalMsgComponent, { data:registro.data }, false, '300px', 'error' )
+            return
+          }
+          
+          this._modalMsg.openModalMsg<ModalMsgComponent>( ModalMsgComponent, { data:registro.data }, false, '300px', 'exito' )
+          this.resetForm()
+   
+        }
     // console.log(this.formulario().value)
+
+}
+
+evaluaUsuariosFechasPrcentajes(){
+  let respuesta:Boolean = true
+
+  // console.log(
+  //   this.Benef2,
+  //   this.Benef3,
+  //   this.Benef4,
+  //   this.Benef5
+  // )
+
+if( this.Benef2 == false ){
+  console.log(1)
+  if( this.formulario().get('Fecha_Nac_Beneficiario2')?.value == '' || this.formulario().get('Beneficiario2')?.value == '' ){
+    respuesta = false
+  }
+}
+if( this.Benef3 == false ){
+  console.log(2)
+  if( this.formulario().get('Fecha_Nac_Beneficiario3')?.value == '' || this.formulario().get('Beneficiario3')?.value == '' ){
+    respuesta = false
+  }
+}
+if( this.Benef4 == false ){
+  console.log(4)
+  if( this.formulario().get('Fecha_Nac_Beneficiario4')?.value == '' || this.formulario().get('Beneficiario4')?.value == '' ){
+    respuesta = false
+  }
+}
+if( this.Benef5 == false ){
+  console.log(5)
+  if( this.formulario().get('Fecha_Nac_Beneficiario5')?.value == '' || this.formulario().get('Beneficiario5')?.value == '' ){
+    respuesta = false
+  }
+}
+
+console.log(respuesta)
+return respuesta
 
 }
 
@@ -546,6 +681,8 @@ this.formulario().patchValue({['BRK']:formComisionista[0].BRK.replace(/\D/g, "")
         this.formatDigitoBancarios(null,formComisionista[0].FINCASH) )
 
   this.actualizaBeneficiario( dataBeneficiarios )
+  this.cuentaPrcentaje = porcentaje[0] + porcentaje[1] + porcentaje[2] + porcentaje[3] + porcentaje[4]
+  console.log(this.cuentaPrcentaje)
 
 }
 
@@ -957,7 +1094,10 @@ evaluaPorciento(event:any, id: number) {
   let val = event != '' ? +event.target.value : 0
   porcentaje[id] = 0
   let cuenta = porcentaje[0] + porcentaje[1] + porcentaje[2] + porcentaje[3] + porcentaje[4]
+  
   cuenta = cuenta + val;
+  this.cuentaPrcentaje = cuenta
+  console.log(cuenta)
   if( cuenta >= 100 ){
     this.btnAgregaBeneficiario = false
   } else{

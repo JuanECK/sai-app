@@ -65,7 +65,7 @@
                         </div>
                         
                         <div class="">
-                            <input class="Monto" type="text" formControlName="Monto" #Monto placeholder="0.00" (change)="getCurrencySaldo( $event )" (input)="parseDigito2( $event )">
+                            <input [classList]=" reconocido ? 'Monto inputInActive':'Monto'" type="text" formControlName="Monto" #Monto placeholder="0.00" (change)="getCurrencySaldo( $event )" (input)="parseDigito2( $event )">
                         </div>
                         
                         <div class="select Cuenta">
@@ -151,7 +151,7 @@
                                     <tbody class="">
                                         @for( item of arrayHistorico[0]; track $index ){
                                             <tr>
-                                                <td class="tbody-td-ligth-No-Border Tipo_Movimiento"><div><span [classList]="item.Tipo_Movimiento == 'Ingreso' ? 'ingreso':'prestamo' "></span></div></td>
+                                                <td class="tbody-td-ligth-No-Border Tipo_Movimiento"><div><span [classList]="item.reconocido == 1 ? 'NoReconosido' : item.Tipo_Movimiento == 'Ingreso' ? 'ingreso':'prestamo' "></span></div></td>
                                                 <td class="tbody-td-ligth-No-Border text-center ConceptoTb">{{item.Concepto}}</td>
                                                 <td class="tbody-td-ligth-No-Border ClienteTb">{{item.cliente}}</td>
                                                 <td class="tbody-td-ligth-No-Border text-center MontoTb">{{getCurrencyTable(item.Monto)}}</td>

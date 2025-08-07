@@ -30,6 +30,7 @@ import { noReconocidos } from "../../core/services/noReconocidos.service";
             <h4 class="busqueda">{{noCuenta}}</h4>
             <div class="inputBusqueda">
                 <p>Ingresa nombre ó número de cliente</p>
+                <div class="inputBRK">
                 <input class="Nombre-Cliente" #Busqueda type="text" placeholder="Nombre ó número de Cliente " (input)="inputBusqueda($event)">
             </div>
             <div class="">
@@ -44,7 +45,7 @@ import { noReconocidos } from "../../core/services/noReconocidos.service";
                 @for( item of listaBusqueda[0]; track $index ){
                   <tr>
                     <td class="tbody-td-ligth-No-Border NombreRazonSocial">{{item.Nombre_Razon_Social}}</td>
-                    <td class="tbody-td-ligth-No-Border BRK">{{item.BRK}}</td>
+                    <td class="tbody-td-ligth-No-Border BRK">{{item.Codigo}}</td>
                     <td class="tbody-td-ligth-No-Border TipoCliente">{{item.Tipo_Cliente}}</td>
                     <td class="tbody-td-ligth-No-Border Correo">{{item.Correo}}</td>
                     <td class="tbody-td-ligth-No-Border accion"> 
@@ -120,17 +121,23 @@ export class VentanaAsignacionNoReconosidos implements OnInit {
     return formatCurrency(value, 'en', '$', '','1.2-4')
   }
 
-  inputBusqueda(event:any) {
+inputBusqueda(event:any) {
   this.criterioBusqueda = event.target.value; 
   this.listaBusqueda = []
   this.btnAsignar=false
   if( event.target.value.length > 0 ){
     this.disabledBtn = false;
-    return
+    return 
   }
   this.disabledBtn = true;
 }
 
+soloDigito(event:any) {
+  let valorMonto = event
+  valorMonto = valorMonto
+  .replace(/\D/g, "")
+  return valorMonto 
+}
 
 async busqueda(){
   if( this.criterioBusqueda != '' ){

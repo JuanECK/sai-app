@@ -75,6 +75,17 @@ background-color: #ccc;
     border-radius: 50%;
     background: #3EBB12;
 }
+.NoReconosido{
+    /* amarillo */
+       content: "";
+    /* position: absolute; */
+    /* margin:  0px 0px 0px 0px; */
+    margin:  0px 0px 0px 0px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #FFC412;
+}
 .inversion{
     /* overflow-y: auto; */
     word-wrap: break-word;

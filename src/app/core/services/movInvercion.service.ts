@@ -246,7 +246,7 @@ export class movInvercion {
                     }
                 }
                 else {
-                    const data = { mensaje:dataService.error } 
+                    const data = { mensaje:dataService.mensaje } 
                     return {
                         status: 'error',
                         data: data 

@@ -290,7 +290,7 @@ tbody {
 }
 
 .tbody-Abonos {
-    background: #00B3CF;
+    /* background: #00B3CF; */
     display: block;
     height: 105px;
     /* height: 120px; */
@@ -300,7 +300,7 @@ tbody {
 
 .tbody-DS {
     display: block;
-    height: 210px;
+    height: 220px;
     overflow-y: auto;
     overflow-x: hidden;
 }
