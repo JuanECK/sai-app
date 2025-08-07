@@ -181,9 +181,51 @@ getCurrencyAbono(event: any) {
 }
 // ------------------------------------------
 // ------- Procedimientos de Caed 1----------
+
+ver(){
+    
+    console.log(this.formulario().value)
+  }
+
+evaluaCheck1(event:any){
+ 
+  
+  if(event.target.checked == true && this.formulario().get('check1')?.value == ''){
+    
+    this.formulario().patchValue({ ['check1']:false })
+    
+  }
+  
+  if(event.target.checked == false && this.formulario().get('check1')?.value == false){
+    
+    this.formulario().patchValue({ ['check1']:'',['check2']:'' })
+    
+  }
+  
+}
+
+evaluaCheck2(event:any){
+
+  
+  if(event.target.checked == true && this.formulario().get('check2')?.value == ''){
+    
+    this.formulario().patchValue({ ['check2']:false })
+    
+  }
+  if(event.target.checked == false && this.formulario().get('check2')?.value == false){
+      
+    this.formulario().patchValue({ ['check1']:'',['check2']:'' })
+    
+  }
+
+
+}
+
 async enviar() {
 
   if (this.formulario().valid) {
+
+    // if(  )
     
     if( this.formulario().get('usuario')?.value ===''){
       let credenciales = await this.servicio.GetCredenciales()
