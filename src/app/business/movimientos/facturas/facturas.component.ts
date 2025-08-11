@@ -54,7 +54,7 @@ export class FacturasComponent implements OnInit {
     new FormGroup({
 
       Id_Mov_Fact: new FormControl( '' ),
-      Id_ICPC: new FormControl( '' ,[Validators.required] ),
+      Id_Esquema: new FormControl( '' ,[Validators.required] ),
       Monto: new FormControl( '' ,[Validators.required] ),
       usuario: new FormControl( '' ),
       estatus: new FormControl( '' ),
@@ -106,7 +106,7 @@ resetForm() {
   this.formulario().patchValue({
 
     ['Id_Mov_Fact']:'',
-    ['Id_ICPC']:'',
+    ['Id_Esquema']:'',
     ['Monto']:'',
     ['usuario']:'',
     ['estatus']:'',
@@ -125,7 +125,7 @@ cargaFormulario(form: Array<any>) {
       this.formulario().patchValue({
 
         ['Id_Mov_Fact']:item.Id_Mov_Fact,
-        ['Id_ICPC']:item.Id_ICPC,
+        ['Id_Esquema']:item.Id_Esquema,
         ['Monto']:item.Monto,
         ['Estatus_Pagado']:item.Estatus_Pagado,
         
@@ -160,7 +160,7 @@ cargaFormulario(form: Array<any>) {
 
   esquemaComision( event: any ){
     this.array[0].map( (item:any) => {
-      if(item.Id_ICPC == event.target.selectedOptions[0].value){
+      if(item.Id_Esquema == event.target.selectedOptions[0].value){
         this.comision = item.comision + '%'
         return
       }

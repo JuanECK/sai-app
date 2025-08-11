@@ -118,11 +118,11 @@ export class ReportesGlobal1 {
             margin: {
                 left: 10,
             },
-            body: [['Retiro de capital:', `${formatCurrency(this.array[1][0].Retiro_Capital, 'en', '$ ', '', '1.2-4')} MXN`],
+            body: [['Retiro de capital:', `${formatCurrency(this.array[1][0].retiroCapital, 'en', '$ ', '', '1.2-4')} MXN`],
             // [ 'Retiro de rendimientos:',`${ formatCurrency( 2000000000000000000000, 'en', '$ ', '', '1.2-4') } MXN` ],
-            ['Retiro de rendimientos:', `${formatCurrency(this.array[1][0].Retiro_Rendimientos, 'en', '$ ', '', '1.2-4')} MXN`],
-            ['Aporte a capital:', `${formatCurrency(this.array[1][0].Aporte_Capital, 'en', '$ ', '', '1.2-4')} MXN`],
-            ['Saldo global:', `${formatCurrency(this.array[1][0].Saldo, 'en', '$ ', '', '1.2-4')} MXN`],
+            ['Retiro de rendimientos:', `${formatCurrency(this.array[1][0].retiroRendimientos, 'en', '$ ', '', '1.2-4')} MXN`],
+            ['Aporte a capital:', `${formatCurrency(this.array[1][0].aporteCapital, 'en', '$ ', '', '1.2-4')} MXN`],
+            ['Saldo global:', `${formatCurrency(this.array[1][0].saldoGlobal, 'en', '$ ', '', '1.2-4')} MXN`],
                 // [ 'Saldo global:',`${ 2000000000000000000000, 'en', '$ ', '', '1.2-4') } MXN` ],
             ],
 

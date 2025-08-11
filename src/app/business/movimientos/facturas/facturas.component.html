@@ -31,12 +31,12 @@
                         </div>
                         
                         <div class="Esquema">
-                            <h4 class="H4ESPECIAL"><span [classList]="formulario().get('Id_ICPC')?.valid  ? 'Obligatiro-is-valid':'Obligatiro-is-invalid' ">*</span> Esquema</h4>
+                            <h4 class="H4ESPECIAL"><span [classList]="formulario().get('Id_Esquema')?.valid  ? 'Obligatiro-is-valid':'Obligatiro-is-invalid' ">*</span> Esquema</h4>
                             <div class="select Esquema">
-                                <select required class="" formControlName="Id_ICPC" (change)="esquemaComision( $event )">
-                                    <option value="" disabled selected hidden>NEST 1 o ROD 2</option>
+                                <select required class="" formControlName="Id_Esquema" (change)="esquemaComision( $event )">
+                                    <option value="" disabled selected hidden>Esquema A, B, C</option>
                                     @for(item of array[0]; track $index ){
-                                        <option [value]="item.Id_ICPC">{{item.Esquema}}</option>
+                                        <option [value]="item.Id_Esquema">{{item.Esquema}}</option>
                                     }
                                 </select>
                             </div>
@@ -85,8 +85,9 @@
                                     <thead>
                                     <tr>
                                         <th class="thead-th-blod-No-Border Tipo_Movimiento"></th>
-                                        <th class="thead-th-blod-No-Border th-just-left ConceptoTb">Esquema</th>
+                                        <th class="thead-th-blod-No-Border th-just-left- text-center ConceptoTb">Esquema</th>
                                         <th class="thead-th-blod-No-Border th-just-left- text-center MontoTb">Monto</th>
+                                        <th class="thead-th-blod-No-Border th-just-left- text-center MontoTb">Utilidad</th>
                                         <th class="thead-th-blod-No-Border th-just-left- text-center MontoTb">Comisión</th>
                                         <th class="thead-th-blod-No-Border th-just-left- text-center fechaTb">Fecha</th>
                                         <th class="thead-th-blod-No-Border "></th>
@@ -96,8 +97,9 @@
                                         @for( item of arrayHistorico[0]; track $index ){
                                             <tr>
                                                 <td class="tbody-td-ligth-No-Border Tipo_Movimiento"><div><span [classList]="item.Estatus_Pagado == '1' ? 'ingreso':'egreso' "></span></div></td>
-                                                <td class="tbody-td-ligth-No-Border ConceptoTb">{{item.esquema}}</td>
+                                                <td class="tbody-td-ligth-No-Border text-center ConceptoTb">{{item.esquema}}</td>
                                                 <td class="tbody-td-ligth-No-Border text-center MontoTb">{{getCurrencyTable(item.Monto)}}</td>
+                                                <td class="tbody-td-ligth-No-Border text-center MontoTb">{{getCurrencyTable(item.Utilidad)}}</td>
                                                 <td class="tbody-td-ligth-No-Border text-center MontoTb">{{getCurrencyTable(item.Comision)}}</td>
                                                 <td class="tbody-td-ligth-No-Border text-center fechaTb">{{formatoFechaLatina(item.fecha)}}</td>
                                                 <td class="TD_Option"><button type="button" [disabled]="item.Estatus_Pagado == '1' ? true:false" (click)="verCambiaEstatusPagadoId( item.Id_Mov_Fact )" class="TdOptionsTable"><img [src]="item.Estatus_Pagado == '1' ?  '/img-sai/icon-flecha-doblada-gris.png' : '/img-sai/icon-flecha-doblada-azul.png' " ></button></td>
@@ -139,8 +141,9 @@
                                     <thead>
                                     <tr>
                                         <th class="thead-th-blod-No-Border Tipo_Movimiento"></th>
-                                        <th class="thead-th-blod-No-Border th-just-left ConceptoTb">Esquema</th>
+                                        <th class="thead-th-blod-No-Border th-just-left- text-center ConceptoTb">Esquema</th>
                                         <th class="thead-th-blod-No-Border th-just-left- text-center MontoTb">Monto</th>
+                                        <th class="thead-th-blod-No-Border th-just-left- text-center MontoTb">Utilidad</th>
                                         <th class="thead-th-blod-No-Border th-just-left- text-center MontoTb">Comisión</th>
                                         <th class="thead-th-blod-No-Border th-just-left- text-center fechaTb">Fecha</th>
                                         <th class="thead-th-blod-No-Border "></th>
@@ -150,8 +153,9 @@
                                         @for( item of listaBusqueda[0]; track $index ){
                                             <tr>
                                                 <td class="tbody-td-ligth-No-Border Tipo_Movimiento"><div><span [classList]="item.Estatus_Pagado == '1' ? 'ingreso':'egreso' "></span></div></td>
-                                                <td class="tbody-td-ligth-No-Border ConceptoTb">{{item.esquema}}</td>
+                                                <td class="tbody-td-ligth-No-Border text-center ConceptoTb">{{item.esquema}}</td>
                                                 <td class="tbody-td-ligth-No-Border text-center MontoTb">{{getCurrencyTable(item.Monto)}}</td>
+                                                <td class="tbody-td-ligth-No-Border text-center MontoTb">{{getCurrencyTable(item.Utilidad)}}</td>
                                                 <td class="tbody-td-ligth-No-Border text-center MontoTb">{{getCurrencyTable(item.Comision)}}</td>
                                                 <td class="tbody-td-ligth-No-Border text-center fechaTb">{{formatoFechaLatina(item.fecha)}}</td>
 

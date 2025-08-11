@@ -124,8 +124,8 @@ export class ReportesGlobalIngresos1 {
              body: [
                  // ['Retiro de capital:', `${formatCurrency(this.array[1][0].Retiro_Capital, 'en', '$ ', '', '1.2-4')} MXN`],
              // [ 'Retiro de rendimientos:',`${ formatCurrency( 2000000000000000000000, 'en', '$ ', '', '1.2-4') } MXN` ],
-             ['Ingresos:', `${formatCurrency(this.array[1][0].SaldoIngresos, 'en', '$ ', '', '1.2-4')} MXN`],
-             ['Egresos:', `${formatCurrency(this.array[1][0].Prestamos, 'en', '$ ', '', '1.2-4')} MXN`],
+             ['Por Reconocer:', `${formatCurrency(this.array[1][0].noAsignados, 'en', '$ ', '', '1.2-4')} MXN`],
+             ['Reconocidos:', `${formatCurrency(this.array[1][0].asignados, 'en', '$ ', '', '1.2-4')} MXN`],
              // ['Saldo global:', `${formatCurrency(200000000, 'en', '$ ', '', '1.2-4')} MXN`],
                  // [ 'Saldo a la fecha:',`${ formatCurrency( this.array[1][0].Egresos, 'en', '$ ', '', '1.2-4') } MXN` ],
              ],
@@ -218,7 +218,7 @@ export class ReportesGlobalIngresos1 {
                  left: 1.2,
              },
              styles: { overflow: 'linebreak' },
-             head: [['Monto', 'Fecha', 'Status', 'Alias de cuenta']],
+             head: [['Monto', 'Fecha', 'Estatus', 'Alias de cuenta']],
              // body: bodyRows(20),
              body: this.array[2].map((item:any) => [formatCurrency(item.Monto, 'en', '$ ', '', '1.2-4'), this.formatoFechaLatina(item.Fecha), item.Estatus, item.Cuenta]),
              tableWidth: 19.2, // Tamaño de la Tabla

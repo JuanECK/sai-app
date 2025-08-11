@@ -28,6 +28,8 @@ export class ReportesIndividualFacturacion1 {
 
     genera(arr: any, ifr:any) {
 
+        console.log(arr)
+
         this.array = arr
         this.iframe = ifr
 
@@ -117,11 +119,13 @@ export class ReportesIndividualFacturacion1 {
             margin: {
                 left: 10,
             },
-            body: [['Comisiones:', `${formatCurrency(this.array[1][0].Comisiones, 'en', '$ ', '', '1.2-4')} MXN`],
+            body: [
+                ['Utilidad:', `${formatCurrency(this.array[1][0].Utilidad, 'en', '$ ', '', '1.2-4')} MXN`],
+                // ['Comisiones:', `${formatCurrency(this.array[1][0].Comisiones, 'en', '$ ', '', '1.2-4')} MXN`],
                 // [ 'Retiro de rendimientos:',`${ formatCurrency( 2000000000000000000000, 'en', '$ ', '', '1.2-4') } MXN` ],
-                ['Comisiones insolutas:', `${formatCurrency(this.array[1][0].Comisiones_Insolutas, 'en', '$ ', '', '1.2-4')} MXN`],
-                ['Saldo insoluto:', `${formatCurrency(this.array[1][0].Saldo_Insoluto, 'en', '$ ', '', '1.2-4')} MXN`],
-                ['Comisiones generadas:', `${formatCurrency(this.array[1][0].Comisiones_Generadas, 'en', '$ ', '', '1.2-4')} MXN`],
+                ['Comisiones insolutas:', `${formatCurrency(this.array[1][0].comisionInsoluta, 'en', '$ ', '', '1.2-4')} MXN`],
+                ['Saldo insoluto:', `${formatCurrency(this.array[1][0].SaldoInsoluto, 'en', '$ ', '', '1.2-4')} MXN`],
+                ['Comisiones generadas:', `${formatCurrency(this.array[1][0].ComisionGenerada, 'en', '$ ', '', '1.2-4')} MXN`],
                 // [ 'Saldo a la fecha:',`${ formatCurrency( this.array[1][0].Egresos, 'en', '$ ', '', '1.2-4') } MXN` ],
             ],
 
@@ -219,9 +223,9 @@ export class ReportesIndividualFacturacion1 {
                 left: 1.2,
             },
             styles: { overflow: 'linebreak' },
-            head: [['Esquema', 'Monto', 'Comision', 'Status', 'Fecha']],
+            head: [['Esquema', 'Monto', 'Utilidad', 'Comision', 'Status', 'Fecha']],
             // body: bodyRows(20),
-            body: this.array[2].map((item:any) => [item.Esquema, formatCurrency( item.Monto, 'en', '$ ', '', '1.2-4'), formatCurrency( item.Comision, 'en', '$ ', '', '1.2-4'), item.Estatus_Pagado, item.Fecha ? this.formatoFechaLatina(item.Fecha): '-']),
+            body: this.array[2].map((item:any) => [item.Esquema, formatCurrency( item.Monto, 'en', '$ ', '', '1.2-4'), formatCurrency( item.Utilidad, 'en', '$ ', '', '1.2-4'), formatCurrency( item.Comision, 'en', '$ ', '', '1.2-4'), item.Estatus_Pagado, item.Fecha ? this.formatoFechaLatina(item.Fecha): '-']),
             tableWidth: 19.2, // Tamaño de la Tabla
 
             didParseCell: function (data) {

@@ -6,27 +6,28 @@ import { FormGroup } from "@angular/forms";
     providedIn: 'root'
 })
 
-export class Facturas {
+export class RetiroCapital {
 
     constructor() { }
 
     private _http: string = `${environment.apiUrl}`;
 
     async GetDataInicial() {
-        const response = await fetch(this._http + 'movimientos/Factura/cargaDataInicio', {
+        const response = await fetch(this._http + 'movimientos/retiroCapital/cargaDataInicio', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
             }
         })
         const data = await response.json()
-        //   console.log(data)
+        //   console.log({getDataInicial:data})
         if (response.status === 200) {
             return data
         }
     }
+
     async getHistorico() {
-        const response = await fetch(this._http + 'movimientos/Factura/cargaHistoricoFactura', {
+        const response = await fetch(this._http + 'movimientos/retiroCapital/cargaHistorico', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -58,35 +59,35 @@ export class Facturas {
         }
     }
 
-    async descargaComprobante( nameComprobante:string ){
+    // async descargaComprobante( nameComprobante:string ){
 
-        const response = await fetch( this._http + 'download/movFactura/'+nameComprobante,{
-            method:'GET',
-            headers:{
-                "Content-Type":"application/x-www-form-urlencoded"
-            },
-            redirect: "follow"
-        } )
+    //     const response = await fetch( this._http + 'download/movProveedor/'+nameComprobante,{
+    //         method:'GET',
+    //         headers:{
+    //             "Content-Type":"application/x-www-form-urlencoded"
+    //         },
+    //         redirect: "follow"
+    //     } )
 
-        if( response.status === 200){
-            const datos = await response.blob()
-            return {
-                status:'ok',
-                data:datos
-            }
-        }else{
-            const datos = await response.json();
-            const data = { mensaje:datos.error }
-            return{
-                status:'error',
-                data:data
-            }
-        }
-    }
+    //     if( response.status === 200){
+    //         const datos = await response.blob()
+    //         return {
+    //             status:'ok',
+    //             data:datos
+    //         }
+    //     }else{
+    //         const datos = await response.json();
+    //         const data = { mensaje:datos.error }
+    //         return{
+    //             status:'error',
+    //             data:data
+    //         }
+    //     }
+    // }
 
-    async cargaMovFacturasId( id:number ){
+    async cargaMovRetiroCapitalId( id:number ){
         // console.log(id)
-        const response = await fetch( this._http + 'movimientos/Factura/cargaMovFactura',{
+        const response = await fetch( this._http + 'movimientos/retiroCapital/cargaMovRetiroCapital',{
             method:'POST',
             headers:{
                 'Content-Type':'application/json'
@@ -94,29 +95,7 @@ export class Facturas {
             body:JSON.stringify({id:id})
         } )
         const datos = await response.json()
-        console.log(datos)
-        if( response.status === 200 ){
-            if( datos[0].length === 0 ){
-                const data = { mensaje:'¡Por el momento no se pueden cargar los datos!' }
-                return {
-                    status:'error',
-                    data}
-            }
-            return datos
-        }
-
-    }
-    async cargaEstatusPagadoId( id:number ){
-        // console.log(id)
-        const response = await fetch( this._http + 'movimientos/Factura/cargaEstatusPagado',{
-            method:'POST',
-            headers:{
-                'Content-Type':'application/json'
-            },
-            body:JSON.stringify({id:id})
-        } )
-        const datos = await response.json()
-        console.log(datos)
+        // console.log(datos)
         if( response.status === 200 ){
             if( datos[0].length === 0 ){
                 const data = { mensaje:'¡Por el momento no se pueden cargar los datos!' }
@@ -131,7 +110,7 @@ export class Facturas {
 
     async busqueda( criterio:string ){
 
-        const response = await fetch( this._http + 'movimientos/Factura/busqueda',{
+        const response = await fetch( this._http + 'movimientos/retiroCapital/busqueda',{
             method:'POST',
             headers:{
                 'Content-Type':'application/json'
@@ -148,7 +127,7 @@ export class Facturas {
                 data:data
             }
             }
-            return datos;
+            return datos.data;
         }else{
             const data = { mensaje:datos.error }
             return {
@@ -167,7 +146,7 @@ export class Facturas {
 
         if( hayCambios ){
 
-            const response = await fetch(this._http + 'movimientos/Factura/actualizaMovFactura', {
+            const response = await fetch(this._http + 'movimientos/retiroCapital/actualizaMovRetiroCapital', {
                 method: 'POST',
                 headers:{
                     'Content-Type':'application/json'
@@ -175,7 +154,7 @@ export class Facturas {
             body: JSON.stringify({formulario:formularioActualizado.value}) ,
             })
             const dataService = await response.json()
-            if (response.status === 200) {
+            if (dataService.status === 200) {
                 const data = { mensaje:dataService.mensaje }
                 return {
                     status:'',    
@@ -183,7 +162,7 @@ export class Facturas {
                 }
             }
             else {
-                const data = { mensaje:dataService.error } 
+                const data = { mensaje:dataService.mensaje } 
                 return {
                     status: 'error',
                     data: data 
@@ -205,9 +184,9 @@ export class Facturas {
         console.log(form.value)
         // console.log(BusquedaID)
         
-        BusquedaID[0].Comprobante == null ? BusquedaID[0].Comprobante = '': BusquedaID[0].Comprobante
-        let {Fecha_Captura, Estatus, esquema, ...usuarioData } = BusquedaID[0][0]
-        // usuarioData = Object.assign({estatus:BusquedaID[0][0].Estatus}, usuarioData)
+        // BusquedaID[0].Comprobante == null ? BusquedaID[0].Comprobante = '': BusquedaID[0].Comprobante
+        let { Id_CuentaBancaria, Justificacion, Monto, Saldo,  ...usuarioData } = BusquedaID[0]
+        usuarioData = Object.assign({ Id_CuentaB:Id_CuentaBancaria, justificacion:Justificacion, monto:Monto }, usuarioData)
         console.log( {Busqueda:usuarioData})
 
         for( let i = 0; i< Object.keys(form.value).length ; i++){
@@ -229,9 +208,9 @@ export class Facturas {
     }
 
 
-    async eliminaFacturas( Id:number, estatus:string, usuario:number ){
+    async elimina( Id:number, estatus:string, usuario:number ){
 
-        const response = await fetch(this._http + 'movimientos/Factura/eliminarRegistro', {
+        const response = await fetch(this._http + 'movimientos/retiroCapital/eliminarRegistro', {
             method: 'POST',
             headers:{
                 'Content-Type':'application/json'
@@ -257,9 +236,9 @@ export class Facturas {
 
     }
 
-    async AgregarMovFacturas(formulario: FormGroup) {
+    async AgregarMovRetiroCapital(formulario: FormGroup) {
 
-        const response = await fetch(this._http + 'movimientos/Factura/agregaMovFactura', {
+        const response = await fetch(this._http + 'movimientos/retiroCapital/agregaMovRetiroCapital', {
             method: 'POST',
             headers:{
                 'Content-Type':'application/json'
@@ -268,7 +247,7 @@ export class Facturas {
         })
         const dataService = await response.json()
         // console.log(dataService)
-        if (response.status === 200) {
+        if (dataService.status === 200) {
             const data = { mensaje:dataService.mensaje }
             return {
                 status:'',    
@@ -276,43 +255,12 @@ export class Facturas {
             }
         }
         else {
-        const data = {mensaje:dataService.error} 
+        const data = { mensaje:dataService.mensaje } 
             return {
                 status: 'error',
                 data: data 
             }
         }
-
     }
-
-    async cambiaEstatusPagado(formulario: FormGroup) {
-
-        const response = await fetch(this._http + 'movimientos/Factura/cambiaEstatusPagado', {
-            method: 'POST',
-            headers:{
-                'Content-Type':'application/json'
-            },
-            body: JSON.stringify({formulario:formulario.value}) ,
-        })
-        const dataService = await response.json()
-        // console.log(dataService)
-        if (response.status === 200) {
-            const data = { mensaje:dataService.mensaje }
-            return {
-                status:'',    
-                data: data
-            }
-        }
-        else {
-        const data = {mensaje:dataService.error} 
-            return {
-                status: 'error',
-                data: data 
-            }
-        }
-
-    }
-
-
 
 }

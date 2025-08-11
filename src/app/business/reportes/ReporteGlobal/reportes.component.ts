@@ -153,6 +153,10 @@ ngOnInit(): void {
 
 // ------------------------------------------
 // ------- Procedimientos Generales----------
+ver(){
+    
+    console.log(this.formulario().value)
+  }
 resetForm(MN:boolean = false) {
 
   this.formulario().patchValue({
@@ -315,13 +319,13 @@ async enviar() {
         break;
           case '14':
             //"No reconocido"
-            if(this.Ingresos){
-              console.log('ingresos')
+            // if(this.Ingresos){
+            //   console.log('ingresos')
               this.reportesGlobalIngresos1.genera(registro.data, this.iframe)
-            }else if(this.Prestamos){
-              console.log('prestamos')
-              this.reportesGlobalPrestamos1.genera(registro.data, this.iframe)
-            }
+            // }else if(this.Prestamos){
+            //   console.log('prestamos')
+            //   this.reportesGlobalPrestamos1.genera(registro.data, this.iframe)
+            // }
 
         break;
           case '16':
@@ -488,53 +492,90 @@ if(event.target.checked){
 
 /////////////////////////////////////////////////////////////  NO RECONOCIDOS  //////////////////////////////////////////////////////////
 
-evaluaIngresos( event:any ){
+evaluaCheck1(event:any){
+ 
   this.Ingresos = true;
-  this.Prestamos = false;
-  if(event.target.checked){
-  this.checkPrestamo.nativeElement.checked = false
-  this.formulario().patchValue({
-    ['check2']:false,
-    ['fechaInicial']:'',
-    ['fechaFin']:'',
-    ['usuario']:'',
-  })
-    return
+  if(event.target.checked == true && this.formulario().get('check1')?.value == ''){
+    
+    this.formulario().patchValue({ ['check1']:false })
+    
   }
-  setTimeout(()=>{
-    this.formulario().patchValue({
-    ['fechaInicial']:'',
-    ['fechaFin']:'',
-    ['check1']:'',
-    ['check2']:'',
-    ['usuario']:'',
-    })
-  },100)
+  
+  if(event.target.checked == false && this.formulario().get('check1')?.value == false){
+    
+    this.formulario().patchValue({ ['check1']:'',['check2']:'' })
+    
+  }
+  
 }
 
-evaluaPrestamo( event:any ){
-  this.Prestamos = true;
-  this.Ingresos = false;
-  if(event.target.checked){
-    this.checkIngresos.nativeElement.checked = false
-    this.formulario().patchValue({
-      ['check1']:false,
-      ['fechaInicial']:'',
-      ['fechaFin']:'',
-      ['usuario']:'',
-    })
-    return
+evaluaCheck2(event:any){
+this.Ingresos = true;
+  
+  if(event.target.checked == true && this.formulario().get('check2')?.value == ''){
+    
+    this.formulario().patchValue({ ['check2']:false })
+    
   }
-  setTimeout(()=>{
-    this.formulario().patchValue({
-    ['fechaInicial']:'',
-    ['fechaFin']:'',
-    ['check1']:'',
-    ['check2']:'',
-    ['usuario']:'',
-  })
-  },100)
+  if(event.target.checked == false && this.formulario().get('check2')?.value == false){
+      
+    this.formulario().patchValue({ ['check1']:'',['check2']:'' })
+    
+  }
+
+
 }
+
+
+
+// evaluaIngresos( event:any ){
+  
+  // this.Ingresos = true;
+  // this.Prestamos = false;
+  // if(event.target.checked){
+    // this.checkPrestamo.nativeElement.checked = false
+    // this.formulario().patchValue({
+      //   ['check2']:false,
+      //   ['fechaInicial']:'',
+      //   ['fechaFin']:'',
+      //   ['usuario']:'',
+      // })
+      //   return
+      // }
+      // setTimeout(()=>{
+        //   this.formulario().patchValue({
+          //   ['fechaInicial']:'',
+          //   ['fechaFin']:'',
+          //   ['check1']:'',
+          //   ['check2']:'',
+          //   ['usuario']:'',
+          //   })
+          // },100)
+//         }
+        
+// evaluaPrestamo( event:any ){
+  // this.Prestamos = true;
+  // this.Ingresos = false;
+  // if(event.target.checked){
+  //   this.checkIngresos.nativeElement.checked = false
+  //   this.formulario().patchValue({
+  //     ['check1']:false,
+  //     ['fechaInicial']:'',
+  //     ['fechaFin']:'',
+  //     ['usuario']:'',
+  //   })
+  //   return
+  // }
+  // setTimeout(()=>{
+  //   this.formulario().patchValue({
+  //   ['fechaInicial']:'',
+  //   ['fechaFin']:'',
+  //   ['check1']:'',
+  //   ['check2']:'',
+  //   ['usuario']:'',
+  // })
+  // },100)
+// }
 
 /////////////////////////////////////////////////////////////  PRESUPUESTO  /////////////////////////////////////////////////////////////
 

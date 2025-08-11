@@ -508,8 +508,8 @@
                 }
 
                 & .ConceptoTb{
-                    max-width: 100px;
-                    min-width: 100px;
+                    max-width: 50px;
+                    min-width: 50px;
                     padding: 6px 8px 6px 8px ;
                 }
                 & .ClienteTb{

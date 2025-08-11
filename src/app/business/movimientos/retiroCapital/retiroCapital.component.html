@@ -1,0 +1,173 @@
+<div class="inversion">
+    <div class="container-modulos">
+        <div class="separacion">
+            <div class="card-1 card">
+
+                <form class="form"  [formGroup]="formulario()">
+
+                    <div>
+                        <div class="d-flex">
+                            <div class="col-7" [hidden]="editar ? false : true">
+                                <h1 class="h1TitleCard">Capturar nuevo Movimiento</h1>
+                            </div>
+                            <button (click)="ver()" >ver</button>  
+        
+                            <div class="edicionRegistro col-7" [hidden]="editar ? true: false">
+                                <h1 class="h1TitleCard"><img src="/img-sai/icon-edicion-de-registro.png" style="width: 20px;">Edición de Registro</h1>
+                                <p>Los cambios afectarán el registro</p>
+                            </div>
+                        </div>
+                        <span  [hidden]="editar ? false: true">{{Hoy}}</span>
+                    </div>
+
+                    <h4 class=""><span [classList]="formulario().get('Id_CuentaB')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'">*</span> Cuenta de egreso</h4>
+                    <div class="d-flex">
+                        <div class="select Concepto">
+                            <select required #Concepto class="" formControlName="Id_CuentaB" (change)="optionConcepto( $event )">
+                                <option value="" disabled selected hidden>Inversiones</option>
+                                @for(item of check ? array[0] : array[1]; track $index ){
+                                    <option [value]="item.Id_Cuenta_Bancaria" [id]="item.Saldo">{{item.Alias}}</option>
+                                }
+                            </select>
+                       </div>
+                       <p class="cantidad" #cantidadSend>Saldo: {{cantidad}}</p>
+                    </div>
+
+
+                     <div class="d-flex justify-content-between">
+                        <div class="">
+                            <h4 class=""><span [classList]="formulario().get('monto')?.valid  ? 'Obligatiro-is-valid':'Obligatiro-is-invalid' ">*</span> Monto</h4>
+                            <div class="">
+                                <input class="" type="text" formControlName="monto" #Monto placeholder="0.00" (change)="getCurrencySaldo( $event )" (input)="parseDigito2( $event )">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h4 class=""><span [classList]="formulario().get('justificacion')?.valid  ? 'Obligatiro-is-valid':'Obligatiro-is-invalid' ">*</span> Observaciones</h4>
+                    <div class="divObservaciones">
+
+                        <h4 class="">Observaciones</h4>
+                        <textarea class="observaciones" name="" id="" formControlName="justificacion" rows=0 cols=0 placeholder="Observaciones del movimiento"></textarea>
+
+                    </div> 
+                    <div class="d-flex btnsRegistro">
+                        <div class="row ">
+                            <button type="submit" (click)="enviar()" [hidden]="editar ? false:true" [classList]="formulario().valid ? 'btn G-C-Registro btnInActivo':'btn G-C-Registro btnActive'" >GUARDAR REGISTRO</button>
+                            <button type="submit" (click)="ActualizarRegistro()" [hidden]="editar ? true:false" [classList]="formulario().valid ? 'btn G-C-Registro btnInActivo':'btn G-C-Registro btnActive'" >ACTUALIZAR CAMPOS</button>
+                            <button class="btn-second G-C-Registro mr-12" type="button" (click)="resetForm()">CANCELAR</button>
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+
+            <form class="InformaciónAdicional-Busqueda" >
+            <!-- <form class="InformaciónAdicional-Busqueda" [formGroup]="formulario()"> -->
+
+                <div class="tabsNav tabsNavAncho">
+
+                    <div class="tab">
+                        <!-- <input type="radio" name="tabs" id="t1" > -->
+                        <input type="radio" #TabsInformacion name="tabs" id="t1" checked>
+
+                    <!-- ------------------CARD HISTORICO--------------------- -->
+
+                        <label class="Extra" for="t1">Histórico</label>
+
+                        <div class="InformaciónAdicional DivContainer">
+                            <h1 class="h1TitleCardTab">Historial de  Movimientos</h1>
+                            <div class="TableBusqueda">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <!-- <th class="thead-th-blod-No-Border Tipo_Movimiento"></th> -->
+                                        <th class="thead-th-blod-No-Border th-just-left- text-center ConceptoTb">Cuenta de egreso</th>
+                                        <!-- <th class="thead-th-blod-No-Border th-just-left ClienteTb">Cliente</th> -->
+                                        <th class="thead-th-blod-No-Border th-just-left- text-center MontoTb">Monto</th>
+                                        <th class="thead-th-blod-No-Border th-just-left- text-center fechaTb">Fecha</th>
+                                        <th class="thead-th-blod-No-Border "></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="">
+                                        @for( item of arrayHistorico[0]; track $index ){
+                                            <tr>
+                                                <!-- <td class="tbody-td-ligth-No-Border Tipo_Movimiento"><div><span [classList]="item.reconocido == 1 ? 'NoReconosido' : item.Tipo_Movimiento == 'Ingreso' ? 'ingreso':'prestamo' "></span></div></td> -->
+                                                <td class="tbody-td-ligth-No-Border text-center ConceptoTb">{{item.Alias_Cuenta}}</td>
+                                                <!-- <td class="tbody-td-ligth-No-Border ClienteTb">{{item.cliente}}</td> -->
+                                                <td class="tbody-td-ligth-No-Border text-center MontoTb">{{getCurrencyTable(item.Monto)}}</td>
+                                                <td class="tbody-td-ligth-No-Border text-center fechaTb">{{formatoFechaLatina(item.FechaRegistro)}}</td>
+
+                                                <td class="TD_Option"><button type="button" (click)="verDatosoMovRetiroCapital( item.Id_RetiroCapital )" class="TdOptionsTable"><img src="/img-sai/ojito_abierto.png"></button></td>
+                                                <td class="TD_Option"><button type="button" (click)="editaroMovRetiroCapital( item.Id_RetiroCapital )" class="TdOptionsTable"><img src="/img-sai/icon-edith.png"></button></td>
+                                                <td class="TD_Option"><button type="button" (click)="eliminaroMovRetiroCapital( item.Id_RetiroCapital )" class="TdOptionsTable"><img src="/img-sai/icon-trash.png"></button></td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- ---------------------------------------------- -->
+                    <!-- ------------------CARD BUSQUEDA --------------------- -->
+
+                    <div class="tab">
+                        <input type="radio" #TabsBusqueda name="tabs" id="t2">
+
+                        <label class="Busqueda" for="t2">Búsqueda</label>
+                        <div class="BusquedaDiv DivContainer">
+                            <h1 class="h1TitleCardTab">Búsqueda</h1>
+                            <div class="inputBusqueda">
+                                <p>Para hacer una búsqueda basado en el Nombre, código de Inversionista o monto</p>
+                                <input class="Nombre-Cliente" #Busqueda type="text" placeholder="Nombre ó número de Cliente " (input)="inputBusqueda($event)">
+                            </div>
+                            <div class="">
+                                <button class="btn NuevaBusqueda mr-12" (click)="busqueda()" [disabled]="disabledBtn"
+                                    [classList]="disabledBtn ? 'btn NuevaBusqueda mr-12 btnActive':'btn NuevaBusqueda mr-12 btnInActivo'"
+                                    type="button">Nueva búsqueda
+                                </button>
+                            </div>
+                            <h1 class="h1TitleCardTab">Coincidencias</h1>
+
+                            <div class="TableBusqueda">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <!-- <th class="thead-th-blod-No-Border Tipo_Movimiento"></th> -->
+                                        <th class="thead-th-blod-No-Border th-just-left- text-center ConceptoTb">Cuenta de egreso</th>
+                                        <!-- <th class="thead-th-blod-No-Border th-just-left ClienteTb">Cliente</th> -->
+                                        <th class="thead-th-blod-No-Border th-just-left- text-center MontoTb">Monto</th>
+                                        <th class="thead-th-blod-No-Border th-just-left- text-center fechaTb">Fecha</th>
+                                        <th class="thead-th-blod-No-Border "></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="">
+                                        @for( item of listaBusqueda[0]; track $index ){
+                                            <tr>
+                                                <!-- <td class="tbody-td-ligth-No-Border Tipo_Movimiento"><div><span [classList]="item.reconocido == 1 ? 'NoReconosido' : item.Tipo_Movimiento == 'Ingreso' ? 'ingreso':'prestamo' "></span></div></td> -->
+                                                <td class="tbody-td-ligth-No-Border text-center ConceptoTb">{{item.Alias_Cuenta}}</td>
+                                                <!-- <td class="tbody-td-ligth-No-Border ClienteTb">{{item.cliente}}</td> -->
+                                                <td class="tbody-td-ligth-No-Border text-center MontoTb">{{getCurrencyTable(item.Monto)}}</td>
+                                                <td class="tbody-td-ligth-No-Border text-center fechaTb">{{formatoFechaLatina(item.FechaRegistro)}}</td>
+
+                                                <td class="TD_Option"><button type="button" (click)="verDatosoMovRetiroCapital( item.Id_RetiroCapital )" class="TdOptionsTable"><img src="/img-sai/ojito_abierto.png"></button></td>
+                                                <td class="TD_Option"><button type="button" (click)="editaroMovRetiroCapital( item.Id_RetiroCapital )" class="TdOptionsTable"><img src="/img-sai/icon-edith.png"></button></td>
+                                                <td class="TD_Option"><button type="button" (click)="eliminaroMovRetiroCapital( item.Id_RetiroCapital )" class="TdOptionsTable"><img src="/img-sai/icon-trash.png"></button></td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                  </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
