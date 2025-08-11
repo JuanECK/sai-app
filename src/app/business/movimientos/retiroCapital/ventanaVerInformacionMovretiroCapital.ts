@@ -29,46 +29,20 @@ import { movInvercion } from "../../../core/services/movInvercion.service";
               <tbody>
                 @for( item of dataModal[0]; track $index ){
                   <tr class="trGris">
-                    <th class="thead-th-blod-No-Border ">Nombre</th>
-                    <td class="tbody-td-ligth-No-Border ">{{item.nombre}}</td>
+                    <th class="thead-th-blod-No-Border ">Cuenta de egreso</th>
+                    <td class="tbody-td-ligth-No-Border ">{{item.Alias_Cuenta}}</td>
                   </tr>
                   <tr class="">
-                    <th class="thead-th-blod-No-Border ">Código de inversionista</th>
-                    <td class="tbody-td-ligth-No-Border ">{{item.codigo}}</td>
-                  </tr>
-                  <tr class="trGris">
                     <th class="thead-th-blod-No-Border ">Monto</th>
                     <td class="tbody-td-ligth-No-Border ">{{getCurrency(item.Monto)}}</td>
-                  </tr>
-                  <tr class="">
-                    <th class="thead-th-blod-No-Border ">Fecha de operación</th>
-                    <td class="tbody-td-ligth-No-Border ">{{formatoFechaLatina(item.Fecha_Captura)}}</td>
-                  </tr>
-                  <tr class="trGris">
-                    <th class="thead-th-blod-No-Border ">Tipo de movimiento</th>
-                    <td class="tbody-td-ligth-No-Border ">{{item.Tipo_Movimiento}}</td>
-                  </tr>
-                  <tr>
-                    <th class="thead-th-blod-No-Border ">Cta. relacionada</th>
-                    <td class="tbody-td-ligth-No-Border ">{{formatDigito(item.clabe, 3)}}</td>
                   </tr>
                 }
               </tbody>
             </table>
               <div class="divObservaciones">
                 <h4 class="">Observaciones</h4>
-                <textarea class="observaciones" name="" id="" rows=0 cols=0 disabled="true" placeholder="Observaciones del movimiento">{{dataModal[0][0].Observaciones}}</textarea>
+                <textarea class="observaciones" name="" id="" rows=0 cols=0 disabled="true" placeholder="Observaciones del movimiento">{{dataModal[0][0].Justificacion}}</textarea>
               </div>
-          </div>
-        </div>
-        <div class="btn-options">
-          <h2>Comprobantes de movimiento</h2>
-          <p>Puedes visualizar e imprimir estos documentos</p>
-          <div class="btn-acction">
-            <div (click)="verComprobante()" class="btn-group">
-              <img src="/img-sai/icon-comprobantedeDomicilio.png" alt="Comprobante de domicilio">
-              <p>Comprobante</p>
-            </div>
           </div>
         </div>
       </div>
@@ -88,16 +62,7 @@ export class VentanaVerInformacionMovInversion implements OnInit {
   direccion: string = '';
 
   ngOnInit(): void {
-    console.log(this.dataModal)
-
-    // let calle = this.dataModal[0].Calle;
-    // let NoExterior = this.dataModal[0].No_Exterior =='' ? '':', No. ' + this.dataModal[0].No_Exterior;
-    // let colonia = this.dataModal[0].Colonia == '' ? '' : ', Col. ' + this.dataModal[0].Colonia
-    // let CP = this.dataModal[0].CP == '' ? '' : ', CP. ' + this.dataModal[0].CP
-    // let municipio = this.dataModal[0].Municipio == '' ? '' : ', ' + this.dataModal[0].Municipio
-    // let estado = this.dataModal[0].Estado == '' ? '' : ', ' + this.dataModal[0].Estado
-
-    // this.direccion = `${calle}${NoExterior}${colonia}${CP}${municipio}${estado}`; 
+    // console.log(this.dataModal)
 
   }
   formatoFechaLatina( fecha:string ){
@@ -129,21 +94,4 @@ export class VentanaVerInformacionMovInversion implements OnInit {
     return valorMonto
   }
 
-  async verComprobante() {
-
-    this.servicio.descargaComprobante(this.dataModal[0][0].Comprobante)
-      .then((data: any) => {
-        if (data.status === 'error') {
-          this._modalMsg.openModalMsg<ModalMsgComponent>(ModalMsgComponent, { data: data.data }, false, '300px', 'exito')
-          return
-        }
-        const url = URL.createObjectURL(data.data);
-        window.open(url, '_blank');
-      })
-
-  }
-  verContrato() {
-    console.log('contrato')
-    // -----------------queda peidniente porque aun no se tiene el machote del cocumento ---------------------
-  }
 }

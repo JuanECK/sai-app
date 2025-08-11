@@ -293,25 +293,26 @@ export class RetiroCapitalComponent implements OnInit {
 
   async verDatosoMovRetiroCapital(id: number) {
 
-    //  const datos = await this.servicio.cargaMovInvercionId( id )
+     const datos = await this.servicio.cargaMovRetiroCapitalId( id )
+     console.log(datos)
 
-    // if(datos.status === 'error'){
-    //   this._modalMsg.openModalMsg<ModalMsgComponent>( ModalMsgComponent, { data:datos.data }, false, '300px', 'exito')
-    //   return
-    // }
+    if(datos.status === 'error'){
+      this._modalMsg.openModalMsg<ModalMsgComponent>( ModalMsgComponent, { data:datos.data }, false, '300px', 'exito')
+      return
+    }
 
-    //  const dialogRef = this._dialog.open(VentanaVerInformacionMovInversion, {
-    //    disableClose: true,
-    //    data: datos,
-    //    width: '705px',
-    //    maxWidth: '100%',
-    //  })
+     const dialogRef = this._dialog.open(VentanaVerInformacionMovInversion, {
+       disableClose: true,
+       data: [datos],
+       width: '705px',
+       maxWidth: '100%',
+     })
 
-    //  dialogRef.afterClosed().subscribe(result => {
-    //   if(result){
-    //     this.cargaHistorico();
-    //   }
-    //  })
+     dialogRef.afterClosed().subscribe(result => {
+      if(result){
+        this.cargaHistorico();
+      }
+     })
 
   }
 

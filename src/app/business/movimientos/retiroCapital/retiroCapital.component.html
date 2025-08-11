@@ -7,10 +7,10 @@
 
                     <div>
                         <div class="d-flex">
-                            <div class="col-7" [hidden]="editar ? false : true">
+                            <div class="col-12" [hidden]="editar ? false : true">
                                 <h1 class="h1TitleCard">Capturar nuevo Movimiento</h1>
                             </div>
-                            <button (click)="ver()" >ver</button>  
+                            <!-- <button (click)="ver()" >ver</button>   -->
         
                             <div class="edicionRegistro col-7" [hidden]="editar ? true: false">
                                 <h1 class="h1TitleCard"><img src="/img-sai/icon-edicion-de-registro.png" style="width: 20px;">Edición de Registro</h1>
@@ -120,7 +120,7 @@
                         <div class="BusquedaDiv DivContainer">
                             <h1 class="h1TitleCardTab">Búsqueda</h1>
                             <div class="inputBusqueda">
-                                <p>Para hacer una búsqueda basado en el Nombre, código de Inversionista o monto</p>
+                                <p>Para hacer una búsqueda escribe la Cuenta de egreso o el monto</p>
                                 <input class="Nombre-Cliente" #Busqueda type="text" placeholder="Nombre ó número de Cliente " (input)="inputBusqueda($event)">
                             </div>
                             <div class="">
