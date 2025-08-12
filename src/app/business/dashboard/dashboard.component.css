@@ -300,7 +300,7 @@ tbody {
 
 .tbody-DS {
     display: block;
-    height: 220px;
+    height: 210px;
     overflow-y: auto;
     overflow-x: hidden;
 }
