@@ -6,8 +6,8 @@ import { ModalMsgComponent } from '../../../core/modal-msg/modal-msg.component';
 import { formatCurrency } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { VentanaVerInformacionMovInversion } from './ventanaVerInformacionMovretiroCapital';
-import { VentanaBusquedaMovInversion } from './ventanaBusquedaMovretiroCapital';
-import { VentanaEliminaMovInversion } from './ventanaEliminar';
+import { VentanaBusquedaMovRetiroCapital } from './ventanaBusquedaMovretiroCapital';
+import { VentanaEliminaMovRetiroCapital } from './ventanaEliminar';
 import { RetiroCapital } from '../../../core/services/movRetiroCapital.service';
 
 let BusquedaText = '';
@@ -318,7 +318,7 @@ export class RetiroCapitalComponent implements OnInit {
 
   editaroMovRetiroCapital(id: number) {
 
-    const dialogRef = this._dialog.open(VentanaBusquedaMovInversion, {
+    const dialogRef = this._dialog.open(VentanaBusquedaMovRetiroCapital, {
       disableClose: true,
       data: '',
       width: '450px',
@@ -392,7 +392,7 @@ export class RetiroCapitalComponent implements OnInit {
 
   async eliminaroMovRetiroCapital(id: number) {
 
-    const dialogRef = this._dialog.open(VentanaEliminaMovInversion, {
+    const dialogRef = this._dialog.open(VentanaEliminaMovRetiroCapital, {
       disableClose: true,
       data: '',
       width: '300px'

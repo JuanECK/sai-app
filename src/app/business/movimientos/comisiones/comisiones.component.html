@@ -12,7 +12,7 @@
                                 <h1 class="h1TitleCard">Registro de comisiones</h1>
                             </div>
                             <!-- <button (click)="formatoFechaLatina()" >carga</button> -->
-                            <!-- <button (click)="ver()" >ver</button>  -->
+                            <button (click)="ver()" >ver</button> 
         
                             <div class="edicionRegistro col-7" [hidden]="editar ? true: false">
                                 <h1 class="h1TitleCard"><img src="/img-sai/icon-edicion-de-registro.png" style="width: 20px;">Edición de Registro</h1>
@@ -24,9 +24,9 @@
 
                     <div class="form-check">
                         <div class="check">
-                            <label  class="form-check-label" >Ingreso</label>
+                            <label  class="form-check-label" >Traslado de valores</label>
                             <label class="label-container" >
-                                <input type="radio" #radioBtn1 (change)="evaluaCheck(1)" checked name="radio">
+                                <input type="radio" #radioBtn1 (change)="evaluaCheck( $event, 1 )" name="radio">
                                 <!-- <input type="radio" #radioBtn1 (change)="formulario().patchValue({'Tipo_Movimiento':'Ingreso'})" checked name="radio"> -->
                                 <span class="checkmark"></span>
                             </label>
@@ -34,7 +34,7 @@
                         <div class="check Second-check">
                             <label  class="form-check-label" >Egreso</label>
                             <label class="label-container" >
-                                <input type="radio" #radioBtn2 (change)="evaluaCheck(2)" name="radio">
+                                <input type="radio" #radioBtn2 (change)="evaluaCheck( $event, 2 )" name="radio">
                                 <!-- <input type="radio" #radioBtn2 (change)="formulario().patchValue({'Tipo_Movimiento':'Egreso'})" name="radio"> -->
                                 <span class="checkmark"></span>
                             </label>
@@ -43,26 +43,31 @@
 
                     <div class="d-flex justify-content-between">
                         <div class="Proveedor">
-                            <h4 class="H4ESPECIAL"><span [classList]="formulario().get('Id_ModeloNegocio')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid' ">*</span> Modelo de negocio</h4>
+                            <h4 class="H4ESPECIAL" ><span [classList]="formulario().get('Id_ModeloNegocio')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid' ">*</span> Modelo de negocio</h4>
                             <div class="select Proveedor">
-                                <select required class="" formControlName="Id_ModeloNegocio" >
-                                    <option value="" disabled selected hidden>Facturación</option>
-                                    @for(item of array[0]; track $index ){
-                                        <option [value]="item.Id_ModeloNegocio">{{item.Modelo_Negocio}}</option>
+                                <!-- formControlName="Id_ModeloNegocio" -->
+                                <select required #ModeloNegocioSelect  [classList]=" ModeloNegocio ? 'btnDisabled':''"  [disabled]="ModeloNegocio" (change)="EvaluaModeloNegocio( $event )">
+                                    <option value="" disabled selected hidden>Modelo</option>
+                                    @for(item of arrayModeloNegocio[0]; track $index ){
+                                        <option [value]="item.Id_Factura ">{{item.esquema}}</option>
                                     }
                                 </select>
                             </div>
                         </div>
                         
                         <div class="Concepto">
-                            <h4 class="H4ESPECIAL"><span [classList]="formulario().get('Id_ICPC')?.valid  ? 'Obligatiro-is-valid':'Obligatiro-is-invalid' ">*</span> Comisionista</h4>
+                            <h4 class="H4ESPECIAL"><span [classList]="formulario().get('Id_ICPC')?.valid  ? 'Obligatiro-is-valid':'Obligatiro-is-invalid' ">*</span> Beneficiario de comision</h4>
                             <div class="select Concepto">
-                                <select required class="" #comisionistaSelect (change)="evaluaComisionista( $event )">
+                                <select required class="" #comisionistaSelect [classList]=" FacturaEgreso ? 'btnDisabled':''"  [disabled]="FacturaEgreso" (change)="evaluaComisionista( $event )">
+                                <!-- <select required class="" #comisionistaSelect (change)="evaluaComisionista( $event )"> -->
                                 <!-- <select required class="" #comisionistaSelect formControlName="Id_ICPC"> -->
-                                    <option value="" disabled selected hidden>Rodrigo 2</option>
-                                    @for(item of check ? array[1] : arrayComisionista[0]; track $index ){
-                                        <option [value]="item.Id_ICPC">{{item.Nombre_Razon_Social}}</option>
+                                    <option value="" disabled selected hidden>Beneficiario</option>
+                                    @for(item of arrayBeneficiarioComision[0]; track $index ){
+                                        <option [value]="item.Id_ICPC">{{item.Nombre}}</option>
                                     }
+                                    <!-- @for(item of check ? array[1] : arrayComisionista[0]; track $index ){
+                                        <option [value]="item.Id_ICPC">{{item.Nombre_Razon_Social}}</option>
+                                    } -->
                                 </select>
                             </div>
                         </div>
@@ -71,18 +76,18 @@
                     
                     <div class="d-flex justify-content-between">
                         <div class="Monto">
-                            <h4 class="H4ESPECIAL"><span [classList]="formulario().get('Monto')?.valid  ? 'Obligatiro-is-valid':'Obligatiro-is-invalid' ">*</span> Comision</h4>
+                            <h4 class="H4ESPECIAL"><span [classList]="formulario().get('Monto')?.valid  ? 'Obligatiro-is-valid':'Obligatiro-is-invalid' ">*</span> Utilidad Progreso</h4>
                             <div class="">
-                                <input class="Monto" type="text" formControlName="Monto" #Monto placeholder="0.00" (change)="getCurrencySaldo( $event )" (input)="parseDigito2( $event )">
+                                <input [classList]=" FacturaEgreso ? 'btnDisabled Monto':'Monto'"  [disabled]="FacturaEgreso" type="text" #Monto placeholder="0.00" (change)="getCurrencySaldo( $event )" (input)="parseDigito2( $event )">
                             </div>
                         </div>
                         
                         <div class="cuentaPago">
                             <h4 class="H4ESPECIAL"><span [classList]="formulario().get('Id_CuentaB')?.valid  ? 'Obligatiro-is-valid':'Obligatiro-is-invalid' ">*</span> Cuenta asociada</h4>
                             <div class="select cuentaPago">
-                                <select required class="" formControlName="Id_CuentaB" >
-                                    <option value="" disabled selected hidden>Inbursa 2</option>
-                                    @for(item of array[2]; track $index ){
+                                <select required #CuentaAsociadaSelect [classList]=" FacturaEgreso ? 'btnDisabled':''"  [disabled]="FacturaEgreso" (change)="evaluaCuenta( $event )" >
+                                    <option value="" disabled selected hidden>Cuenta</option>
+                                    @for(item of array[0]; track $index ){
                                         <option [value]="item.Id_CuentaB">{{item.alias}}</option>
                                     }
                                 </select>
@@ -144,9 +149,9 @@
                                                 <td class="tbody-td-ligth-No-Border text-center MontoTb">{{getCurrencyTable(item.Comision)}}</td>
                                                 <td class="tbody-td-ligth-No-Border text-center fechaTb">{{formatoFechaLatina(item.Fecha)}}</td>
 
-                                                <td class="TD_Option"><button type="button" (click)="verDatosoId( item.Id_Mov_Com )" class="TdOptionsTable"><img src="/img-sai/ojito_abierto.png"></button></td>
-                                                <td class="TD_Option"><button type="button" (click)="editaroMov( item.Id_Mov_Com )" class="TdOptionsTable"><img src="/img-sai/icon-edith.png"></button></td>
-                                                <td class="TD_Option"><button type="button" (click)="eliminaroMov( item.Id_Mov_Com )" class="TdOptionsTable"><img src="/img-sai/icon-trash.png"></button></td>
+                                                <td class="TD_Option"><button type="button" (click)="verDatosoId( item.Id_Mov_Com )" class="TdOptionsTable" ><img src="/img-sai/ojito_abierto.png"></button></td>
+                                                <td class="TD_Option"><button type="button" (click)="editaroMov( item.Id_Mov_Com )" class="TdOptionsTable" [disabled]="item.Proceso == '1' ? true:false" ><img [src]="item.Proceso == '1' ?  '/img-sai/icon-Brief-disabled-35.png' : '/img-sai/icon-edith.png' " ></button></td>
+                                                <td class="TD_Option"><button type="button" (click)="eliminaroMov( item.Id_Mov_Com )" class="TdOptionsTable" [disabled]="item.Proceso == '1' ? true:false" ><img [src]="item.Proceso == '1' ?  '/img-sai/icon-trash-gris.png' : '/img-sai/icon-trash.png' "></button></td>
                                             </tr>
                                         }
                                     </tbody>
@@ -192,15 +197,15 @@
                                     <tbody class="">
                                         @for( item of listaBusqueda[0]; track $index ){
                                             <tr>
-                                               <td class="tbody-td-ligth-No-Border Tipo_Movimiento"><div><span [classList]="item.Tipo_Movimiento == 'Ingreso' ? 'ingreso':'egreso' "></span></div></td>
+                                                <td class="tbody-td-ligth-No-Border Tipo_Movimiento"><div><span [classList]="item.Tipo_Movimiento == 'Ingreso' ? 'ingreso':'egreso' "></span></div></td>
                                                 <td class="tbody-td-ligth-No-Border ConceptoTb">{{item.Modelo}}</td>
                                                 <td class="tbody-td-ligth-No-Border ClienteTb">{{item.Comisionista}}</td>
                                                 <td class="tbody-td-ligth-No-Border text-center MontoTb">{{getCurrencyTable(item.Comision)}}</td>
                                                 <td class="tbody-td-ligth-No-Border text-center fechaTb">{{formatoFechaLatina(item.Fecha)}}</td>
 
-                                                <td class="TD_Option"><button type="button" (click)="verDatosoId( item.Id_Mov_Com )" class="TdOptionsTable"><img src="/img-sai/ojito_abierto.png"></button></td>
-                                                <td class="TD_Option"><button type="button" (click)="editaroMov( item.Id_Mov_Com )" class="TdOptionsTable"><img src="/img-sai/icon-edith.png"></button></td>
-                                                <td class="TD_Option"><button type="button" (click)="eliminaroMov( item.Id_Mov_Com )" class="TdOptionsTable"><img src="/img-sai/icon-trash.png"></button></td>
+                                                <td class="TD_Option"><button type="button" (click)="verDatosoId( item.Id_Mov_Com )" class="TdOptionsTable" ><img src="/img-sai/ojito_abierto.png"></button></td>
+                                                <td class="TD_Option"><button type="button" (click)="editaroMov( item.Id_Mov_Com )" class="TdOptionsTable" [disabled]="item.Proceso == '1' ? true:false" ><img [src]="item.Proceso == '1' ?  '/img-sai/icon-Brief-disabled-35.png' : '/img-sai/icon-edith.png' " ></button></td>
+                                                <td class="TD_Option"><button type="button" (click)="eliminaroMov( item.Id_Mov_Com )" class="TdOptionsTable" [disabled]="item.Proceso == '1' ? true:false" ><img [src]="item.Proceso == '1' ?  '/img-sai/icon-trash-gris.png' : '/img-sai/icon-trash.png' "></button></td>
                                             </tr>
                                         }
                                     </tbody>

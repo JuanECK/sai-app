@@ -9,6 +9,7 @@ import { ModalMsgComponent } from '../../../core/modal-msg/modal-msg.component';
 import { VentanaFinalizarMovimiento } from './ventanaVerInformacionMov';
 import { VentanaBusquedaMovFacturas } from './ventanaBusquedaMov';
 import { VentanaEliminaMovFacturas } from './ventanaEliminar';
+import { VentanaVerInformacionMovFactura } from './ventanaVerInformacionMovFactura';
 
 let BusquedaText = '';
 let BusquedaID: Array<any>[] = [];
@@ -58,8 +59,10 @@ export class FacturasComponent implements OnInit {
       Monto: new FormControl( '' ,[Validators.required] ),
       usuario: new FormControl( '' ),
       estatus: new FormControl( '' ),
-
+      Observaciones: new FormControl( '' ),
+      
       Estatus_Pagado: new FormControl( '' ),
+      Id_CuentaB: new FormControl( '',[Validators.required] ),
     })
   )
 
@@ -110,13 +113,15 @@ resetForm() {
     ['Monto']:'',
     ['usuario']:'',
     ['estatus']:'',
+    ['Observaciones']:'',
     ['Estatus_Pagado']:'',
+    ['Id_CuentaB']:'',
 
   });
   this.comision = 0 +'%'
   this.editar = true
   this.switch = true
-  this.switchbtn.nativeElement.checked = false;
+  // this.switchbtn.nativeElement.checked = false;
 }
 
 cargaFormulario(form: Array<any>) {
@@ -127,7 +132,9 @@ cargaFormulario(form: Array<any>) {
         ['Id_Mov_Fact']:item.Id_Mov_Fact,
         ['Id_Esquema']:item.Id_Esquema,
         ['Monto']:item.Monto,
+        ['Observaciones']:item.Observaciones,
         ['Estatus_Pagado']:item.Estatus_Pagado,
+        ['Id_CuentaB']:item.Id_CuentaB,
         
       })
     })
@@ -303,6 +310,30 @@ async ActualizarRegistro() {
      })
 
   }
+    async verDatosoId(id: number) {
+  
+       const datos = await this.servicio.cargaEstatusPagadoId( id )
+       console.log({VerDatos:datos})
+  
+      if(datos.status === 'error'){
+        this._modalMsg.openModalMsg<ModalMsgComponent>( ModalMsgComponent, { data:datos.data }, false, '300px', 'exito')
+        return
+      }
+  
+       const dialogRef = this._dialog.open(VentanaVerInformacionMovFactura, {
+         disableClose: true,
+         data: datos,
+         width: '705px',
+         maxWidth: '100%',
+       })
+  
+       dialogRef.afterClosed().subscribe(result => {
+        if(result){
+          this.cargaHistorico();
+        }
+       })
+  
+    }
 
   editaroMov(id: number) {
 

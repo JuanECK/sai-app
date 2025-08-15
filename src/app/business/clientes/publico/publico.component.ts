@@ -115,7 +115,7 @@ export class PublicoComponent implements OnInit{
 evaluaCatalogo( event:any ){
   if( event.target.value == 0 ){
 
-    this.formulario().patchValue({['tipoClienteDivisa']: '', ['tipoDivisa']:'', ['saldoApertura']:''})
+    this.formulario().patchValue({['tipoClienteDivisa']: '', ['tipoDivisa']:'', ['saldoApertura']:0})
     this.Monto.nativeElement.value = ''
     this.TipoDivisa.nativeElement.value = ''
     event.target.value = ''
@@ -125,7 +125,7 @@ evaluaCatalogo( event:any ){
   if( event.target.value == 2 || event.target.value == 0 ){
 
     this.cataDivisa = true
-    this.formulario().patchValue({['tipoDivisa']:'', ['saldoApertura']:''})
+    this.formulario().patchValue({['tipoDivisa']:'', ['saldoApertura']:0})
     this.Monto.nativeElement.value = ''
     this.TipoDivisa.nativeElement.value = ''
   }else{

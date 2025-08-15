@@ -1,13 +1,10 @@
-
-
-
 :host {
   display: block;
   background: #ffffff;
   border-radius: 5px;
 }
 
-/* table{
+table{
   border-collapse: collapse;
 
   & thead, tbody { 
@@ -30,7 +27,7 @@
       background: rgba(217, 217, 217, 0.300);
     }
   }
-} */
+}
 
 
   .content-modalMsg{
@@ -43,98 +40,26 @@
     & .titulo{
       display: flex;
       align-items: center;
-      flex-direction: column;
+      justify-content: space-between;
 
-      /* justify-content: space-between; */
-      & h2{
-        color: #FF9900;
-        font-weight: var(--Medium);
-        margin: 0 0 0px 0px;
-      }
-      & p {
-        font-size: 12px;
-        margin: 5px 0px 0px 0px;
-        font-weight: var(--Normal);
-        & span{
-          font-weight: var(--Semi-Bold);
+      div{
+        cursor: pointer;
+        & img{
+          position: relative;
+          bottom: 12px;
         }
       }
     }
 
-
+    & h1{
+      color: #00B3CF;
+      font-weight: var(--Medium);
+      margin: 0 0 25px 25px;
+    }
     & .bodyCard{
-      margin: 0 0 0px 0;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      justify-content: center;
-      grid-template-areas: "sec-A sec-B";
+      margin: 0 0 20px 0;
     }
-
-    & .sec-A {
-        margin-right: 15px;
-        text-align: right;
-        grid-area: sec-A;
-
-    }
-
-    & .sec-B {
-        margin-left: 15px;
-        grid-area: sec-B;
-
-      & .checkPago{
-        margin:21.28px 0 16px 0;
-      }
- 
-      & .financiamiento{
-
-        /* margin-top: 62px; */
-        /* margin-top: 21px; */
-      }
-      & .Esquema{
-        /* margin-left: 292px; */
-        width: 205px;
-        & select{
-            text-overflow: ellipsis;
-        }
-      }
-      & .Esquema > select:invalid
-      {
-        background: #BBBBBB ;
-        color: transparent;
-        background-clip: text;
-      }
-
-      & select option{
-        background: #ffffff;
-      }
-
-      & h4{
-        color: #00B3CF;
-      }
-    }
-    
-     & .btnsRegistro{
-      justify-content: center;
-      /* position: absolute; */
-      /* bottom: 19px; */
-          & .G-C-Registro{
-              width: 423px;
-              height: 30px;
-              margin-bottom: 6px;
-          }
-
-          #cerrar{
-            position: relative;
-            left: 50px;
-            bottom: 60px;
-            z-index: -1;
-            background: #00B3CF;
-            width: 5px;
-          }
-      }
-
-
-    /* & .divObservaciones{
+    & .divObservaciones{
       
       & h4{
         text-align: left;
@@ -151,9 +76,9 @@
         padding: 0px 8px 8px 25px;
         border: none;
       }
-    } */
+    }
 
-    /* & .btn-options{
+    & .btn-options{
       background: rgba(217, 217, 217, 0.300);
       height: 153px;
       border:  1px solid rgb(0, 0, 0);
@@ -196,6 +121,6 @@
         }
         
       }
-    } */
+    }
 
   }

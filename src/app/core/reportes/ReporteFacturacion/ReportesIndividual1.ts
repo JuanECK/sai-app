@@ -120,12 +120,17 @@ export class ReportesIndividualFacturacion1 {
                 left: 10,
             },
             body: [
-                ['Utilidad:', `${formatCurrency(this.array[1][0].Utilidad, 'en', '$ ', '', '1.2-4')} MXN`],
+                ['Adeudo Contador:', `${formatCurrency(this.array[1][0].AdeudoContador, 'en', '$ ', '', '1.2-4')} MXN`], // Todo el dinero de los procesos inconclusos que nos deve el contador
+                ['Adeudo Infinity:', `${formatCurrency(this.array[1][0].adeudoInfinity, 'en', '$ ', '', '1.2-4')} MXN`], // Todo el dinero de los procesos inconclusos que nos se le a pagado a Sebastian
+                ['Comisiones:', `${formatCurrency(this.array[1][0].comisiones, 'en', '$ ', '', '1.2-4')} MXN`], // Todas las comiciones pagadas y no pagadas
+                ['Utilidad:', `${formatCurrency(this.array[1][0].Utilidad, 'en', '$ ', '', '1.2-4')} MXN`], // Toda la utilidad pagada y no pagada
+
+
+                
                 // ['Comisiones:', `${formatCurrency(this.array[1][0].Comisiones, 'en', '$ ', '', '1.2-4')} MXN`],
                 // [ 'Retiro de rendimientos:',`${ formatCurrency( 2000000000000000000000, 'en', '$ ', '', '1.2-4') } MXN` ],
-                ['Comisiones insolutas:', `${formatCurrency(this.array[1][0].comisionInsoluta, 'en', '$ ', '', '1.2-4')} MXN`],
-                ['Saldo insoluto:', `${formatCurrency(this.array[1][0].SaldoInsoluto, 'en', '$ ', '', '1.2-4')} MXN`],
-                ['Comisiones generadas:', `${formatCurrency(this.array[1][0].ComisionGenerada, 'en', '$ ', '', '1.2-4')} MXN`],
+                // ['Comisiones insolutas:', `${formatCurrency(this.array[1][0].comisionInsoluta, 'en', '$ ', '', '1.2-4')} MXN`],
+                // ['Saldo insoluto:', `${formatCurrency(this.array[1][0].SaldoInsoluto, 'en', '$ ', '', '1.2-4')} MXN`],
                 // [ 'Saldo a la fecha:',`${ formatCurrency( this.array[1][0].Egresos, 'en', '$ ', '', '1.2-4') } MXN` ],
             ],
 

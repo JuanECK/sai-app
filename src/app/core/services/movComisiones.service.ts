@@ -20,7 +20,7 @@ export class Comisiones {
             }
         })
         const data = await response.json()
-        //   console.log(data)
+          console.log({inicial:data})
         if (response.status === 200) {
             return data
         }
@@ -33,7 +33,7 @@ export class Comisiones {
             }
         })
         const data = await response.json()
-        // console.log(data)
+        console.log(data)
         if (response.status === 200) {
             return data
         }
@@ -117,6 +117,29 @@ export class Comisiones {
             body:JSON.stringify({comisionista:comisionista})
         } )
         const datos = await response.json()
+        // console.log(datos)
+        // if( response.status === 200 ){
+        //     if( datos[0].length === 0 ){
+        //         const data = { mensaje:'¡Por el momento no se pueden cargar los datos!' }
+        //         return {
+        //             status:'error',
+        //             data}
+        //     }
+            return datos
+        // }
+
+    }
+
+    async cargaTipoComisionista( id:string ){
+        // console.log(id)
+        const response = await fetch( this._http + 'movimientos/Comisiones/cargaTipoComisionista',{
+            method:'POST',
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify({id:id})
+        } )
+        const datos = await response.json()
         console.log(datos)
         // if( response.status === 200 ){
         //     if( datos[0].length === 0 ){
@@ -178,7 +201,7 @@ export class Comisiones {
             body: JSON.stringify({formulario:formularioActualizado.value})
             })
             const dataService = await response.json()
-            if (response.status === 200) {
+            if (dataService.status === 200) {
                 const data = { mensaje:dataService.mensaje }
                 return {
                     status:'',    
@@ -186,7 +209,7 @@ export class Comisiones {
                 }
             }
             else {
-                const data = { mensaje:dataService.error } 
+                const data = { mensaje:dataService.mensaje } 
                 return {
                     status: 'error',
                     data: data 

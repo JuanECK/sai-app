@@ -27,8 +27,9 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angula
         </div>
         <div class="bodyCard">
           <div class="sec-A">
-            <h4>Comisiones Tijuana</h4>
-            <h4>Cuenta de retorno</h4>
+            <h4>Estatus</h4>
+            <h4>Esquema</h4>
+            <!-- <h4>Cuenta de retorno</h4> -->
             <h4>Financiamiento</h4>
             <h4>Pago de factura</h4>
             <h4>Pago a comisionista</h4>
@@ -46,16 +47,18 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angula
               </div>
             </div>
 
-            <div class="Esquema">
-              <div class="select Esquema">
+           <div class="Esquema">
+            <h4>{{dataModal.datos[0][0].Esquema}}</h4>
+              <!--  <div class="select Esquema">
                   <select required class="" formControlName="Id_CuentaB" >
                       <option value="" disabled selected hidden>Cuenta de comisiones fac</option>
                       @for(item of dataModal.facturacion; track $index ){
                           <option [value]="item.Id_CuentaB">{{item.Alias_Cuenta}}</option>
                       }
                   </select>
-              </div>
-            </div>
+              </div>-->
+            </div> 
+
             <h4 class="financiamiento">{{getCurrency(dataModal.datos[0][0].Financiamiento)}}</h4>
             <h4>{{getCurrency(dataModal.datos[0][0].Factura)}}</h4>
             <h4>{{getCurrency(dataModal.datos[0][0].Comisionista)}}</h4>
@@ -92,7 +95,7 @@ export class VentanaFinalizarMovimiento implements OnInit {
 
         Id_Mov_Fact: new FormControl( '' ),
         estatus_pagado: new FormControl( '',[Validators.required] ),
-        Id_CuentaB: new FormControl( '' ,[Validators.required] ),
+        // Id_CuentaB: new FormControl( '' ,[Validators.required] ),
         usuario: new FormControl( '' ),
       })
     )

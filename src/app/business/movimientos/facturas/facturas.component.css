@@ -345,6 +345,12 @@
     font-size: 16px;
     font-weight: var(--Medium);
 }
+.H4ESPECIAL2{
+    margin-top: 60px;
+    margin-bottom: 12px;
+    font-size: 16px;
+    font-weight: var(--Medium);
+}
 .nombreSinCoincidencias{
     color: #00b3cf;
 }
@@ -355,7 +361,7 @@
     opacity: 0;
     cursor:auto ;
 }
-.egreso{
+.amarillo{
     content: "";
     /* position: absolute; */
     margin:  0px 0px 0px 0px;
@@ -364,7 +370,7 @@
     border-radius: 50%;
     background: #FFC412;
 }
-.ingreso{
+.verde{
     content: "";
     /* position: absolute; */
     margin:  0px 0px 0px 0px;
@@ -428,7 +434,8 @@
 
                 }
 
-                & .Esquema > select:invalid
+                & .Esquema > select:invalid,
+                .cuentaPago > select:invalid
                 {
                     background: #BBBBBB ;
                     color: transparent;
@@ -437,6 +444,15 @@
 
                 & select option{
                     background: #ffffff;
+                }
+
+                & .cuentaPago{
+                    /* margin-left: 292px; */
+                    width: 205px;
+                    & select{
+                        text-overflow: ellipsis;
+                    }
+
                 }
 
 
@@ -523,8 +539,8 @@
                     padding: 6px 8px 6px 8px ;
                 }
                 & .fechaTb{
-                    max-width: 100px;
-                    min-width: 100px;
+                    max-width: 65px;
+                    min-width: 65px;
                     padding: 6px 8px 6px 8px ;
                 }
 

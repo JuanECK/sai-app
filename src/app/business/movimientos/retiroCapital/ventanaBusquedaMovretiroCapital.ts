@@ -3,7 +3,7 @@ import { MatDialogModule } from "@angular/material/dialog";
 import {MatButtonModule} from '@angular/material/button';
 
 @Component({
-    selector: 'Ventana-Busqueda-MovInversion',
+    selector: 'Ventana-Busqueda-MovRetiroCapital',
     standalone:true,
     imports: [MatDialogModule,MatButtonModule],
     styleUrl:'./cdk-dialog-style.css',
@@ -25,7 +25,7 @@ import {MatButtonModule} from '@angular/material/button';
     changeDetection: ChangeDetectionStrategy.OnPush,
   })
 
-export class VentanaBusquedaMovInversion {
+export class VentanaBusquedaMovRetiroCapital {
 
 
 }

@@ -37,6 +37,8 @@ export class ComisionesComponent implements OnInit {
   @ViewChild('Monto') Monto!: ElementRef;
   @ViewChild('TabsInformacion') TabsInformacion!: ElementRef;
   @ViewChild('comisionistaSelect') comisionistaSelect!: ElementRef;
+  @ViewChild('ModeloNegocioSelect') ModeloNegocioSelect!: ElementRef;
+  @ViewChild('CuentaAsociadaSelect') CuentaAsociadaSelect!: ElementRef;
 
 
   // ---------------------------------
@@ -47,12 +49,16 @@ export class ComisionesComponent implements OnInit {
   listaBusqueda: Array<any>[] = [];
   arrayHistorico: Array<any>[] = [];
   array: Array<any>[] = [];
-  arrayComisionista: Array<any>[] = [];
+  // arrayComisionista: Array<any>[] = [];
   array2: Array<any>[] = [];
   editar: boolean = true;
   Hoy: string = "";
   input_BRK: boolean = false;
   edicionComisionista: boolean = false;
+  ModeloNegocio: boolean = false;
+  FacturaEgreso: boolean = false;
+  arrayModeloNegocio: Array<any>[] = [];
+  arrayBeneficiarioComision: Array<any>[] = [];
   // selectComisiones: boolean = true;
   // selectConcepto: boolean = true;
   // selectCuenta: boolean = true;
@@ -75,6 +81,7 @@ export class ComisionesComponent implements OnInit {
       Observaciones: new FormControl(''),
       usuario: new FormControl(''),
       estatus: new FormControl(''),
+      Id_Factura: new FormControl(0),
        
     })
   )
@@ -138,17 +145,25 @@ export class ComisionesComponent implements OnInit {
     ['Observaciones']:'',
     ['usuario']:'',
     ['estatus']:'',
+    ['Id_Factura']:'',
     
   });
+
+  this.ModeloNegocioSelect.nativeElement.value = ''
+  this.comisionistaSelect.nativeElement.value = ''
+  this.CuentaAsociadaSelect.nativeElement.value = ''
+  this.Monto.nativeElement.value = ''
   // this.inputINV.nativeElement.value = '';
   // this.nombreInversionista = '';
-  this.comisionistaSelect.nativeElement.value = ''
-  this.radioBtn1.nativeElement.checked = true
+  this.radioBtn1.nativeElement.checked = false
+  this.radioBtn2.nativeElement.checked = false
   
   // if(this.edicionComisionista){
     // this.check = false
   // }else{
     this.check = true
+    this.ModeloNegocio = false
+    this.FacturaEgreso = false
   // }
   // this.edicionComisionista = false
 
@@ -159,14 +174,14 @@ cargaFormulario(form: Array<any>) {
 
     // console.log(form[0][0])
     // form[0][0].Tipo_Movimiento === 'Ingreso' ? (this.radioBtn1.nativeElement.checked = true) : (this.radioBtn2.nativeElement.checked = true)
-    form[0][0].Tipo_Movimiento == 'Ingreso' ? (
-      this.radioBtn1.nativeElement.checked = true,
-      this.cargaComisionistaEdicion( 'I' )
-    ):(
-      this.radioBtn2.nativeElement.checked = true,
-      this.cargaComisionistaEdicion( 'E' )
+    // form[0][0].Tipo_Movimiento == 'Ingreso' ? (
+    //   this.radioBtn1.nativeElement.checked = true,
+    //   this.cargaComisionistaEdicion( 'I' )
+    // ):(
+    //   this.radioBtn2.nativeElement.checked = true,
+    //   this.cargaComisionistaEdicion( 'E' )
       
-    )
+    // )
     
     form[0].map((item: any) => {
       this.formulario().patchValue({
@@ -179,6 +194,7 @@ cargaFormulario(form: Array<any>) {
         ['Monto']:item.Comision,
         ['Observaciones']:item.Observaciones,
         ['estatus']:item.estatus,
+        ['Id_Factura']:item.Id_Factura,
         
       })
     })
@@ -205,30 +221,40 @@ cargaFormulario(form: Array<any>) {
   // ---------------------------------
   // ------- Procedimientos de pantalla 1------
 
-   async cargaComisionistaEdicion( tipo:string ){
-  if( tipo == 'I' ){
-    this.arrayComisionista =  await this.servicio.cargaComisionistas( 'I' )
-    return
-  }
-  this.arrayComisionista = await this.servicio.cargaComisionistas( 'E' )
+  //  async cargaComisionistaEdicion( tipo:string ){
+  // if( tipo == 'I' ){
+  //   this.arrayComisionista =  await this.servicio.cargaComisionistas( 'I' )
+  //   return
+  // }
+  // this.arrayComisionista = await this.servicio.cargaComisionistas( 'E' )
 
-  }
+  // }
 
-  async evaluaCheck( num:number ){
-    this.formulario().patchValue({['Id_ICPC']:''})
+  async evaluaCheck( event:any, num:number ){
+    this.formulario().patchValue({['Id_ICPC']:'','Id_ModeloNegocio':''})
     // this.Concepto.nativeElement.value = '';
     // this.selectConcepto = true;
+    // this.arrayComisionista = []
+    this.arrayBeneficiarioComision = []
+    this.arrayModeloNegocio = []
+    this.ModeloNegocioSelect.nativeElement.value = ''
     this.comisionistaSelect.nativeElement.value = ''
-    this.arrayComisionista = []
+    this.Monto.nativeElement.value = ''
+    this.CuentaAsociadaSelect.nativeElement.value = ''
+
     this.check = false
     if(num === 1){
-      this.formulario().patchValue({'Tipo_Movimiento':'Ingreso'})
-      this.arrayComisionista = await this.servicio.cargaComisionistas( 'I' )
+      this.ModeloNegocio = true
+      this.FacturaEgreso = false
+      this.formulario().patchValue({'Tipo_Movimiento':'Ingreso','Id_ModeloNegocio':7,'Id_Factura':0})
+      this.arrayBeneficiarioComision = await this.servicio.cargaTipoComisionista( 'I' )
       return
     }
     if(num === 2){
+      this.ModeloNegocio = false
+      this.FacturaEgreso = true
+      this.arrayModeloNegocio = await this.servicio.cargaTipoComisionista( 'E' )
       this.formulario().patchValue({'Tipo_Movimiento':'Egreso'})
-      this.arrayComisionista = await this.servicio.cargaComisionistas( 'E' )
       // this.comisionistaSelect.nativeElement.value = ''
       // this.check = false
       return
@@ -236,9 +262,30 @@ cargaFormulario(form: Array<any>) {
 
   }
 
+  async EvaluaModeloNegocio( event:any ){
+   
+    this.arrayBeneficiarioComision = await this.servicio.cargaComisionistas( event.target.value )
+    this.formulario().patchValue({
+      'Id_ModeloNegocio':0,
+      // 'Id_ModeloNegocio':event.target.value,
+      'Id_ICPC':this.arrayBeneficiarioComision[0][0].Id_ICPC, 
+      'Monto':this.arrayBeneficiarioComision[0][0].Monto,
+      'Id_Factura':event.target.value,
+      'Id_CuentaB':this.arrayBeneficiarioComision[0][0].Id_CuentaB
+    })
+    this.comisionistaSelect.nativeElement.value = this.arrayBeneficiarioComision[0][0].Id_ICPC
+    this.CuentaAsociadaSelect.nativeElement.value = this.arrayBeneficiarioComision[0][0].Id_CuentaB
+    this.Monto.nativeElement.value = formatCurrency(+this.arrayBeneficiarioComision[0][0].Monto, 'en', '', '', '1.2-4')
+    // console.log(this.arrayBeneficiarioComision)
+  }
+
   evaluaComisionista( event:any ){
     // console.log(event.target.value)
     this.formulario().patchValue({['Id_ICPC']:event.target.value})
+  }
+  evaluaCuenta( event:any ){
+    // console.log(event.target.value)
+    this.formulario().patchValue({['Id_CuentaB']:event.target.value})
   }
 
   getCurrencySaldo(event: any) {
