@@ -39,7 +39,7 @@ export const routes: Routes = [
         children: [
             { path:'', redirectTo: 'Inicio', pathMatch: 'full' },
             // { path: componente.inicio, component: componente.componentes ,canActivate: [LoginGuardianService]},
-            { path:'Inicio',component: DashboardComponent, canActivate: [PerfilGuard], },
+            { path:'Dashboard',component: DashboardComponent, canActivate: [PerfilGuard], },
             { path:'sai',component: SaiComponent, canActivate: [PerfilSAIGuard]},
             { path:'Movimientos', component:InversionComponent, canActivate: [isNavHeadNoActiveGuard]},
             { path:'Clientes', component:InversionComponent, canActivate: [isNavHeadNoActiveGuard]},

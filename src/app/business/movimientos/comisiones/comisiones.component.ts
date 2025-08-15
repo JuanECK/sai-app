@@ -170,7 +170,7 @@ export class ComisionesComponent implements OnInit {
   this.editar = true
 }
 
-cargaFormulario(form: Array<any>) {
+async cargaFormulario(form: Array<any>) {
 
     // console.log(form[0][0])
     // form[0][0].Tipo_Movimiento === 'Ingreso' ? (this.radioBtn1.nativeElement.checked = true) : (this.radioBtn2.nativeElement.checked = true)
@@ -182,6 +182,7 @@ cargaFormulario(form: Array<any>) {
     //   this.cargaComisionistaEdicion( 'E' )
       
     // )
+
     
     form[0].map((item: any) => {
       this.formulario().patchValue({
@@ -194,21 +195,27 @@ cargaFormulario(form: Array<any>) {
         ['Monto']:item.Comision,
         ['Observaciones']:item.Observaciones,
         ['estatus']:item.estatus,
-        ['Id_Factura']:item.Id_Factura,
+        // ['Id_Factura']:item.Id_Factura,
         
       })
     })
+  this.arrayBeneficiarioComision = []
+  this.arrayBeneficiarioComision = await this.servicio.cargaTipoComisionista( 'I' )
+
+  this.ModeloNegocioSelect.nativeElement.value = ''
+  this.CuentaAsociadaSelect.nativeElement.value = form[0][0].Id_CuentaB
+
+  this.radioBtn1.nativeElement.checked = true
     
-    this.comisionistaSelect.nativeElement.value = form[0][0].Id_ICPC
+  this.comisionistaSelect.nativeElement.value = form[0][0].Id_ICPC
+
     // let num = form[0][0].Tipo_Movimiento === 'Ingreso' ? 1 : 2;
-    this.Monto.nativeElement.value = this.getCurrency(form[0][0].Comision)
+  this.Monto.nativeElement.value = this.getCurrency(form[0][0].Comision)
 
+  this.ModeloNegocio = true
+  // this.FacturaEgreso = false
       
-
-
-
-
-  this.nombreInversionista = form[0][0].nombre
+  // this.nombreInversionista = form[0][0].nombre
 
   }
   getCurrency(value: number) {
