@@ -29,6 +29,7 @@ export class PresupuestoComponent implements OnInit {
   // -------Variables de referencia---
   @ViewChild('Monto') Monto!: ElementRef;
   @ViewChild('Abono') Abono!: ElementRef;
+  @ViewChild('observa') observa!: ElementRef;
   @ViewChild('CPago') CPago!: ElementRef;
   @ViewChild('cancelar') cancelar!: ElementRef;
   @ViewChild('radioBtn1') radioBtn1!: ElementRef;
@@ -68,6 +69,7 @@ export class PresupuestoComponent implements OnInit {
       id_cuentaB: new FormControl( '' ,[Validators.required]),
       monto : new FormControl( '' ,[Validators.required] ),
       usuario: new FormControl( '' ),
+      Observaciones: new FormControl( '',[Validators.required] ),
       
     })
   )
@@ -96,13 +98,17 @@ export class PresupuestoComponent implements OnInit {
   async cargaDataInicial(){
 
     this.array = await this.servicio.GetDataInicial(); 
-    // console.log(this.array)
+    console.log(this.array)
     if(this.array[0][0].Resultado == 'Exito'){
       this.Monto.nativeElement.disabled = true
       this.Monto.nativeElement.classList.add('btnDisabled')
+      this.observa.nativeElement.disabled = false
+      this.observa.nativeElement.classList.remove('btnDisabled')
       this.DesactivaAbonoAjustesPresupuesto( false );
       return
     }
+    this.observa.nativeElement.disabled = true
+    this.observa.nativeElement.classList.add('btnDisabled')
     this.Monto.nativeElement.disabled = false
     this.Monto.nativeElement.classList.remove('btnDisabled')
     this.DesactivaAbonoAjustesPresupuesto( true );
@@ -238,6 +244,7 @@ resetPresupuesto() {
         ['id_abono']:item.id_abono,
         ['id_cuentaB']:item.Id_CuentaB,
         ['monto']:item.abono,
+        ['Observaciones']:item.Observaciones,
         
       })
     })

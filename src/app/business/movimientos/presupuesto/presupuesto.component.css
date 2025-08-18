@@ -22,8 +22,11 @@
 
     
 }
-.H4ESPECIAL{
-    margin-top: 40px;
+h4{
+     margin-top: 10px;
+}
+.H4ESPECIAL1{
+    margin-top: 22px;
     margin-bottom: 12px;
     font-size: 16px;
     font-weight: var(--Medium);
@@ -167,10 +170,10 @@
                     }
                 }
                 & .Abono{
-                    margin-top: 40px;
+                    margin-top: 20px;
                 }
                 & .PresMensual{
-                    margin-top: 60px;
+                    margin-top: 20px;
                 }
                 
 
@@ -198,6 +201,14 @@
                     width: 130px;
                 }
                 
+                & .divObservacionesAbono{
+                    & .observacionesAbono{
+                        width: 405px;
+                        height: 50px;
+                    }
+
+                }
+
                 & .divObservaciones{
                     margin-left: 12px;
                 }

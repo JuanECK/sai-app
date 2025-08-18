@@ -26,7 +26,7 @@
 
                     <div class="d-flex">
                         <div class="MontoPresupuesto">
-                            <h4 class="H4ESPECIA">Monto</h4>
+                            <h4 class="H4ESPECIAL1">Monto</h4>
                             <div class="">
                                 <input class="MontoPresupuesto btnDisabled" type="text" formControlName="monto" #Monto placeholder="0.00" (change)="getCurrencyMonto( $event )" (input)="parseDigito2( $event )">
                             </div>
@@ -58,6 +58,14 @@
                                 </select>
                             </div>
                         </div>
+                    </div>
+                    
+                    <div class="divObservacionesAbono">
+
+                        <!-- <h4 class="">Observaciones</h4> -->
+                         <h4 class=""><span [classList]="ajustePresupuesto().get('Observaciones')?.valid  ? 'Obligatiro-is-valid':'Obligatiro-is-invalid' ">*</span> Observaciones</h4>
+                        <textarea class="observacionesAbono btnDisabled" name="" id="" #observa formControlName="Observaciones" rows=0 cols=0 placeholder="Observaciones del movimiento"></textarea>
+
                     </div>
                     
                     <div class="d-flex btnsRegistro">
