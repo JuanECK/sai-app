@@ -404,6 +404,8 @@ async ActualizarRegistro() {
 
     console.log(form[0][0])
     form[0][0].Tipo_Movimiento === 'Ingreso' ? (this.radioBtn1.nativeElement.checked = true) : (this.radioBtn2.nativeElement.checked = true)
+
+    form[0][0].Id_CuentaB == null ? form[0][0].Id_CuentaB = '': form[0][0].Id_CuentaB = form[0][0].Id_CuentaB;
     
     form[0].map((item: any) => {
       this.formulario().patchValue({
@@ -422,6 +424,8 @@ async ActualizarRegistro() {
       })
     })
     
+
+
     let num = form[0][0].Tipo_Movimiento === 'Ingreso' ? 1 : 2;
     this.Monto.nativeElement.value = this.getCurrency(form[0][0].Monto)
 
