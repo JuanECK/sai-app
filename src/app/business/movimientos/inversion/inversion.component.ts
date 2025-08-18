@@ -55,6 +55,7 @@ export class InversionComponent implements OnInit {
   selectCuenta:boolean = true;
   nombreInversionista: string='';
   reconocido: boolean = false;
+  RB1: string = 'Balance';
 
   private readonly _modalMsg = inject(ModalMsgService);
   private readonly _dialog = inject(MatDialog);
@@ -441,6 +442,7 @@ async ActualizarRegistro() {
     this.nombreInversionista = form[0][0].nombre
 
     if( form[0][0].reconocido == 1 ){
+      this.RB1 = 'Ingreso'
       this.Monto.nativeElement.disabled = true
       this.reconocido = true;
       this.radioBtn2.nativeElement.disabled = true
@@ -540,6 +542,7 @@ async ActualizarRegistro() {
     ['estatus']:'',
     
   });
+  this.RB1 = 'Balance'
   this.Monto.nativeElement.disabled = false
   this.inputINV.nativeElement.value = '';
   this.nombreInversionista = '';

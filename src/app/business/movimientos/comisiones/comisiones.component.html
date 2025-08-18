@@ -12,7 +12,7 @@
                                 <h1 class="h1TitleCard">Registro de comisiones</h1>
                             </div>
                             <!-- <button (click)="formatoFechaLatina()" >carga</button> -->
-                            <button (click)="ver()" >ver</button> 
+                            <!-- <button (click)="ver()" >ver</button>  -->
         
                             <div class="edicionRegistro col-7" [hidden]="editar ? true: false">
                                 <h1 class="h1TitleCard"><img src="/img-sai/icon-edicion-de-registro.png" style="width: 20px;">Edición de Registro</h1>
@@ -24,7 +24,7 @@
 
                     <div class="form-check">
                         <div class="check">
-                            <label  class="form-check-label" >Traslado de valores</label>
+                            <label  class="form-check-label" >{{RB1}}</label>
                             <label class="label-container" >
                                 <input type="radio" #radioBtn1 (change)="evaluaCheck( $event, 1 )" name="radio">
                                 <!-- <input type="radio" #radioBtn1 (change)="formulario().patchValue({'Tipo_Movimiento':'Ingreso'})" checked name="radio"> -->

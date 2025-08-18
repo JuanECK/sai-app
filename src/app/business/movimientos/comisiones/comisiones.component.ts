@@ -63,6 +63,7 @@ export class ComisionesComponent implements OnInit {
   // selectConcepto: boolean = true;
   // selectCuenta: boolean = true;
   nombreInversionista: string = '';
+  RB1: string = 'Traslado de valores';
   
   private readonly _modalMsg = inject(ModalMsgService);
   private readonly _dialog = inject(MatDialog);
@@ -132,6 +133,7 @@ export class ComisionesComponent implements OnInit {
 
 
   async resetForm( ) {
+    // this.RB1 = 'Traslado de valores'
   // this.selectCuenta = true;
   // this.selectConcepto = true;
   this.formulario().patchValue({
@@ -183,6 +185,7 @@ async cargaFormulario(form: Array<any>) {
       
     // )
 
+    // this.RB1 = 'Ingreso'
     
     form[0].map((item: any) => {
       this.formulario().patchValue({
