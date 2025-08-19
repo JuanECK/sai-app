@@ -81,7 +81,7 @@
                         </div>
                         <div class="">
                             <h4>{{titulo_cuenta_asociada}}</h4>
-                            <input [classList]="Banco_cuenta ? 'No-Fecha-Targeta inputInActive' : 'No-Fecha-Targeta' " #Ref_input_Cuenta_Tarjeta type="text" [attr.maxLength]="valor ==='CLABE' ? 18:16 "  [placeholder]="placeHolder_cuenta_asociada" [disabled]="Banco_cuenta" (change)="cuenta_o_tarjeta( $event )">
+                            <input [classList]="Banco_cuenta ? 'No-Fecha-Targeta inputInActive' : 'No-Fecha-Targeta' " #Ref_input_Cuenta_Tarjeta type="text" [attr.maxLength]="valor ==='CLABE' ? 23:19 "  [placeholder]="placeHolder_cuenta_asociada" [disabled]="Banco_cuenta" (input)="formatDigitoBancarios( $event, '', 0 )" (change)="cuenta_o_tarjeta( $event )">
                         </div>
                     </div>
                     <div class="">

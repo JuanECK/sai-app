@@ -133,6 +133,7 @@ export class ComisionistasComponent implements OnInit {
 
   TipoDeCuenta( event:any ){
 
+    this.cuenta_targeta = false
     this.Banco_cuenta = true;
     this.inst_Bancaria = true;
     this.titulo_cuenta_asociada = 'No. de cuenta o tarjeta'
@@ -165,28 +166,65 @@ export class ComisionistasComponent implements OnInit {
   
   }
 
+  evaluaCuantaTargetaNull( clave:string ){
+    if(clave == 'CLABE'){
+      if(this.formulario().get('CLABE')?.value == '' || this.formulario().get('banco_cuenta')?.value == '' ){
+        this.cuenta_targeta = false
+        this.formulario().patchValue({['Tipo_Cuenta_targeta']:''});
+        return
+      }
+      this.cuenta_targeta = true
+      this.formulario().patchValue({['Tipo_Cuenta_targeta']:clave});
+    }
+    
+    if(clave == 'Debito'){
+      if(this.formulario().get('Banco_tarjeta')?.value == '' || this.formulario().get('tarjeta')?.value == '' ){
+        this.cuenta_targeta = false
+        this.formulario().patchValue({['Tipo_Cuenta_targeta']:''});
+        return
+      }
+      this.cuenta_targeta = true
+      this.formulario().patchValue({['Tipo_Cuenta_targeta']:clave});
+    }
+    
+  }
+
   Institucion_Bancaria( event:any ){
   
     if( this.valor === 'CLABE' ){
+
       this.formulario().patchValue({['banco_cuenta']:event.target.value});
-      if( this.formulario().get('CLABE')?.value != '' ){
+
+      this.evaluaCuantaTargetaNull( 'CLABE' )
+      // if( this.formulario().get('CLABE')?.value != '' ){
         
-        this.cuenta_targeta = true
-        this.formulario().patchValue({['Tipo_Cuenta_targeta']:this.valor});
+      //   this.cuenta_targeta = true
+        // this.formulario().patchValue({['Tipo_Cuenta_targeta']:this.valor});
         
-      }
+      // }else{
+      //   this.cuenta_targeta = false
+        
+      // }
       
-    }else if (this.valor === 'Debito'){
+    }
+
+    if (this.valor === 'Debito'){
       this.formulario().patchValue({['Banco_tarjeta']:event.target.value});
-      if( this.formulario().get('tarjeta')?.value != '' ){
+      this.evaluaCuantaTargetaNull( 'Debito' )
+      // if( this.formulario().get('tarjeta')?.value != '' ){
         
-        this.cuenta_targeta = true
-        this.formulario().patchValue({['Tipo_Cuenta_targeta']:this.valor});
+      //   this.cuenta_targeta = true
+        // this.formulario().patchValue({['Tipo_Cuenta_targeta']:this.valor});
         
-      }
+      // }else{
+      //   this.cuenta_targeta = false
+
+      // }
     }
   
   }
+
+
 
   formatDigitoBancarios(event: any, valor: string = '') {
     let valorMonto = event ? event.target.value : valor;
@@ -205,7 +243,7 @@ export class ComisionistasComponent implements OnInit {
 
   cuenta_o_tarjeta( event:any ){
 
-    // console.log(this.valor)
+    console.log(this.valor)
   
   if( this.valor === 'Fincash' ){
     this.formulario().patchValue({['fincash']:event.target.value.replace(/[^0-9.]/g, ""), ['Tipo_Cuenta_targeta']:this.valor});
@@ -215,20 +253,30 @@ export class ComisionistasComponent implements OnInit {
   
   if( this.valor === 'CLABE' ){
     this.formulario().patchValue({['CLABE']:event.target.value.replace(/[^0-9.]/g, "")});
-    if( this.formulario().get('banco_cuenta')?.value != '' ){
+    this.evaluaCuantaTargetaNull( 'CLABE' )
+    // if( this.formulario().get('banco_cuenta')?.value != '' ){
       
-      this.cuenta_targeta = true
-      this.formulario().patchValue({['Tipo_Cuenta_targeta']:this.valor.replace(/[^0-9.]/g, "")});
-    }
+    //   this.cuenta_targeta = true
+      // this.formulario().patchValue({['Tipo_Cuenta_targeta']:this.valor});
+    //   // this.formulario().patchValue({['Tipo_Cuenta_targeta']:this.valor.replace(/[^0-9.]/g, "")});
+    // }else{
+    //  this.cuenta_targeta = false
+    // }
     
-  }else if (this.valor === 'Debito'){
-    this.formulario().patchValue({['tarjeta']:event.target.value.replace(/[^0-9.]/g, "")});
-    if( this.formulario().get('Banco_tarjeta')?.value != '' ){
+  }
+  
+  if (this.valor === 'Debito'){
+    this.formulario().patchValue({['tarjeta']:event.target.value});
+    this.evaluaCuantaTargetaNull( 'Debito' )
+    // this.formulario().patchValue({['tarjeta']:event.target.value.replace(/[^0-9.]/g, "")});
+    // if( this.formulario().get('Banco_tarjeta')?.value != '' ){
       
-      this.cuenta_targeta = true
-      this.formulario().patchValue({['Tipo_Cuenta_targeta']:this.valor});
+    //   this.cuenta_targeta = true
+      // this.formulario().patchValue({['Tipo_Cuenta_targeta']:this.valor});
       
-    }
+    // }else{
+    //   this.cuenta_targeta = false
+    // }
   }
   
   
@@ -535,6 +583,7 @@ export class ComisionistasComponent implements OnInit {
   cargaCuentaTargeta( _Clave:string, _BancoCuenta:string, _tarjeta:string, _BancoTargeta:string, _fincash:string ){
     if( _Clave != '' ){
       this.formulario().patchValue({['Tipo_Cuenta_targeta']:'CLABE'})
+      this.valor = 'CLABE'
       this.targeta_asociada.nativeElement.value ='CLABE'
       this.Ref_input_Cuenta_Tarjeta.nativeElement.value = _Clave
       this.Ref_Inst_Bancaria.nativeElement.value = _BancoCuenta
@@ -546,6 +595,7 @@ export class ComisionistasComponent implements OnInit {
     }
     if( _tarjeta != '' ){
       this.formulario().patchValue({['Tipo_Cuenta_targeta']:'Debito'})
+      this.valor ='Debito'
       this.targeta_asociada.nativeElement.value ='Debito'
       this.Ref_input_Cuenta_Tarjeta.nativeElement.value = _tarjeta
       this.Ref_Inst_Bancaria.nativeElement.value = _BancoTargeta
@@ -557,6 +607,7 @@ export class ComisionistasComponent implements OnInit {
     }
     if( _fincash != '' ){
       this.formulario().patchValue({['Tipo_Cuenta_targeta']:'Fincash'})
+      this.valor ='Fincash'
       this.targeta_asociada.nativeElement.value ='Fincash'
       this.Ref_input_Cuenta_Tarjeta.nativeElement.value = _fincash
       this.inst_Bancaria = true;

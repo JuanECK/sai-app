@@ -47,7 +47,7 @@ export class CuentasComponent implements OnInit {
       nombreBanco: new FormControl('', [Validators.required]),
       noCuenta: new FormControl(''),
       saldoInicial: new FormControl(0),
-      clabe: new FormControl('', [Validators.required]),
+      clabe: new FormControl('', [Validators.required, Validators.minLength(23)]),
       tarjeta: new FormControl(''),
       alias: new FormControl('', [Validators.required]),
       moneda: new FormControl('', [Validators.required]),
@@ -371,6 +371,7 @@ export class CuentasComponent implements OnInit {
               'exito'
             );
 
+            this.resetForm();
             this.servicio.busqueda(this.criterioBusqueda).then(data => {
               this.listaBusqueda = data;
             });

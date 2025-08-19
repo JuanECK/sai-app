@@ -16,6 +16,16 @@
         margin-top: 33px;
     }
 
+
+    .form-check-nacionalidad{
+         display: flex;
+        margin: 25px 0 0 43px;
+    }
+
+    .MarginLefth{
+        margin-left: 40px;
+    }
+
     .card-1{
         width: 527px;
         margin-top: 45px;
@@ -134,6 +144,10 @@
                     & .Colonia{
                         width: 171px;
                         margin-left: 344px;
+                    }
+                    & .direccionExtranjero{
+                        width: 510px;
+                        height: 47px;
                     }
 
                     & .numTel{

@@ -221,62 +221,136 @@ evaluaDivisa( event:any ){
   
   }
 
-  Institucion_Bancaria( event:any ){
+    Institucion_Bancaria( event:any ){
   
-    if( this.targeta_asociada.nativeElement.value === 'CLABE' ){
-      console.log(event.target.value)
+    if( this.valor === 'CLABE' ){
       this.formulario().patchValue({['Banco_cuenta']:event.target.value});
       // if( this.formulario().get('CLABE')?.value != '' ){
         
-      //   this.cuenta_targeta = true
-      //   // this.formulario().patchValue({['Tipo_Cuenta_targeta']:this.valor});
+        // this.cuenta_targeta = true
+        // this.formulario().patchValue({['Tipo_Cuenta_targeta']:this.valor});
         
       // }
       
-    }else if (this.targeta_asociada.nativeElement.value === 'Debito'){
+    }else if (this.valor === 'Debito'){
       this.formulario().patchValue({['Banco_tarjeta']:event.target.value});
       // if( this.formulario().get('tarjeta')?.value != '' ){
         
-      //   this.cuenta_targeta = true
-      //   // this.formulario().patchValue({['Tipo_Cuenta_targeta']:this.valor});
+        // this.cuenta_targeta = true
+        // this.formulario().patchValue({['Tipo_Cuenta_targeta']:this.valor});
         
       // }
     }
   
   }
 
+  formatDigitoBancarios(event: any, valor: string = '', sizeN:number ) {
+    let valorMonto = event ? event.target.value : valor;
+    let size = sizeN == 0 ? (this.valor == 'CLABE' ? 3 : 4) : ( sizeN ); 
+
+    console.log(size)
+
+    switch (size) {
+      case 3:
+        valorMonto = valorMonto.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d)\.?)/g, " ");
+        break;
+      case 4:
+        valorMonto = valorMonto.replace(/\D/g, "").replace(/\B(?=(\d{4})+(?!\d)\.?)/g, " ");
+        break;
+    }
+    return event ? event.target.value = valorMonto : valorMonto;
+  }
+
   cuenta_o_tarjeta( event:any ){
 
-    console.log(this.targeta_asociada.nativeElement.value)
+    console.log(this.valor)
   
-  if( this.targeta_asociada.nativeElement.value === 'Fincash' ){
-    this.formulario().patchValue({['FINCASH']:event.target.value, 
+  if( this.valor === 'Fincash' ){
+    this.formulario().patchValue({
+      ['FINCASH']:event.target.value.replace(/[^0-9.]/g, ""), 
       // ['Tipo_Cuenta_targeta']:this.valor
-    });
+      });
     // this.cuenta_targeta = true
     return
   }
   
-  if( this.targeta_asociada.nativeElement.value === 'CLABE' ){
-    this.formulario().patchValue({['CLABE']:event.target.value});
+  if( this.valor === 'CLABE' ){
+    this.formulario().patchValue({['CLABE']:event.target.value.replace(/[^0-9.]/g, "")});
     // if( this.formulario().get('banco_cuenta')?.value != '' ){
       
-    //   this.cuenta_targeta = true
-    //   // this.formulario().patchValue({['Tipo_Cuenta_targeta']:this.valor});
+      // this.cuenta_targeta = true
+      // this.formulario().patchValue({['Tipo_Cuenta_targeta']:this.valor.replace(/[^0-9.]/g, "")});
     // }
     
-  }else if (this.targeta_asociada.nativeElement.value === 'Debito'){
-    this.formulario().patchValue({['tarjeta']:event.target.value});
+  }else if (this.valor === 'Debito'){
+    this.formulario().patchValue({['tarjeta']:event.target.value.replace(/[^0-9.]/g, "")});
     // if( this.formulario().get('Banco_tarjeta')?.value != '' ){
       
-    //   this.cuenta_targeta = true
-    //   // this.formulario().patchValue({['Tipo_Cuenta_targeta']:this.valor});
+      // this.cuenta_targeta = true
+      // this.formulario().patchValue({['Tipo_Cuenta_targeta']:this.valor});
       
     // }
   }
   
   
   }
+
+  // Institucion_Bancaria( event:any ){
+  
+  //   if( this.targeta_asociada.nativeElement.value === 'CLABE' ){
+  //     // console.log(event.target.value)
+  //     this.formulario().patchValue({['Banco_cuenta']:event.target.value});
+  //     // if( this.formulario().get('CLABE')?.value != '' ){
+        
+  //     //   this.cuenta_targeta = true
+  //     //   // this.formulario().patchValue({['Tipo_Cuenta_targeta']:this.valor});
+        
+  //     // }
+      
+  //   }else if (this.targeta_asociada.nativeElement.value === 'Debito'){
+  //     this.formulario().patchValue({['Banco_tarjeta']:event.target.value});
+  //     // if( this.formulario().get('tarjeta')?.value != '' ){
+        
+  //     //   this.cuenta_targeta = true
+  //     //   // this.formulario().patchValue({['Tipo_Cuenta_targeta']:this.valor});
+        
+  //     // }
+  //   }
+  
+  // }
+
+  // cuenta_o_tarjeta( event:any ){
+
+  //   console.log(this.targeta_asociada.nativeElement.value)
+  
+  // if( this.targeta_asociada.nativeElement.value === 'Fincash' ){
+  //   this.formulario().patchValue({['FINCASH']:event.target.value, 
+  //     // ['Tipo_Cuenta_targeta']:this.valor
+  //   });
+  //   // this.cuenta_targeta = true
+  //   return
+  // }
+  
+  // if( this.targeta_asociada.nativeElement.value === 'CLABE' ){
+  //   this.formulario().patchValue({['CLABE']:event.target.value});
+  //   // if( this.formulario().get('banco_cuenta')?.value != '' ){
+      
+  //   //   this.cuenta_targeta = true
+  //   //   // this.formulario().patchValue({['Tipo_Cuenta_targeta']:this.valor});
+  //   // }
+    
+  // }else if (this.targeta_asociada.nativeElement.value === 'Debito'){
+  //   this.formulario().patchValue({['tarjeta']:event.target.value});
+  //   // if( this.formulario().get('Banco_tarjeta')?.value != '' ){
+      
+  //   //   this.cuenta_targeta = true
+  //   //   // this.formulario().patchValue({['Tipo_Cuenta_targeta']:this.valor});
+      
+  //   // }
+  // }
+  
+  
+  // }
 
   async enviar() {
   
@@ -470,7 +544,7 @@ evaluaDivisa( event:any ){
 
         cargaFormularioProveedor( formProveedor:Array<any> ){
 
-          console.log(formProveedor)
+          // console.log(formProveedor)
  
           formProveedor.map((item:any)=>{
             this.formulario().patchValue({
@@ -512,9 +586,10 @@ evaluaDivisa( event:any ){
 
         cargaCuentaTargeta( _Clave:string, _BancoCuenta:string, _tarjeta:string, _BancoTargeta:string, _fincash:string ){
           if( _Clave != '' ){
-            this.formulario().patchValue({['Tipo_Cuenta_targeta']:'CLABE'})
+            // this.formulario().patchValue({['Tipo_Cuenta_targeta']:'CLABE'})
+            this.valor = 'CLABE'
             this.targeta_asociada.nativeElement.value ='CLABE'
-            this.Ref_input_Cuenta_Tarjeta.nativeElement.value = _Clave
+            this.Ref_input_Cuenta_Tarjeta.nativeElement.value = this.formatDigitoBancarios( null, _Clave, 3 )
             this.Ref_Inst_Bancaria.nativeElement.value = _BancoCuenta
             this.inst_Bancaria = false;
             // this.cuenta_targeta = true
@@ -523,9 +598,10 @@ evaluaDivisa( event:any ){
             return
           }
           if( _tarjeta != '' ){
-            this.formulario().patchValue({['Tipo_Cuenta_targeta']:'Debito'})
+            // this.formulario().patchValue({['Tipo_Cuenta_targeta']:'Debito'}) 
+            this.valor = 'Debito'
             this.targeta_asociada.nativeElement.value ='Debito'
-            this.Ref_input_Cuenta_Tarjeta.nativeElement.value = _tarjeta
+            this.Ref_input_Cuenta_Tarjeta.nativeElement.value = this.formatDigitoBancarios( null, _tarjeta, 4 )
             this.Ref_Inst_Bancaria.nativeElement.value = _BancoTargeta
             this.inst_Bancaria = false;
             // this.cuenta_targeta = true
@@ -534,9 +610,10 @@ evaluaDivisa( event:any ){
             return
           }
           if( _fincash != '' ){
-            this.formulario().patchValue({['Tipo_Cuenta_targeta']:'Fincash'})
+            // this.formulario().patchValue({['Tipo_Cuenta_targeta']:'Fincash'})
+            this.valor = 'Fincash'
             this.targeta_asociada.nativeElement.value ='Fincash'
-            this.Ref_input_Cuenta_Tarjeta.nativeElement.value = _fincash
+            this.Ref_input_Cuenta_Tarjeta.nativeElement.value = this.formatDigitoBancarios( null, _fincash, 4 )
             this.inst_Bancaria = true;
             // this.cuenta_targeta = true
             this.Banco_cuenta = false;

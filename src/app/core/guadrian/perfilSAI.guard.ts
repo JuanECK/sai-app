@@ -25,7 +25,7 @@ import { AuthService } from '../services/auth.service';
             return true; // se resolverá la promesa y Angular sabrá si puede o no activar la ruta
           } else {
             // console.log('SAI Out');
-            this.router.navigateByUrl('/Inicio');
+            this.router.navigateByUrl('/Dashboard');
             return false; // se resolverá la promesa y Angular sabrá si puede o no activar la ruta
 
        }

@@ -1,6 +1,7 @@
 .error{
 
     & .container{
+        background: #00B3CF;
 display: flex;
 /* justify-content: center; */
 justify-content: space-evenly;

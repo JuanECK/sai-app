@@ -33,6 +33,8 @@ export class InversionistaComponent implements OnInit {
   
   @ViewChild('radioBtn1') radioBtn1!: ElementRef;
   @ViewChild('radioBtn2') radioBtn2!: ElementRef;
+  @ViewChild('radioNac1') radioNac1!: ElementRef;
+  @ViewChild('radioNac2') radioNac2!: ElementRef;
   @ViewChild('mySelect') mySelect!: ElementRef;
   @ViewChild('Estado') Estado!: ElementRef;
   @ViewChild('FileDomicilio') FileDomicilio!: ElementRef;
@@ -48,61 +50,6 @@ export class InversionistaComponent implements OnInit {
   @ViewChild('brk') brk!: ElementRef;
   @ViewChild('targeta_asociada') targeta_asociada!: ElementRef;
   @ViewChild('benefScroll') benefScroll!: ElementRef;
-
-  // formulario = signal<FormGroup>(
-  //   new FormGroup({
-  //     Id_ICPC: new FormControl(''),
-
-  //     nombre: new FormControl('22', [Validators.required]), //Nombre_Razon_Social
-  //     fisica_moral: new FormControl(1),
-  //     correo: new FormControl('22@ll.com', [Validators.required, Validators.email]),
-  //     telefono: new FormControl('22', [Validators.required]),
-  //     BRK: new FormControl('22', [Validators.required]),
-
-  //     usuario: new FormControl(''),
-
-  //     Fecha_Nac: new FormControl('22', [Validators.required]),
-  //     RFC: new FormControl(''),
-  //     Beneficiario1: new FormControl('', [Validators.required]),
-  //     Fecha_Nac_Beneficiario1: new FormControl('', [Validators.required]),
-  //     Porcentaje_Beneficiario1: new FormControl('', [Validators.required]),
-  //     Beneficiario2: new FormControl(''),
-  //     Fecha_Nac_Beneficiario2: new FormControl(''),
-  //     Porcentaje_Beneficiario2: new FormControl(''),
-  //     Beneficiario3: new FormControl(''),
-  //     Fecha_Nac_Beneficiario3: new FormControl(''),
-  //     Porcentaje_Beneficiario3: new FormControl(''),
-  //     Beneficiario4: new FormControl(''),
-  //     Fecha_Nac_Beneficiario4: new FormControl(''),
-  //     Porcentaje_Beneficiario4: new FormControl(''),
-  //     Beneficiario5: new FormControl(''),
-  //     Fecha_Nac_Beneficiario5: new FormControl(''),
-  //     Porcentaje_Beneficiario5: new FormControl(''),
-
-  //     Banco_cuenta: new FormControl(''),
-  //     CLABE: new FormControl(''),
-  //     FINCASH: new FormControl('555555'),
-  //     Banco_Tarjeta: new FormControl(''),
-  //     Tarjeta: new FormControl(''),
-
-  //     INE: new FormControl('22', [Validators.required]),
-  //     Comprobante_Domicilio: new FormControl('22', [Validators.required]),
-  //     Recomendado: new FormControl('22',[Validators.required]),
-  //     Fecha_Contrato: new FormControl(''),
-  //     Calle: new FormControl('22', [Validators.required]),
-  //     No_Exterior: new FormControl('22', [Validators.required]),
-  //     No_Interior: new FormControl(''),
-  //     Colonia: new FormControl('22', [Validators.required]),
-  //     Id_Estado: new FormControl('22', [Validators.required]),
-  //     Id_Municipio: new FormControl('22', [Validators.required]),
-  //     CP: new FormControl('12345', [Validators.required]),
-
-  //     estatus: new FormControl(''),
-
-  //     Tipo_Cuenta_targeta: new FormControl('22', [Validators.required]),
-
-  //   })
-  // )
 
   
   formulario = signal<FormGroup>(
@@ -157,6 +104,8 @@ export class InversionistaComponent implements OnInit {
 
       Tipo_Cuenta_targeta: new FormControl('', [Validators.required]),
 
+      direccionExtanjera: new FormControl( 'NA', [Validators.required] )
+
     })
   )
   
@@ -189,6 +138,7 @@ cuenta_targeta: boolean = false;
 valor:string = ''
 maxlengthCuentas!:number;
 cuentaPrcentaje!:number;
+nacional: boolean = false;
 
 // actualizaRegistro:boolean = false;
 
@@ -243,7 +193,34 @@ mayus( event:any ){
   let valor = event.target.value.toUpperCase()
   return event.target.value = valor
 }
-
+// <!-- --------------------------Nacionalidad------------------ -->
+evaluaNacionalidad(nacional:number){
+if(nacional == 1){
+  this.nacional = false
+  this.formulario().patchValue({
+    ['Calle']:'',
+    ['No_Exterior']:'',
+    ['No_Interior']:'',
+    ['CP']:'',
+    ['Id_Estado']:'',
+    ['Id_Municipio']:'',
+    ['Colonia']:'',
+    ['direccionExtanjera']:'NA',
+  })
+  return
+}
+this.nacional = true
+this.formulario().patchValue({
+    ['Calle']:'NA',
+    ['No_Exterior']:'NA',
+    ['No_Interior']:'NA',
+    ['CP']:'NANAN',
+    ['Id_Estado']:'NA',
+    ['Id_Municipio']:'NA',
+    ['Colonia']:'NA',
+    ['direccionExtanjera']:'',
+  })
+}
 
 // -------------------Tipos de cuentas asiciadas y sus variantes-----------------------
 TipoDeCuenta( event:any ){
@@ -456,6 +433,9 @@ resetForm() {
     this.Ref_Inst_Bancaria.nativeElement.value=''
     this.brk.nativeElement.value=''
     this.brk.nativeElement.disabled = false
+    this.radioNac1.nativeElement.checked = 1
+
+
     this.input_BRK = false;
     InversionistaBusquedaID = []
 
@@ -464,6 +444,7 @@ resetForm() {
     this.Benef3=true;
     this.Benef4=true;
     this.Benef5=true;
+    this.nacional=false;
 
     porcentaje = [0, 0, 0, 0, 0]
     pocicion = [ 0, 0, 0, 0]

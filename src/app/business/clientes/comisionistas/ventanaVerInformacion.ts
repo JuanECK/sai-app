@@ -53,6 +53,14 @@ import { ModalMsgComponent } from "../../../core/modal-msg/modal-msg.component";
                     <th class="thead-th-blod-No-Border ">No de Comisionista</th>
                     <td class="tbody-td-ligth-No-Border ">{{item.Num_Comisionista}}</td>
                   </tr>
+                   <tr>
+                    <th class="thead-th-blod-No-Border ">No de cuenta</th>
+                    <td class="tbody-td-ligth-No-Border ">{{noCuenta}}</td>
+                  </tr>
+                  <tr class="trGris">
+                    <th class="thead-th-blod-No-Border ">Institución bancaria</th>
+                    <td class="tbody-td-ligth-No-Border ">{{instBancaria}}</td>
+                  </tr>
                 }
                 
               </tbody>
@@ -92,6 +100,8 @@ export class VentanaVerInformacion implements OnInit {
   private readonly _modalMsg = inject(ModalMsgService)
   // data = this.dataModal.data.data
   direccion:string = '';
+  noCuenta:string = '';
+  instBancaria:string = '';
   
   ngOnInit(): void {
     
@@ -104,7 +114,44 @@ export class VentanaVerInformacion implements OnInit {
 
     this.direccion = `${calle}${NoExterior}${colonia}${CP}${municipio}${estado}`; 
 
+    this.revisarCuentas()
   }
+
+    revisarCuentas(){
+    if(this.dataModal[0][0].Banco_Tarjeta){
+      this.noCuenta = this.formatDigito(this.dataModal[0][0].tarjeta, 4)
+      this.instBancaria = this.dataModal[0][0].Banco_Tarjeta
+      return
+    }
+    if(this.dataModal[0][0].Banco_Cuenta){
+      this.noCuenta = this.formatDigito(this.dataModal[0][0].CLABE, 3)
+      this.instBancaria = this.dataModal[0][0].Banco_Cuenta
+      return
+    }
+    if(this.dataModal[0][0].fincash){
+      this.noCuenta = this.formatDigito(this.dataModal[0][0].fincash, 4)
+      this.instBancaria = 'FINCASH'
+      return
+    }
+  }
+
+  formatDigito( digito:string, size:number ){
+    let valorMonto = digito;
+    switch (size) {
+      case 3:
+        valorMonto = valorMonto
+        .replace(/\D/g, "")
+        .replace(/\B(?=(\d{3})+(?!\d)\.?)/g, " ");
+      break
+      case 4:
+        valorMonto = valorMonto
+        .replace(/\D/g, "")
+        .replace(/\B(?=(\d{4})+(?!\d)\.?)/g, ` `);
+      break
+    }
+    return valorMonto  
+  }
+
   async verIdentificacion(){
     this.servicio.descargaComprobante( this.dataModal[0][0].INE )
     .then( (data:any)  => {

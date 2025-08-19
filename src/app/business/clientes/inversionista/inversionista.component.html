@@ -46,11 +46,33 @@
                             </div>
                         </div>
                     </div>
-                    <div>
-                        <h4 class="h1FechaNacimiento"><span [classList]="formulario().get('Fecha_Nac')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'">*</span> Fecha de nacimiento</h4>
-                        <input [classList]="Piker ? 'custom-date-picker FechaNacimiento mr-12 btnInActivo':'custom-date-picker FechaEmision mr-12 btnActive'" type="date" formControlName="Fecha_Nac" #FechaContrato (change)="validaFecha( $event, 'Fecha_Nac' )">
+                    <div class="d-flex">
+                        <div>
+                            <h4 class="h1FechaNacimiento"><span [classList]="formulario().get('Fecha_Nac')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'">*</span> Fecha de nacimiento</h4>
+                            <input [classList]="Piker ? 'custom-date-picker FechaNacimiento mr-12 btnInActivo':'custom-date-picker FechaEmision mr-12 btnActive'" type="date" formControlName="Fecha_Nac" #FechaContrato (change)="validaFecha( $event, 'Fecha_Nac' )">
+                        </div>
+<!-- --------------------------Nacionalidad------------------ -->
+                     <div class="form-check-nacionalidad">
+                        <div class="check text-center">
+                            <label class="form-check-label">Inversionistas <br> nacional</label>
+                            <label class="label-container">
+                                <input type="radio" #radioNac1 (change)="evaluaNacionalidad(1)" checked name="radio">
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                        <div class="check MarginLefth text-center">
+                            <label class="form-check-label">Inversionistas <br> extranjero</label>
+                            <label class="label-container">
+                                <input type="radio" #radioNac2 (change)="evaluaNacionalidad(2)" name="radio">
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                    </div>
+<!-- ----------------------------------------------------------------- -->
                     </div>
 
+<!-- ----------------------------------------DIRECCION----------------------------------------------------------------- -->
+                <div [hidden]="nacional">
                     <div class="mb-12">
 
                         <h4>Dirección</h4>
@@ -66,7 +88,6 @@
                     <div class="">
 
                         <div class="select Estado">
-                            <!-- <span class="spanExedioCaractereSelect" id="estado" [ariaSelected]="true" [hidden]="selectEstado">...</span> -->
                             <select required #Estado class="Estado-" formControlName="Id_Estado" (change)="Municipio( $event )">
                                     <option value="" disabled selected hidden>* Estado</option>
 
@@ -76,7 +97,6 @@
                         </div>
 
                         <div class="select Municipio">
-                            <!-- <span class="spanExedioCaractereSelect" id="municipio" [hidden]="selectMunicipio">...</span> -->
                             <select required #mySelect class="Municipio-" formControlName="Id_Municipio" (change)="SeleccionMunicipio( $event )">
                                     <option value="" disabled selected hidden>* Municipio</option>
                                 @for(item of arrayMunicipio[0]; track $index ){
@@ -87,6 +107,17 @@
 
                         <input class="Colonia" type="text" formControlName="Colonia" placeholder="* Colonia">
                     </div>
+                </div>
+
+                <div [hidden]="nacional == true ? false:true" class="divObservaciones">
+
+                    <!-- <h4 class="" >Dirección</h4> -->
+                    <h4 class="h1FechaNacimiento"><span [classList]="formulario().get('direccionExtanjera')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'">*</span> Dirección Extranjera</h4>
+                    <textarea class="direccionExtranjero" name="" id="" formControlName="direccionExtanjera" rows=0 cols=0 placeholder="Descripcion de la direccion"></textarea>
+
+                </div>
+<!-- -------------------------------------------------------------------------------------------------------------- -->
+
                     <div class="d-flex">
                         <div>
                             <h4><span [classList]="formulario().get('telefono')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'">*</span> No. telefónico</h4>
@@ -334,7 +365,7 @@
 
                             <div class="">
                                 <!-- <h4>Comisionista referente</h4> -->
-                                <h4 class="InvRefInt"><span [classList]="formulario().get('Recomendado')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'">*</span> Comisionista referente</h4>
+                                <h4 class="InvRefInt"><span [classList]="formulario().get('Recomendado')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'">*</span> Referencia interna</h4>
                                 
                                 <div class="select selectTipoCuenta">
                                     <!-- <span class="spanExedioCaractereSelect" id="estado" [ariaSelected]="true" [hidden]="selectBRK">...</span> -->

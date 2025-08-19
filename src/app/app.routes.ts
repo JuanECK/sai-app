@@ -37,7 +37,7 @@ export const routes: Routes = [
 
     {    path:'', component: LayoutComponent, canActivate: [LoginGuardianService] ,
         children: [
-            { path:'', redirectTo: 'Inicio', pathMatch: 'full' },
+            { path:'', redirectTo: 'Dashboard', pathMatch: 'full' },
             // { path: componente.inicio, component: componente.componentes ,canActivate: [LoginGuardianService]},
             { path:'Dashboard',component: DashboardComponent, canActivate: [PerfilGuard], },
             { path:'sai',component: SaiComponent, canActivate: [PerfilSAIGuard]},
