@@ -26,6 +26,10 @@
         margin-left: 40px;
     }
 
+    .H4pais{
+        margin-left: 40px;
+    }
+
     .card-1{
         width: 527px;
         margin-top: 45px;
@@ -146,8 +150,19 @@
                         margin-left: 344px;
                     }
                     & .direccionExtranjero{
+                        margin-top: 9px;
                         width: 510px;
-                        height: 47px;
+                        height: 43px;
+                    }
+                    & .Pais{
+                        width: 175px;
+                        /* max-width: 154px;
+                        min-width: 154px; */
+                        /* bottom: 1px; */
+                        margin-top: 15px;
+                        margin-right: 12px;
+                        left: 187px;
+                        z-index: 5;
                     }
 
                     & .numTel{

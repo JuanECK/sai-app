@@ -4,7 +4,7 @@
             <!-- ------------------CARD 1 --------------------- -->
             <div class="card-1 card">
                 <!-- <button (click)="verDatosComisionista( 600 )" >ver</button> -->
-                <!-- <button (click)="ver()" >ver-array</button> -->
+                <button (click)="ver()" >ver-array</button>
                 <div class="d-flex">
                     <div class="col-7" [hidden]="editar ? false : true">
                         <h1 class="h1TitleCard">Agregar Inversionistas</h1>
@@ -91,7 +91,7 @@
                             <select required #Estado class="Estado-" formControlName="Id_Estado" (change)="Municipio( $event )">
                                     <option value="" disabled selected hidden>* Estado</option>
 
-                                @for(item of arrayEstado[0]; track $index ){
+                                @for(item of arrayDataInicial[0]; track $index ){
                                     <option [value]="item.Id_Estado">{{item.Estado}}</option> }
                             </select>
                         </div>
@@ -110,10 +110,21 @@
                 </div>
 
                 <div [hidden]="nacional == true ? false:true" class="divObservaciones">
+                    <div class="d-flex">
+                        <h4 class="h1FechaNacimiento-"><span [classList]="formulario().get('Id_Pais')?.valid && formulario().get('Calle')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'">*</span> Dirección</h4>
+                        <h4 class="H4pais" >País</h4>
 
-                    <!-- <h4 class="" >Dirección</h4> -->
-                    <h4 class="h1FechaNacimiento"><span [classList]="formulario().get('direccionExtanjera')?.valid ? 'Obligatiro-is-valid':'Obligatiro-is-invalid'">*</span> Dirección Extranjera</h4>
-                    <textarea class="direccionExtranjero" name="" id="" formControlName="direccionExtanjera" rows=0 cols=0 placeholder="Descripcion de la direccion"></textarea>
+                        <div class="select Pais">
+                            <select required #Pais class="Pais-" formControlName="Id_Pais" (change)="SeleccionPais( $event )">
+                                    <option value="" disabled selected hidden>* Municipio</option>
+                                @for(item of arrayDataInicial[1]; track $index ){
+                                    <option [value]="item.Id_Pais">{{item.Nombre}}</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+
+                    <textarea class="direccionExtranjero" name="" id="" formControlName="Calle" rows=0 cols=0 placeholder="Descripcion de la direccion"></textarea>
 
                 </div>
 <!-- -------------------------------------------------------------------------------------------------------------- -->

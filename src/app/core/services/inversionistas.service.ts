@@ -13,9 +13,9 @@ export class Inversionistas {
 
     private _http: string = `${environment.apiUrl}`;
 
-    async getEstado() {
-        const response = await fetch(this._http + 'generales/estado', {
-            method: 'GET',
+    async getDataInicial() {
+        const response = await fetch(this._http + 'clientes/inversionistas/DataInicial', {
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             }

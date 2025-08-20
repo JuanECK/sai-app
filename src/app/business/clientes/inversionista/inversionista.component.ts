@@ -104,12 +104,12 @@ export class InversionistaComponent implements OnInit {
 
       Tipo_Cuenta_targeta: new FormControl('', [Validators.required]),
 
-      direccionExtanjera: new FormControl( 'NA', [Validators.required] )
+      Id_Pais: new FormControl( '0', [Validators.required] )
 
     })
   )
   
-arrayEstado: Array<any>[] = [];
+arrayDataInicial: Array<any>[] = [];
 arrayRefInt: Array<any>[] = [];
 arrayMunicipio: Array<any>[] = [];
 arrayCuentaAsociada: Array<any>[] = [];
@@ -151,7 +151,7 @@ Hoy:string = "";
 ngOnInit(): void {
   this.puenteData.disparadorData.emit({ dato: 'Inversionistas', poisionX: '' })
   this.Hoy = this.fechaActual()
-  this.estado()
+  this.dataInicial()
   this.BRK()
 
   // this.formulario().get('nombre')?.valueChanges.subscribe(selectedValue => {
@@ -193,6 +193,14 @@ mayus( event:any ){
   let valor = event.target.value.toUpperCase()
   return event.target.value = valor
 }
+
+async dataInicial() {
+
+  const estado = await this.servicio.getDataInicial()
+  this.arrayDataInicial = estado
+  // console.log(estado)
+
+}
 // <!-- --------------------------Nacionalidad------------------ -->
 evaluaNacionalidad(nacional:number){
 if(nacional == 1){
@@ -205,21 +213,25 @@ if(nacional == 1){
     ['Id_Estado']:'',
     ['Id_Municipio']:'',
     ['Colonia']:'',
-    ['direccionExtanjera']:'NA',
+    ['Id_Pais']:'0',
   })
   return
 }
 this.nacional = true
 this.formulario().patchValue({
-    ['Calle']:'NA',
+    ['Calle']:'',
     ['No_Exterior']:'NA',
     ['No_Interior']:'NA',
     ['CP']:'NANAN',
-    ['Id_Estado']:'NA',
-    ['Id_Municipio']:'NA',
+    ['Id_Estado']:'0',
+    ['Id_Municipio']:'0',
     ['Colonia']:'NA',
-    ['direccionExtanjera']:'',
+    ['Id_Pais']:'',
   })
+}
+
+SeleccionPais( event:any ){
+
 }
 
 // -------------------Tipos de cuentas asiciadas y sus variantes-----------------------
@@ -327,14 +339,6 @@ Institucion_Bancaria( event:any ){
 
 // ------------------------------------------------------------------------------
 
-async estado() {
-
-  const estado = await this.servicio.getEstado()
-  this.arrayEstado = estado
-  // console.log(estado)
-
-}
-
 async BRK(  ) {
 
   const referido = await this.servicio.getReferidoBRK()
@@ -426,7 +430,9 @@ resetForm() {
     ['Banco_cuenta']:'',
     ['Banco_Tarjeta']:'',
     ['Tarjeta']:'',
-    ['Tipo_Cuenta_targeta']:''});
+    ['Tipo_Cuenta_targeta']:'',
+    ['Id_Pais']:'0'
+  });
 
     this.targeta_asociada.nativeElement.value=''
     this.Ref_input_Cuenta_Tarjeta.nativeElement.value=''
