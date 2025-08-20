@@ -116,7 +116,7 @@
 
                         <div class="select Pais">
                             <select required #Pais class="Pais-" formControlName="Id_Pais" (change)="SeleccionPais( $event )">
-                                    <option value="" disabled selected hidden>* Municipio</option>
+                                    <option value="" disabled selected hidden>* EEUU</option>
                                 @for(item of arrayDataInicial[1]; track $index ){
                                     <option [value]="item.Id_Pais">{{item.Nombre}}</option>
                                 }
@@ -124,7 +124,7 @@
                         </div>
                     </div>
 
-                    <textarea class="direccionExtranjero" name="" id="" formControlName="Calle" rows=0 cols=0 placeholder="Descripcion de la direccion"></textarea>
+                    <textarea class="direccionExtranjero" name="" id="" formControlName="Calle" rows=0 cols=0 placeholder="Calle, Numero, Codigo Postal y Estado"></textarea>
 
                 </div>
 <!-- -------------------------------------------------------------------------------------------------------------- -->

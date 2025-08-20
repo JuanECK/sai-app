@@ -167,6 +167,17 @@ export class ComisionistasComponent implements OnInit {
   }
 
   evaluaCuantaTargetaNull( clave:string ){
+
+    if(clave == 'Fincash'){
+      if(this.formulario().get('fincash')?.value == '' ){
+        this.cuenta_targeta = false
+        this.formulario().patchValue({['Tipo_Cuenta_targeta']:''});
+        return
+      }
+      this.cuenta_targeta = true
+      this.formulario().patchValue({['Tipo_Cuenta_targeta']:clave});
+    }
+
     if(clave == 'CLABE'){
       if(this.formulario().get('CLABE')?.value == '' || this.formulario().get('banco_cuenta')?.value == '' ){
         this.cuenta_targeta = false
@@ -246,8 +257,8 @@ export class ComisionistasComponent implements OnInit {
     console.log(this.valor)
   
   if( this.valor === 'Fincash' ){
-    this.formulario().patchValue({['fincash']:event.target.value.replace(/[^0-9.]/g, ""), ['Tipo_Cuenta_targeta']:this.valor});
-    this.cuenta_targeta = true
+    this.formulario().patchValue({['fincash']:event.target.value.replace(/[^0-9.]/g, "")});
+    this.evaluaCuantaTargetaNull( 'Fincash' )
     return
   }
   

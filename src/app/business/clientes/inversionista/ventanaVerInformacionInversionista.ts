@@ -121,14 +121,20 @@ export class VentanaVerInformacionInversionista implements OnInit {
   ngOnInit(): void {
     console.log( this.dataModal)
 
-    let calle = this.dataModal[0].Calle;
-    let NoExterior = this.dataModal[0].No_Exterior =='' ? '':', No. ' + this.dataModal[0].No_Exterior;
-    let colonia = this.dataModal[0].Colonia == '' ? '' : ', Col. ' + this.dataModal[0].Colonia
-    let CP = this.dataModal[0].CP == '' ? '' : ', CP. ' + this.dataModal[0].CP
-    let municipio = this.dataModal[0].Municipio == '' ? '' : ', ' + this.dataModal[0].Municipio
-    let estado = this.dataModal[0].Estado == '' ? '' : ', ' + this.dataModal[0].Estado
-
-    this.direccion = `${calle}${NoExterior}${colonia}${CP}${municipio}${estado}`; 
+    if( this.dataModal[0].Id_Pais == 0 ){
+      let calle = this.dataModal[0].Calle;
+      let NoExterior = this.dataModal[0].No_Exterior =='' ? '':', No. ' + this.dataModal[0].No_Exterior;
+      let colonia = this.dataModal[0].Colonia == '' ? '' : ', Col. ' + this.dataModal[0].Colonia
+      let CP = this.dataModal[0].CP == '' ? '' : ', CP. ' + this.dataModal[0].CP
+      let municipio = this.dataModal[0].Municipio == '' ? '' : ', ' + this.dataModal[0].Municipio
+      let estado = this.dataModal[0].Estado == '' ? '' : ', ' + this.dataModal[0].Estado
+  
+      this.direccion = `${calle}${NoExterior}${colonia}${CP}${municipio}${estado}`; 
+    }else{
+      let calle = this.dataModal[0].Calle;
+      let pais = this.dataModal[0].NombrePais;
+      this.direccion = `${pais}, ${calle}`
+    }
     
     this.val.push({'Item':this.dataModal[0].Beneficiario1, 'porciento':this.dataModal[0].Porcentaje_Beneficiario1},
        {'Item':this.dataModal[0].Beneficiario2, 'porciento':this.dataModal[0].Porcentaje_Beneficiario2},
