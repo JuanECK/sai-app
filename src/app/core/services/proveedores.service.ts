@@ -295,7 +295,7 @@ export class Proveedores {
         })
         const dataService = await response.json()
         // console.log(dataService)
-        if (response.status === 200) {
+        if (dataService.status === 200) {
             const data = { mensaje:dataService.mensaje }
             return {
                 status:'',    
@@ -303,7 +303,7 @@ export class Proveedores {
             }
         }
         else {
-            const data = { mensaje:dataService.error } 
+            const data = { mensaje:dataService.mensaje } 
             return {
                 status: 'error',
                 data: data 

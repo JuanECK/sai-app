@@ -205,7 +205,7 @@ export class Publico {
         })
         const dataService = await response.json()
         // console.log(dataService)
-        if (response.status === 200) {
+        if (dataService.status === 200) {
             const data = { mensaje:dataService.mensaje }
             return {
                 status:'',    
@@ -213,7 +213,7 @@ export class Publico {
             }
         }
         else {
-            const data = { mensaje:dataService.error } 
+            const data = { mensaje:dataService.mensaje } 
             return {
                 status: 'error',
                 data: data 

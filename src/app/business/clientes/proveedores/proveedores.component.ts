@@ -446,7 +446,7 @@ export class ProveedoresComponent implements OnInit{
                   .then( respuesta => {
         
                     if(respuesta.status == 'error'){
-                      this._modalMsg.openModalMsg<ModalMsgComponent>( ModalMsgComponent, { data:respuesta.data }, false, '300px', 'exito')
+                      this._modalMsg.openModalMsg<ModalMsgComponent>( ModalMsgComponent, { data:respuesta.data }, false, '300px', 'error')
                       return
                     }
         
