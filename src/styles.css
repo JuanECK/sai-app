@@ -417,11 +417,11 @@ select {
     background: #eeeeee;
   }
 
-  select:invalid{
+  /* select:invalid{
     background: linear-gradient(90deg, var(--Obligatorio) 12px, #BBBBBB 12px);
     color: transparent;
     background-clip: text;
-  }
+  } */
 
   select::-webkit-scrollbar-thumb{
     background: #00B3CF;

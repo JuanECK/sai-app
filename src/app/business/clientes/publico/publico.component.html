@@ -92,7 +92,7 @@
 
 
                     <h4>Alta al Catálogo de Divisa</h4>
-                    <div class="divisas">
+                    <div class="divisas-">
 
                         <div class="select Catalogo">
                             <select required class="Estado-" #Catalogo formControlName="tipoClienteDivisa"  (change)="evaluaCatalogo( $event )" >
@@ -102,16 +102,26 @@
                             </select>
                         </div>
 
-                        <div class="select Divisa">
-                            <select required [classList]="cataDivisa ? ' inputInActive' : '' " #TipoDivisa (change)="evaluaDivisa( $event )" [disabled]="cataDivisa">
-                                    <option value="" disabled selected hidden>Sin asignar</option>
-                                @for(item of array[1]; track $index ){
-                                    <option [value]="item.Id_Tipo_Divisa">{{item.Moneda}}</option>
-                                }
-                            </select>
+                        <div>   
+                            <div [hidden]="saldoDivisa">
+                                <div class="select Divisa">
+                                    <select required [classList]="cataDivisa ? ' inputInActive' : 'Div' " #TipoDivisa (change)="evaluaDivisa( $event )" [disabled]="cataDivisa">
+                                            <option value="" disabled selected hidden>Sin asignar</option>
+                                        @for(item of array[1]; track $index ){
+                                            <option [value]="item.Id_Tipo_Divisa">{{item.Moneda}}</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div> 
+                            <div class="saldoDivisa-" [hidden]="saldoDivisa == true ? false:true">    
+                                <input class="saldoDivisa" type="text" #Utilidad  placeholder="Utilidad en %" formControlName="utilidad" (input)="parseDigito2( $event )">
+                            </div>
+                            <div class="saldoDivisa-" [hidden]="saldoDivisa == true ? false:true">    
+                                <input class="SaldoComision" type="text" #Comision  placeholder="Comision en %" formControlName="comision" (input)="parseDigito2( $event )">
+                            </div>
                         </div>
 
-                        <div>
+                        <div [hidden]="saldoDivisa">
                             <input [classList]="cataDivisa ? 'Saldo inputInActive' : 'Saldo' " type="text" #Monto  placeholder="0.00" [disabled]="cataDivisa" (change)="getCurrencySaldo( $event )" (input)="parseDigito2( $event )">
                         </div>
                     </div>

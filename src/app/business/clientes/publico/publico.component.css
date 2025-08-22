@@ -89,9 +89,10 @@
                 & .TipoCuenta{
                     width: 273px;
                 }
+                /* & .divisas > .Divisa > select:invalid */
                 & .selectTipoCuenta > select:invalid,
-                & .divisas > .Catalogo > select:invalid,
-                & .divisas > .Divisa > select:invalid{
+                & .divisas > .Catalogo > select:invalid
+                {
                     background: #BBBBBB ;
                     color: transparent;
                     background-clip: text;
@@ -112,10 +113,29 @@
                     width: 246px;
                   }
 
+                  & .saldoDivisa{
+                    margin-left: 160px;
+                    width: 157px;
+                    position: absolute;
+                  }
+                  & .SaldoComision{
+                    margin-left: 344px;
+                    width: 157px;
+                    position: absolute;
+                  }
                   & .divisas{
                     display: flex;
                     /* grid-template-columns: 1fr 1fr 1fr ;
-                    grid-template-areas: "Catalogo Divisa Saldo"; */
+                    grid-template-areas: "Catalogo Divisa Saldo";  */
+                  }
+
+                  & .h4Utilidad{
+                    margin-left: 160px;
+                    margin-top:0px ;
+                  }
+                  & .h4Comision{
+                    margin-left: 344px;
+                    margin-top:0px ;
                   }
 
                   & .Catalogo{

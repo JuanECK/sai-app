@@ -59,6 +59,8 @@ export class PublicoComponent implements OnInit{
       tipoClienteDivisa : new FormControl(0),
       tipoDivisa : new FormControl(0),
       saldoApertura: new FormControl(0),
+      utilidad: new FormControl('', [Validators.required]),
+      comision : new FormControl('', [Validators.required]),
 
     })
   )
@@ -81,6 +83,7 @@ export class PublicoComponent implements OnInit{
   array: Array<any>[] = [];
 
   cataDivisa:boolean = true
+  saldoDivisa:boolean = false
 
   private readonly _modalMsg = inject(ModalMsgService);
   private readonly _dialog = inject(MatDialog);
@@ -89,7 +92,7 @@ export class PublicoComponent implements OnInit{
     this.setDataLogin();
     this.cargaDataInicial();
     this.Hoy = this.fechaActual()
-
+    this.formulario().patchValue({['utilidad']:0, ['comision']:0})
   }
 
   async cargaDataInicial(){
@@ -113,27 +116,43 @@ export class PublicoComponent implements OnInit{
   }
 
 evaluaCatalogo( event:any ){
+
   if( event.target.value == 0 ){
 
-    this.formulario().patchValue({['tipoClienteDivisa']: '', ['tipoDivisa']:'', ['saldoApertura']:0})
+    // console.log(1)
+    this.formulario().patchValue({['tipoClienteDivisa']: 0, ['tipoDivisa']:'', ['saldoApertura']:0, ['utilidad']:0, ['comision']:0})
     this.Monto.nativeElement.value = ''
     this.TipoDivisa.nativeElement.value = ''
     event.target.value = ''
     this.cataDivisa = true
+    this.saldoDivisa = false
     return 
   }
   if( event.target.value == 2 || event.target.value == 0 ){
-
+    
+    // console.log(2)
     this.cataDivisa = true
-    this.formulario().patchValue({['tipoDivisa']:'', ['saldoApertura']:0})
+    this.saldoDivisa = false
+    this.formulario().patchValue({['tipoDivisa']:'', ['saldoApertura']:0, ['utilidad']:0, ['comision']:0})
     this.Monto.nativeElement.value = ''
     this.TipoDivisa.nativeElement.value = ''
-  }else{
-
-    this.cataDivisa = false
-    
+    return
+  }
+  // else{
+  //   this.cataDivisa = false
+  // }
+  if(event.target.value == 11){
+    // console.log(3)
+    this.saldoDivisa = true
+     this.formulario().patchValue({['tipoDivisa']:0, ['saldoApertura']:0, ['utilidad']:'', ['comision']:''})
+    this.Monto.nativeElement.value = ''
+    this.TipoDivisa.nativeElement.value = ''
+    return
   }
   
+  // console.log(4)
+  this.saldoDivisa = false
+  this.cataDivisa = false
   this.formulario().patchValue({['tipoClienteDivisa']: event.target.value})
 }
 
@@ -429,12 +448,16 @@ evaluaDivisa( event:any ){
       'tipoClienteDivisa':0,
       'tipoDivisa':'',
       'saldoApertura':0,
+      ['utilidad']:'', 
+      ['comision']:''
     });
 
     this.radioBtn1.nativeElement.checked = 1
     this.formulario().patchValue({fisica_moral:true})
     this.editar = true
 
+    this.cataDivisa = true
+    this.saldoDivisa = false
     this.Banco_cuenta = true;
     this.inst_Bancaria = true;
     this.titulo_cuenta_asociada = 'No. de cuenta o tarjeta'
@@ -498,6 +521,8 @@ evaluaDivisa( event:any ){
       async verDatosProveedor( id:number ){
         let datos = await this.servicio.cargaProveedorId( id )
         let item = this.array[0].filter(item => item.Id_Tipo_ClienteDivisa == datos[0].Id_Tipo_ClienteDivisa)
+        console.log({ver:item})
+
         datos[0] = { TipoPerfil:item[0].TipoPerfil, ...datos[0] } 
         if(datos.status === 'error'){
           this._modalMsg.openModalMsg<ModalMsgComponent>( ModalMsgComponent, { data:datos.data }, false, '300px', 'exito')
@@ -564,6 +589,8 @@ evaluaDivisa( event:any ){
               ['tipoClienteDivisa']:item.Id_Tipo_ClienteDivisa,
               ['tipoDivisa']:item.Id_Moneda,
               ['saldoApertura']:item.Saldo_Apertura,
+              ['utilidad']:item.utilidad,
+              ['comision']:item.comision,
 
             })
           })
@@ -581,7 +608,12 @@ evaluaDivisa( event:any ){
           formProveedor[0].fisica_moral === '1' ? (this.radioBtn1.nativeElement.checked = true) : (this.radioBtn2.nativeElement.checked = true)
           this.cargaCuentaTargeta( formProveedor[0].CLABE, formProveedor[0].Banco_cuenta, formProveedor[0].tarjeta, formProveedor[0].Banco_Tarjeta, formProveedor[0].FINCASH )
 
+          if (formProveedor[0].Id_Tipo_ClienteDivisa == 11) {
+            this.saldoDivisa = true
+          }
+
         }
+
 
 
         cargaCuentaTargeta( _Clave:string, _BancoCuenta:string, _tarjeta:string, _BancoTargeta:string, _fincash:string ){

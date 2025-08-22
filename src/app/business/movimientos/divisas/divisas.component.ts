@@ -57,6 +57,7 @@ export class DivisasComponent implements OnInit {
   Moneda:string ='';
   clienteEspecial:Array<any>[] = [];
   tipoMovimiento:string = ''
+  comisionMonto:string = 'Comisión Progreso'
 
   Dolares: boolean = false;
 
@@ -286,7 +287,7 @@ cargaFormularioSeleccionado( form: Array<any> ){
     let id = event.target.selectedOptions[0].id
     // let id = select.split("-");
 
-    console.log(id[0])
+    // console.log(id[0])
     
     let data = await this.servicio.GetConcepto( event.target.value );
     console.log(data.Conceptos)
@@ -296,6 +297,12 @@ cargaFormularioSeleccionado( form: Array<any> ){
 
     this.clienteEspecial = [this.array[0].filter( cliente =>  cliente.Id_ICPC == id  )]
     console.log({cliente:this.clienteEspecial})
+
+    if(this.clienteEspecial[0][0].ClienteDivisas == 11){
+      this.comisionMonto = 'Monto de operación'
+    }else{
+      this.comisionMonto = 'Comisión Progreso'
+    }
 
     if( this.clienteEspecial[0][0].Moneda == 'USD' ){
       this.Dolares = true
@@ -392,6 +399,12 @@ cargaFormularioSeleccionado( form: Array<any> ){
   getCurrencySaldo(event: any) {
     let value = event.target.value
     let returnvalor = value
+    
+    // console.log(this.clienteEspecial[0][0].ClienteDivisas)
+    if(this.clienteEspecial[0][0].ClienteDivisas == 11){
+      this.cargaUtilidadComision( this.clienteEspecial[0][0].ClienteDivisas )
+    }
+    
     if (value != '') {
       returnvalor = formatCurrency(+value, 'en', '', '', '1.2-4')
       this.formulario().patchValue({ ['Comision']: returnvalor.replace(/[^0-9.]/g, "") })
@@ -400,6 +413,12 @@ cargaFormularioSeleccionado( form: Array<any> ){
     }
     this.formulario().patchValue({ ['Monto']: 0 })
     event.target.value = returnvalor
+  }
+  
+  async cargaUtilidadComision ( clienteDivisa:number ){
+    console.log('canelo')
+    // seguir con la implementacion del consumo de la api con el procedimiento "sp_carga_montos_comisionDivisas"
+    
   }
 
   parseDigito2(event: any) {
